@@ -248,6 +248,24 @@ function initMobileMenu() {
 
     if (!navbarCollapse || !navbarToggler) return;
 
+    // Fix active link color on mobile menu open
+    function fixActiveLinksColor() {
+        if (window.innerWidth < 992) {
+            const activeLinks = document.querySelectorAll('.navbar-nav .nav-link.active');
+            activeLinks.forEach(link => {
+                link.style.color = '#ffffff';
+            });
+        }
+    }
+
+    // Apply fix when menu is shown
+    navbarCollapse.addEventListener('shown.bs.collapse', fixActiveLinksColor);
+
+    // Also apply on toggler click
+    navbarToggler.addEventListener('click', function () {
+        setTimeout(fixActiveLinksColor, 50);
+    });
+
     // Close menu when clicking the X pseudo-element area only
     navbarCollapse.addEventListener('click', function (e) {
         const rect = this.getBoundingClientRect();
