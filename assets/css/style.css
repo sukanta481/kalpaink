@@ -214,12 +214,17 @@ ul {
 ================================ */
 .navbar {
     padding: 15px 0;
-    background-color: var(--primary-yellow);
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     transition: var(--transition-normal);
     z-index: 1000;
 }
 
 .navbar.scrolled {
+    position: fixed;
     background-color: var(--primary-yellow);
     box-shadow: var(--shadow-md);
     padding: 10px 0;
@@ -1585,26 +1590,104 @@ textarea.form-control {
 }
 
 @media (max-width: 767.98px) {
+
+    /* Mobile Hero - Image Behind Text Layout */
     .hero-section {
-        min-height: auto;
+        min-height: 100vh;
+        padding-top: 80px;
+    }
+
+    .hero-section .carousel-item .row {
+        flex-direction: column;
+        position: relative;
+    }
+
+    .hero-section .carousel-item .col-lg-6:first-child {
+        order: 2;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-section .carousel-item .col-lg-6:last-child {
+        order: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .min-vh-hero {
+        min-height: calc(100vh - 80px);
+        position: relative;
+    }
+
+    .hero-content {
+        text-align: center;
+        padding: 60px 20px 100px;
+        position: relative;
+        z-index: 2;
     }
 
     .hero-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-subtitle {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-buttons {
         flex-direction: column;
         gap: 12px;
+        justify-content: center;
     }
 
     .hero-buttons .btn {
         width: 100%;
-        padding: 14px 28px;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 16px 28px;
+    }
+
+    /* Mobile Hero Image as Background */
+    .hero-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
     }
 
     .placeholder-image.hero {
-        height: 280px;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        opacity: 0.4;
+    }
+
+    /* Hide second button on mobile like reference */
+    .hero-buttons .btn:last-child {
+        display: none;
+    }
+
+    .hero-section .carousel-indicators {
+        bottom: 30px;
+        z-index: 10;
+    }
+
+    .hero-section .carousel-indicators button {
+        background-color: var(--black);
     }
 
     .welcome-card {
