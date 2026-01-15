@@ -240,40 +240,15 @@ function showAlert(type, message) {
 }
 
 /**
- * Mobile menu - close on link click and overlay handling
+ * Mobile menu - simplified handler for proper navigation
  */
 function initMobileMenu() {
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     const navbarCollapse = document.querySelector('.navbar-collapse');
     const navbarToggler = document.querySelector('.navbar-toggler');
 
     if (!navbarCollapse || !navbarToggler) return;
 
-    // Toggle menu-open class on body when mobile menu opens/closes
-    navbarToggler.addEventListener('click', function () {
-        setTimeout(() => {
-            if (navbarCollapse.classList.contains('show')) {
-                document.body.classList.add('menu-open');
-            } else {
-                document.body.classList.remove('menu-open');
-            }
-        }, 10);
-    });
-
-    // Close menu when clicking on nav links
-    navLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
-                const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                if (bsCollapse) {
-                    bsCollapse.hide();
-                }
-                document.body.classList.remove('menu-open');
-            }
-        });
-    });
-
-    // Close menu when clicking the X pseudo-element area 
+    // Close menu when clicking the X pseudo-element area only
     navbarCollapse.addEventListener('click', function (e) {
         const rect = this.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -281,15 +256,16 @@ function initMobileMenu() {
 
         // Check if click is in the close button area (top right corner)
         if (x > rect.width - 60 && y < 60 && window.innerWidth < 992) {
+            e.preventDefault();
+            e.stopPropagation();
             const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
             if (bsCollapse) {
                 bsCollapse.hide();
             }
-            document.body.classList.remove('menu-open');
         }
     });
 
-    // Close menu when clicking outside (on the overlay)
+    // Close menu when clicking outside (not on menu or toggler)
     document.addEventListener('click', function (e) {
         if (window.innerWidth < 992 &&
             navbarCollapse.classList.contains('show') &&
@@ -299,19 +275,10 @@ function initMobileMenu() {
             if (bsCollapse) {
                 bsCollapse.hide();
             }
-            document.body.classList.remove('menu-open');
         }
     });
-
-    // Update body class when collapse hides
-    navbarCollapse.addEventListener('hidden.bs.collapse', function () {
-        document.body.classList.remove('menu-open');
-    });
-
-    navbarCollapse.addEventListener('shown.bs.collapse', function () {
-        document.body.classList.add('menu-open');
-    });
 }
+
 
 /**
  * Counter animation for stats

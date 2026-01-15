@@ -32,9 +32,7 @@ include 'includes/header.php';
                             </div>
                             <div class="col-lg-6">
                                 <div class="hero-image">
-                                    <div class="placeholder-image hero">
-                                        <i class="fas fa-paint-brush"></i>
-                                    </div>
+                                    <img src="uploads/1st slider.jpeg" alt="Creative Design" class="img-fluid hero-banner">
                                 </div>
                             </div>
                         </div>
