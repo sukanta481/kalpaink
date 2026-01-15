@@ -336,11 +336,11 @@ ul {
     position: relative;
     z-index: 1100;
     background-color: transparent;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    visibility: visible !important;
-    opacity: 1 !important;
+}
+
+/* Ensure toggler icon is visible when shown */
+.navbar-toggler:not(.collapsed) {
+    z-index: 1100;
 }
 
 .navbar-toggler:focus {
@@ -349,13 +349,25 @@ ul {
 }
 
 .navbar-toggler-icon {
-    width: 30px;
-    height: 30px;
-    display: block !important;
+    width: 28px;
+    height: 28px;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+/* Prevent horizontal scroll when mobile menu is open */
+html,
+body {
+    overflow-x: hidden;
+}
+
+/* Hide hamburger menu on desktop (Bootstrap uses 992px as lg breakpoint) */
+@media (min-width: 992px) {
+    .navbar-toggler {
+        display: none !important;
+    }
 }
 
 /* ================================
