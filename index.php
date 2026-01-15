@@ -15,24 +15,42 @@ include 'includes/header.php';
 
             <!-- Carousel Slides -->
             <div class="carousel-inner">
-                <!-- Slide 1 - Graphics Design -->
+                <!-- Slide 1 - Creative Design -->
                 <div class="carousel-item active">
                     <div class="container">
                         <div class="row align-items-center min-vh-hero">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 hero-text-col">
                                 <div class="hero-content" data-aos="fade-right">
                                     <span class="hero-badge">Creative Design Studio</span>
                                     <h1 class="hero-title">Reimagining with Purpose</h1>
-                                    <p class="hero-subtitle">Transform your brand with creative design solutions. We specialize in graphics, branding, and digital marketing that makes an impact.</p>
+                                    <p class="hero-subtitle">Transform your brand with creative design solutions. We specialize in graphics, branding, and digital marketing.</p>
                                     <div class="hero-buttons">
-                                        <a href="contact.php" class="btn btn-outline-dark">Get Started</a>
-                                        <a href="case-studies.php" class="btn btn-white">Our Work</a>
+                                        <a href="contact.php" class="btn btn-dark btn-lg">Get Quote</a>
+                                        <a href="services.php" class="btn btn-outline-dark btn-lg">Services</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="hero-image">
-                                    <img src="uploads/1st slider.jpeg" alt="Creative Design" class="img-fluid hero-banner">
+                            <div class="col-lg-6 hero-visual-col">
+                                <!-- Masonry Grid with Parallax -->
+                                <div class="hero-masonry" data-parallax-container>
+                                    <div class="masonry-item item-1" data-parallax="0.03">
+                                        <img src="uploads/1st slider.jpeg" alt="Creative Design">
+                                    </div>
+                                    <div class="masonry-item item-2" data-parallax="0.05">
+                                        <div class="masonry-placeholder">
+                                            <i class="fas fa-palette"></i>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item item-3" data-parallax="0.04">
+                                        <div class="masonry-placeholder">
+                                            <i class="fas fa-pen-nib"></i>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item item-4" data-parallax="0.06">
+                                        <div class="masonry-placeholder">
+                                            <i class="fas fa-laptop-code"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -43,21 +61,38 @@ include 'includes/header.php';
                 <div class="carousel-item">
                     <div class="container">
                         <div class="row align-items-center min-vh-hero">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 hero-text-col">
                                 <div class="hero-content">
                                     <span class="hero-badge">Digital Marketing</span>
                                     <h1 class="hero-title">Grow Your Digital Presence</h1>
-                                    <p class="hero-subtitle">Strategic digital marketing solutions to boost your brand visibility, engage your audience, and drive measurable results.</p>
+                                    <p class="hero-subtitle">Strategic digital marketing to boost your brand visibility and drive measurable results.</p>
                                     <div class="hero-buttons">
-                                        <a href="services.php" class="btn btn-outline-dark">Our Services</a>
-                                        <a href="contact.php" class="btn btn-white">Get Quote</a>
+                                        <a href="contact.php" class="btn btn-dark btn-lg">Get Quote</a>
+                                        <a href="services.php" class="btn btn-outline-dark btn-lg">Services</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="hero-image">
-                                    <div class="placeholder-image hero">
-                                        <i class="fas fa-chart-line"></i>
+                            <div class="col-lg-6 hero-visual-col">
+                                <div class="hero-masonry" data-parallax-container>
+                                    <div class="masonry-item item-1" data-parallax="0.03">
+                                        <div class="masonry-placeholder gradient-1">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item item-2" data-parallax="0.05">
+                                        <div class="masonry-placeholder gradient-2">
+                                            <i class="fas fa-bullhorn"></i>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item item-3" data-parallax="0.04">
+                                        <div class="masonry-placeholder gradient-3">
+                                            <i class="fas fa-hashtag"></i>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item item-4" data-parallax="0.06">
+                                        <div class="masonry-placeholder gradient-4">
+                                            <i class="fas fa-ad"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -69,21 +104,38 @@ include 'includes/header.php';
                 <div class="carousel-item">
                     <div class="container">
                         <div class="row align-items-center min-vh-hero">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 hero-text-col">
                                 <div class="hero-content">
                                     <span class="hero-badge">Brand Identity</span>
                                     <h1 class="hero-title">Build Your Unique Brand</h1>
-                                    <p class="hero-subtitle">Create a memorable brand identity that stands out. From logos to complete brand guidelines, we craft identities that resonate.</p>
+                                    <p class="hero-subtitle">Create a memorable brand identity from logos to complete brand guidelines.</p>
                                     <div class="hero-buttons">
-                                        <a href="about.php" class="btn btn-outline-dark">About Us</a>
-                                        <a href="case-studies.php" class="btn btn-white">View Portfolio</a>
+                                        <a href="contact.php" class="btn btn-dark btn-lg">Get Quote</a>
+                                        <a href="case-studies.php" class="btn btn-outline-dark btn-lg">Portfolio</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="hero-image">
-                                    <div class="placeholder-image hero">
-                                        <i class="fas fa-gem"></i>
+                            <div class="col-lg-6 hero-visual-col">
+                                <div class="hero-masonry" data-parallax-container>
+                                    <div class="masonry-item item-1" data-parallax="0.03">
+                                        <div class="masonry-placeholder gradient-5">
+                                            <i class="fas fa-gem"></i>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item item-2" data-parallax="0.05">
+                                        <div class="masonry-placeholder gradient-6">
+                                            <i class="fas fa-swatchbook"></i>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item item-3" data-parallax="0.04">
+                                        <div class="masonry-placeholder gradient-7">
+                                            <i class="fas fa-layer-group"></i>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item item-4" data-parallax="0.06">
+                                        <div class="masonry-placeholder gradient-8">
+                                            <i class="fas fa-signature"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -92,47 +144,39 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Carousel Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <!-- Carousel Controls (hidden on mobile) -->
+            <button class="carousel-control-prev hero-nav" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <button class="carousel-control-next hero-nav" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
     </section>
 
-    <!-- Client Logos -->
-    <section class="client-logos">
-        <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-auto">
-                    <div class="client-logo-item" data-aos="fade-up" data-aos-delay="100">
-                        <span style="font-weight: 600; color: #333;">Client 1</span>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="client-logo-item" data-aos="fade-up" data-aos-delay="200">
-                        <span style="font-weight: 600; color: #333;">Client 2</span>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="client-logo-item" data-aos="fade-up" data-aos-delay="300">
-                        <span style="font-weight: 600; color: #333;">Client 3</span>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="client-logo-item" data-aos="fade-up" data-aos-delay="400">
-                        <span style="font-weight: 600; color: #333;">Client 4</span>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="client-logo-item" data-aos="fade-up" data-aos-delay="500">
-                        <span style="font-weight: 600; color: #333;">Client 5</span>
-                    </div>
-                </div>
+    <!-- Client Trust Bar - Infinite Marquee -->
+    <section class="client-marquee">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span class="client-logo-item">Acme Corp</span>
+                <span class="client-logo-item">TechFlow</span>
+                <span class="client-logo-item">Brandify</span>
+                <span class="client-logo-item">DigitalPro</span>
+                <span class="client-logo-item">MediaMax</span>
+                <span class="client-logo-item">StartupXYZ</span>
+                <span class="client-logo-item">CloudNine</span>
+                <span class="client-logo-item">Innovate Inc</span>
+                <!-- Duplicate for seamless loop -->
+                <span class="client-logo-item">Acme Corp</span>
+                <span class="client-logo-item">TechFlow</span>
+                <span class="client-logo-item">Brandify</span>
+                <span class="client-logo-item">DigitalPro</span>
+                <span class="client-logo-item">MediaMax</span>
+                <span class="client-logo-item">StartupXYZ</span>
+                <span class="client-logo-item">CloudNine</span>
+                <span class="client-logo-item">Innovate Inc</span>
             </div>
         </div>
     </section>

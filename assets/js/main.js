@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mobile menu close on link click
     initMobileMenu();
+
+    // Mouse parallax effect for hero masonry
+    initParallaxEffect();
 });
 
 /**
@@ -397,3 +400,44 @@ function initParallax() {
 
 // Initialize parallax
 initParallax();
+
+/**
+ * Mouse Parallax Effect for Hero Masonry Grid
+ * Creates subtle movement opposite to mouse direction
+ */
+function initParallaxEffect() {
+    // Only run on desktop
+    if (window.innerWidth < 992) return;
+
+    const containers = document.querySelectorAll('[data-parallax-container]');
+    if (containers.length === 0) return;
+
+    document.addEventListener('mousemove', function (e) {
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        containers.forEach(container => {
+            const items = container.querySelectorAll('[data-parallax]');
+            items.forEach(item => {
+                const speed = parseFloat(item.dataset.parallax) || 0.05;
+                const x = (centerX - mouseX) * speed;
+                const y = (centerY - mouseY) * speed;
+
+                // Apply transform with existing animation
+                item.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    });
+
+    // Reset on mouse leave
+    document.addEventListener('mouseleave', function () {
+        containers.forEach(container => {
+            const items = container.querySelectorAll('[data-parallax]');
+            items.forEach(item => {
+                item.style.transform = 'translate(0, 0)';
+            });
+        });
+    });
+}

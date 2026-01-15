@@ -25,8 +25,8 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Custom CSS (with auto cache-busting) -->
+    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo filemtime('assets/css/style.css'); ?>">
 </head>
 <body>
     <!-- Navbar -->
@@ -76,7 +76,10 @@
                 </ul>
                 
                 <!-- CTA Button -->
-                <a href="contact.php" class="btn btn-primary cta-btn">Get Enquiry Now</a>
+                <a href="contact.php" class="btn btn-primary cta-btn">
+                    <span class="btn-text">Get Enquiry Now</span>
+                    <i class="fas fa-arrow-right btn-arrow"></i>
+                </a>
             </div>
         </div>
     </nav>
