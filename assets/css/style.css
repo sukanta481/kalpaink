@@ -1217,29 +1217,48 @@ textarea.form-control {
 }
 
 .footer-bottom {
+    background-color: var(--gray-800);
     border-top: 1px solid var(--gray-700);
-    padding: 25px 0;
+    padding: 20px 0;
     margin-top: 50px;
 }
 
-.copyright {
-    color: var(--gray-500);
-    font-size: 0.9rem;
-    margin-bottom: 0;
-}
-
-.footer-bottom-links {
+.footer-bottom-content {
     display: flex;
-    gap: 20px;
-}
-
-.footer-bottom-links a {
-    color: var(--gray-500);
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     font-size: 0.9rem;
+    color: var(--gray-400);
 }
 
-.footer-bottom-links a:hover {
+.footer-bottom-content strong {
     color: var(--white);
+}
+
+.footer-bottom-content .separator {
+    color: var(--gray-600);
+    margin: 0 8px;
+}
+
+.footer-bottom-content a {
+    color: var(--gray-400);
+    transition: var(--transition-fast);
+}
+
+.footer-bottom-content a:hover {
+    color: var(--white);
+}
+
+.footer-bottom-content .designer-link {
+    color: var(--primary-yellow);
+    font-weight: 600;
+}
+
+.footer-bottom-content .designer-link:hover {
+    color: var(--primary-yellow-light);
+    text-decoration: underline;
 }
 
 /* ================================
@@ -1606,21 +1625,60 @@ textarea.form-control {
         height: 160px;
     }
 
+    /* Footer Mobile - Left Aligned like Reference */
     .footer {
-        text-align: center;
+        text-align: left;
+        padding-top: 60px;
     }
 
-    .footer-bottom {
-        text-align: center;
+    .footer-brand {
+        text-align: left;
+        margin-bottom: 30px;
     }
 
-    .footer-bottom-links {
-        justify-content: center;
-        margin-top: 15px;
+    .footer-logo {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .footer-links-row {
+        margin-bottom: 30px;
+    }
+
+    .footer-title {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        font-size: 0.9rem;
+    }
+
+    .footer-contact {
+        text-align: left;
+    }
+
+    .footer-contact li {
+        justify-content: flex-start;
     }
 
     .social-links {
-        justify-content: center;
+        justify-content: flex-start;
+    }
+
+    .footer-bottom {
+        text-align: left;
+        margin-top: 40px;
+    }
+
+    .footer-bottom-content {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        font-size: 0.8rem;
     }
 
     h1 {

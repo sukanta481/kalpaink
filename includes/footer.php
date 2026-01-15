@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <!-- Company Info -->
-                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
                     <div class="footer-brand">
                         <a href="index.php" class="footer-logo">Kalpoink</a>
                         <p class="footer-description">
@@ -13,32 +13,37 @@
                     </div>
                 </div>
                 
-                <!-- Services Links -->
-                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
-                    <h5 class="footer-title">Services</h5>
-                    <ul class="footer-links">
-                        <li><a href="services.php#graphics">Graphics Design</a></li>
-                        <li><a href="services.php#branding">Branding</a></li>
-                        <li><a href="services.php#smm">SMM</a></li>
-                        <li><a href="services.php#seo">SEO</a></li>
-                        <li><a href="services.php#content">Content Marketing</a></li>
-                        <li><a href="services.php#web">Web Development</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Quick Links -->
-                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
-                    <h5 class="footer-title">Quick Links</h5>
-                    <ul class="footer-links">
-                        <li><a href="about.php">About Us</a></li>
-                        <li><a href="case-studies.php">Case Studies</a></li>
-                        <li><a href="blog.php">Blog</a></li>
-                        <li><a href="contact.php">Contact Us</a></li>
-                    </ul>
+                <!-- Services & Quick Links Container for Mobile 2-Column -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                    <div class="row footer-links-row">
+                        <!-- Services Links -->
+                        <div class="col-lg-6 col-6">
+                            <h5 class="footer-title">Services</h5>
+                            <ul class="footer-links">
+                                <li><a href="services.php#graphics">Graphics Design</a></li>
+                                <li><a href="services.php#branding">Branding</a></li>
+                                <li><a href="services.php#smm">SMM</a></li>
+                                <li><a href="services.php#seo">SEO</a></li>
+                                <li><a href="services.php#content">Content Marketing</a></li>
+                                <li><a href="services.php#web">Web Development</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Quick Links -->
+                        <div class="col-lg-6 col-6">
+                            <h5 class="footer-title">Quick Links</h5>
+                            <ul class="footer-links">
+                                <li><a href="about.php">About Us</a></li>
+                                <li><a href="case-studies.php">Case Studies</a></li>
+                                <li><a href="blog.php">Blog</a></li>
+                                <li><a href="contact.php">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Contact Info -->
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 col-12">
                     <h5 class="footer-title">Contact Us</h5>
                     <ul class="footer-contact">
                         <li>
@@ -66,16 +71,16 @@
             
             <!-- Footer Bottom -->
             <div class="footer-bottom">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <p class="copyright">&copy; <?php echo date('Y'); ?> All rights reserved to Kalpoink</p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <div class="footer-bottom-links">
-                            <a href="#">Privacy Policy</a>
-                            <a href="#">Cookies</a>
-                        </div>
-                    </div>
+                <div class="footer-bottom-content">
+                    <span>&copy; <?php echo date('Y'); ?> <strong>Kalpoink</strong></span>
+                    <span class="separator">|</span>
+                    <span>All Rights Reserved</span>
+                    <span class="separator">|</span>
+                    <a href="#">Terms & Conditions</a>
+                    <span class="separator">|</span>
+                    <a href="#">Privacy Policy</a>
+                    <span class="separator">|</span>
+                    <span>Design by <a href="https://biznexa.tech" target="_blank" class="designer-link">Biznexa</a></span>
                 </div>
             </div>
         </div>
