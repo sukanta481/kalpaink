@@ -29,14 +29,6 @@
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo filemtime('assets/css/style.css'); ?>">
 </head>
 <body>
-    <!-- Custom Cursor (Desktop Only) -->
-    <div class="custom-cursor">
-        <div class="cursor-dot"></div>
-        <div class="cursor-circle">
-            <span>View Work</span>
-        </div>
-    </div>
-    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -60,10 +52,12 @@
                         <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="about.php">About Us</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : ''; ?>" href="services.php">
-                            Services <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        <a class="nav-link dropdown-toggle <?php echo basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Services
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="services.php">All Services</a></li>
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="services.php#graphics">Graphics Design</a></li>
                             <li><a class="dropdown-item" href="services.php#branding">Brand Identity</a></li>
                             <li><a class="dropdown-item" href="services.php#smm">Social Media Marketing</a></li>

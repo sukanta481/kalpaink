@@ -34,9 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Mouse parallax effect for hero masonry
     initParallaxEffect();
 
-    // Custom cursor (Desktop only)
-    initCustomCursor();
-
     // GSAP Text reveal animation
     initTextReveal();
 });
@@ -445,51 +442,6 @@ function initParallaxEffect() {
                 item.style.transform = 'translate(0, 0)';
             });
         });
-    });
-}
-
-/**
- * Custom Cursor (Desktop Only)
- * Small dot that expands to "View Work" on hero image hover
- */
-function initCustomCursor() {
-    // Only run on desktop
-    if (window.innerWidth < 992) return;
-
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorCircle = document.querySelector('.cursor-circle');
-
-    if (!cursorDot || !cursorCircle) return;
-
-    // Move cursor with mouse
-    document.addEventListener('mousemove', function (e) {
-        cursorDot.style.left = e.clientX + 'px';
-        cursorDot.style.top = e.clientY + 'px';
-        cursorCircle.style.left = e.clientX + 'px';
-        cursorCircle.style.top = e.clientY + 'px';
-    });
-
-    // Expand cursor on hero masonry hover
-    const hoverTargets = document.querySelectorAll('.masonry-item, .hero-masonry');
-
-    hoverTargets.forEach(target => {
-        target.addEventListener('mouseenter', function () {
-            document.body.classList.add('cursor-hover');
-        });
-
-        target.addEventListener('mouseleave', function () {
-            document.body.classList.remove('cursor-hover');
-        });
-    });
-
-    // Hide cursor when leaving window
-    document.addEventListener('mouseleave', function () {
-        cursorDot.style.opacity = '0';
-        cursorCircle.style.opacity = '0';
-    });
-
-    document.addEventListener('mouseenter', function () {
-        cursorDot.style.opacity = '1';
     });
 }
 

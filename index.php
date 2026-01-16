@@ -34,22 +34,16 @@ include 'includes/header.php';
                                 <!-- Masonry Grid with Parallax -->
                                 <div class="hero-masonry" data-parallax-container>
                                     <div class="masonry-item item-1" data-parallax="0.03">
-                                        <img src="uploads/1st slider.jpeg" alt="Creative Design">
+                                        <img src="uploads/portfolio_website.png" alt="Website Design Portfolio">
                                     </div>
                                     <div class="masonry-item item-2" data-parallax="0.05">
-                                        <div class="masonry-placeholder">
-                                            <i class="fas fa-palette"></i>
-                                        </div>
+                                        <img src="uploads/portfolio_logo.png" alt="Logo Design Portfolio">
                                     </div>
                                     <div class="masonry-item item-3" data-parallax="0.04">
-                                        <div class="masonry-placeholder">
-                                            <i class="fas fa-pen-nib"></i>
-                                        </div>
+                                        <img src="uploads/portfolio_social.png" alt="Social Media Design">
                                     </div>
                                     <div class="masonry-item item-4" data-parallax="0.06">
-                                        <div class="masonry-placeholder">
-                                            <i class="fas fa-laptop-code"></i>
-                                        </div>
+                                        <img src="uploads/1st slider.jpeg" alt="Creative Design Work">
                                     </div>
                                 </div>
                             </div>
@@ -75,25 +69,17 @@ include 'includes/header.php';
                             <div class="col-lg-6 hero-visual-col">
                                 <div class="hero-masonry" data-parallax-container>
                                     <div class="masonry-item item-1" data-parallax="0.03">
-                                        <div class="masonry-placeholder gradient-1">
-                                            <i class="fas fa-chart-line"></i>
-                                        </div>
+                                        <img src="uploads/portfolio_social.png" alt="Social Media Marketing">
                                     </div>
                                     <div class="masonry-item item-2" data-parallax="0.05">
-                                        <div class="masonry-placeholder gradient-2">
-                                            <i class="fas fa-bullhorn"></i>
-                                        </div>
+                                        <img src="uploads/portfolio_website.png" alt="Website Design">
                                     </div>
                                     <div class="masonry-item item-3" data-parallax="0.04">
-                                        <div class="masonry-placeholder gradient-3">
-                                            <i class="fas fa-hashtag"></i>
-                                        </div>
+                                        <img src="uploads/portfolio_logo.png" alt="Brand Identity">
                                     </div>
-                                    <div class="masonry-item item-4" data-parallax="0.06">
-                                        <div class="masonry-placeholder gradient-4">
-                                            <i class="fas fa-ad"></i>
-                                        </div>
-                                    </div>
+                                    <!-- <div class="masonry-item item-4" data-parallax="0.06">
+                                        <img src="uploads/1st slider.jpeg" alt="Creative Design">
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -132,11 +118,11 @@ include 'includes/header.php';
                                             <i class="fas fa-layer-group"></i>
                                         </div>
                                     </div>
-                                    <div class="masonry-item item-4" data-parallax="0.06">
+                                    <!-- <div class="masonry-item item-4" data-parallax="0.06">
                                         <div class="masonry-placeholder gradient-8">
                                             <i class="fas fa-signature"></i>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

@@ -128,92 +128,6 @@ ul {
 }
 
 /* ================================
-   CUSTOM CURSOR (Desktop Only)
-================================ */
-@media (min-width: 992px) {
-    body {
-        cursor: none;
-    }
-
-    a,
-    button,
-    .btn,
-    [role="button"] {
-        cursor: none;
-    }
-}
-
-.custom-cursor {
-    display: none;
-    pointer-events: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99999;
-    mix-blend-mode: difference;
-}
-
-@media (min-width: 992px) {
-    .custom-cursor {
-        display: block;
-    }
-}
-
-.cursor-dot {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background-color: var(--white);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
-    pointer-events: none;
-}
-
-.cursor-circle {
-    position: fixed;
-    width: 0;
-    height: 0;
-    background-color: var(--white);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-}
-
-.cursor-circle span {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--black);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0;
-    transition: opacity 0.3s ease 0.1s;
-    white-space: nowrap;
-}
-
-/* Cursor hover state on hero images */
-body.cursor-hover .cursor-dot {
-    width: 0;
-    height: 0;
-    opacity: 0;
-}
-
-body.cursor-hover .cursor-circle {
-    width: 100px;
-    height: 100px;
-    opacity: 1;
-}
-
-body.cursor-hover .cursor-circle span {
-    opacity: 1;
-}
-
-/* ================================
    TEXT REVEAL ANIMATION
 ================================ */
 .hero-title {
@@ -484,6 +398,51 @@ body.cursor-hover .cursor-circle span {
 
     .nav-item.dropdown:hover .dropdown-arrow {
         transform: rotate(180deg);
+    }
+}
+
+/* Mobile Dropdown Menu */
+@media (max-width: 991.98px) {
+    .dropdown-menu {
+        position: static !important;
+        float: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 0;
+        display: none;
+    }
+
+    /* Show dropdown when toggled */
+    .dropdown-menu.show {
+        display: block !important;
+    }
+
+    .dropdown-item {
+        display: block !important;
+        color: var(--white);
+        padding: 12px 30px;
+        font-size: 0.95rem;
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: var(--white);
+    }
+
+    .dropdown-divider {
+        display: block !important;
+        border-color: rgba(255, 255, 255, 0.2);
+        margin: 5px 20px;
+    }
+
+    .dropdown-toggle::after {
+        float: right;
+        margin-top: 8px;
     }
 }
 
@@ -927,19 +886,28 @@ body {
 }
 
 .client-logo-item {
-    padding: 10px 30px;
+    padding: 0;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--black);
-    background-color: rgba(0, 0, 0, 0.08);
-    border-radius: var(--radius-xl);
+    background: none;
     white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
     transition: var(--transition-fast);
 }
 
 .client-logo-item:hover {
-    background-color: var(--black);
-    color: var(--white);
+    opacity: 1;
+}
+
+/* Separator dots between client names */
+.client-logo-item::after {
+    content: '•';
+    margin: 0 30px;
+    font-size: 0.8rem;
+    opacity: 0.5;
 }
 
 @keyframes marquee {
@@ -1938,17 +1906,28 @@ textarea.form-control {
         display: none;
     }
 
-    /* Hide dropdown menu on mobile - links navigate directly */
+    /* Mobile Dropdown - Show when toggled */
     .navbar .dropdown-menu {
-        display: none !important;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.3);
+        border: none;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .navbar .dropdown-menu.show {
+        display: block !important;
     }
 
     .navbar .dropdown-item {
-        display: none;
+        color: var(--white);
+        padding: 12px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .navbar .dropdown-item:hover {
-        background-color: transparent;
+        background-color: rgba(255, 255, 255, 0.1);
         color: var(--primary-yellow);
     }
 
