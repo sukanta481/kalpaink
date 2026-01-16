@@ -29,6 +29,14 @@
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo filemtime('assets/css/style.css'); ?>">
 </head>
 <body>
+    <!-- Custom Cursor (Desktop Only) -->
+    <div class="custom-cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-circle">
+            <span>View Work</span>
+        </div>
+    </div>
+    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">

@@ -128,6 +128,116 @@ ul {
 }
 
 /* ================================
+   CUSTOM CURSOR (Desktop Only)
+================================ */
+@media (min-width: 992px) {
+    body {
+        cursor: none;
+    }
+
+    a,
+    button,
+    .btn,
+    [role="button"] {
+        cursor: none;
+    }
+}
+
+.custom-cursor {
+    display: none;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    mix-blend-mode: difference;
+}
+
+@media (min-width: 992px) {
+    .custom-cursor {
+        display: block;
+    }
+}
+
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background-color: var(--white);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+    pointer-events: none;
+}
+
+.cursor-circle {
+    position: fixed;
+    width: 0;
+    height: 0;
+    background-color: var(--white);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.cursor-circle span {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--black);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+    white-space: nowrap;
+}
+
+/* Cursor hover state on hero images */
+body.cursor-hover .cursor-dot {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+body.cursor-hover .cursor-circle {
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+}
+
+body.cursor-hover .cursor-circle span {
+    opacity: 1;
+}
+
+/* ================================
+   TEXT REVEAL ANIMATION
+================================ */
+.hero-title {
+    overflow: hidden;
+}
+
+.hero-title .word {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.hero-title .word-inner {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+/* When animation completes */
+.hero-title.revealed .word-inner {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ================================
    UTILITY CLASSES
 ================================ */
 .section-padding {
@@ -1924,178 +2034,145 @@ textarea.form-control {
 
 @media (max-width: 767.98px) {
 
-    /* Mobile Hero - Image Behind Text Layout */
+    /* ========================================
+       MOBILE HERO - STACK & SIMPLIFY LAYOUT
+    ======================================== */
+
     .hero-section {
-        min-height: 100vh;
+        min-height: auto;
         padding-top: 80px;
-    }
-
-    .hero-section .carousel-item .row {
-        flex-direction: column;
-        position: relative;
-    }
-
-    .hero-section .carousel-item .col-lg-6:first-child {
-        order: 2;
-        position: relative;
-        z-index: 2;
-    }
-
-    .hero-section .carousel-item .col-lg-6:last-child {
-        order: 1;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-        pointer-events: none;
+        padding-bottom: 0;
     }
 
     .min-vh-hero {
-        min-height: calc(100vh - 80px);
-        position: relative;
+        min-height: auto;
+        padding: 40px 0 0;
     }
 
-    .hero-content {
-        text-align: center;
-        padding: 60px 20px 100px;
+    /* Stack columns with flex */
+    .hero-section .carousel-item .row {
+        flex-direction: column;
+    }
+
+    /* Text column comes first */
+    .hero-text-col {
+        order: 1;
         position: relative;
         z-index: 2;
     }
 
+    /* Visual column comes last (below text) */
+    .hero-visual-col {
+        order: 2;
+        position: relative;
+        margin-top: 30px;
+    }
+
+    /* Hero content - centered text */
+    .hero-content {
+        text-align: center;
+        padding: 30px 20px 20px;
+    }
+
+    /* Large headline */
     .hero-title {
-        font-size: 2.2rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 2.5rem;
+        line-height: 1.1;
+        margin-bottom: 15px;
     }
 
+    /* Subtitle - max 2 lines */
     .hero-subtitle {
+        font-size: 0.95rem;
         max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        gap: 12px;
-        justify-content: center;
-    }
-
-    .hero-buttons .btn {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
-        padding: 16px 28px;
-    }
-
-    /* Mobile Hero Image as Background */
-    .hero-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        margin: 0 auto 20px;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
         overflow: hidden;
     }
 
-    .placeholder-image.hero {
+    /* ========================================
+       MOBILE BUTTONS - SIDE BY SIDE, 50% EACH
+    ======================================== */
+    .hero-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        background: transparent !important;
+    }
+
+    .hero-buttons .btn {
+        flex: 1;
+        max-width: 48%;
+        padding: 14px 20px;
+        font-size: 0.95rem;
+        border-radius: 30px;
+        background-color: var(--black) !important;
+        color: var(--white) !important;
+        border: none !important;
+    }
+
+    .hero-buttons .btn:last-child {
+        display: inline-flex !important;
+        background-color: transparent !important;
+        color: var(--black) !important;
+        border: 2px solid var(--black) !important;
+    }
+
+    /* ========================================
+       MOBILE MASONRY - SHOW ONLY 1 IMAGE
+    ======================================== */
+    .hero-masonry {
+        display: block;
+        padding: 0;
+        margin: 0 -15px;
+    }
+
+    /* Hide items 2, 3, 4 - keep only the main image */
+    .masonry-item.item-2,
+    .masonry-item.item-3,
+    .masonry-item.item-4 {
+        display: none !important;
+    }
+
+    /* Show only item 1 - full width at bottom */
+    .masonry-item.item-1 {
+        display: block;
+        width: 100%;
+        height: 250px;
+        border-radius: 20px 20px 0 0;
+        animation: none;
+        box-shadow: none;
+    }
+
+    .masonry-item.item-1 img {
         width: 100%;
         height: 100%;
-        border-radius: 0;
-        opacity: 0.4;
+        object-fit: cover;
+        border-radius: 20px 20px 0 0;
     }
 
-    /* Hide second button on mobile like reference */
-    .hero-buttons .btn:last-child {
-        display: none;
+    .masonry-placeholder {
+        font-size: 3rem;
+        border-radius: 20px 20px 0 0;
     }
 
+    /* Hide hero nav arrows */
+    .hero-nav {
+        display: none !important;
+    }
+
+    /* Carousel indicators */
     .hero-section .carousel-indicators {
-        bottom: 30px;
+        bottom: 20px;
         z-index: 10;
     }
 
     .hero-section .carousel-indicators button {
         background-color: var(--black);
-    }
-
-    /* Hide hero carousel arrows on mobile - users can swipe */
-    .hero-nav {
-        display: none !important;
-    }
-
-    /* Hero Title - Make it HUGE on mobile */
-    .hero-title {
-        font-size: 2.8rem;
-        line-height: 1.1;
-    }
-
-    /* Hero Subtitle - Keep it short */
-    .hero-subtitle {
-        font-size: 1rem;
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    /* Hero Column Order - Text first, then Image */
-    .hero-text-col {
-        order: 1;
-    }
-
-    .hero-visual-col {
-        order: 2;
-        margin-top: 30px;
-    }
-
-    /* Hero Buttons - Side by Side on Mobile */
-    .hero-buttons {
-        flex-direction: row;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .hero-buttons .btn {
-        flex: 1;
-        max-width: 160px;
-        padding: 12px 16px;
-        font-size: 0.9rem;
-    }
-
-    /* Show both buttons on mobile */
-    .hero-buttons .btn:last-child {
-        display: inline-block;
-    }
-
-    /* Mobile Masonry Grid - Smaller */
-    .hero-masonry {
-        grid-template-rows: repeat(2, 120px);
-        gap: 12px;
-        padding: 10px;
-    }
-
-    .masonry-item.item-1 {
-        grid-row: span 2;
-    }
-
-    .masonry-placeholder {
-        font-size: 1.8rem;
-    }
-
-    /* Stop floating animations on mobile for performance */
-    .masonry-item.item-1,
-    .masonry-item.item-2,
-    .masonry-item.item-3,
-    .masonry-item.item-4 {
-        animation: none;
     }
 
     .welcome-card {
