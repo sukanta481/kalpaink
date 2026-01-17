@@ -42,9 +42,9 @@ include 'includes/header.php';
                                     <div class="masonry-item item-3" data-parallax="0.04">
                                         <img src="uploads/portfolio_social.png" alt="Social Media Design">
                                     </div>
-                                    <div class="masonry-item item-4" data-parallax="0.06">
+                                    <!-- <div class="masonry-item item-4" data-parallax="0.06">
                                         <img src="uploads/1st slider.jpeg" alt="Creative Design Work">
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -139,6 +139,41 @@ include 'includes/header.php';
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
+        </div>
+
+        <!-- Mobile Swipe Deck (visible only on mobile/tablet) -->
+        <div class="mobile-hero-deck">
+            <div class="swipe-deck-container" id="swipeDeck">
+                <div class="swipe-card" data-index="0" data-service="logo">
+                    <div class="swipe-card-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h4 class="swipe-card-title">Logo Design</h4>
+                    <p class="swipe-card-desc">Unique brand identities that make lasting impressions</p>
+                </div>
+                <div class="swipe-card" data-index="1" data-service="web">
+                    <div class="swipe-card-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h4 class="swipe-card-title">Web Development</h4>
+                    <p class="swipe-card-desc">Modern, responsive websites that convert visitors</p>
+                </div>
+                <div class="swipe-card" data-index="2" data-service="marketing">
+                    <div class="swipe-card-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h4 class="swipe-card-title">Digital Marketing</h4>
+                    <p class="swipe-card-desc">Strategic campaigns that grow your online presence</p>
+                </div>
+            </div>
+            <div class="swipe-indicators">
+                <span class="swipe-indicator active" data-index="0"></span>
+                <span class="swipe-indicator" data-index="1"></span>
+                <span class="swipe-indicator" data-index="2"></span>
+            </div>
+            <div class="swipe-hint">
+                <i class="fas fa-hand-point-left"></i> Swipe to explore <i class="fas fa-hand-point-right"></i>
+            </div>
         </div>
     </section>
 

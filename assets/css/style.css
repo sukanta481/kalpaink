@@ -8,10 +8,10 @@
    CSS VARIABLES
 ================================ */
 :root {
-    /* Primary Colors - Indian Yellow Theme */
-    --primary-yellow: #FFB800;
-    --primary-yellow-dark: #E5A600;
-    --primary-yellow-light: #FFD54F;
+    /* Primary Colors - Yellow Theme */
+    --primary-yellow: #fdd728;
+    --primary-yellow-dark: #e5c224;
+    --primary-yellow-light: #fee563;
 
     /* Neutral Colors */
     --black: #1A1A1A;
@@ -2331,4 +2331,241 @@ textarea.form-control {
     width: 100%;
     height: 400px;
     border-radius: var(--radius-lg);
+}
+
+/* ================================
+   MOBILE HERO - INSTAGRAM STORY STYLE
+   Only affects devices < 992px
+================================ */
+
+/* Mobile Swipe Deck - Hidden on desktop */
+.mobile-hero-deck {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+
+    /* Full-screen immersive hero */
+    .hero-section {
+        min-height: 100vh;
+        height: 100vh;
+        padding-top: 80px;
+        position: relative;
+        background-image: url('../images/hero-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    /* Yellow overlay (85% opacity) */
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(253, 215, 40, 0.85);
+        z-index: 0;
+    }
+
+    .hero-section .carousel,
+    .hero-section .carousel-inner,
+    .hero-section .carousel-item,
+    .hero-section .carousel-item>.container {
+        height: 100%;
+    }
+
+    .hero-section .min-vh-hero {
+        min-height: 100%;
+        height: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    /* Hide desktop masonry grid on mobile */
+    .hero-section .hero-visual-col {
+        display: none;
+    }
+
+    /* Hero text takes full width */
+    .hero-section .hero-text-col {
+        flex: 0 0 100%;
+        max-width: 100%;
+        order: 1;
+        z-index: 1;
+        padding-top: 20px;
+    }
+
+    .hero-section .hero-content {
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .hero-section .hero-subtitle {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-section .hero-buttons {
+        justify-content: center;
+    }
+
+    /* Hide carousel controls on mobile */
+    .hero-section .carousel-control-prev,
+    .hero-section .carousel-control-next {
+        display: none;
+    }
+
+    .hero-section .carousel-indicators {
+        display: none;
+    }
+
+    /* Show mobile swipe deck */
+    .mobile-hero-deck {
+        display: block;
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        padding: 0 20px;
+    }
+
+    /* Swipe Deck Container */
+    .swipe-deck-container {
+        position: relative;
+        height: 200px;
+        perspective: 1000px;
+    }
+
+    /* Individual Swipe Cards */
+    .swipe-card {
+        position: absolute;
+        width: 100%;
+        max-width: 320px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 25px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        cursor: grab;
+        user-select: none;
+        touch-action: pan-y;
+    }
+
+    .swipe-card:active {
+        cursor: grabbing;
+    }
+
+    /* Card Stack Effect */
+    .swipe-card[data-index="0"] {
+        z-index: 3;
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+
+    .swipe-card[data-index="1"] {
+        z-index: 2;
+        opacity: 0.7;
+        transform: translateX(-50%) scale(0.95) translateY(10px);
+    }
+
+    .swipe-card[data-index="2"] {
+        z-index: 1;
+        opacity: 0.4;
+        transform: translateX(-50%) scale(0.9) translateY(20px);
+    }
+
+    /* Card swiping animation */
+    .swipe-card.swiping-left {
+        transform: translateX(-150%) rotate(-15deg);
+        opacity: 0;
+    }
+
+    .swipe-card.swiping-right {
+        transform: translateX(50%) rotate(15deg);
+        opacity: 0;
+    }
+
+    .swipe-card-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--primary-yellow);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-size: 1.5rem;
+        color: var(--black);
+    }
+
+    .swipe-card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--black);
+        margin-bottom: 8px;
+    }
+
+    .swipe-card-desc {
+        font-size: 0.9rem;
+        color: var(--gray-600);
+        margin-bottom: 0;
+        line-height: 1.4;
+    }
+
+    /* Swipe Indicators */
+    .swipe-indicators {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    .swipe-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.3);
+        transition: var(--transition-fast);
+    }
+
+    .swipe-indicator.active {
+        background: var(--black);
+        width: 24px;
+        border-radius: 4px;
+    }
+
+    /* Swipe Hint */
+    .swipe-hint {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 0.8rem;
+        color: var(--gray-700);
+        opacity: 0.7;
+    }
+
+    .swipe-hint i {
+        margin: 0 5px;
+        animation: swipeHint 1.5s ease-in-out infinite;
+    }
+
+    @keyframes swipeHint {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(5px);
+        }
+    }
 }

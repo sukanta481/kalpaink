@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // GSAP Text reveal animation
     initTextReveal();
+
+    // Mobile Hero Swipe Deck
+    initMobileHeroSwipe();
 });
 
 /**
@@ -514,4 +517,173 @@ function initTextReveal() {
             }
         });
     }
+}
+
+/**
+ * Mobile Hero Swipe Deck
+ * Touch-enabled card swiping like Tinder/Instagram Stories
+ */
+function initMobileHeroSwipe() {
+    // Only run on mobile/tablet
+    if (window.innerWidth >= 992) return;
+
+    const deck = document.getElementById('swipeDeck');
+    if (!deck) return;
+
+    const cards = deck.querySelectorAll('.swipe-card');
+    const indicators = document.querySelectorAll('.swipe-indicator');
+
+    if (cards.length === 0) return;
+
+    let currentIndex = 0;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let isDragging = false;
+    let autoRotateInterval;
+
+    // Update card positions based on current index
+    function updateCardPositions() {
+        cards.forEach((card, index) => {
+            // Calculate the relative position (0, 1, 2) from current index
+            const relativeIndex = (index - currentIndex + cards.length) % cards.length;
+            card.setAttribute('data-index', relativeIndex);
+        });
+
+        // Update indicators
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    // Move to next card
+    function nextCard() {
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCardPositions();
+    }
+
+    // Move to previous card
+    function prevCard() {
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updateCardPositions();
+    }
+
+    // Handle touch start
+    function handleTouchStart(e) {
+        if (window.innerWidth >= 992) return;
+
+        const card = e.target.closest('.swipe-card');
+        if (!card || card.getAttribute('data-index') !== '0') return;
+
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        currentX = startX;
+
+        // Pause auto-rotate while dragging
+        clearInterval(autoRotateInterval);
+
+        card.style.transition = 'none';
+    }
+
+    // Handle touch move
+    function handleTouchMove(e) {
+        if (!isDragging || window.innerWidth >= 992) return;
+
+        const card = deck.querySelector('.swipe-card[data-index="0"]');
+        if (!card) return;
+
+        currentX = e.touches[0].clientX;
+        const diffX = currentX - startX;
+        const diffY = e.touches[0].clientY - startY;
+
+        // Only handle horizontal swipes
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            e.preventDefault();
+
+            // Apply transform during drag
+            const rotation = diffX * 0.1;
+            const opacity = 1 - Math.abs(diffX) / 300;
+
+            card.style.transform = `translateX(calc(-50% + ${diffX}px)) rotate(${rotation}deg)`;
+            card.style.opacity = Math.max(0.5, opacity);
+        }
+    }
+
+    // Handle touch end
+    function handleTouchEnd(e) {
+        if (!isDragging || window.innerWidth >= 992) return;
+
+        isDragging = false;
+
+        const card = deck.querySelector('.swipe-card[data-index="0"]');
+        if (!card) return;
+
+        const diffX = currentX - startX;
+        const threshold = 80; // Minimum swipe distance
+
+        card.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+        if (Math.abs(diffX) > threshold) {
+            if (diffX > 0) {
+                // Swiped right - go to previous
+                card.classList.add('swiping-right');
+                setTimeout(() => {
+                    card.classList.remove('swiping-right');
+                    prevCard();
+                }, 300);
+            } else {
+                // Swiped left - go to next
+                card.classList.add('swiping-left');
+                setTimeout(() => {
+                    card.classList.remove('swiping-left');
+                    nextCard();
+                }, 300);
+            }
+        } else {
+            // Reset position if not swiped enough
+            card.style.transform = 'translateX(-50%) scale(1)';
+            card.style.opacity = '1';
+        }
+
+        // Restart auto-rotate
+        startAutoRotate();
+    }
+
+    // Auto-rotate cards
+    function startAutoRotate() {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = setInterval(() => {
+            if (window.innerWidth < 992) {
+                nextCard();
+            }
+        }, 4000);
+    }
+
+    // Click on indicators
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentIndex = index;
+            updateCardPositions();
+            startAutoRotate();
+        });
+    });
+
+    // Add event listeners
+    deck.addEventListener('touchstart', handleTouchStart, { passive: true });
+    deck.addEventListener('touchmove', handleTouchMove, { passive: false });
+    deck.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    // Initial setup
+    updateCardPositions();
+    startAutoRotate();
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 992) {
+            clearInterval(autoRotateInterval);
+        } else {
+            startAutoRotate();
+        }
+    });
 }
