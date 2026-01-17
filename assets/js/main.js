@@ -547,6 +547,12 @@ function initMobileHeroSwipe() {
         cards.forEach((card, index) => {
             // Calculate the relative position (0, 1, 2) from current index
             const relativeIndex = (index - currentIndex + cards.length) % cards.length;
+
+            // Reset any inline styles before updating position
+            card.style.transform = '';
+            card.style.opacity = '';
+            card.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+
             card.setAttribute('data-index', relativeIndex);
         });
 
@@ -583,6 +589,7 @@ function initMobileHeroSwipe() {
         // Pause auto-rotate while dragging
         clearInterval(autoRotateInterval);
 
+        // Disable transition during drag for responsiveness
         card.style.transition = 'none';
     }
 
@@ -601,12 +608,14 @@ function initMobileHeroSwipe() {
         if (Math.abs(diffX) > Math.abs(diffY)) {
             e.preventDefault();
 
-            // Apply transform during drag
-            const rotation = diffX * 0.1;
-            const opacity = 1 - Math.abs(diffX) / 300;
+            // Apply transform during drag with requestAnimationFrame for smoothness
+            requestAnimationFrame(() => {
+                const rotation = diffX * 0.08;
+                const opacity = 1 - Math.abs(diffX) / 400;
 
-            card.style.transform = `translateX(calc(-50% + ${diffX}px)) rotate(${rotation}deg)`;
-            card.style.opacity = Math.max(0.5, opacity);
+                card.style.transform = `translateX(calc(-50% + ${diffX}px)) rotate(${rotation}deg) scale(1)`;
+                card.style.opacity = Math.max(0.6, opacity);
+            });
         }
     }
 
@@ -620,29 +629,30 @@ function initMobileHeroSwipe() {
         if (!card) return;
 
         const diffX = currentX - startX;
-        const threshold = 80; // Minimum swipe distance
+        const threshold = 60; // Minimum swipe distance
 
-        card.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        // Re-enable transition
+        card.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
 
         if (Math.abs(diffX) > threshold) {
             if (diffX > 0) {
                 // Swiped right - go to previous
-                card.classList.add('swiping-right');
+                card.style.transform = 'translateX(100%) rotate(10deg)';
+                card.style.opacity = '0';
                 setTimeout(() => {
-                    card.classList.remove('swiping-right');
                     prevCard();
-                }, 300);
+                }, 250);
             } else {
                 // Swiped left - go to next
-                card.classList.add('swiping-left');
+                card.style.transform = 'translateX(-150%) rotate(-10deg)';
+                card.style.opacity = '0';
                 setTimeout(() => {
-                    card.classList.remove('swiping-left');
                     nextCard();
-                }, 300);
+                }, 250);
             }
         } else {
             // Reset position if not swiped enough
-            card.style.transform = 'translateX(-50%) scale(1)';
+            card.style.transform = 'translateX(-50%) scale(1) translateY(0)';
             card.style.opacity = '1';
         }
 
