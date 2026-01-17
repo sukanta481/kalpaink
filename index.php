@@ -286,38 +286,50 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <!-- Case Studies Section -->
-    <section class="case-studies-section section-padding">
+    <!-- Case Studies Section - Interactive Gallery -->
+    <section class="case-studies-section section-padding" id="portfolio">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="section-title" data-aos="fade-up">Case Studies</h2>
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Some of our recent creative work</p>
             </div>
             
-            <div class="row g-4">
-                <?php foreach (array_slice($case_studies, 0, 6) as $index => $case): ?>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
-                    <div class="case-study-card">
-                        <div class="case-study-image">
-                            <div class="placeholder-image portfolio">
-                                <i class="fas fa-image"></i>
+            <!-- Pinterest-Style Masonry Layout -->
+            <?php 
+            $displayed_cases = array_slice($case_studies, 0, 8);
+            
+            // Masonry pattern for 8 items - fills grid perfectly
+            $masonry_sizes = ['tall', 'normal', 'wide', 'normal', 'tall', 'normal', 'wide', 'normal'];
+            ?>
+            <div class="case-gallery" data-aos="fade-up">
+                <div class="case-masonry-grid">
+                    <?php foreach ($displayed_cases as $index => $case): ?>
+                    <?php $size_class = $masonry_sizes[$index]; ?>
+                    <div class="case-masonry-item case-<?php echo $size_class; ?>">
+                        <div class="case-card">
+                            <div class="case-card-image">
+                                <img src="<?php echo $case['image']; ?>" alt="<?php echo $case['title']; ?>" loading="lazy">
+                                <div class="case-card-overlay">
+                                    <a href="case-studies.php" class="btn btn-white">View Case Study</a>
+                                </div>
                             </div>
-                            <div class="case-study-overlay">
-                                <a href="case-studies.php" class="btn btn-white btn-sm">View Project</a>
+                            <div class="case-card-content">
+                                <h5 class="case-card-title"><?php echo $case['title']; ?></h5>
+                                <div class="case-card-tags">
+                                    <?php foreach ($case['tags'] as $tag): ?>
+                                    <span class="case-tag"><?php echo $tag; ?></span>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="case-study-content">
-                            <h5 class="case-study-title"><?php echo $case['title']; ?></h5>
-                            <div class="case-study-tags">
-                                <?php foreach ($case['tags'] as $tag): ?>
-                                <span class="case-study-tag"><?php echo $tag; ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                            <a href="case-studies.php" class="view-details-link">View Details <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
+            </div>
+
+            <!-- Mobile Scroll Indicator -->
+            <div class="case-scroll-hint d-lg-none">
+                <i class="fas fa-hand-point-left"></i> Swipe to explore <i class="fas fa-hand-point-right"></i>
             </div>
             
             <div class="text-center mt-5" data-aos="fade-up">
@@ -326,37 +338,70 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <!-- Team Section -->
-    <section class="team-section section-padding">
+    <!-- The Creators Section -->
+    <section class="creators-section section-padding">
         <div class="container">
-            <div class="row align-items-center mb-5">
-                <div class="col-md-8">
-                    <h2 class="section-title" data-aos="fade-right">Our Team</h2>
-                </div>
-                <div class="col-md-4 text-md-end">
-                    <div class="team-nav" data-aos="fade-left">
-                        <button class="team-nav-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button class="team-nav-btn"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
+            <!-- Section Header -->
+            <div class="text-center mb-5">
+                <span class="section-badge" data-aos="fade-up">The Minds Behind The Magic</span>
+                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Meet The Creators</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Two dreamers who turned their passion into your brand's success story</p>
             </div>
             
-            <div class="row justify-content-center g-4">
-                <?php foreach ($team_members as $index => $member): ?>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
-                    <div class="team-card">
-                        <div class="team-image-wrapper">
-                            <div class="placeholder-image team">
-                                <i class="fas fa-user"></i>
+            <!-- Desktop: Cutout Style -->
+            <div class="creators-showcase d-none d-lg-block" data-aos="fade-up">
+                <div class="creators-grid">
+                    <?php foreach ($team_members as $index => $member): ?>
+                    <div class="creator-cutout" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 150; ?>">
+                        <div class="creator-photo-wrapper">
+                            <!-- Flip Card -->
+                            <div class="creator-flip-card">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo $member['name']; ?> - Professional">
+                                        <div class="photo-label">Professional Mode 🎯</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <img src="<?php echo $member['image_fun']; ?>" alt="<?php echo $member['name']; ?> - Creative">
+                                        <div class="photo-label">Creative Mode 🎨</div>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="<?php echo $member['linkedin']; ?>" class="team-linkedin" target="_blank">
-                                <i class="fab fa-linkedin-in"></i>
+                            <!-- Decorative Elements -->
+                            <div class="creator-decoration">
+                                <span class="deco-circle"></span>
+                                <span class="deco-dots"></span>
+                            </div>
+                        </div>
+                        <div class="creator-info">
+                            <h3 class="creator-name"><?php echo $member['name']; ?></h3>
+                            <p class="creator-role"><?php echo $member['position']; ?></p>
+                            <p class="creator-tagline">"<?php echo $member['tagline']; ?>"</p>
+                            <a href="<?php echo $member['linkedin']; ?>" class="creator-linkedin" target="_blank">
+                                <i class="fab fa-linkedin-in"></i> Connect
                             </a>
                         </div>
-                        <h5 class="team-name"><?php echo $member['name']; ?></h5>
-                        <p class="team-position"><?php echo $member['position']; ?></p>
-                        <p class="team-experience"><?php echo $member['experience']; ?></p>
                     </div>
+                    <?php endforeach; ?>
+                </div>
+                <p class="hover-hint text-center mt-4"><i class="fas fa-hand-pointer"></i> Hover to see our creative side!</p>
+            </div>
+            
+            <!-- Mobile: Compact Profile Strips -->
+            <div class="creators-mobile d-lg-none">
+                <?php foreach ($team_members as $index => $member): ?>
+                <div class="creator-strip" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
+                    <div class="strip-avatar">
+                        <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo $member['name']; ?>">
+                    </div>
+                    <div class="strip-info">
+                        <h4 class="strip-name"><?php echo $member['name']; ?></h4>
+                        <p class="strip-role"><?php echo $member['position']; ?></p>
+                        <p class="strip-tagline">"<?php echo $member['tagline']; ?>"</p>
+                    </div>
+                    <a href="<?php echo $member['linkedin']; ?>" class="strip-linkedin" target="_blank">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
                 </div>
                 <?php endforeach; ?>
             </div>

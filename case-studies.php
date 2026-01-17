@@ -2,68 +2,68 @@
 $page_title = 'Case Studies';
 include 'includes/header.php'; 
 
-// Extended portfolio items
+// Extended portfolio items with high-quality images
 $portfolio_items = [
     [
         'title' => 'FoodKa Branding',
         'category' => 'Branding,Logo',
-        'image' => 'assets/images/portfolio/foodka.jpg',
+        'image' => 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop',
         'tags' => ['Branding', 'Logo'],
         'description' => 'Complete brand identity for a food delivery startup'
     ],
     [
         'title' => 'Shohoj Kotha Podcast',
         'category' => 'Branding,YouTube',
-        'image' => 'assets/images/portfolio/podcast.jpg',
+        'image' => 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&h=400&fit=crop',
         'tags' => ['Branding', 'YouTube'],
         'description' => 'Podcast branding and YouTube channel design'
     ],
     [
         'title' => 'ServiceZet UI/UX',
         'category' => 'UI/UX,Web',
-        'image' => 'assets/images/portfolio/servicezet.jpg',
+        'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
         'tags' => ['UI/UX', 'Web'],
         'description' => 'Modern UI/UX design for a service marketplace'
     ],
     [
         'title' => 'KLUBB10 Brand Identity',
         'category' => 'Branding,Logo',
-        'image' => 'assets/images/portfolio/klubb10.jpg',
+        'image' => 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&h=400&fit=crop',
         'tags' => ['Branding', 'Logo'],
         'description' => 'Sports club branding and merchandise design'
     ],
     [
         'title' => 'Travel Live Campaign',
         'category' => 'SMM,Branding',
-        'image' => 'assets/images/portfolio/travellive.jpg',
+        'image' => 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=400&fit=crop',
         'tags' => ['SMM', 'Branding'],
         'description' => 'Travel agency social media campaign'
     ],
     [
         'title' => 'E-commerce Website',
         'category' => 'Web,UI/UX',
-        'image' => 'assets/images/portfolio/ecommerce.jpg',
+        'image' => 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
         'tags' => ['Web', 'UI/UX'],
         'description' => 'Full e-commerce website design and development'
     ],
     [
         'title' => 'Restaurant Rebranding',
         'category' => 'Branding,Print',
-        'image' => 'assets/images/portfolio/restaurant.jpg',
+        'image' => 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop',
         'tags' => ['Branding', 'Print'],
         'description' => 'Complete restaurant rebranding with menu design'
     ],
     [
         'title' => 'Tech Startup Logo',
         'category' => 'Logo,Branding',
-        'image' => 'assets/images/portfolio/techlogo.jpg',
+        'image' => 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop',
         'tags' => ['Logo', 'Branding'],
         'description' => 'Modern logo design for a tech startup'
     ],
     [
         'title' => 'Film Publicity Campaign',
         'category' => 'Film,Print',
-        'image' => 'assets/images/portfolio/film.jpg',
+        'image' => 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&h=400&fit=crop',
         'tags' => ['Film', 'Print'],
         'description' => 'Film poster and publicity material design'
     ]
@@ -111,9 +111,7 @@ $categories = ['All', 'Branding', 'UI/UX', 'Web', 'YouTube', 'Print', 'Film'];
                 <div class="col-lg-4 col-md-6 portfolio-item" data-category="<?php echo $item['category']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 3 + 1) * 100; ?>">
                     <div class="case-study-card">
                         <div class="case-study-image">
-                            <div class="placeholder-image portfolio">
-                                <i class="fas fa-image"></i>
-                            </div>
+                            <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['title']; ?>" loading="lazy">
                             <div class="case-study-overlay">
                                 <a href="#" class="btn btn-white btn-sm">View Project</a>
                             </div>

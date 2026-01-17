@@ -20,20 +20,22 @@ define('SOCIAL_INSTAGRAM', '#');
 define('SOCIAL_LINKEDIN', '#');
 define('SOCIAL_TWITTER', '#');
 
-// Team Information
+// Team Information - The Creators
 $team_members = [
     [
         'name' => 'Suman Kundu',
-        'position' => 'Co-Founder & Partner',
-        'image' => 'assets/images/team/suman.jpg',
-        'experience' => '10+ Years Experience',
+        'position' => 'Co-Founder & Creative Director',
+        'image_pro' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
+        'image_fun' => 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop',
+        'tagline' => 'Turning caffeine into creativity since 2016',
         'linkedin' => '#'
     ],
     [
         'name' => 'Souvik Das',
-        'position' => 'Co-Founder & Partner',
-        'image' => 'assets/images/team/souvik.jpg',
-        'experience' => '10+ Years Experience',
+        'position' => 'Co-Founder & Strategy Lead',
+        'image_pro' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop',
+        'image_fun' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop',
+        'tagline' => 'Making brands unforgettable, one pixel at a time',
         'linkedin' => '#'
     ]
 ];
@@ -77,38 +79,50 @@ $case_studies = [
     [
         'title' => 'Modern Restaurant Branding',
         'category' => 'Branding',
-        'image' => 'assets/images/portfolio/project1.jpg',
+        'image' => 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=800&fit=crop',
         'tags' => ['Branding', 'Logo']
     ],
     [
         'title' => 'E-Commerce Website Design',
         'category' => 'Web Design',
-        'image' => 'assets/images/portfolio/project2.jpg',
+        'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
         'tags' => ['UI/UX', 'Web']
     ],
     [
         'title' => 'Social Media Campaign',
         'category' => 'Marketing',
-        'image' => 'assets/images/portfolio/project3.jpg',
+        'image' => 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=400&fit=crop',
         'tags' => ['SMM', 'Content']
     ],
     [
         'title' => 'Corporate Identity Design',
         'category' => 'Branding',
-        'image' => 'assets/images/portfolio/project4.jpg',
+        'image' => 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=400&fit=crop',
         'tags' => ['Branding', 'Print']
     ],
     [
         'title' => 'Mobile App UI Design',
         'category' => 'UI/UX',
-        'image' => 'assets/images/portfolio/project5.jpg',
+        'image' => 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=800&fit=crop',
         'tags' => ['UI/UX', 'Mobile']
     ],
     [
         'title' => 'YouTube Channel Branding',
         'category' => 'YouTube',
-        'image' => 'assets/images/portfolio/project6.jpg',
+        'image' => 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=600&h=400&fit=crop',
         'tags' => ['YouTube', 'Branding']
+    ],
+    [
+        'title' => 'Startup Brand Strategy',
+        'category' => 'Branding',
+        'image' => 'https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=800&h=400&fit=crop',
+        'tags' => ['Strategy', 'Branding']
+    ],
+    [
+        'title' => 'Product Photography',
+        'category' => 'Photography',
+        'image' => 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=400&fit=crop',
+        'tags' => ['Photography', 'Product']
     ]
 ];
 
