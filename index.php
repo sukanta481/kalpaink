@@ -202,50 +202,72 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <!-- Welcome Section -->
-    <section class="welcome-section section-padding">
+    <!-- Welcome Section - Fusion Concept -->
+    <section class="welcome-section section-padding" id="about">
         <div class="container">
             <div class="welcome-card" data-aos="fade-up">
                 <div class="row align-items-center">
                     <div class="col-lg-5 mb-4 mb-lg-0">
-                        <div class="welcome-image">
-                            <div class="placeholder-image" style="height: 350px; border-radius: 15px;">
-                                <i class="fas fa-chess-king"></i>
-                            </div>
+                        <div class="welcome-image fusion-image">
+                            <img src="assets/images/about-fusion.png" alt="Raw Concept to Brand Creation - We transform ideas into masterpieces">
                         </div>
                     </div>
                     <div class="col-lg-7">
                         <span class="welcome-badge">Who We Are</span>
-                        <h2>Welcome to <span class="text-yellow">Kalpoink</span></h2>
-                        <p>We are a creative digital marketing agency based in Kolkata, specializing in graphics design and comprehensive digital marketing solutions. Our team combines artistic vision with strategic thinking to deliver exceptional results for our clients.</p>
-                        <p>With expertise in everything from logo design to complete brand identity packages, social media marketing, and web development, we're your one-stop solution for all things digital.</p>
-                        <a href="about.php" class="btn btn-primary">Learn More About Us</a>
+                        <h2 class="fusion-headline">We <span class="text-yellow">Sculpt</span> Brands.</h2>
+                        <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
+                        <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
+                        <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we're the creative studio that brings visions to life.</p>
+                        <div class="welcome-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">150+</span>
+                                <span class="stat-label">Brands Sculpted</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">5+</span>
+                                <span class="stat-label">Years Crafting</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">Happy Clients</span>
+                            </div>
+                        </div>
+                        <a href="about.php" class="btn btn-primary">Discover Our Story</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services-section section-padding bg-light-gray" id="services">
+    <!-- Services Section - Horizontal Gallery -->
+    <section class="services-section section-padding" id="services">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="section-title" data-aos="fade-up">Our Services</h2>
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Comprehensive digital solutions to elevate your brand</p>
             </div>
             
-            <div class="row g-4">
-                <?php foreach ($services as $index => $service): ?>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas <?php echo $service['icon']; ?>"></i>
+            <!-- Desktop Grid / Mobile Horizontal Scroll -->
+            <div class="services-gallery" data-aos="fade-up">
+                <div class="services-track">
+                    <?php foreach ($services as $index => $service): ?>
+                    <div class="service-card-wrapper">
+                        <div class="service-card">
+                            <div class="service-icon-3d">
+                                <i class="fas <?php echo $service['icon']; ?>"></i>
+                            </div>
+                            <h4 class="service-title"><?php echo $service['title']; ?></h4>
+                            <p class="service-description"><?php echo $service['description']; ?></p>
+                            <a href="services.php" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
                         </div>
-                        <h4 class="service-title"><?php echo $service['title']; ?></h4>
-                        <p class="service-description"><?php echo $service['description']; ?></p>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
+            </div>
+
+            <!-- Mobile Scroll Indicator -->
+            <div class="services-scroll-hint d-lg-none">
+                <i class="fas fa-hand-point-left"></i> Swipe for more <i class="fas fa-hand-point-right"></i>
             </div>
             
             <div class="text-center mt-5" data-aos="fade-up">
