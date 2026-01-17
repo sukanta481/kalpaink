@@ -543,15 +543,20 @@ function initMobileHeroSwipe() {
     let autoRotateInterval;
 
     // Update card positions based on current index
-    function updateCardPositions() {
+    function updateCardPositions(skipAnimation = false) {
         cards.forEach((card, index) => {
             // Calculate the relative position (0, 1, 2) from current index
             const relativeIndex = (index - currentIndex + cards.length) % cards.length;
 
-            // Reset any inline styles before updating position
+            if (skipAnimation) {
+                card.style.transition = 'none';
+            } else {
+                card.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
+            }
+
+            // Reset inline styles - CSS will handle positioning via data-index
             card.style.transform = '';
             card.style.opacity = '';
-            card.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
 
             card.setAttribute('data-index', relativeIndex);
         });
@@ -562,16 +567,77 @@ function initMobileHeroSwipe() {
         });
     }
 
-    // Move to next card
+    // Move to next card with Tinder-style animation
     function nextCard() {
+        const oldCard = deck.querySelector('.swipe-card[data-index="0"]');
+
+        // Update index
         currentIndex = (currentIndex + 1) % cards.length;
-        updateCardPositions();
+
+        // First, update positions without animation for the card coming to front
+        cards.forEach((card, index) => {
+            const relativeIndex = (index - currentIndex + cards.length) % cards.length;
+
+            if (card === oldCard) {
+                // Keep the old card off-screen, it will animate back later
+                card.style.transition = 'none';
+                card.style.transform = 'translateX(-50%) scale(0.84) translateY(30px)';
+                card.style.opacity = '0';
+            } else {
+                card.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
+                card.style.transform = '';
+                card.style.opacity = '';
+            }
+
+            card.setAttribute('data-index', relativeIndex);
+        });
+
+        // Fade in the old card at back after a delay
+        setTimeout(() => {
+            if (oldCard) {
+                oldCard.style.transition = 'opacity 0.3s ease';
+                oldCard.style.opacity = '';
+            }
+        }, 400);
+
+        // Update indicators
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
     }
 
     // Move to previous card
     function prevCard() {
+        const oldCard = deck.querySelector('.swipe-card[data-index="0"]');
+
         currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-        updateCardPositions();
+
+        cards.forEach((card, index) => {
+            const relativeIndex = (index - currentIndex + cards.length) % cards.length;
+
+            if (card === oldCard) {
+                card.style.transition = 'none';
+                card.style.transform = 'translateX(-50%) scale(0.84) translateY(30px)';
+                card.style.opacity = '0';
+            } else {
+                card.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
+                card.style.transform = '';
+                card.style.opacity = '';
+            }
+
+            card.setAttribute('data-index', relativeIndex);
+        });
+
+        setTimeout(() => {
+            if (oldCard) {
+                oldCard.style.transition = 'opacity 0.3s ease';
+                oldCard.style.opacity = '';
+            }
+        }, 400);
+
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
     }
 
     // Handle touch start
@@ -631,24 +697,24 @@ function initMobileHeroSwipe() {
         const diffX = currentX - startX;
         const threshold = 60; // Minimum swipe distance
 
-        // Re-enable transition
-        card.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+        // Re-enable transition for fly-off animation
+        card.style.transition = 'transform 0.35s ease-out, opacity 0.35s ease-out';
 
         if (Math.abs(diffX) > threshold) {
             if (diffX > 0) {
-                // Swiped right - go to previous
-                card.style.transform = 'translateX(100%) rotate(10deg)';
+                // Swiped right - fly off to right
+                card.style.transform = 'translateX(120%) rotate(15deg) scale(0.9)';
                 card.style.opacity = '0';
                 setTimeout(() => {
                     prevCard();
-                }, 250);
+                }, 300);
             } else {
-                // Swiped left - go to next
-                card.style.transform = 'translateX(-150%) rotate(-10deg)';
+                // Swiped left - fly off to left
+                card.style.transform = 'translateX(-170%) rotate(-15deg) scale(0.9)';
                 card.style.opacity = '0';
                 setTimeout(() => {
                     nextCard();
-                }, 250);
+                }, 300);
             }
         } else {
             // Reset position if not swiped enough
