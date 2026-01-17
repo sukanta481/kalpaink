@@ -206,16 +206,26 @@ include 'includes/header.php';
     <section class="welcome-section section-padding" id="about">
         <div class="container">
             <div class="welcome-card" data-aos="fade-up">
+                <!-- Mobile: Sandwich Layout (Headline → Image → Content) -->
+                <div class="welcome-header-mobile d-lg-none text-center">
+                    <span class="welcome-badge">Who We Are</span>
+                    <h2 class="fusion-headline">We <span class="text-yellow">Sculpt</span> Brands.</h2>
+                    <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
+                </div>
+
                 <div class="row align-items-center">
-                    <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col">
                         <div class="welcome-image fusion-image">
                             <img src="assets/images/about-fusion.png" alt="Raw Concept to Brand Creation - We transform ideas into masterpieces">
                         </div>
                     </div>
-                    <div class="col-lg-7">
-                        <span class="welcome-badge">Who We Are</span>
-                        <h2 class="fusion-headline">We <span class="text-yellow">Sculpt</span> Brands.</h2>
-                        <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
+                    <div class="col-lg-7 welcome-text-col">
+                        <!-- Desktop: Show header here -->
+                        <div class="welcome-header-desktop d-none d-lg-block">
+                            <span class="welcome-badge">Who We Are</span>
+                            <h2 class="fusion-headline">We <span class="text-yellow">Sculpt</span> Brands.</h2>
+                            <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
+                        </div>
                         <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
                         <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we're the creative studio that brings visions to life.</p>
                         <div class="welcome-stats">

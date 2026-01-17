@@ -1032,34 +1032,45 @@ body {
         padding: 30px 20px;
     }
 
-    .fusion-headline {
+    /* Mobile header (shown above image) */
+    .welcome-header-mobile {
+        margin-bottom: 20px;
+    }
+
+    .welcome-header-mobile .fusion-headline {
         font-size: 2rem;
     }
 
-    /* Magazine style - image floats right */
+    .welcome-header-mobile .lead-text {
+        margin-bottom: 0;
+    }
+
+    /* Image comes first in the row on mobile */
     .welcome-card .row {
-        display: block;
+        display: flex;
+        flex-direction: column;
     }
 
-    .welcome-card .col-lg-5 {
-        float: right;
-        width: 45%;
-        margin-left: 20px;
-        margin-bottom: 15px;
-    }
-
-    .welcome-card .col-lg-7 {
+    .welcome-image-col {
+        order: 1;
         width: 100%;
+    }
+
+    .welcome-text-col {
+        order: 2;
+        width: 100%;
+        text-align: center;
     }
 
     .welcome-image.fusion-image img {
         border-radius: var(--radius-md);
+        width: 100%;
     }
 
     .welcome-stats {
         gap: 15px;
         margin: 1.5rem 0;
-        clear: both;
+        justify-content: center;
     }
 
     .stat-number {
@@ -1076,17 +1087,12 @@ body {
 }
 
 @media (max-width: 575.98px) {
-    .welcome-card .col-lg-5 {
-        width: 50%;
-        margin-left: 15px;
-    }
-
-    .fusion-headline {
-        font-size: 1.6rem;
+    .welcome-header-mobile .fusion-headline {
+        font-size: 1.8rem;
     }
 
     .welcome-stats {
-        justify-content: space-between;
+        justify-content: space-around;
     }
 
     .stat-item {
@@ -1156,7 +1162,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 25px;
+    margin: 0 auto 35px;
+    /* Increased for glow breathing room */
     font-size: 2rem;
     color: var(--black);
     box-shadow:
@@ -1267,11 +1274,14 @@ body {
         height: 65px;
         font-size: 1.6rem;
         border-radius: 16px;
-        margin-bottom: 20px;
+        margin-bottom: 60px;
+        /* Increased to clear the large hover glow */
     }
 
     .service-title {
         font-size: 1.1rem;
+        padding-top: 20px;
+        /* Extra breathing room from icon glow */
     }
 
     .service-description {
