@@ -4,24 +4,31 @@
  * Digital Marketing Agency Website
  */
 
+// Include CRM data helper
+require_once __DIR__ . '/includes/crm-data.php';
+
+// Get settings from CRM database (with fallbacks)
+$crm_settings = getSettings();
+
 // Site Configuration
-define('SITE_NAME', 'Kalpoink');
-define('SITE_TAGLINE', 'Creative Digital Solutions');
+define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpoink');
+define('SITE_TAGLINE', $crm_settings['site_tagline'] ?? 'Creative Digital Solutions');
 define('SITE_URL', 'http://localhost/kalpoink');
 
 // Contact Information
-define('CONTACT_ADDRESS', '225 Bagmari Road, Kolkata - 700054');
-define('CONTACT_PHONE', '+91 891 082 1105');
-define('CONTACT_EMAIL', 'kalpoinc@gmail.com');
+define('CONTACT_ADDRESS', $crm_settings['contact_address'] ?? '225 Bagmari Road, Kolkata - 700054');
+define('CONTACT_PHONE', $crm_settings['contact_phone'] ?? '+91 891 082 1105');
+define('CONTACT_EMAIL', $crm_settings['contact_email'] ?? 'kalpoinc@gmail.com');
 
 // Social Media Links (Update with actual links)
-define('SOCIAL_FACEBOOK', '#');
-define('SOCIAL_INSTAGRAM', '#');
-define('SOCIAL_LINKEDIN', '#');
-define('SOCIAL_TWITTER', '#');
+define('SOCIAL_FACEBOOK', $crm_settings['social_facebook'] ?? '#');
+define('SOCIAL_INSTAGRAM', $crm_settings['social_instagram'] ?? '#');
+define('SOCIAL_LINKEDIN', $crm_settings['social_linkedin'] ?? '#');
+define('SOCIAL_TWITTER', $crm_settings['social_twitter'] ?? '#');
 
-// Team Information - The Creators
-$team_members = [
+// Get Team Members from CRM (with fallback to static data)
+$team_members_db = getTeamMembersFromDB();
+$team_members = !empty($team_members_db) ? $team_members_db : [
     [
         'name' => 'Suman Kundu',
         'position' => 'Co-Founder & Creative Director',
@@ -40,8 +47,15 @@ $team_members = [
     ]
 ];
 
-// Services
-$services = [
+// Get Services from CRM (with fallback to static data)
+$services_db = getServicesFromDB(true);
+$services = !empty($services_db) ? array_map(function($s) {
+    return [
+        'icon' => $s['icon'],
+        'title' => $s['title'],
+        'description' => $s['short_description']
+    ];
+}, $services_db) : [
     [
         'icon' => 'fa-palette',
         'title' => 'Graphics Design',
@@ -74,8 +88,9 @@ $services = [
     ]
 ];
 
-// Demo Case Studies
-$case_studies = [
+// Get Case Studies/Projects from CRM (with fallback to static data)
+$case_studies_db = getProjectsFromDB(8);
+$case_studies = !empty($case_studies_db) ? $case_studies_db : [
     [
         'title' => 'Modern Restaurant Branding',
         'category' => 'Branding',
@@ -126,8 +141,9 @@ $case_studies = [
     ]
 ];
 
-// FAQ Items
-$faqs = [
+// Get FAQs from CRM (with fallback to static data)
+$faqs_db = getFAQsFromDB();
+$faqs = !empty($faqs_db) ? $faqs_db : [
     [
         'question' => 'What services does Kalpoink offer?',
         'answer' => 'Kalpoink specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing. Our primary expertise is in all types of graphics work.'
@@ -149,4 +165,13 @@ $faqs = [
         'answer' => 'Our focus on creative excellence combined with strategic thinking sets us apart. With our partners\' combined experience, we deliver work that not only looks great but also drives real business results.'
     ]
 ];
+
+// Get Statistics from CRM
+$statistics = getStatisticsFromDB();
+
+// Get Testimonials from CRM
+$testimonials = getTestimonialsFromDB();
+
+// Get Hero Slides from CRM
+$hero_slides = getHeroSlides();
 ?>

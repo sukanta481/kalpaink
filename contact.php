@@ -23,10 +23,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $form_error = true;
         $form_message = 'Please enter a valid email address.';
     } else {
-        // In a real application, you would send an email or save to database here
-        // For now, we'll just show a success message
+        // Try to save to database (CRM)
+        $saved_to_db = false;
         
-        // Example: Save to a file (for demo purposes)
+        try {
+            // Include database config if CRM is installed
+            $db_config = __DIR__ . '/admin/config/database.php';
+            if (file_exists($db_config)) {
+                require_once $db_config;
+                $db = getDB();
+                
+                $stmt = $db->prepare("INSERT INTO leads (name, email, phone, country, message, source, status, priority) VALUES (?, ?, ?, ?, ?, 'contact_form', 'new', 'medium')");
+                $stmt->execute([$name, $email, $phone, $country, $message]);
+                $saved_to_db = true;
+            }
+        } catch (Exception $e) {
+            // Database not available, fall back to file
+            $saved_to_db = false;
+        }
+        
+        // Also save to file as backup
         $submission = date('Y-m-d H:i:s') . " | Name: $name | Email: $email | Phone: $phone | Country: $country | Message: $message\n";
         $log_file = 'uploads/contact_submissions.txt';
         

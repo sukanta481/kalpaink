@@ -1,0 +1,22 @@
+# Kalpoink Admin CRM - Upload Directory Security
+
+# Prevent script execution
+<FilesMatch "\.(php|php5|php7|phtml|pl|py|jsp|asp|htm|html|shtml|sh|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Allow only specific file types
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|pdf|doc|docx|xls|xlsx|ppt|pptx)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Disable directory listing
+Options -Indexes
+
+# Protect htaccess file
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
