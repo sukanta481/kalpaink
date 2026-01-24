@@ -10,10 +10,18 @@ require_once __DIR__ . '/includes/crm-data.php';
 // Get settings from CRM database (with fallbacks)
 $crm_settings = getSettings();
 
+// Auto-detect environment for SITE_URL
+if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
+    define('SITE_URL', 'http://localhost/kalpoink');
+} else {
+    // Use HTTPS and actual domain on live server
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    define('SITE_URL', $protocol . $_SERVER['SERVER_NAME']);
+}
+
 // Site Configuration
 define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpoink');
 define('SITE_TAGLINE', $crm_settings['site_tagline'] ?? 'Creative Digital Solutions');
-define('SITE_URL', 'http://localhost/kalpoink');
 
 // Contact Information
 define('CONTACT_ADDRESS', $crm_settings['contact_address'] ?? '225 Bagmari Road, Kolkata - 700054');

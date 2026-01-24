@@ -130,10 +130,23 @@ function logActivity($action, $entityType = null, $entityId = null, $details = n
 }
 
 /**
+ * Get base URL - auto-detect environment
+ */
+function getBaseUrl() {
+    // Auto-detect if we're on localhost or live server
+    if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
+        return '/kalpoink/';
+    } else {
+        // Live server - site is at root
+        return '/';
+    }
+}
+
+/**
  * Get admin URL
  */
 function getAdminUrl($path = '') {
-    $baseUrl = '/kalpoink/admin/';
+    $baseUrl = getBaseUrl() . 'admin/';
     return $baseUrl . ltrim($path, '/');
 }
 
@@ -141,7 +154,7 @@ function getAdminUrl($path = '') {
  * Get site URL
  */
 function getSiteUrl($path = '') {
-    $baseUrl = '/kalpoink/';
+    $baseUrl = getBaseUrl();
     return $baseUrl . ltrim($path, '/');
 }
 

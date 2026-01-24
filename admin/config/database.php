@@ -38,7 +38,9 @@ class Database {
         } catch (PDOException $e) {
             // If database doesn't exist, redirect to installer
             if (strpos($e->getMessage(), 'Unknown database') !== false) {
-                header('Location: /kalpoink/admin/install/');
+                // Auto-detect base path
+                $basePath = ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') ? '/kalpoink/' : '/';
+                header('Location: ' . $basePath . 'admin/install/');
                 exit;
             }
             die("Connection failed: " . $e->getMessage());
