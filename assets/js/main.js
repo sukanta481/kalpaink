@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Mobile Hero Swipe Deck
     initMobileHeroSwipe();
 
-    // Services Carousel Focus Effect (Mobile)
-    initServicesCarousel();
+    // Mobile Creator Flip Cards
+    initCreatorFlipCards();
 });
 
 /**
@@ -768,87 +768,43 @@ function initMobileHeroSwipe() {
 }
 
 /**
- * Services Carousel Focus Effect (Mobile)
- * Detects center card and applies 3D focus effect with progress indicator
+ * Mobile Creator Flip Cards
+ * Tap to flip between Professional and Creative sides
  */
-function initServicesCarousel() {
-    const track = document.getElementById('servicesTrack');
-    const progressDots = document.querySelectorAll('.progress-dot');
-    const progressFill = document.getElementById('servicesProgressFill');
+function initCreatorFlipCards() {
+    const flipCards = document.querySelectorAll('.creator-flip-mobile');
     
-    if (!track || window.innerWidth >= 992) return;
+    if (!flipCards.length) return;
     
-    const cards = track.querySelectorAll('.service-card-wrapper');
-    const totalCards = cards.length;
-    
-    // Function to determine which card is most visible (center)
-    function updateActiveCard() {
-        const trackRect = track.getBoundingClientRect();
-        const trackCenter = trackRect.left + trackRect.width / 2;
-        
-        let closestCard = null;
-        let closestDistance = Infinity;
-        let activeIndex = 0;
-        
-        cards.forEach((card, index) => {
-            const cardRect = card.getBoundingClientRect();
-            const cardCenter = cardRect.left + cardRect.width / 2;
-            const distance = Math.abs(trackCenter - cardCenter);
+    flipCards.forEach(card => {
+        // Tap to flip
+        card.addEventListener('click', function(e) {
+            // Don't flip if clicking on the LinkedIn button
+            if (e.target.closest('.flip-linkedin')) return;
             
-            // Remove in-view class from all cards
-            card.classList.remove('in-view');
+            this.classList.toggle('flipped');
             
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestCard = card;
-                activeIndex = index;
-            }
+            // Add a subtle haptic feedback feel with a small animation
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 100);
         });
         
-        // Add in-view class to the closest (center) card
-        if (closestCard) {
-            closestCard.classList.add('in-view');
-        }
-        
-        // Update progress dots
-        progressDots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === activeIndex);
-        });
-        
-        // Update progress bar
-        if (progressFill) {
-            const progress = ((activeIndex + 1) / totalCards) * 100;
-            progressFill.style.width = progress + '%';
-        }
-    }
-    
-    // Listen to scroll events on the track
-    track.addEventListener('scroll', updateActiveCard, { passive: true });
-    
-    // Click on progress dots to scroll to that card
-    progressDots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            const targetCard = cards[index];
-            if (targetCard) {
-                targetCard.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                    inline: 'center'
-                });
-            }
+        // Also support touch events for better mobile response
+        card.addEventListener('touchend', function(e) {
+            // Prevent double-triggering with click
+            if (e.target.closest('.flip-linkedin')) return;
         });
     });
     
-    // Initial call to set the first card as active
-    setTimeout(updateActiveCard, 100);
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 992) {
-            // Remove all mobile classes on desktop
-            cards.forEach(card => card.classList.remove('in-view'));
-        } else {
-            updateActiveCard();
+    // Optional: Auto-flip hint animation on first card after 3 seconds
+    setTimeout(() => {
+        if (flipCards[0] && window.innerWidth < 992) {
+            flipCards[0].classList.add('flipped');
+            setTimeout(() => {
+                flipCards[0].classList.remove('flipped');
+            }, 1500);
         }
-    });
+    }, 3000);
 }
