@@ -1216,7 +1216,7 @@ body {
 /* Scroll Hint */
 .services-scroll-hint {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 0.85rem;
     color: var(--gray-500);
     opacity: 0.8;
@@ -1224,6 +1224,52 @@ body {
 
 .services-scroll-hint i {
     margin: 0 5px;
+}
+
+/* Mobile Progress Indicator */
+.services-progress {
+    margin-top: 25px;
+    padding: 0 20px;
+}
+
+.services-progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--gray-300);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.progress-dot.active {
+    background-color: var(--primary-yellow);
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(253, 215, 40, 0.5);
+}
+
+.services-progress-bar {
+    width: 100%;
+    max-width: 200px;
+    height: 3px;
+    background-color: var(--gray-300);
+    border-radius: 3px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary-yellow), var(--primary-yellow-dark));
+    border-radius: 3px;
+    transition: width 0.3s ease;
 }
 
 /* Mobile: Horizontal Snap Scroll */
@@ -1253,6 +1299,8 @@ body {
         scrollbar-width: none;
         padding-right: 20px;
         padding-bottom: 10px;
+        /* Center alignment for carousel effect */
+        scroll-padding-left: 10%;
     }
 
     .services-track::-webkit-scrollbar {
@@ -1260,13 +1308,53 @@ body {
     }
 
     .service-card-wrapper {
-        flex: 0 0 85%;
-        scroll-snap-align: start;
+        flex: 0 0 75%;
+        scroll-snap-align: center;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform-origin: center center;
+    }
+
+    /* Side cards (not in focus) */
+    .service-card-wrapper:not(.in-view) {
+        transform: scale(0.88);
+        opacity: 0.5;
+    }
+
+    .service-card-wrapper:not(.in-view) .service-card {
+        background-color: var(--gray-200);
+        border-color: var(--gray-300);
+    }
+
+    /* Active/Center card (in focus) */
+    .service-card-wrapper.in-view {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .service-card-wrapper.in-view .service-card {
+        background-color: var(--black);
+        border-color: var(--black);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .service-card-wrapper.in-view .service-title,
+    .service-card-wrapper.in-view .service-description {
+        color: var(--white);
+    }
+
+    .service-card-wrapper.in-view .service-link {
+        color: var(--primary-yellow);
+    }
+
+    .service-card-wrapper.in-view .service-icon-3d {
+        background: linear-gradient(145deg, var(--primary-yellow), #fff);
+        box-shadow: 0 15px 35px rgba(253, 215, 40, 0.5);
     }
 
     .service-card {
         padding: 30px 20px;
         border-radius: var(--radius-md);
+        transition: all 0.4s ease;
     }
 
     .service-icon-3d {
@@ -1276,17 +1364,24 @@ body {
         border-radius: 16px;
         margin-bottom: 60px;
         /* Increased to clear the large hover glow */
+        transition: all 0.4s ease;
     }
 
     .service-title {
         font-size: 1.1rem;
         padding-top: 20px;
         /* Extra breathing room from icon glow */
+        transition: color 0.4s ease;
     }
 
     .service-description {
         font-size: 0.9rem;
         margin-bottom: 15px;
+        transition: color 0.4s ease;
+    }
+
+    .service-link {
+        transition: color 0.4s ease;
     }
 }
 

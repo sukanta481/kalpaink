@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mobile Hero Swipe Deck
     initMobileHeroSwipe();
+
+    // Services Carousel Focus Effect (Mobile)
+    initServicesCarousel();
 });
 
 /**
@@ -760,6 +763,92 @@ function initMobileHeroSwipe() {
             clearInterval(autoRotateInterval);
         } else {
             startAutoRotate();
+        }
+    });
+}
+
+/**
+ * Services Carousel Focus Effect (Mobile)
+ * Detects center card and applies 3D focus effect with progress indicator
+ */
+function initServicesCarousel() {
+    const track = document.getElementById('servicesTrack');
+    const progressDots = document.querySelectorAll('.progress-dot');
+    const progressFill = document.getElementById('servicesProgressFill');
+    
+    if (!track || window.innerWidth >= 992) return;
+    
+    const cards = track.querySelectorAll('.service-card-wrapper');
+    const totalCards = cards.length;
+    
+    // Function to determine which card is most visible (center)
+    function updateActiveCard() {
+        const trackRect = track.getBoundingClientRect();
+        const trackCenter = trackRect.left + trackRect.width / 2;
+        
+        let closestCard = null;
+        let closestDistance = Infinity;
+        let activeIndex = 0;
+        
+        cards.forEach((card, index) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2;
+            const distance = Math.abs(trackCenter - cardCenter);
+            
+            // Remove in-view class from all cards
+            card.classList.remove('in-view');
+            
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestCard = card;
+                activeIndex = index;
+            }
+        });
+        
+        // Add in-view class to the closest (center) card
+        if (closestCard) {
+            closestCard.classList.add('in-view');
+        }
+        
+        // Update progress dots
+        progressDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === activeIndex);
+        });
+        
+        // Update progress bar
+        if (progressFill) {
+            const progress = ((activeIndex + 1) / totalCards) * 100;
+            progressFill.style.width = progress + '%';
+        }
+    }
+    
+    // Listen to scroll events on the track
+    track.addEventListener('scroll', updateActiveCard, { passive: true });
+    
+    // Click on progress dots to scroll to that card
+    progressDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            const targetCard = cards[index];
+            if (targetCard) {
+                targetCard.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        });
+    });
+    
+    // Initial call to set the first card as active
+    setTimeout(updateActiveCard, 100);
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 992) {
+            // Remove all mobile classes on desktop
+            cards.forEach(card => card.classList.remove('in-view'));
+        } else {
+            updateActiveCard();
         }
     });
 }

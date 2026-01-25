@@ -28,7 +28,7 @@
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     
     <!-- TinyMCE Editor -->
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/5xym3iqrlk70fxgju7h3vpelkys6gvx16nvxfe38i4n9mi8j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     
     <!-- Admin JS -->
     <script src="<?php echo getAdminUrl('assets/js/admin.js'); ?>"></script>

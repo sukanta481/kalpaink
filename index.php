@@ -259,9 +259,9 @@ include 'includes/header.php';
             
             <!-- Desktop Grid / Mobile Horizontal Scroll -->
             <div class="services-gallery" data-aos="fade-up">
-                <div class="services-track">
+                <div class="services-track" id="servicesTrack">
                     <?php foreach ($services as $index => $service): ?>
-                    <div class="service-card-wrapper">
+                    <div class="service-card-wrapper" data-index="<?php echo $index; ?>">
                         <div class="service-card">
                             <div class="service-icon-3d">
                                 <i class="fas <?php echo $service['icon']; ?>"></i>
@@ -272,6 +272,18 @@ include 'includes/header.php';
                         </div>
                     </div>
                     <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Mobile Progress Indicator -->
+            <div class="services-progress d-lg-none">
+                <div class="services-progress-dots" id="servicesProgressDots">
+                    <?php foreach ($services as $index => $service): ?>
+                    <span class="progress-dot <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>"></span>
+                    <?php endforeach; ?>
+                </div>
+                <div class="services-progress-bar">
+                    <div class="progress-fill" id="servicesProgressFill"></div>
                 </div>
             </div>
 
