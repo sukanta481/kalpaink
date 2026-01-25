@@ -1269,6 +1269,7 @@ body {
         border-radius: var(--radius-md);
         position: relative;
         margin-top: 35px;
+        overflow: visible;
     }
 
     .service-icon-3d {
