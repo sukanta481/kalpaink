@@ -48,7 +48,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Footer Accordion (Mobile)
     initFooterAccordion();
+
+    // Services Page - Mobile Accordion Cards
+    initServiceAccordion();
+
+    // Services Page - Floating Tools Parallax
+    initFloatingToolsParallax();
 });
+
 
 /**
  * Navbar scroll effect
@@ -905,5 +912,76 @@ function initFooterAccordion() {
                 item.classList.remove('active');
             });
         }
+    });
+}
+
+/**
+ * Services Page - Mobile Accordion Cards
+ * Tap to expand service cards on mobile
+ */
+function initServiceAccordion() {
+    const serviceCards = document.querySelectorAll('.service-hologram-card');
+    
+    if (!serviceCards.length) return;
+    
+    serviceCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Only work on mobile/tablet
+            if (window.innerWidth >= 992) return;
+            
+            const isExpanded = this.classList.contains('expanded');
+            
+            // Close all other cards
+            serviceCards.forEach(c => {
+                if (c !== this) {
+                    c.classList.remove('expanded');
+                }
+            });
+            
+            // Toggle current card
+            this.classList.toggle('expanded');
+        });
+    });
+    
+    // Reset on resize to desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 992) {
+            serviceCards.forEach(card => {
+                card.classList.remove('expanded');
+            });
+        }
+    });
+}
+
+/**
+ * Services Page - Floating Tools Parallax
+ * Subtle mouse movement effect on floating tools
+ */
+function initFloatingToolsParallax() {
+    const container = document.querySelector('.floating-tools-container');
+    const tools = document.querySelectorAll('.floating-tool');
+    
+    if (!container || !tools.length) return;
+    
+    container.addEventListener('mousemove', function(e) {
+        const rect = container.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const mouseX = e.clientX - rect.left - centerX;
+        const mouseY = e.clientY - rect.top - centerY;
+        
+        tools.forEach(tool => {
+            const speed = parseFloat(tool.dataset.speed) || 1;
+            const x = (mouseX * speed * 0.02);
+            const y = (mouseY * speed * 0.02);
+            
+            tool.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+    
+    container.addEventListener('mouseleave', function() {
+        tools.forEach(tool => {
+            tool.style.transform = '';
+        });
     });
 }
