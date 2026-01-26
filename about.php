@@ -6,24 +6,26 @@ include 'includes/header.php';
     <!-- About Hero Section -->
     <section class="about-hero">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <!-- Hero Visual: Sculpting Concept -->
-                    <div class="about-hero-visual">
-                        <div class="sculpt-concept">
-                            <div class="stone-block">
-                                <i class="fas fa-cube"></i>
-                            </div>
-                            <div class="chisel-spark">
-                                <span></span><span></span><span></span>
-                            </div>
-                            <div class="crown-emerging">
-                                <i class="fas fa-crown"></i>
-                            </div>
+            <div class="row align-items-center min-vh-50">
+                <div class="col-lg-6 order-2 order-lg-2">
+                    <!-- Hero Visual: Stylus/iPad showing the digital craft -->
+                    <div class="about-hero-visual" data-aos="fade-left">
+                        <div class="hero-image-wrapper">
+                            <img src="assets/images/about-hero-banner.png" 
+                                 alt="Designer hand holding Apple Pencil on iPad Pro - Digital craftsmanship meets old-school artistry" 
+                                 class="hero-craft-image">
+                            <div class="image-overlay-accent"></div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Wave/Torn Paper Transition -->
+        <div class="hero-wave-transition">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,60 C180,120 360,0 540,60 C720,120 900,0 1080,60 C1260,120 1440,60 1440,60 L1440,120 L0,120 Z" fill="#ffffff"/>
+                <path d="M0,80 C180,40 360,100 540,60 C720,20 900,100 1080,80 C1260,60 1440,80 1440,80 L1440,120 L0,120 Z" fill="#ffffff" opacity="0.5"/>
+            </svg>
         </div>
     </section>
 
@@ -76,17 +78,11 @@ include 'includes/header.php';
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-5" data-aos="fade-right">
-                    <div class="who-we-are-image workspace-image">
-                        <!-- Creative Workspace Visual -->
-                        <div class="workspace-mockup">
-                            <div class="desk-items">
-                                <div class="item laptop"><i class="fas fa-laptop-code"></i></div>
-                                <div class="item coffee"><i class="fas fa-mug-hot"></i></div>
-                                <div class="item pencil"><i class="fas fa-pencil-ruler"></i></div>
-                                <div class="item palette"><i class="fas fa-palette"></i></div>
-                            </div>
-                            <p class="workspace-label">Our Creative Space</p>
-                        </div>
+                    <div class="digital-desk-image">
+                        <!-- Digital Desk Bento Grid - Real workspace imagery -->
+                        <img src="assets/images/digital-desk-bento.png" 
+                             alt="Our Digital Workspace - VS Code, Sketchbook with Coffee, and Figma UI Kit" 
+                             class="bento-collage">
                     </div>
                 </div>
                 <div class="col-lg-7" data-aos="fade-left">
