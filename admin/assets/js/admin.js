@@ -197,3 +197,248 @@ function createToastContainer() {
     document.body.appendChild(container);
     return container;
 }
+
+/**
+ * File Upload Progress System
+ * Shows upload progress for single and multiple file uploads
+ */
+class FileUploadProgress {
+    constructor() {
+        this.createProgressModal();
+        this.initFileInputs();
+    }
+
+    createProgressModal() {
+        // Create the progress overlay/modal
+        const modal = document.createElement('div');
+        modal.id = 'uploadProgressModal';
+        modal.className = 'upload-progress-modal';
+        modal.innerHTML = `
+            <div class="upload-progress-content">
+                <div class="upload-progress-header">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h5>Uploading Files...</h5>
+                    <span class="upload-status-text">Please wait while your files are being uploaded</span>
+                </div>
+                <div class="upload-progress-body" id="uploadProgressBody">
+                    <!-- Progress items will be added here -->
+                </div>
+                <div class="upload-progress-footer">
+                    <div class="overall-progress">
+                        <span class="overall-text">Overall Progress</span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" id="overallProgress" style="width: 0%">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        this.modal = modal;
+        this.progressBody = document.getElementById('uploadProgressBody');
+        this.overallProgress = document.getElementById('overallProgress');
+    }
+
+    initFileInputs() {
+        // Find all forms with file inputs
+        document.querySelectorAll('form').forEach(form => {
+            const fileInputs = form.querySelectorAll('input[type="file"]');
+            if (fileInputs.length > 0) {
+                form.addEventListener('submit', (e) => this.handleFormSubmit(e, form, fileInputs));
+            }
+        });
+    }
+
+    handleFormSubmit(e, form, fileInputs) {
+        // Check if any files are selected
+        let hasFiles = false;
+        let totalFiles = 0;
+        
+        fileInputs.forEach(input => {
+            if (input.files && input.files.length > 0) {
+                hasFiles = true;
+                totalFiles += input.files.length;
+            }
+        });
+
+        if (!hasFiles) return; // No files, proceed with normal submit
+
+        e.preventDefault();
+        this.showProgress(fileInputs, totalFiles);
+        this.uploadWithProgress(form);
+    }
+
+    showProgress(fileInputs, totalFiles) {
+        this.progressBody.innerHTML = '';
+        let fileIndex = 0;
+
+        fileInputs.forEach(input => {
+            if (input.files && input.files.length > 0) {
+                for (let i = 0; i < input.files.length; i++) {
+                    const file = input.files[i];
+                    const fileId = `file-${fileIndex}`;
+                    const fileSize = this.formatFileSize(file.size);
+                    const fileIcon = this.getFileIcon(file.type);
+                    
+                    const progressItem = document.createElement('div');
+                    progressItem.className = 'upload-file-item';
+                    progressItem.id = fileId;
+                    progressItem.innerHTML = `
+                        <div class="file-icon">
+                            <i class="fas ${fileIcon}"></i>
+                        </div>
+                        <div class="file-details">
+                            <div class="file-name">${this.truncateFileName(file.name, 30)}</div>
+                            <div class="file-meta">
+                                <span class="file-size">${fileSize}</span>
+                                <span class="file-status" id="${fileId}-status">Waiting...</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" id="${fileId}-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="file-percent" id="${fileId}-percent">0%</div>
+                        </div>
+                    `;
+                    this.progressBody.appendChild(progressItem);
+                    fileIndex++;
+                }
+            }
+        });
+
+        this.modal.classList.add('show');
+        this.totalFiles = totalFiles;
+        this.completedFiles = 0;
+    }
+
+    uploadWithProgress(form) {
+        const formData = new FormData(form);
+        const xhr = new XMLHttpRequest();
+
+        // Track upload progress
+        xhr.upload.addEventListener('progress', (e) => {
+            if (e.lengthComputable) {
+                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                this.updateProgress(percentComplete);
+            }
+        });
+
+        // Handle completion
+        xhr.addEventListener('load', () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                this.completeUpload(true);
+                // Redirect or handle response
+                setTimeout(() => {
+                    // Check if response contains redirect URL or just reload
+                    if (xhr.responseURL) {
+                        window.location.href = xhr.responseURL;
+                    } else {
+                        window.location.reload();
+                    }
+                }, 1000);
+            } else {
+                this.completeUpload(false);
+                showToast('Upload failed. Please try again.', 'danger');
+                setTimeout(() => this.hideProgress(), 2000);
+            }
+        });
+
+        xhr.addEventListener('error', () => {
+            this.completeUpload(false);
+            showToast('Upload failed. Please try again.', 'danger');
+            setTimeout(() => this.hideProgress(), 2000);
+        });
+
+        // Open and send
+        xhr.open(form.method || 'POST', form.action || window.location.href, true);
+        xhr.send(formData);
+    }
+
+    updateProgress(percent) {
+        // Update overall progress
+        this.overallProgress.style.width = `${percent}%`;
+        this.overallProgress.textContent = `${percent}%`;
+
+        // Update individual file progress (simulate distribution)
+        const fileItems = this.progressBody.querySelectorAll('.upload-file-item');
+        const progressPerFile = 100 / fileItems.length;
+        
+        fileItems.forEach((item, index) => {
+            const fileProgress = Math.min(100, Math.round((percent / 100) * ((index + 1) * progressPerFile) * (100 / progressPerFile)));
+            const bar = item.querySelector('.progress-bar');
+            const percentText = item.querySelector('.file-percent');
+            const status = item.querySelector('.file-status');
+            
+            if (bar) {
+                bar.style.width = `${fileProgress}%`;
+                bar.classList.add('progress-bar-animated', 'progress-bar-striped');
+            }
+            if (percentText) {
+                percentText.textContent = `${fileProgress}%`;
+            }
+            if (status) {
+                if (fileProgress >= 100) {
+                    status.textContent = 'Complete';
+                    status.className = 'file-status text-success';
+                    bar.classList.remove('progress-bar-animated', 'progress-bar-striped');
+                    bar.classList.add('bg-success');
+                } else if (fileProgress > 0) {
+                    status.textContent = 'Uploading...';
+                    status.className = 'file-status text-primary';
+                }
+            }
+        });
+    }
+
+    completeUpload(success) {
+        if (success) {
+            this.overallProgress.style.width = '100%';
+            this.overallProgress.textContent = '100%';
+            this.overallProgress.classList.remove('progress-bar-animated');
+            this.overallProgress.classList.add('bg-success');
+            
+            document.querySelector('.upload-status-text').textContent = 'Upload complete! Redirecting...';
+            document.querySelector('.upload-progress-header i').className = 'fas fa-check-circle text-success';
+        } else {
+            this.overallProgress.classList.remove('progress-bar-animated');
+            this.overallProgress.classList.add('bg-danger');
+            document.querySelector('.upload-status-text').textContent = 'Upload failed!';
+            document.querySelector('.upload-progress-header i').className = 'fas fa-times-circle text-danger';
+        }
+    }
+
+    hideProgress() {
+        this.modal.classList.remove('show');
+    }
+
+    formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    getFileIcon(mimeType) {
+        if (mimeType.startsWith('image/')) return 'fa-file-image';
+        if (mimeType.startsWith('video/')) return 'fa-file-video';
+        if (mimeType.startsWith('audio/')) return 'fa-file-audio';
+        if (mimeType.includes('pdf')) return 'fa-file-pdf';
+        if (mimeType.includes('word') || mimeType.includes('document')) return 'fa-file-word';
+        if (mimeType.includes('excel') || mimeType.includes('spreadsheet')) return 'fa-file-excel';
+        return 'fa-file';
+    }
+
+    truncateFileName(name, maxLength) {
+        if (name.length <= maxLength) return name;
+        const ext = name.split('.').pop();
+        const nameWithoutExt = name.substring(0, name.length - ext.length - 1);
+        const truncatedName = nameWithoutExt.substring(0, maxLength - ext.length - 4) + '...';
+        return truncatedName + '.' + ext;
+    }
+}
+
+// Initialize upload progress on DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+    new FileUploadProgress();
+});
+

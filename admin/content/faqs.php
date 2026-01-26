@@ -4,15 +4,15 @@
  * Kalpoink Admin CRM
  */
 
-$page_title = 'FAQs';
-require_once __DIR__ . '/../includes/header.php';
+// Load auth BEFORE any output
+require_once __DIR__ . '/../config/auth.php';
 requireRole('editor');
 
 $db = getDB();
 $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// Handle form submissions
+// Handle form submissions BEFORE including header (which outputs HTML)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = $_POST['csrf_token'] ?? '';
     
@@ -66,20 +66,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // FAQ categories
 $faq_categories = ['general', 'services', 'pricing', 'process', 'support', 'other'];
 
+// Handle edit action - check if FAQ exists before outputting anything
+$faq = null;
+if ($action === 'edit' && $id > 0) {
+    $stmt = $db->prepare("SELECT * FROM faqs WHERE id = ?");
+    $stmt->execute([$id]);
+    $faq = $stmt->fetch();
+    
+    if (!$faq) {
+        setFlashMessage('danger', 'FAQ not found.');
+        header('Location: faqs.php');
+        exit;
+    }
+}
+
+// NOW include header (after all potential redirects)
+$page_title = 'FAQs';
+require_once __DIR__ . '/../includes/header.php';
+
 // Handle different actions
 if ($action === 'add' || $action === 'edit') {
-    $faq = null;
-    if ($action === 'edit' && $id > 0) {
-        $stmt = $db->prepare("SELECT * FROM faqs WHERE id = ?");
-        $stmt->execute([$id]);
-        $faq = $stmt->fetch();
-        
-        if (!$faq) {
-            setFlashMessage('danger', 'FAQ not found.');
-            header('Location: faqs.php');
-            exit;
-        }
-    }
     ?>
     
     <div class="page-header">

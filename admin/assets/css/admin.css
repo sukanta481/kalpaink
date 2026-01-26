@@ -622,3 +622,234 @@ body {
     to { transform: rotate(360deg); }
 }
 
+/* ==========================================
+   FILE UPLOAD PROGRESS MODAL
+   ========================================== */
+.upload-progress-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.upload-progress-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.upload-progress-content {
+    background: #fff;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.upload-progress-header {
+    background: linear-gradient(135deg, var(--primary-color), #6366f1);
+    color: #fff;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.upload-progress-header i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.upload-progress-header h5 {
+    margin: 0.5rem 0 0.25rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.upload-progress-header .upload-status-text {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.upload-progress-body {
+    padding: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.upload-file-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.upload-file-item:last-child {
+    margin-bottom: 0;
+}
+
+.upload-file-item .file-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.upload-file-item .file-icon i {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+}
+
+.upload-file-item .file-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.upload-file-item .file-name {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--dark-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
+}
+
+.upload-file-item .file-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.upload-file-item .file-status {
+    font-weight: 500;
+}
+
+.upload-file-item .progress {
+    height: 6px;
+    border-radius: 3px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.upload-file-item .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), #6366f1);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.upload-file-item .file-percent {
+    text-align: right;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-top: 0.25rem;
+}
+
+.upload-progress-footer {
+    padding: 1rem 1.5rem 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.upload-progress-footer .overall-progress {
+    text-align: center;
+}
+
+.upload-progress-footer .overall-text {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.upload-progress-footer .progress {
+    height: 12px;
+    border-radius: 6px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.upload-progress-footer .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), #6366f1);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 12px;
+    text-align: center;
+    color: #fff;
+    transition: width 0.3s ease;
+}
+
+/* Upload complete states */
+.upload-progress-header i.fa-check-circle {
+    color: #10b981;
+    animation: none;
+}
+
+.upload-progress-header i.fa-times-circle {
+    color: #ef4444;
+    animation: none;
+}
+
+/* Scrollbar styling for progress body */
+.upload-progress-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.upload-progress-body::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.upload-progress-body::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.upload-progress-body::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
