@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mobile Services Neon Spotlight
     initServicesSpotlight();
+
+    // Footer Accordion (Mobile)
+    initFooterAccordion();
 });
 
 /**
@@ -864,4 +867,43 @@ function initServicesSpotlight() {
     
     // Recheck on resize
     window.addEventListener('resize', updateActiveCard);
+}
+
+/**
+ * Footer Accordion for Mobile
+ * Collapsible sections to reduce footer height
+ */
+function initFooterAccordion() {
+    const triggers = document.querySelectorAll('.footer-accordion-trigger');
+    
+    if (!triggers.length) return;
+    
+    triggers.forEach(trigger => {
+        trigger.addEventListener('click', function() {
+            // Only work on mobile/tablet
+            if (window.innerWidth >= 992) return;
+            
+            const parent = this.closest('.footer-accordion-item');
+            const isActive = parent.classList.contains('active');
+            
+            // Close all other accordions
+            document.querySelectorAll('.footer-accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Toggle current one
+            if (!isActive) {
+                parent.classList.add('active');
+            }
+        });
+    });
+    
+    // Reset on resize to desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 992) {
+            document.querySelectorAll('.footer-accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+    });
 }
