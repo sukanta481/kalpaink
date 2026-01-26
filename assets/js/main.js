@@ -66,6 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Case Studies - Floating Gallery Parallax
     initFloatingGalleryParallax();
+
+    // Blog - Trending Section Progress Bar
+    initBlogTrendingProgress();
 });
 
 
@@ -1201,4 +1204,29 @@ function initFloatingGalleryParallax() {
             item.style.transform = '';
         });
     });
+}
+
+/**
+ * Blog - Trending Section Progress Bar
+ */
+function initBlogTrendingProgress() {
+    const wrapper = document.querySelector('.trending-cards-wrapper');
+    const progressFill = document.getElementById('blogTrendingProgress');
+    
+    if (!wrapper || !progressFill) return;
+    
+    function updateProgress() {
+        const scrollLeft = wrapper.scrollLeft;
+        const scrollWidth = wrapper.scrollWidth - wrapper.clientWidth;
+        
+        if (scrollWidth > 0) {
+            const progress = (scrollLeft / scrollWidth) * 100;
+            // Minimum 25% (1 of 4 cards visible)
+            const displayProgress = Math.max(25, Math.min(100, progress + 25));
+            progressFill.style.width = displayProgress + '%';
+        }
+    }
+    
+    wrapper.addEventListener('scroll', updateProgress);
+    updateProgress();
 }
