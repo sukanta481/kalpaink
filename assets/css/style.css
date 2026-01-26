@@ -2916,17 +2916,33 @@ body {
         font-size: 1.8rem;
     }
     
+    /* 2x2 Dashboard Grid for Stats */
+    .stats-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .stats-grid > div {
+        width: 100%;
+        padding: 0;
+        flex: none;
+        max-width: none;
+    }
+    
     .stat-card {
         padding: 20px 10px;
-        margin-bottom: 15px;
+        margin-bottom: 0;
+        height: 100%;
     }
     
     .stat-card .stat-number {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .stat-card .stat-label {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        line-height: 1.3;
     }
     
     .who-we-are {
