@@ -446,16 +446,28 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="faq-section section-padding bg-light-gray">
+    <!-- FAQ Section - Split Screen -->
+    <section class="faq-section section-padding">
         <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Frequently Asked Questions</h2>
-            </div>
-            
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="accordion" id="faqAccordion">
+            <div class="row">
+                <!-- Left: Sticky Headline -->
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="faq-sticky-header" data-aos="fade-right">
+                        <div class="faq-icon-float">
+                            <i class="fas fa-question"></i>
+                        </div>
+                        <h2 class="faq-headline">Got Questions?</h2>
+                        <p class="faq-subtext">We've got answers. Find quick solutions to your most common queries.</p>
+                        <a href="contact.php" class="faq-contact-link">
+                            <span>Still have questions?</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right: Accordion -->
+                <div class="col-lg-7">
+                    <div class="accordion faq-accordion" id="faqAccordion">
                         <?php foreach ($faqs as $index => $faq): ?>
                         <div class="accordion-item" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 50; ?>">
                             <h2 class="accordion-header">

@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <!-- Company Info -->
-                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                <div class="col-lg-4 col-md-6 col-12 mb-5 mb-lg-0">
                     <div class="footer-brand">
                         <a href="index.php" class="footer-logo">Kalpoink</a>
                         <p class="footer-description">
@@ -14,7 +14,7 @@
                 </div>
                 
                 <!-- Services & Quick Links Container for Mobile 2-Column -->
-                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                <div class="col-lg-4 col-md-6 col-12 mb-5 mb-lg-0">
                     <div class="row footer-links-row">
                         <!-- Services Links -->
                         <div class="col-lg-6 col-6">
@@ -60,8 +60,8 @@
                         </li>
                     </ul>
                     
-                    <!-- Social Links -->
-                    <div class="social-links">
+                    <!-- Social Links - Big Buttons -->
+                    <div class="social-links-big">
                         <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -84,6 +84,9 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Giant Watermark -->
+        <div class="footer-watermark">KALPOINK</div>
     </footer>
 
     <!-- Back to Top Button -->
