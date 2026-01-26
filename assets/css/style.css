@@ -3055,13 +3055,19 @@ textarea.form-control {
     color: var(--gray-400);
 }
 
-.footer-bottom-content strong {
-    color: var(--white);
+.footer-line {
+    display: flex;
+    align-items: center;
+    gap: 0;
 }
 
-.footer-bottom-content .separator {
-    color: var(--gray-600);
-    margin: 0 8px;
+.footer-line .dot {
+    margin: 0 10px;
+    color: var(--gray-500);
+}
+
+.footer-bottom-content strong {
+    color: var(--white);
 }
 
 .footer-bottom-content a {
@@ -3150,12 +3156,21 @@ textarea.form-control {
     
     .footer-bottom-content {
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
         text-align: center;
     }
     
-    .footer-bottom-content .separator {
-        display: none;
+    .footer-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        flex-wrap: wrap;
+    }
+    
+    .footer-line .dot {
+        margin: 0 8px;
+        color: var(--gray-500);
     }
 }
 

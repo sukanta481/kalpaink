@@ -91,15 +91,22 @@
             <!-- Footer Bottom -->
             <div class="footer-bottom">
                 <div class="footer-bottom-content">
-                    <span>&copy; <?php echo date('Y'); ?> <strong>Kalpoink</strong></span>
-                    <span class="separator">|</span>
-                    <span>All Rights Reserved</span>
-                    <span class="separator">|</span>
-                    <a href="#">Terms & Conditions</a>
-                    <span class="separator">|</span>
-                    <a href="#">Privacy Policy</a>
-                    <span class="separator">|</span>
-                    <span>Design by <a href="https://biznexa.tech" target="_blank" class="designer-link">Biznexa</a></span>
+                    <!-- Line 1: Copyright -->
+                    <div class="footer-line">
+                        <span>&copy; <?php echo date('Y'); ?> <strong>Kalpoink</strong></span>
+                        <span class="dot">•</span>
+                        <span>All Rights Reserved</span>
+                    </div>
+                    <!-- Line 2: Legal Links -->
+                    <div class="footer-line">
+                        <a href="#">Terms & Conditions</a>
+                        <span class="dot">•</span>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                    <!-- Line 3: Credits -->
+                    <div class="footer-line">
+                        <span>Design by <a href="https://biznexa.tech" target="_blank" class="designer-link">Biznexa</a></span>
+                    </div>
                 </div>
             </div>
         </div>
