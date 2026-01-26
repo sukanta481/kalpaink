@@ -2317,22 +2317,163 @@ body {
 }
 
 /* ================================
-   CTA SECTION
+   HOLOGRAPHIC CTA SECTION
 ================================ */
-.cta-section {
-    background-color: var(--primary-yellow);
-    padding: 60px 0;
+.cta-holographic {
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.cta-title {
-    font-size: 1.75rem;
+/* Subtle glow background */
+.cta-glow-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(253, 215, 40, 0.15) 0%, rgba(253, 215, 40, 0) 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-headline {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.cta-subtext {
+    font-size: 1.2rem;
+    color: var(--gray-400);
+    margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Pulsing Button - The Star */
+.cta-pulse-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 45px;
+    background: var(--primary-yellow);
+    color: var(--black);
+    font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    text-decoration: none;
+    border-radius: 50px;
+    position: relative;
+    transition: all 0.3s ease;
+    animation: heartbeat 2s ease-in-out infinite;
+    box-shadow: 
+        0 0 30px rgba(253, 215, 40, 0.4),
+        0 0 60px rgba(253, 215, 40, 0.2),
+        0 0 90px rgba(253, 215, 40, 0.1);
 }
 
-.cta-text {
-    color: var(--gray-700);
-    margin-bottom: 0;
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.05); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.05); }
+    70% { transform: scale(1); }
+}
+
+.cta-pulse-btn:hover {
+    transform: scale(1.1);
+    color: var(--black);
+    box-shadow: 
+        0 0 40px rgba(253, 215, 40, 0.6),
+        0 0 80px rgba(253, 215, 40, 0.4),
+        0 0 120px rgba(253, 215, 40, 0.2);
+    animation: none;
+}
+
+.cta-pulse-btn .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: var(--black);
+    color: var(--primary-yellow);
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.cta-pulse-btn:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+/* Floating Particles */
+.cta-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.cta-particles span {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--primary-yellow);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: floatParticle 8s ease-in-out infinite;
+}
+
+.cta-particles span:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+.cta-particles span:nth-child(2) { left: 20%; top: 80%; animation-delay: 1.5s; }
+.cta-particles span:nth-child(3) { left: 70%; top: 30%; animation-delay: 3s; }
+.cta-particles span:nth-child(4) { left: 80%; top: 70%; animation-delay: 4.5s; }
+.cta-particles span:nth-child(5) { left: 50%; top: 10%; animation-delay: 6s; }
+
+@keyframes floatParticle {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+    50% { transform: translateY(-30px) scale(1.5); opacity: 0.6; }
+}
+
+/* Mobile Responsive */
+@media (max-width: 767.98px) {
+    .cta-holographic {
+        padding: 80px 20px;
+    }
+    
+    .cta-headline {
+        font-size: 2rem;
+    }
+    
+    .cta-subtext {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+    
+    .cta-pulse-btn {
+        padding: 16px 35px;
+        font-size: 1rem;
+    }
+    
+    .cta-glow-bg {
+        width: 350px;
+        height: 350px;
+    }
 }
 
 /* ================================

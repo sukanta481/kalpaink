@@ -476,18 +476,22 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- Holographic CTA Section -->
+    <section class="cta-holographic">
+        <div class="cta-glow-bg"></div>
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8" data-aos="fade-right">
-                    <h3 class="cta-title">Ready to Transform Your Brand?</h3>
-                    <p class="cta-text">Let's create something amazing together. Get in touch with us today!</p>
-                </div>
-                <div class="col-lg-4 text-lg-end" data-aos="fade-left">
-                    <a href="contact.php" class="btn btn-white">Get Started</a>
-                </div>
+            <div class="cta-content text-center" data-aos="zoom-in" data-aos-duration="1000">
+                <h2 class="cta-headline">Ready to Sculpt Your Legacy?</h2>
+                <p class="cta-subtext">Let's transform your vision into a digital masterpiece</p>
+                <a href="contact.php" class="cta-pulse-btn">
+                    <span class="btn-text">Let's Create Together</span>
+                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                </a>
             </div>
+        </div>
+        <!-- Floating particles for depth -->
+        <div class="cta-particles">
+            <span></span><span></span><span></span><span></span><span></span>
         </div>
     </section>
 
