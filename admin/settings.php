@@ -4,13 +4,13 @@
  * Kalpoink Admin CRM
  */
 
-$page_title = 'Settings';
-require_once __DIR__ . '/includes/header.php';
+// Load auth BEFORE any output
+require_once __DIR__ . '/config/auth.php';
 requireRole('admin');
 
 $db = getDB();
 
-// Handle form submissions
+// Handle form submissions BEFORE including header
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = $_POST['csrf_token'] ?? '';
     
@@ -32,6 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: settings.php');
     exit;
 }
+
+// NOW include header (after all potential redirects)
+$page_title = 'Settings';
+require_once __DIR__ . '/includes/header.php';
 
 // Get all settings grouped by category
 $stmt = $db->query("SELECT * FROM settings ORDER BY category, id");
@@ -116,6 +120,7 @@ foreach ($allSettings as $setting) {
                     <h5 class="card-title"><i class="fas fa-share-nodes me-2"></i>Social Media Links</h5>
                 </div>
                 <div class="card-body">
+                    <p class="text-muted small mb-3"><i class="fas fa-info-circle me-1"></i>All fields are optional. You can add or update one link at a time.</p>
                     <?php if (isset($settings['social'])): ?>
                     <div class="row">
                     <?php foreach ($settings['social'] as $setting): ?>
@@ -124,9 +129,9 @@ foreach ($allSettings as $setting) {
                             <i class="fab fa-<?php echo str_replace('social_', '', $setting['setting_key']); ?> me-1"></i>
                             <?php echo ucwords(str_replace(['social_', '_'], ['', ' '], $setting['setting_key'])); ?>
                         </label>
-                        <input type="url" class="form-control" id="<?php echo $setting['setting_key']; ?>" 
+                        <input type="text" class="form-control" id="<?php echo $setting['setting_key']; ?>" 
                                name="settings[<?php echo $setting['setting_key']; ?>]" 
-                               placeholder="https://"
+                               placeholder="https://..."
                                value="<?php echo htmlspecialchars($setting['setting_value']); ?>">
                     </div>
                     <?php endforeach; ?>
