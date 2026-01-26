@@ -8,10 +8,18 @@ include 'includes/header.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <!-- Hero Image Area -->
-                    <div class="d-flex align-items-end" style="min-height: 300px;">
-                        <div class="placeholder-image" style="width: 100%; height: 250px; border-radius: 15px;">
-                            <i class="fas fa-chess-queen" style="font-size: 4rem;"></i>
+                    <!-- Hero Visual: Sculpting Concept -->
+                    <div class="about-hero-visual">
+                        <div class="sculpt-concept">
+                            <div class="stone-block">
+                                <i class="fas fa-cube"></i>
+                            </div>
+                            <div class="chisel-spark">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="crown-emerging">
+                                <i class="fas fa-crown"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -25,32 +33,37 @@ include 'includes/header.php';
             <div class="about-card" data-aos="fade-up">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h2>About Us</h2>
+                        <span class="about-badge">Our Story</span>
+                        <h2 class="about-headline">Behind The Chisel</h2>
                         <p>At Kalpoink, creativity isn't just our passion – it's our heartbeat. We're a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p>
                         <p>With fresh ideas and an unbridled enthusiasm, we turn challenges into opportunities and dreams into realities. We are based in Kolkata and serve clients across India and beyond.</p>
                     </div>
                 </div>
                 
-                <!-- Stats -->
-                <div class="row mt-5">
+                <!-- Stats Grid with Numbers -->
+                <div class="row mt-5 stats-grid">
                     <div class="col-md-3 col-6">
-                        <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
-                            <p class="mb-1"><strong>Successfully completed projects</strong></p>
+                        <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                            <span class="stat-number">150+</span>
+                            <p class="stat-label">Projects Delivered</p>
                         </div>
                     </div>
                     <div class="col-md-3 col-6">
-                        <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
-                            <p class="mb-1"><strong>Passionate team members ready to innovate</strong></p>
+                        <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                            <span class="stat-number">100%</span>
+                            <p class="stat-label">In-House Team</p>
                         </div>
                     </div>
                     <div class="col-md-3 col-6">
-                        <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
-                            <p class="mb-1"><strong>Brands trust us to amplify their digital presence</strong></p>
+                        <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                            <span class="stat-number">5+</span>
+                            <p class="stat-label">Years Experience</p>
                         </div>
                     </div>
                     <div class="col-md-3 col-6">
-                        <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
-                            <p class="mb-1"><strong>Creative projects executed with excellence</strong></p>
+                        <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                            <span class="stat-number">24/7</span>
+                            <p class="stat-label">Creative Support</p>
                         </div>
                     </div>
                 </div>
@@ -63,9 +76,16 @@ include 'includes/header.php';
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-5" data-aos="fade-right">
-                    <div class="who-we-are-image">
-                        <div class="placeholder-image" style="height: 400px; border-radius: 15px;">
-                            <i class="fas fa-users" style="font-size: 4rem;"></i>
+                    <div class="who-we-are-image workspace-image">
+                        <!-- Creative Workspace Visual -->
+                        <div class="workspace-mockup">
+                            <div class="desk-items">
+                                <div class="item laptop"><i class="fas fa-laptop-code"></i></div>
+                                <div class="item coffee"><i class="fas fa-mug-hot"></i></div>
+                                <div class="item pencil"><i class="fas fa-pencil-ruler"></i></div>
+                                <div class="item palette"><i class="fas fa-palette"></i></div>
+                            </div>
+                            <p class="workspace-label">Our Creative Space</p>
                         </div>
                     </div>
                 </div>
@@ -83,7 +103,8 @@ include 'includes/header.php';
     <section class="section-padding" style="padding-top: 0;">
         <div class="container">
             <div class="join-us-section" data-aos="fade-up">
-                <div class="row align-items-center">
+                <div class="join-us-pattern"></div>
+                <div class="row align-items-center position-relative">
                     <div class="col-lg-8">
                         <h3 class="cta-title">Why Work With Us?</h3>
                         <p class="mb-0">Ready to elevate your brand? If you're creative, passionate, and driven by innovation, Kalpoink is your perfect partner. Let's disrupt the digital world together!</p>
