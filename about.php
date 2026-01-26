@@ -97,7 +97,7 @@ include 'includes/header.php';
     </section>
 
     <!-- The Creators Section -->
-    <section class="creators-section section-padding bg-light-gray">
+    <section class="creators-section section-padding">
         <div class="container">
             <!-- Section Header -->
             <div class="text-center mb-5">
@@ -145,23 +145,61 @@ include 'includes/header.php';
                 <p class="hover-hint text-center mt-4"><i class="fas fa-hand-pointer"></i> Hover to see our creative side!</p>
             </div>
             
-            <!-- Mobile: Compact Profile Strips -->
+            <!-- Mobile: Flip Cards (Tap to reveal Creative Side) -->
             <div class="creators-mobile d-lg-none">
                 <?php foreach ($team_members as $index => $member): ?>
-                <div class="creator-strip" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
-                    <div class="strip-avatar">
-                        <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo $member['name']; ?>">
+                <div class="creator-flip-mobile" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
+                    <div class="flip-mobile-inner">
+                        <!-- Front: Professional Side -->
+                        <div class="flip-mobile-front">
+                            <div class="flip-avatar">
+                                <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo $member['name']; ?>">
+                            </div>
+                            <div class="flip-content">
+                                <h4 class="flip-name"><?php echo $member['name']; ?></h4>
+                                <p class="flip-role"><?php echo $member['position']; ?></p>
+                                <p class="flip-tagline">"<?php echo $member['tagline']; ?>"</p>
+                            </div>
+                            <div class="flip-hint">
+                                <i class="fas fa-hand-pointer"></i> Tap to flip
+                            </div>
+                        </div>
+                        <!-- Back: Creative/Fun Side -->
+                        <div class="flip-mobile-back">
+                            <div class="flip-avatar">
+                                <img src="<?php echo $member['image_fun'] ?? $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo $member['name']; ?> - Creative">
+                            </div>
+                            <div class="flip-content">
+                                <h4 class="flip-name"><?php echo $member['name']; ?></h4>
+                                <p class="flip-role flip-role-fun">
+                                    <?php 
+                                    // Fun titles based on position
+                                    $fun_titles = [
+                                        'Co-Founder & Creative Director' => '✨ Chief Visionary & Pixel Perfectionist',
+                                        'Co-Founder & Strategy Lead' => '🚀 Master of Ideas & Caffeine Addict'
+                                    ];
+                                    echo $fun_titles[$member['position']] ?? '🎨 Creative Genius';
+                                    ?>
+                                </p>
+                                <p class="flip-fact">
+                                    <?php 
+                                    // Fun facts
+                                    $fun_facts = [
+                                        0 => "☕ Runs on coffee & creative chaos. Has probably redesigned this card 47 times.",
+                                        1 => "🎯 Believes every brand has a story. Also believes pineapple belongs on pizza."
+                                    ];
+                                    echo $fun_facts[$index] ?? "🎨 Making magic happen, one pixel at a time!";
+                                    ?>
+                                </p>
+                            </div>
+                            <a href="<?php echo $member['linkedin']; ?>" class="flip-linkedin" target="_blank">
+                                <i class="fab fa-linkedin-in"></i> Let's Connect!
+                            </a>
+                        </div>
                     </div>
-                    <div class="strip-info">
-                        <h4 class="strip-name"><?php echo $member['name']; ?></h4>
-                        <p class="strip-role"><?php echo $member['position']; ?></p>
-                        <p class="strip-tagline">"<?php echo $member['tagline']; ?>"</p>
-                    </div>
-                    <a href="<?php echo $member['linkedin']; ?>" class="strip-linkedin" target="_blank">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
                 </div>
                 <?php endforeach; ?>
+                <p class="tap-hint text-center mt-3"><i class="fas fa-sync-alt"></i> Tap cards to see our creative side!</p>
             </div>
         </div>
     </section>
