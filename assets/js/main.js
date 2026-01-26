@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mobile Creator Flip Cards
     initCreatorFlipCards();
+
+    // Mobile Services Neon Spotlight
+    initServicesSpotlight();
 });
 
 /**
@@ -807,4 +810,58 @@ function initCreatorFlipCards() {
             }, 1500);
         }
     }, 3000);
+}
+
+/**
+ * Mobile Services Neon Spotlight
+ * Detects which service card is most visible and activates it
+ */
+function initServicesSpotlight() {
+    const track = document.querySelector('.services-track');
+    const wrappers = document.querySelectorAll('.service-card-wrapper');
+    
+    if (!track || !wrappers.length || window.innerWidth >= 992) return;
+    
+    function updateActiveCard() {
+        // Only apply on mobile
+        if (window.innerWidth >= 992) {
+            wrappers.forEach(w => w.classList.remove('is-active'));
+            return;
+        }
+        
+        const trackRect = track.getBoundingClientRect();
+        const trackCenter = trackRect.left + trackRect.width * 0.4; // Slightly left of center for better UX
+        
+        let closestCard = null;
+        let closestDistance = Infinity;
+        
+        wrappers.forEach(wrapper => {
+            const rect = wrapper.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            const distance = Math.abs(cardCenter - trackCenter);
+            
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestCard = wrapper;
+            }
+        });
+        
+        // Update active states
+        wrappers.forEach(wrapper => {
+            if (wrapper === closestCard) {
+                wrapper.classList.add('is-active');
+            } else {
+                wrapper.classList.remove('is-active');
+            }
+        });
+    }
+    
+    // Listen for scroll on the track
+    track.addEventListener('scroll', updateActiveCard, { passive: true });
+    
+    // Initial check
+    updateActiveCard();
+    
+    // Recheck on resize
+    window.addEventListener('resize', updateActiveCard);
 }
