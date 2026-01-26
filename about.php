@@ -4,27 +4,23 @@ include 'includes/header.php';
 ?>
 
     <!-- About Hero Section -->
-    <section class="about-hero">
-        <div class="container">
-            <div class="row align-items-center min-vh-50">
-                <div class="col-lg-6 order-2 order-lg-2">
-                    <!-- Hero Visual: Stylus/iPad showing the digital craft -->
-                    <div class="about-hero-visual" data-aos="fade-left">
-                        <div class="hero-image-wrapper">
-                            <img src="assets/images/about-hero-banner.png" 
-                                 alt="Designer hand holding Apple Pencil on iPad Pro - Digital craftsmanship meets old-school artistry" 
-                                 class="hero-craft-image">
-                            <div class="image-overlay-accent"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="about-hero about-hero-dark">
+        <!-- Hero Banner Image with Curved Mask -->
+        <div class="hero-banner-full">
+            <img src="assets/images/about-hero-dark.png" 
+                 alt="Designer hand drawing on glowing tablet - Digital craftsmanship in the dark" 
+                 class="hero-banner-image">
+            <div class="hero-banner-overlay"></div>
         </div>
-        <!-- Wave/Torn Paper Transition -->
-        <div class="hero-wave-transition">
-            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                <path d="M0,60 C180,120 360,0 540,60 C720,120 900,0 1080,60 C1260,120 1440,60 1440,60 L1440,120 L0,120 Z" fill="#ffffff"/>
-                <path d="M0,80 C180,40 360,100 540,60 C720,20 900,100 1080,80 C1260,60 1440,80 1440,80 L1440,120 L0,120 Z" fill="#ffffff" opacity="0.5"/>
+        <!-- Curved Bottom Mask - Stage Curtain Effect -->
+        <div class="hero-curved-mask">
+            <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <path d="M0,0 L0,60 Q720,120 1440,60 L1440,0 Z" fill="var(--primary-yellow)"/>
+            </svg>
+        </div>
+        <div class="hero-curved-bottom">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+                <path d="M0,80 Q720,0 1440,80 L1440,80 L0,80 Z" fill="#ffffff"/>
             </svg>
         </div>
     </section>
@@ -78,7 +74,7 @@ include 'includes/header.php';
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-5" data-aos="fade-right">
-                    <div class="digital-desk-image">
+                    <div class="digital-desk-image animate-slide-up" data-aos="fade-up" data-aos-duration="800">
                         <!-- Digital Desk Bento Grid - Real workspace imagery -->
                         <img src="assets/images/digital-desk-bento.png" 
                              alt="Our Digital Workspace - VS Code, Sketchbook with Coffee, and Figma UI Kit" 
@@ -106,7 +102,7 @@ include 'includes/header.php';
                         <p class="mb-0">Ready to elevate your brand? If you're creative, passionate, and driven by innovation, Kalpoink is your perfect partner. Let's disrupt the digital world together!</p>
                     </div>
                     <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                        <a href="contact.php" class="btn btn-white">Get In Touch</a>
+                        <a href="contact.php" class="btn btn-white btn-pulse-ripple">Get In Touch</a>
                     </div>
                 </div>
             </div>
