@@ -1,6 +1,19 @@
 <?php 
 $page_title = 'Home';
 include 'includes/header.php'; 
+
+// Get hero slides from CRM (auto-sync)
+$crm_hero_slides = getHeroSlides();
+
+// Default gradient icons for slides without images
+$default_gradients = [
+    ['gradient-1', 'fa-palette'],
+    ['gradient-2', 'fa-code'],
+    ['gradient-3', 'fa-bullhorn'],
+    ['gradient-5', 'fa-gem'],
+    ['gradient-6', 'fa-swatchbook'],
+    ['gradient-7', 'fa-layer-group'],
+];
 ?>
 
     <!-- Hero Section with Slider -->
@@ -8,14 +21,80 @@ include 'includes/header.php';
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <!-- Carousel Indicators -->
             <div class="carousel-indicators">
+                <?php if (!empty($crm_hero_slides)): ?>
+                    <?php foreach ($crm_hero_slides as $index => $slide): ?>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="<?php echo $index; ?>" <?php echo $index === 0 ? 'class="active" aria-current="true"' : ''; ?> aria-label="Slide <?php echo $index + 1; ?>"></button>
+                    <?php endforeach; ?>
+                <?php else: ?>
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <?php endif; ?>
             </div>
 
             <!-- Carousel Slides -->
             <div class="carousel-inner">
-                <!-- Slide 1 - Creative Design -->
+                <?php if (!empty($crm_hero_slides)): ?>
+                    <?php foreach ($crm_hero_slides as $index => $slide): ?>
+                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                    <div class="container">
+                        <div class="row align-items-center min-vh-hero">
+                            <div class="col-lg-6 hero-text-col">
+                                <div class="hero-content" <?php echo $index === 0 ? 'data-aos="fade-right"' : ''; ?>>
+                                    <span class="hero-badge"><?php echo htmlspecialchars($slide['badge_text'] ?? ''); ?></span>
+                                    <h1 class="hero-title"><?php echo htmlspecialchars($slide['title']); ?></h1>
+                                    <p class="hero-subtitle"><?php echo htmlspecialchars($slide['subtitle'] ?? ''); ?></p>
+                                    <div class="hero-buttons">
+                                        <?php if (!empty($slide['button1_text'])): ?>
+                                        <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact.php'); ?>" class="btn btn-dark btn-lg"><?php echo htmlspecialchars($slide['button1_text']); ?></a>
+                                        <?php endif; ?>
+                                        <?php if (!empty($slide['button2_text'])): ?>
+                                        <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services.php'); ?>" class="btn btn-outline-dark btn-lg"><?php echo htmlspecialchars($slide['button2_text']); ?></a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 hero-visual-col">
+                                <div class="hero-masonry" data-parallax-container>
+                                    <?php 
+                                    // Check if slide has uploaded images
+                                    $hasImages = !empty($slide['image1']) || !empty($slide['image2']) || !empty($slide['image3']);
+                                    
+                                    if ($hasImages): 
+                                        $images = [$slide['image1'] ?? '', $slide['image2'] ?? '', $slide['image3'] ?? ''];
+                                        $parallax = ['0.03', '0.05', '0.04'];
+                                        foreach ($images as $imgIndex => $img): 
+                                            if (!empty($img)):
+                                    ?>
+                                    <div class="masonry-item item-<?php echo $imgIndex + 1; ?>" data-parallax="<?php echo $parallax[$imgIndex]; ?>">
+                                        <img src="<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($slide['title']); ?>">
+                                    </div>
+                                    <?php 
+                                            endif;
+                                        endforeach; 
+                                    else: 
+                                        // Use placeholder gradients
+                                        $gradientSet = $index % 2 === 0 ? [['gradient-1', 'fa-palette'], ['gradient-2', 'fa-code'], ['gradient-3', 'fa-bullhorn']] : [['gradient-5', 'fa-gem'], ['gradient-6', 'fa-swatchbook'], ['gradient-7', 'fa-layer-group']];
+                                        $parallax = ['0.03', '0.05', '0.04'];
+                                        foreach ($gradientSet as $gIndex => $gradient):
+                                    ?>
+                                    <div class="masonry-item item-<?php echo $gIndex + 1; ?>" data-parallax="<?php echo $parallax[$gIndex]; ?>">
+                                        <div class="masonry-placeholder <?php echo $gradient[0]; ?>">
+                                            <i class="fas <?php echo $gradient[1]; ?>"></i>
+                                        </div>
+                                    </div>
+                                    <?php 
+                                        endforeach;
+                                    endif; 
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                <!-- Fallback: Default slides if no CRM data -->
                 <div class="carousel-item active">
                     <div class="container">
                         <div class="row align-items-center min-vh-hero">
@@ -31,103 +110,22 @@ include 'includes/header.php';
                                 </div>
                             </div>
                             <div class="col-lg-6 hero-visual-col">
-                                <!-- Masonry Grid with Parallax -->
                                 <div class="hero-masonry" data-parallax-container>
                                     <div class="masonry-item item-1" data-parallax="0.03">
-                                        <img src="uploads/portfolio_website.png" alt="Website Design Portfolio">
+                                        <div class="masonry-placeholder gradient-1"><i class="fas fa-palette"></i></div>
                                     </div>
                                     <div class="masonry-item item-2" data-parallax="0.05">
-                                        <img src="uploads/portfolio_logo.png" alt="Logo Design Portfolio">
+                                        <div class="masonry-placeholder gradient-2"><i class="fas fa-code"></i></div>
                                     </div>
                                     <div class="masonry-item item-3" data-parallax="0.04">
-                                        <img src="uploads/portfolio_social.png" alt="Social Media Design">
+                                        <div class="masonry-placeholder gradient-3"><i class="fas fa-bullhorn"></i></div>
                                     </div>
-                                    <!-- <div class="masonry-item item-4" data-parallax="0.06">
-                                        <img src="uploads/1st slider.jpeg" alt="Creative Design Work">
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Slide 2 - Digital Marketing -->
-                <div class="carousel-item">
-                    <div class="container">
-                        <div class="row align-items-center min-vh-hero">
-                            <div class="col-lg-6 hero-text-col">
-                                <div class="hero-content">
-                                    <span class="hero-badge">Digital Marketing</span>
-                                    <h1 class="hero-title">Grow Your Digital Presence</h1>
-                                    <p class="hero-subtitle">Strategic digital marketing to boost your brand visibility and drive measurable results.</p>
-                                    <div class="hero-buttons">
-                                        <a href="contact.php" class="btn btn-dark btn-lg">Get Quote</a>
-                                        <a href="services.php" class="btn btn-outline-dark btn-lg">Services</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 hero-visual-col">
-                                <div class="hero-masonry" data-parallax-container>
-                                    <div class="masonry-item item-1" data-parallax="0.03">
-                                        <img src="uploads/portfolio_social.png" alt="Social Media Marketing">
-                                    </div>
-                                    <div class="masonry-item item-2" data-parallax="0.05">
-                                        <img src="uploads/portfolio_website.png" alt="Website Design">
-                                    </div>
-                                    <div class="masonry-item item-3" data-parallax="0.04">
-                                        <img src="uploads/portfolio_logo.png" alt="Brand Identity">
-                                    </div>
-                                    <!-- <div class="masonry-item item-4" data-parallax="0.06">
-                                        <img src="uploads/1st slider.jpeg" alt="Creative Design">
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3 - Brand Identity -->
-                <div class="carousel-item">
-                    <div class="container">
-                        <div class="row align-items-center min-vh-hero">
-                            <div class="col-lg-6 hero-text-col">
-                                <div class="hero-content">
-                                    <span class="hero-badge">Brand Identity</span>
-                                    <h1 class="hero-title">Build Your Unique Brand</h1>
-                                    <p class="hero-subtitle">Create a memorable brand identity from logos to complete brand guidelines.</p>
-                                    <div class="hero-buttons">
-                                        <a href="contact.php" class="btn btn-dark btn-lg">Get Quote</a>
-                                        <a href="case-studies.php" class="btn btn-outline-dark btn-lg">Portfolio</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 hero-visual-col">
-                                <div class="hero-masonry" data-parallax-container>
-                                    <div class="masonry-item item-1" data-parallax="0.03">
-                                        <div class="masonry-placeholder gradient-5">
-                                            <i class="fas fa-gem"></i>
-                                        </div>
-                                    </div>
-                                    <div class="masonry-item item-2" data-parallax="0.05">
-                                        <div class="masonry-placeholder gradient-6">
-                                            <i class="fas fa-swatchbook"></i>
-                                        </div>
-                                    </div>
-                                    <div class="masonry-item item-3" data-parallax="0.04">
-                                        <div class="masonry-placeholder gradient-7">
-                                            <i class="fas fa-layer-group"></i>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="masonry-item item-4" data-parallax="0.06">
-                                        <div class="masonry-placeholder gradient-8">
-                                            <i class="fas fa-signature"></i>
-                                        </div>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
 
             <!-- Carousel Controls (hidden on mobile) -->

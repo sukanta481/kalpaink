@@ -2,8 +2,20 @@
 $page_title = 'Services';
 include 'includes/header.php'; 
 
-// Extended services list for the services page
-$detailed_services = [
+// Get services from CRM database (auto-sync)
+$services_from_db = getServicesFromDB(false);
+
+// Use CRM services if available, otherwise use fallback
+$detailed_services = !empty($services_from_db) ? array_map(function($s) {
+    return [
+        'id' => $s['slug'] ?? strtolower(str_replace(' ', '-', $s['title'])),
+        'icon' => $s['icon'] ?? 'fa-cogs',
+        'title' => $s['title'],
+        'summary' => $s['short_description'],
+        'description' => $s['full_description'] ?? $s['short_description'],
+        'features' => is_array($s['features']) ? $s['features'] : (json_decode($s['features'], true) ?? [])
+    ];
+}, $services_from_db) : [
     [
         'id' => 'graphics',
         'icon' => 'fa-palette',

@@ -28,6 +28,54 @@ $stats['blogs'] = $stmt->fetch()['count'] ?? 0;
 $stmt = $db->query("SELECT COUNT(*) as count FROM projects WHERE is_active = 1");
 $stats['projects'] = $stmt->fetch()['count'] ?? 0;
 
+// Total Services
+try {
+    $stmt = $db->query("SELECT COUNT(*) as count FROM services WHERE is_active = 1");
+    $stats['services'] = $stmt->fetch()['count'] ?? 0;
+} catch (PDOException $e) {
+    $stats['services'] = 0;
+}
+
+// Total Team Members
+try {
+    $stmt = $db->query("SELECT COUNT(*) as count FROM team_members WHERE is_active = 1");
+    $stats['team'] = $stmt->fetch()['count'] ?? 0;
+} catch (PDOException $e) {
+    $stats['team'] = 0;
+}
+
+// Total Testimonials
+try {
+    $stmt = $db->query("SELECT COUNT(*) as count FROM testimonials WHERE is_active = 1");
+    $stats['testimonials'] = $stmt->fetch()['count'] ?? 0;
+} catch (PDOException $e) {
+    $stats['testimonials'] = 0;
+}
+
+// Total Hero Slides
+try {
+    $stmt = $db->query("SELECT COUNT(*) as count FROM hero_slides WHERE is_active = 1");
+    $stats['hero_slides'] = $stmt->fetch()['count'] ?? 0;
+} catch (PDOException $e) {
+    $stats['hero_slides'] = 0;
+}
+
+// Total FAQs
+try {
+    $stmt = $db->query("SELECT COUNT(*) as count FROM faqs WHERE is_active = 1");
+    $stats['faqs'] = $stmt->fetch()['count'] ?? 0;
+} catch (PDOException $e) {
+    $stats['faqs'] = 0;
+}
+
+// Total Gallery Images
+try {
+    $stmt = $db->query("SELECT COUNT(*) as count FROM gallery WHERE is_active = 1");
+    $stats['gallery'] = $stmt->fetch()['count'] ?? 0;
+} catch (PDOException $e) {
+    $stats['gallery'] = 0;
+}
+
 // Recent Leads
 $stmt = $db->query("SELECT * FROM leads ORDER BY created_at DESC LIMIT 5");
 $recentLeads = $stmt->fetchAll();
@@ -86,6 +134,82 @@ $leadsByStatus = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
             </div>
             <div class="stat-value"><?php echo number_format($stats['projects']); ?></div>
             <div class="stat-label">Projects</div>
+        </div>
+    </div>
+</div>
+
+<!-- Website Content Stats -->
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0"><i class="fas fa-globe me-2"></i>Website Content Overview</h5>
+                <a href="<?php echo getAdminUrl('content.php'); ?>" class="btn btn-sm btn-primary">
+                    <i class="fas fa-cog me-1"></i>Manage Content
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="<?php echo getAdminUrl('services.php'); ?>" class="content-stat-box text-decoration-none">
+                            <div class="content-stat-icon bg-primary bg-opacity-10 text-primary">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="content-stat-value"><?php echo $stats['services']; ?></div>
+                            <div class="content-stat-label">Services</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="<?php echo getAdminUrl('team.php'); ?>" class="content-stat-box text-decoration-none">
+                            <div class="content-stat-icon bg-success bg-opacity-10 text-success">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="content-stat-value"><?php echo $stats['team']; ?></div>
+                            <div class="content-stat-label">Team Members</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="<?php echo getAdminUrl('content/testimonials.php'); ?>" class="content-stat-box text-decoration-none">
+                            <div class="content-stat-icon bg-warning bg-opacity-10 text-warning">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="content-stat-value"><?php echo $stats['testimonials']; ?></div>
+                            <div class="content-stat-label">Testimonials</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="<?php echo getAdminUrl('content/hero-slides.php'); ?>" class="content-stat-box text-decoration-none">
+                            <div class="content-stat-icon bg-info bg-opacity-10 text-info">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="content-stat-value"><?php echo $stats['hero_slides']; ?></div>
+                            <div class="content-stat-label">Hero Slides</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="<?php echo getAdminUrl('content/faqs.php'); ?>" class="content-stat-box text-decoration-none">
+                            <div class="content-stat-icon bg-danger bg-opacity-10 text-danger">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <div class="content-stat-value"><?php echo $stats['faqs']; ?></div>
+                            <div class="content-stat-label">FAQs</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="<?php echo getAdminUrl('content/gallery.php'); ?>" class="content-stat-box text-decoration-none">
+                            <div class="content-stat-icon bg-secondary bg-opacity-10 text-secondary">
+                                <i class="fas fa-photo-video"></i>
+                            </div>
+                            <div class="content-stat-value"><?php echo $stats['gallery']; ?></div>
+                            <div class="content-stat-label">Gallery Images</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="alert alert-info mt-3 mb-0">
+                    <i class="fas fa-sync-alt me-2"></i>
+                    <strong>Auto-Sync Enabled:</strong> All content changes are automatically reflected on the website. No manual sync required!
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -188,15 +312,28 @@ $leadsByStatus = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
         <!-- Quick Links -->
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Quick Links</h5>
+                <h5 class="card-title">Quick Actions</h5>
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
+                    <a href="<?php echo getAdminUrl('leads.php?action=add'); ?>" class="btn btn-outline-success">
+                        <i class="fas fa-user-plus me-2"></i>Add New Lead
+                    </a>
                     <a href="<?php echo getAdminUrl('blogs.php?action=add'); ?>" class="btn btn-outline-primary">
                         <i class="fas fa-plus me-2"></i>New Blog Post
                     </a>
                     <a href="<?php echo getAdminUrl('projects.php?action=add'); ?>" class="btn btn-outline-primary">
                         <i class="fas fa-plus me-2"></i>New Project
+                    </a>
+                    <a href="<?php echo getAdminUrl('services.php?action=add'); ?>" class="btn btn-outline-info">
+                        <i class="fas fa-cogs me-2"></i>Add Service
+                    </a>
+                    <a href="<?php echo getAdminUrl('team.php?action=add'); ?>" class="btn btn-outline-warning">
+                        <i class="fas fa-user me-2"></i>Add Team Member
+                    </a>
+                    <hr class="my-2">
+                    <a href="<?php echo getAdminUrl('content.php'); ?>" class="btn btn-dark">
+                        <i class="fas fa-edit me-2"></i>Manage All Content
                     </a>
                     <a href="<?php echo getSiteUrl(); ?>" target="_blank" class="btn btn-outline-secondary">
                         <i class="fas fa-external-link-alt me-2"></i>Visit Website

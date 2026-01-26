@@ -1,6 +1,13 @@
 <?php 
 $page_title = 'About Us';
 include 'includes/header.php'; 
+
+// Get statistics from CRM (auto-sync)
+$crm_stats = getStatisticsFromDB();
+$stats_map = [];
+foreach ($crm_stats as $stat) {
+    $stats_map[$stat['stat_key'] ?? $stat['label']] = $stat;
+}
 ?>
 
     <!-- About Hero Section -->
@@ -38,8 +45,18 @@ include 'includes/header.php';
                     </div>
                 </div>
                 
-                <!-- Stats Grid with Numbers -->
+                <!-- Stats Grid with Numbers - Auto-sync from CRM -->
                 <div class="row mt-5 stats-grid">
+                    <?php if (!empty($crm_stats)): ?>
+                        <?php foreach ($crm_stats as $index => $stat): ?>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-card" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
+                                <span class="stat-number"><?php echo htmlspecialchars($stat['value'] . ($stat['suffix'] ?? '')); ?></span>
+                                <p class="stat-label"><?php echo htmlspecialchars($stat['label']); ?></p>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
                     <div class="col-md-3 col-6">
                         <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
                             <span class="stat-number">150+</span>
@@ -64,6 +81,7 @@ include 'includes/header.php';
                             <p class="stat-label">Creative Support</p>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

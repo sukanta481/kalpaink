@@ -59,6 +59,17 @@ if ($tablesExist) {
     </a>
 </div>
 <?php else: ?>
+<div class="alert alert-success mb-4">
+    <div class="d-flex align-items-center">
+        <div class="me-3">
+            <i class="fas fa-check-circle fa-2x"></i>
+        </div>
+        <div>
+            <strong><i class="fas fa-sync-alt me-2"></i>Auto-Sync Active!</strong><br>
+            All content changes are automatically reflected on the live website. No manual publishing required!
+        </div>
+    </div>
+</div>
 <div class="alert alert-info mb-4">
     <i class="fas fa-info-circle me-2"></i>
     <strong>Content Management Center:</strong> Manage all website content from this central hub. Select a section below to edit.

@@ -67,6 +67,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <a class="nav-link <?php echo $currentPage == 'content' ? 'active' : ''; ?>" href="<?php echo getAdminUrl('content.php'); ?>">
                         <i class="fas fa-layer-group"></i>
                         <span>Content Manager</span>
+                        <span class="badge bg-success ms-auto" style="font-size: 0.65rem;">Auto-Sync</span>
                     </a>
                 </li>
                 <li class="nav-item">

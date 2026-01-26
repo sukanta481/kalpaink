@@ -4,15 +4,16 @@
  * Kalpoink Admin CRM
  */
 
-$page_title = 'Hero Slides';
-require_once __DIR__ . '/../includes/header.php';
+// Include auth first (without HTML output) to handle redirects
+require_once __DIR__ . '/../config/auth.php';
+requireAuth();
 requireRole('editor');
 
 $db = getDB();
 $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// Handle form submissions
+// Handle form submissions BEFORE including header (which outputs HTML)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = $_POST['csrf_token'] ?? '';
     
@@ -106,6 +107,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+
+// NOW include the header (after all redirects are done)
+$page_title = 'Hero Slides';
+require_once __DIR__ . '/../includes/header.php';
 
 // Handle different actions
 if ($action === 'add' || $action === 'edit') {

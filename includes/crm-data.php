@@ -89,6 +89,28 @@ function getServicesFromDB($featured_only = false) {
 }
 
 /**
+ * Get a single service by slug
+ */
+function getServiceBySlug($slug) {
+    $db = getCRMDatabase();
+    if (!$db) return null;
+    
+    try {
+        $stmt = $db->prepare("SELECT * FROM services WHERE slug = ? AND is_active = 1");
+        $stmt->execute([$slug]);
+        $service = $stmt->fetch();
+        
+        if ($service) {
+            $service['features'] = json_decode($service['features'], true) ?? [];
+        }
+        
+        return $service;
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
+/**
  * Get all active projects/case studies
  */
 function getProjectsFromDB($limit = null, $featured_only = false) {
@@ -121,6 +143,52 @@ function getProjectsFromDB($limit = null, $featured_only = false) {
         return $projects;
     } catch (PDOException $e) {
         return [];
+    }
+}
+
+/**
+ * Get a single project by slug
+ */
+function getProjectBySlug($slug) {
+    $db = getCRMDatabase();
+    if (!$db) return null;
+    
+    try {
+        $stmt = $db->prepare("SELECT * FROM projects WHERE slug = ? AND is_active = 1");
+        $stmt->execute([$slug]);
+        $project = $stmt->fetch();
+        
+        if ($project) {
+            $project['tags'] = json_decode($project['tags'], true) ?? [];
+            $project['gallery_images'] = json_decode($project['gallery_images'], true) ?? [];
+            $project['image'] = $project['featured_image'];
+        }
+        
+        return $project;
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
+/**
+ * Get a single blog by slug
+ */
+function getBlogBySlug($slug) {
+    $db = getCRMDatabase();
+    if (!$db) return null;
+    
+    try {
+        $stmt = $db->prepare("SELECT * FROM blogs WHERE slug = ? AND status = 'published'");
+        $stmt->execute([$slug]);
+        $blog = $stmt->fetch();
+        
+        if ($blog) {
+            $blog['tags'] = json_decode($blog['tags'], true) ?? [];
+        }
+        
+        return $blog;
+    } catch (PDOException $e) {
+        return null;
     }
 }
 
@@ -170,7 +238,15 @@ function getFAQsFromDB($category = null) {
             $stmt->execute();
         }
         
-        return $stmt->fetchAll();
+        $faqs = $stmt->fetchAll();
+        
+        // Map to consistent format for frontend
+        foreach ($faqs as &$faq) {
+            $faq['question'] = $faq['question'] ?? '';
+            $faq['answer'] = $faq['answer'] ?? '';
+        }
+        
+        return $faqs;
     } catch (PDOException $e) {
         return [];
     }
@@ -185,7 +261,17 @@ function getStatisticsFromDB() {
     
     try {
         $stmt = $db->query("SELECT * FROM statistics WHERE is_active = 1 ORDER BY sort_order ASC");
-        return $stmt->fetchAll();
+        $stats = $stmt->fetchAll();
+        
+        // Map to consistent format (support both column naming conventions)
+        foreach ($stats as &$stat) {
+            $stat['label'] = $stat['stat_label'] ?? $stat['label'] ?? '';
+            $stat['value'] = $stat['stat_value'] ?? $stat['value'] ?? '';
+            $stat['suffix'] = $stat['stat_suffix'] ?? $stat['suffix'] ?? '';
+            $stat['icon'] = $stat['stat_icon'] ?? $stat['icon'] ?? '';
+        }
+        
+        return $stats;
     } catch (PDOException $e) {
         return [];
     }

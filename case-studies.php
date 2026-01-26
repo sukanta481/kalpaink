@@ -2,91 +2,126 @@
 $page_title = 'Case Studies';
 include 'includes/header.php'; 
 
-// Extended portfolio items with high-quality images - varied sizes for masonry
-$portfolio_items = [
-    [
-        'title' => 'FoodKa Branding',
-        'category' => 'Branding,Logo',
-        'image' => 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop',
-        'tags' => ['Branding', 'Logo'],
-        'description' => 'Complete brand identity for a food delivery startup',
-        'size' => 'normal'
-    ],
-    [
-        'title' => 'Shohoj Kotha Podcast',
-        'category' => 'Branding,YouTube',
-        'image' => 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&h=800&fit=crop',
-        'tags' => ['Branding', 'YouTube'],
-        'description' => 'Podcast branding and YouTube channel design',
-        'size' => 'tall'
-    ],
-    [
-        'title' => 'ServiceZet UI/UX',
-        'category' => 'UI/UX,Web',
-        'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop',
-        'tags' => ['UI/UX', 'Web'],
-        'description' => 'Modern UI/UX design for a service marketplace',
-        'size' => 'wide'
-    ],
-    [
-        'title' => 'KLUBB10 Brand Identity',
-        'category' => 'Branding,Logo',
-        'image' => 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&h=400&fit=crop',
-        'tags' => ['Branding', 'Logo'],
-        'description' => 'Sports club branding and merchandise design',
-        'size' => 'normal'
-    ],
-    [
-        'title' => 'Travel Live Campaign',
-        'category' => 'SMM,Branding',
-        'image' => 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=800&fit=crop',
-        'tags' => ['SMM', 'Branding'],
-        'description' => 'Travel agency social media campaign',
-        'size' => 'tall'
-    ],
-    [
-        'title' => 'E-commerce Website',
-        'category' => 'Web,UI/UX',
-        'image' => 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
-        'tags' => ['Web', 'UI/UX'],
-        'description' => 'Full e-commerce website design and development',
-        'size' => 'normal'
-    ],
-    [
-        'title' => 'Restaurant Rebranding',
-        'category' => 'Branding,Print',
-        'image' => 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop',
-        'tags' => ['Branding', 'Print'],
-        'description' => 'Complete restaurant rebranding with menu design',
-        'size' => 'wide'
-    ],
-    [
-        'title' => 'Tech Startup Logo',
-        'category' => 'Logo,Branding',
-        'image' => 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop',
-        'tags' => ['Logo', 'Branding'],
-        'description' => 'Modern logo design for a tech startup',
-        'size' => 'normal'
-    ],
-    [
-        'title' => 'Film Publicity Campaign',
-        'category' => 'Film,Print',
-        'image' => 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&h=400&fit=crop',
-        'tags' => ['Film', 'Print'],
-        'description' => 'Film poster and publicity material design',
-        'size' => 'normal'
-    ]
-];
+// Get projects from CRM database (auto-sync)
+$projects_from_db = getProjectsFromDB();
 
-$categories = ['All', 'Branding', 'UI/UX', 'Web', 'YouTube', 'Print', 'Film'];
+// Use CRM projects if available, otherwise use fallback
+if (!empty($projects_from_db)) {
+    $portfolio_items = [];
+    $sizes = ['normal', 'tall', 'wide', 'normal', 'tall', 'normal', 'wide', 'normal', 'normal'];
+    
+    foreach ($projects_from_db as $index => $project) {
+        $tags = is_array($project['tags']) ? $project['tags'] : (json_decode($project['tags'], true) ?? []);
+        $portfolio_items[] = [
+            'title' => $project['title'],
+            'category' => implode(',', $tags),
+            'image' => $project['featured_image'] ?? 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop',
+            'tags' => $tags,
+            'description' => $project['short_description'] ?? '',
+            'size' => $sizes[$index % count($sizes)],
+            'slug' => $project['slug'] ?? ''
+        ];
+    }
+    
+    // Build categories dynamically from projects
+    $all_tags = [];
+    foreach ($portfolio_items as $item) {
+        $all_tags = array_merge($all_tags, $item['tags']);
+    }
+    $categories = array_merge(['All'], array_unique($all_tags));
+} else {
+    // Fallback to static content
+    $portfolio_items = [
+        [
+            'title' => 'FoodKa Branding',
+            'category' => 'Branding,Logo',
+            'image' => 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop',
+            'tags' => ['Branding', 'Logo'],
+            'description' => 'Complete brand identity for a food delivery startup',
+            'size' => 'normal'
+        ],
+        [
+            'title' => 'Shohoj Kotha Podcast',
+            'category' => 'Branding,YouTube',
+            'image' => 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&h=800&fit=crop',
+            'tags' => ['Branding', 'YouTube'],
+            'description' => 'Podcast branding and YouTube channel design',
+            'size' => 'tall'
+        ],
+        [
+            'title' => 'ServiceZet UI/UX',
+            'category' => 'UI/UX,Web',
+            'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop',
+            'tags' => ['UI/UX', 'Web'],
+            'description' => 'Modern UI/UX design for a service marketplace',
+            'size' => 'wide'
+        ],
+        [
+            'title' => 'KLUBB10 Brand Identity',
+            'category' => 'Branding,Logo',
+            'image' => 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&h=400&fit=crop',
+            'tags' => ['Branding', 'Logo'],
+            'description' => 'Sports club branding and merchandise design',
+            'size' => 'normal'
+        ],
+        [
+            'title' => 'Travel Live Campaign',
+            'category' => 'SMM,Branding',
+            'image' => 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=800&fit=crop',
+            'tags' => ['SMM', 'Branding'],
+            'description' => 'Travel agency social media campaign',
+            'size' => 'tall'
+        ],
+        [
+            'title' => 'E-commerce Website',
+            'category' => 'Web,UI/UX',
+            'image' => 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
+            'tags' => ['Web', 'UI/UX'],
+            'description' => 'Full e-commerce website design and development',
+            'size' => 'normal'
+        ],
+        [
+            'title' => 'Restaurant Rebranding',
+            'category' => 'Branding,Print',
+            'image' => 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop',
+            'tags' => ['Branding', 'Print'],
+            'description' => 'Complete restaurant rebranding with menu design',
+            'size' => 'wide'
+        ],
+        [
+            'title' => 'Tech Startup Logo',
+            'category' => 'Logo,Branding',
+            'image' => 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop',
+            'tags' => ['Logo', 'Branding'],
+            'description' => 'Modern logo design for a tech startup',
+            'size' => 'normal'
+        ],
+        [
+            'title' => 'Film Publicity Campaign',
+            'category' => 'Film,Print',
+            'image' => 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&h=400&fit=crop',
+            'tags' => ['Film', 'Print'],
+            'description' => 'Film poster and publicity material design',
+            'size' => 'normal'
+        ]
+    ];
+
+    $categories = ['All', 'Branding', 'UI/UX', 'Web', 'YouTube', 'Print', 'Film'];
+}
 
 // Sample images for floating gallery
-$gallery_previews = [
-    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=200&fit=crop',
-    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200&fit=crop',
-    'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&h=200&fit=crop',
-    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop'
-];
+$gallery_previews = [];
+foreach (array_slice($portfolio_items, 0, 4) as $item) {
+    $gallery_previews[] = $item['image'];
+}
+if (count($gallery_previews) < 4) {
+    $gallery_previews = [
+        'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=200&fit=crop',
+        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200&fit=crop',
+        'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&h=200&fit=crop',
+        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop'
+    ];
+}
 ?>
 
     <!-- Case Studies Hero Section - The Trophy Room -->

@@ -10,85 +10,104 @@ $category_colors = [
     'SEO' => ['bg' => '#43e97b', 'text' => '#1a1a1a'],
 ];
 
-// Featured post (the #1 best article)
-$featured_post = [
-    'title' => '10 Graphic Design Trends to Watch in 2026',
-    'category' => 'Design',
-    'excerpt' => 'Stay ahead of the curve with these emerging design trends that are shaping the visual landscape this year. From bold typography to immersive 3D experiences, discover what\'s defining modern design.',
-    'date' => 'January 10, 2026',
-    'read_time' => '5 min read',
-    'image' => 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop'
-];
+// Get blogs from CRM database (auto-sync)
+$blogs_from_db = getBlogsFromDB();
 
-// Trending posts (for horizontal carousel)
-$trending_posts = [
-    [
-        'title' => 'How to Build a Strong Brand Identity',
-        'category' => 'Branding',
-        'excerpt' => 'Learn the essential steps to create a memorable brand identity.',
-        'date' => 'January 8, 2026',
-        'read_time' => '7 min read',
-        'image' => 'https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=600&h=400&fit=crop'
-    ],
-    [
-        'title' => 'Social Media Marketing Strategies That Work',
-        'category' => 'Marketing',
-        'excerpt' => 'Discover proven social media strategies to boost engagement.',
-        'date' => 'January 5, 2026',
-        'read_time' => '6 min read',
-        'image' => 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop'
-    ],
-    [
-        'title' => 'The Power of Visual Storytelling',
+// If CRM has blogs, use them
+if (!empty($blogs_from_db)) {
+    // Featured post (first published blog)
+    $first_blog = $blogs_from_db[0];
+    $featured_post = [
+        'title' => $first_blog['title'],
+        'category' => $first_blog['category'] ?? 'Design',
+        'excerpt' => $first_blog['excerpt'] ?? substr(strip_tags($first_blog['content']), 0, 200) . '...',
+        'date' => date('F j, Y', strtotime($first_blog['published_at'] ?? $first_blog['created_at'])),
+        'read_time' => ceil(str_word_count(strip_tags($first_blog['content'])) / 200) . ' min read',
+        'image' => $first_blog['featured_image'] ?? 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop',
+        'slug' => $first_blog['slug'] ?? ''
+    ];
+    
+    // Trending posts (next 4 blogs)
+    $trending_posts = [];
+    for ($i = 1; $i < min(5, count($blogs_from_db)); $i++) {
+        $blog = $blogs_from_db[$i];
+        $trending_posts[] = [
+            'title' => $blog['title'],
+            'category' => $blog['category'] ?? 'Design',
+            'excerpt' => $blog['excerpt'] ?? substr(strip_tags($blog['content']), 0, 100) . '...',
+            'date' => date('F j, Y', strtotime($blog['published_at'] ?? $blog['created_at'])),
+            'read_time' => ceil(str_word_count(strip_tags($blog['content'])) / 200) . ' min read',
+            'image' => $blog['featured_image'] ?? '',
+            'slug' => $blog['slug'] ?? ''
+        ];
+    }
+    
+    // Recent posts (remaining blogs)
+    $recent_posts = [];
+    for ($i = 5; $i < count($blogs_from_db); $i++) {
+        $blog = $blogs_from_db[$i];
+        $recent_posts[] = [
+            'title' => $blog['title'],
+            'category' => $blog['category'] ?? 'Design',
+            'date' => date('F j, Y', strtotime($blog['published_at'] ?? $blog['created_at'])),
+            'read_time' => ceil(str_word_count(strip_tags($blog['content'])) / 200) . ' min read',
+            'slug' => $blog['slug'] ?? ''
+        ];
+    }
+} else {
+    // Fallback to static content
+    $featured_post = [
+        'title' => '10 Graphic Design Trends to Watch in 2026',
         'category' => 'Design',
-        'excerpt' => 'Explore how visual storytelling can transform your brand.',
-        'date' => 'January 3, 2026',
-        'read_time' => '4 min read',
-        'image' => 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=400&fit=crop'
-    ],
-    [
-        'title' => 'SEO Best Practices for 2026',
-        'category' => 'SEO',
-        'excerpt' => 'Updated SEO strategies to improve your website rankings.',
-        'date' => 'January 1, 2026',
-        'read_time' => '8 min read',
-        'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop'
-    ]
-];
+        'excerpt' => 'Stay ahead of the curve with these emerging design trends that are shaping the visual landscape this year. From bold typography to immersive 3D experiences, discover what\'s defining modern design.',
+        'date' => 'January 10, 2026',
+        'read_time' => '5 min read',
+        'image' => 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop'
+    ];
 
-// Recent articles (for list view on mobile)
-$recent_posts = [
-    [
-        'title' => 'Creating Effective Email Marketing Campaigns',
-        'category' => 'Marketing',
-        'date' => 'December 28, 2025',
-        'read_time' => '5 min read'
-    ],
-    [
-        'title' => 'Logo Design: From Concept to Creation',
-        'category' => 'Design',
-        'date' => 'December 25, 2025',
-        'read_time' => '6 min read'
-    ],
-    [
-        'title' => 'Content Marketing ROI: Measuring Success',
-        'category' => 'Marketing',
-        'date' => 'December 22, 2025',
-        'read_time' => '4 min read'
-    ],
-    [
-        'title' => 'Website Speed Optimization Tips',
-        'category' => 'SEO',
-        'date' => 'December 20, 2025',
-        'read_time' => '7 min read'
-    ],
-    [
-        'title' => 'Color Psychology in Brand Design',
-        'category' => 'Branding',
-        'date' => 'December 18, 2025',
-        'read_time' => '5 min read'
-    ]
-];
+    $trending_posts = [
+        [
+            'title' => 'How to Build a Strong Brand Identity',
+            'category' => 'Branding',
+            'excerpt' => 'Learn the essential steps to create a memorable brand identity.',
+            'date' => 'January 8, 2026',
+            'read_time' => '7 min read',
+            'image' => 'https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=600&h=400&fit=crop'
+        ],
+        [
+            'title' => 'Social Media Marketing Strategies That Work',
+            'category' => 'Marketing',
+            'excerpt' => 'Discover proven social media strategies to boost engagement.',
+            'date' => 'January 5, 2026',
+            'read_time' => '6 min read',
+            'image' => 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop'
+        ],
+        [
+            'title' => 'The Power of Visual Storytelling',
+            'category' => 'Design',
+            'excerpt' => 'Explore how visual storytelling can transform your brand.',
+            'date' => 'January 3, 2026',
+            'read_time' => '4 min read',
+            'image' => 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=400&fit=crop'
+        ],
+        [
+            'title' => 'SEO Best Practices for 2026',
+            'category' => 'SEO',
+            'excerpt' => 'Updated SEO strategies to improve your website rankings.',
+            'date' => 'January 1, 2026',
+            'read_time' => '8 min read',
+            'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop'
+        ]
+    ];
+
+    $recent_posts = [
+        ['title' => 'Creating Effective Email Marketing Campaigns', 'category' => 'Marketing', 'date' => 'December 28, 2025', 'read_time' => '5 min read'],
+        ['title' => 'Logo Design: From Concept to Creation', 'category' => 'Design', 'date' => 'December 25, 2025', 'read_time' => '6 min read'],
+        ['title' => 'Content Marketing ROI: Measuring Success', 'category' => 'Marketing', 'date' => 'December 22, 2025', 'read_time' => '4 min read'],
+        ['title' => 'Website Speed Optimization Tips', 'category' => 'SEO', 'date' => 'December 20, 2025', 'read_time' => '7 min read'],
+        ['title' => 'Color Psychology in Brand Design', 'category' => 'Branding', 'date' => 'December 18, 2025', 'read_time' => '5 min read']
+    ];
+}
 ?>
 
     <!-- Featured Story Hero Section -->

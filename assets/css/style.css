@@ -3655,12 +3655,20 @@ textarea.form-control {
     border-radius: var(--radius-lg);
     overflow: hidden;
     height: 300px;
+    position: relative;
 }
 
 .map-container iframe {
     width: 100%;
     height: 100%;
     border: none;
+    /* Grayscale "Architectural Map" - matches dark/yellow theme */
+    filter: grayscale(100%) contrast(1.1);
+    transition: filter 0.4s ease;
+}
+
+.map-container:hover iframe {
+    filter: grayscale(50%) contrast(1.05);
 }
 
 /* ================================
