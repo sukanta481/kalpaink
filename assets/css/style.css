@@ -3213,14 +3213,14 @@ body {
 .hero-headline {
     font-size: 4rem;
     font-weight: 900;
-    color: var(--black);
+    color: var(--white);
     line-height: 1.1;
     margin-bottom: 20px;
 }
 
 .hero-subtext {
     font-size: 1.2rem;
-    color: var(--gray-700);
+    color: var(--gray-400);
     max-width: 450px;
     line-height: 1.7;
     margin-bottom: 35px;
@@ -3512,10 +3512,10 @@ textarea.form-control-dark {
     resize: vertical;
 }
 
-/* Neon Submit Button */
+/* Neon Submit Button - Refined White */
 .btn-neon-submit {
     width: 100%;
-    background: var(--primary-yellow);
+    background: var(--white);
     color: var(--black);
     border: none;
     border-radius: 12px;
@@ -3527,13 +3527,14 @@ textarea.form-control-dark {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(253, 215, 40, 0.3);
+    box-shadow: none;
     margin-top: 10px;
 }
 
 .btn-neon-submit:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(253, 215, 40, 0.4);
+    background-color: var(--gray-200);
+    box-shadow: none;
 }
 
 .btn-neon-submit:active {
@@ -3728,9 +3729,24 @@ textarea.form-control {
 
 /* Contact Info Card */
 .contact-info-card {
-    background-color: var(--gray-100);
+    background-color: var(--mono-dark);
     border-radius: var(--radius-lg);
     padding: 40px;
+}
+
+.contact-info-card h3 {
+    color: var(--white);
+}
+
+.contact-info-item p,
+.contact-info-item a {
+    color: var(--gray-300);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.contact-info-item a:hover {
+    color: var(--white);
 }
 
 .contact-info-item {
@@ -3743,12 +3759,12 @@ textarea.form-control {
 .contact-info-icon {
     width: 40px;
     height: 40px;
-    background-color: var(--primary-yellow);
+    background-color: var(--neutral-800);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--black);
+    color: var(--white);
     flex-shrink: 0;
 }
 
@@ -3763,8 +3779,8 @@ textarea.form-control {
     width: 100%;
     height: 100%;
     border: none;
-    /* Grayscale "Architectural Map" - matches dark/yellow theme */
-    filter: grayscale(100%) contrast(1.1);
+    /* Dark Mode Map Filter */
+    filter: grayscale(100%) invert(100%) brightness(90%) contrast(125%);
     transition: filter 0.4s ease;
 }
 
