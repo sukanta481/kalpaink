@@ -801,31 +801,31 @@ function initMobileHeroSwipe() {
  */
 function initCreatorFlipCards() {
     const flipCards = document.querySelectorAll('.creator-flip-mobile');
-    
+
     if (!flipCards.length) return;
-    
+
     flipCards.forEach(card => {
         // Tap to flip
-        card.addEventListener('click', function(e) {
+        card.addEventListener('click', function (e) {
             // Don't flip if clicking on the LinkedIn button
             if (e.target.closest('.flip-linkedin')) return;
-            
+
             this.classList.toggle('flipped');
-            
+
             // Add a subtle haptic feedback feel with a small animation
             this.style.transform = 'scale(0.98)';
             setTimeout(() => {
                 this.style.transform = 'scale(1)';
             }, 100);
         });
-        
+
         // Also support touch events for better mobile response
-        card.addEventListener('touchend', function(e) {
+        card.addEventListener('touchend', function (e) {
             // Prevent double-triggering with click
             if (e.target.closest('.flip-linkedin')) return;
         });
     });
-    
+
     // Optional: Auto-flip hint animation on first card after 3 seconds
     setTimeout(() => {
         if (flipCards[0] && window.innerWidth < 992) {
@@ -844,33 +844,33 @@ function initCreatorFlipCards() {
 function initServicesSpotlight() {
     const track = document.querySelector('.services-track');
     const wrappers = document.querySelectorAll('.service-card-wrapper');
-    
+
     if (!track || !wrappers.length || window.innerWidth >= 992) return;
-    
+
     function updateActiveCard() {
         // Only apply on mobile
         if (window.innerWidth >= 992) {
             wrappers.forEach(w => w.classList.remove('is-active'));
             return;
         }
-        
+
         const trackRect = track.getBoundingClientRect();
         const trackCenter = trackRect.left + trackRect.width * 0.4; // Slightly left of center for better UX
-        
+
         let closestCard = null;
         let closestDistance = Infinity;
-        
+
         wrappers.forEach(wrapper => {
             const rect = wrapper.getBoundingClientRect();
             const cardCenter = rect.left + rect.width / 2;
             const distance = Math.abs(cardCenter - trackCenter);
-            
+
             if (distance < closestDistance) {
                 closestDistance = distance;
                 closestCard = wrapper;
             }
         });
-        
+
         // Update active states
         wrappers.forEach(wrapper => {
             if (wrapper === closestCard) {
@@ -880,13 +880,13 @@ function initServicesSpotlight() {
             }
         });
     }
-    
+
     // Listen for scroll on the track
     track.addEventListener('scroll', updateActiveCard, { passive: true });
-    
+
     // Initial check
     updateActiveCard();
-    
+
     // Recheck on resize
     window.addEventListener('resize', updateActiveCard);
 }
@@ -897,31 +897,31 @@ function initServicesSpotlight() {
  */
 function initFooterAccordion() {
     const triggers = document.querySelectorAll('.footer-accordion-trigger');
-    
+
     if (!triggers.length) return;
-    
+
     triggers.forEach(trigger => {
-        trigger.addEventListener('click', function() {
+        trigger.addEventListener('click', function () {
             // Only work on mobile/tablet
             if (window.innerWidth >= 992) return;
-            
+
             const parent = this.closest('.footer-accordion-item');
             const isActive = parent.classList.contains('active');
-            
+
             // Close all other accordions
             document.querySelectorAll('.footer-accordion-item').forEach(item => {
                 item.classList.remove('active');
             });
-            
+
             // Toggle current one
             if (!isActive) {
                 parent.classList.add('active');
             }
         });
     });
-    
+
     // Reset on resize to desktop
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         if (window.innerWidth >= 992) {
             document.querySelectorAll('.footer-accordion-item').forEach(item => {
                 item.classList.remove('active');
@@ -936,30 +936,30 @@ function initFooterAccordion() {
  */
 function initServiceAccordion() {
     const serviceCards = document.querySelectorAll('.service-hologram-card');
-    
+
     if (!serviceCards.length) return;
-    
+
     serviceCards.forEach(card => {
-        card.addEventListener('click', function(e) {
+        card.addEventListener('click', function (e) {
             // Only work on mobile/tablet
             if (window.innerWidth >= 992) return;
-            
+
             const isExpanded = this.classList.contains('expanded');
-            
+
             // Close all other cards
             serviceCards.forEach(c => {
                 if (c !== this) {
                     c.classList.remove('expanded');
                 }
             });
-            
+
             // Toggle current card
             this.classList.toggle('expanded');
         });
     });
-    
+
     // Reset on resize to desktop
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         if (window.innerWidth >= 992) {
             serviceCards.forEach(card => {
                 card.classList.remove('expanded');
@@ -975,26 +975,26 @@ function initServiceAccordion() {
 function initFloatingToolsParallax() {
     const container = document.querySelector('.floating-tools-container');
     const tools = document.querySelectorAll('.floating-tool');
-    
+
     if (!container || !tools.length) return;
-    
-    container.addEventListener('mousemove', function(e) {
+
+    container.addEventListener('mousemove', function (e) {
         const rect = container.getBoundingClientRect();
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         const mouseX = e.clientX - rect.left - centerX;
         const mouseY = e.clientY - rect.top - centerY;
-        
+
         tools.forEach(tool => {
             const speed = parseFloat(tool.dataset.speed) || 1;
             const x = (mouseX * speed * 0.02);
             const y = (mouseY * speed * 0.02);
-            
+
             tool.style.transform = `translate(${x}px, ${y}px)`;
         });
     });
-    
-    container.addEventListener('mouseleave', function() {
+
+    container.addEventListener('mouseleave', function () {
         tools.forEach(tool => {
             tool.style.transform = '';
         });
@@ -1009,71 +1009,71 @@ function initFloatingToolsParallax() {
 function initCaseStudySpotlight() {
     const cards = document.querySelectorAll('.case-study-card-v2');
     const grid = document.querySelector('.masonry-portfolio-grid');
-    
+
     if (!cards.length || !grid) return;
-    
+
     // Only apply on mobile/tablet
     function isMobile() {
         return window.innerWidth < 992;
     }
-    
+
     function updateSpotlight() {
         if (!isMobile()) {
             // Remove all spotlight states on desktop
             cards.forEach(card => card.classList.remove('spotlight-active'));
             return;
         }
-        
+
         // For horizontal swipe deck, use horizontal center
         const viewportCenterX = window.innerWidth / 2;
         let closestCard = null;
         let closestDistance = Infinity;
-        
+
         cards.forEach(card => {
             const rect = card.getBoundingClientRect();
             const cardCenterX = rect.left + rect.width / 2;
             const distance = Math.abs(cardCenterX - viewportCenterX);
-            
+
             if (distance < closestDistance) {
                 closestDistance = distance;
                 closestCard = card;
             }
-            
+
             card.classList.remove('spotlight-active');
         });
-        
+
         // Only activate if card is reasonably close to center
         if (closestCard && closestDistance < window.innerWidth * 0.4) {
             closestCard.classList.add('spotlight-active');
         }
     }
-    
+
     // Listen to horizontal scroll on the grid container
     let ticking = false;
-    grid.addEventListener('scroll', function() {
+    grid.addEventListener('scroll', function () {
         if (!ticking) {
-            window.requestAnimationFrame(function() {
+            window.requestAnimationFrame(function () {
                 updateSpotlight();
                 ticking = false;
             });
             ticking = true;
         }
     });
-    
+
     // Also listen to window scroll (for page scroll)
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (!ticking) {
-            window.requestAnimationFrame(function() {
+            window.requestAnimationFrame(function () {
                 updateSpotlight();
                 ticking = false;
             });
             ticking = true;
         }
     });
-    
+
     // Initial check
     updateSpotlight();
-    
+
     // Update on resize
     window.addEventListener('resize', updateSpotlight);
 }
@@ -1085,13 +1085,13 @@ function initCaseStudySpotlight() {
 function initCaseStudyProgressBar() {
     const grid = document.querySelector('.masonry-portfolio-grid');
     const progressFill = document.getElementById('caseStudyProgress');
-    
+
     if (!grid || !progressFill) return;
-    
+
     function updateProgress() {
         const scrollLeft = grid.scrollLeft;
         const scrollWidth = grid.scrollWidth - grid.clientWidth;
-        
+
         if (scrollWidth > 0) {
             const progress = (scrollLeft / scrollWidth) * 100;
             // Ensure minimum of ~11% (first card visible)
@@ -1099,9 +1099,9 @@ function initCaseStudyProgressBar() {
             progressFill.style.width = displayProgress + '%';
         }
     }
-    
+
     grid.addEventListener('scroll', updateProgress);
-    
+
     // Initial state
     updateProgress();
 }
@@ -1113,58 +1113,58 @@ function initCaseStudyProgressBar() {
 function initCustomCursor() {
     const cursor = document.querySelector('.custom-cursor-view');
     const grid = document.querySelector('.masonry-portfolio-grid');
-    
+
     if (!cursor || !grid) return;
-    
+
     // Only on desktop
     if (window.innerWidth < 992) return;
-    
+
     let mouseX = 0;
     let mouseY = 0;
     let cursorX = 0;
     let cursorY = 0;
-    
+
     // Smooth cursor following
     function animateCursor() {
         const dx = mouseX - cursorX;
         const dy = mouseY - cursorY;
-        
+
         cursorX += dx * 0.15;
         cursorY += dy * 0.15;
-        
+
         cursor.style.left = cursorX - 40 + 'px';
         cursor.style.top = cursorY - 40 + 'px';
-        
+
         requestAnimationFrame(animateCursor);
     }
-    
+
     animateCursor();
-    
+
     // Track mouse movement
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', function (e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
-    
+
     // Show/hide cursor on grid
-    grid.addEventListener('mouseenter', function() {
+    grid.addEventListener('mouseenter', function () {
         cursor.classList.add('active');
         document.body.style.cursor = 'none';
     });
-    
-    grid.addEventListener('mouseleave', function() {
+
+    grid.addEventListener('mouseleave', function () {
         cursor.classList.remove('active');
         document.body.style.cursor = '';
     });
-    
+
     // Hide cursor when hovering links inside cards
     const links = grid.querySelectorAll('a');
     links.forEach(link => {
-        link.addEventListener('mouseenter', function() {
+        link.addEventListener('mouseenter', function () {
             cursor.classList.remove('active');
             document.body.style.cursor = 'pointer';
         });
-        link.addEventListener('mouseleave', function() {
+        link.addEventListener('mouseleave', function () {
             cursor.classList.add('active');
             document.body.style.cursor = 'none';
         });
@@ -1177,29 +1177,29 @@ function initCustomCursor() {
 function initFloatingGalleryParallax() {
     const gallery = document.querySelector('.floating-gallery');
     const items = document.querySelectorAll('.gallery-float-item');
-    
+
     if (!gallery || !items.length) return;
-    
-    gallery.addEventListener('mousemove', function(e) {
+
+    gallery.addEventListener('mousemove', function (e) {
         const rect = gallery.getBoundingClientRect();
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         const mouseX = e.clientX - rect.left - centerX;
         const mouseY = e.clientY - rect.top - centerY;
-        
+
         items.forEach((item, index) => {
             const speed = 0.02 + (index * 0.01);
             const x = mouseX * speed;
             const y = mouseY * speed;
             const baseRotation = item.classList.contains('item-1') ? -8 :
-                                item.classList.contains('item-2') ? 5 :
-                                item.classList.contains('item-3') ? 3 : -5;
-            
+                item.classList.contains('item-2') ? 5 :
+                    item.classList.contains('item-3') ? 3 : -5;
+
             item.style.transform = `rotate(${baseRotation}deg) translate(${x}px, ${y}px)`;
         });
     });
-    
-    gallery.addEventListener('mouseleave', function() {
+
+    gallery.addEventListener('mouseleave', function () {
         items.forEach(item => {
             item.style.transform = '';
         });
@@ -1212,13 +1212,13 @@ function initFloatingGalleryParallax() {
 function initBlogTrendingProgress() {
     const wrapper = document.querySelector('.trending-cards-wrapper');
     const progressFill = document.getElementById('blogTrendingProgress');
-    
+
     if (!wrapper || !progressFill) return;
-    
+
     function updateProgress() {
         const scrollLeft = wrapper.scrollLeft;
         const scrollWidth = wrapper.scrollWidth - wrapper.clientWidth;
-        
+
         if (scrollWidth > 0) {
             const progress = (scrollLeft / scrollWidth) * 100;
             // Minimum 25% (1 of 4 cards visible)
@@ -1226,7 +1226,102 @@ function initBlogTrendingProgress() {
             progressFill.style.width = displayProgress + '%';
         }
     }
-    
+
     wrapper.addEventListener('scroll', updateProgress);
     updateProgress();
+}
+
+/**
+ * Services Page - Mobile Accordion Cards
+ * Tap to expand/collapse service details on mobile
+ */
+function initServiceAccordion() {
+    // Only run on mobile
+    if (window.innerWidth >= 992) return;
+
+    const serviceCards = document.querySelectorAll('.service-hologram-card');
+
+    if (!serviceCards.length) return;
+
+    serviceCards.forEach(card => {
+        const header = card.querySelector('.hologram-header');
+
+        if (!header) return;
+
+        header.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Close other expanded cards (optional - accordion behavior)
+            const wasExpanded = card.classList.contains('expanded');
+
+            // Collapse all cards first for accordion effect
+            serviceCards.forEach(otherCard => {
+                if (otherCard !== card) {
+                    otherCard.classList.remove('expanded');
+                }
+            });
+
+            // Toggle current card
+            if (wasExpanded) {
+                card.classList.remove('expanded');
+            } else {
+                card.classList.add('expanded');
+
+                // Scroll card into view smoothly
+                setTimeout(() => {
+                    card.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest'
+                    });
+                }, 100);
+            }
+        });
+    });
+
+    // Handle window resize - remove expanded class on desktop
+    window.addEventListener('resize', function () {
+        if (window.innerWidth >= 992) {
+            serviceCards.forEach(card => {
+                card.classList.remove('expanded');
+            });
+        }
+    });
+}
+
+/**
+ * Services Page - Floating Tools Parallax
+ * Mouse movement creates subtle parallax on floating tool icons
+ */
+function initFloatingToolsParallax() {
+    const container = document.querySelector('.floating-tools-container');
+    const tools = document.querySelectorAll('.floating-tool');
+
+    if (!container || !tools.length) return;
+
+    // Only on desktop
+    if (window.innerWidth < 992) return;
+
+    container.addEventListener('mousemove', function (e) {
+        const rect = container.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const mouseX = e.clientX - rect.left - centerX;
+        const mouseY = e.clientY - rect.top - centerY;
+
+        tools.forEach(tool => {
+            const speed = parseFloat(tool.dataset.speed) || 1;
+            const x = mouseX * 0.02 * speed;
+            const y = mouseY * 0.02 * speed;
+            const rotation = mouseX * 0.01 * speed;
+
+            tool.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+        });
+    });
+
+    container.addEventListener('mouseleave', function () {
+        tools.forEach(tool => {
+            tool.style.transform = '';
+        });
+    });
 }

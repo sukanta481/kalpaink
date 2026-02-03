@@ -27,10 +27,15 @@
     
     <!-- Custom CSS (with auto cache-busting) -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo filemtime('assets/css/style.css'); ?>">
+    
+    <!-- Services Page Specific Styles -->
+    <?php if (basename($_SERVER['PHP_SELF']) == 'services.php'): ?>
+    <link rel="stylesheet" href="assets/css/services-page.css?v=<?php echo filemtime('assets/css/services-page.css'); ?>">
+    <?php endif; ?>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top text-white">
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="index.php">

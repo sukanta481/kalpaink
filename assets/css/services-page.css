@@ -1,0 +1,796 @@
+/* ================================
+   SERVICES PAGE STYLES
+   Hero Toolkit, Hologram Cards & Blueprint CTA
+================================ */
+
+/* ================================
+   1. HERO SECTION - DIGITAL TOOLKIT
+   Features: Floating 3D Tools + Glassmorphism Card
+================================ */
+.services-hero-toolkit {
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+    padding: 140px 0 100px;
+    position: relative;
+    overflow: hidden;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+/* Subtle Grid Pattern Overlay */
+.services-hero-toolkit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+/* Toolkit Visual Container */
+.toolkit-visual {
+    position: relative;
+    height: 400px;
+    perspective: 1000px;
+}
+
+.floating-tools-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+}
+
+/* Floating Tool Icons - 3D Effect */
+.floating-tool {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #fff;
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    transform-style: preserve-3d;
+    animation: floatTool 4s ease-in-out infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.floating-tool:hover {
+    transform: scale(1.1) translateZ(20px);
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+
+/* Individual Tool Positions & Colors */
+.floating-tool.tool-pen {
+    top: 10%;
+    left: 10%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    animation-delay: 0s;
+}
+
+.floating-tool.tool-code {
+    top: 5%;
+    right: 20%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    animation-delay: 0.8s;
+}
+
+.floating-tool.tool-megaphone {
+    bottom: 25%;
+    left: 5%;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    animation-delay: 1.6s;
+}
+
+.floating-tool.tool-palette {
+    bottom: 10%;
+    right: 10%;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    animation-delay: 2.4s;
+}
+
+.floating-tool.tool-chart {
+    bottom: 50%;
+    right: 5%;
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    animation-delay: 3.2s;
+    width: 65px;
+    height: 65px;
+    font-size: 1.6rem;
+}
+
+/* Float Animation */
+@keyframes floatTool {
+
+    0%,
+    100% {
+        transform: translateY(0) translateZ(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-15px) translateZ(10px) rotate(3deg);
+    }
+
+    50% {
+        transform: translateY(-8px) translateZ(5px) rotate(-2deg);
+    }
+
+    75% {
+        transform: translateY(-20px) translateZ(15px) rotate(2deg);
+    }
+}
+
+/* Glassmorphism Card - Dark Glass with White Glow */
+.glass-toolkit-card {
+    position: relative;
+    width: 280px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        0 0 100px rgba(255, 255, 255, 0.05);
+    transform: perspective(1000px) rotateY(-8deg) rotateX(5deg);
+    animation: cardTilt 6s ease-in-out infinite;
+}
+
+@keyframes cardTilt {
+
+    0%,
+    100% {
+        transform: perspective(1000px) rotateY(-8deg) rotateX(5deg);
+    }
+
+    50% {
+        transform: perspective(1000px) rotateY(-5deg) rotateX(3deg) translateY(-10px);
+    }
+}
+
+.glass-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.glass-service-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInGlow 0.5s ease forwards;
+}
+
+.glass-service-item:nth-child(1) {
+    animation-delay: 0.3s;
+}
+
+.glass-service-item:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.glass-service-item:nth-child(3) {
+    animation-delay: 0.7s;
+}
+
+.glass-service-item:nth-child(4) {
+    animation-delay: 0.9s;
+}
+
+@keyframes slideInGlow {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.glass-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.4);
+    }
+}
+
+/* Toolkit Content (Right Side) */
+.toolkit-content {
+    padding-left: 40px;
+}
+
+.toolkit-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.toolkit-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    max-width: 480px;
+}
+
+/* ================================
+   2. SERVICES GRID SECTION
+   Desktop: Hover Hologram | Mobile: Accordion Stack
+================================ */
+.services-grid-section {
+    background: var(--white);
+    padding: 80px 0;
+}
+
+.services-hologram-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+/* Hologram Card Base */
+.service-hologram-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+/* Card Header - Always Visible */
+.hologram-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px 30px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    transition: all 0.4s ease;
+}
+
+.hologram-icon {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--black);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hologram-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: inherit;
+}
+
+.hologram-icon i {
+    position: relative;
+    z-index: 1;
+}
+
+.hologram-title-wrap {
+    flex: 1;
+}
+
+.hologram-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 5px;
+    transition: color 0.4s ease;
+}
+
+.hologram-summary {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+    margin: 0;
+    line-height: 1.5;
+    transition: color 0.4s ease;
+}
+
+/* Mobile Toggle Arrow */
+.hologram-toggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-500);
+    transition: all 0.3s ease;
+}
+
+.hologram-toggle i {
+    transition: transform 0.3s ease;
+}
+
+/* Expandable Body */
+.hologram-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease;
+    padding: 0 30px;
+    opacity: 0;
+    background: transparent;
+}
+
+.hologram-description {
+    font-size: 0.95rem;
+    color: var(--gray-600);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    transition: color 0.4s ease;
+}
+
+.hologram-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.hologram-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    transition-delay: calc(var(--feature-index) * 0.05s);
+}
+
+.hologram-feature-item i {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+}
+
+/* ================================
+   DESKTOP: Hover Hologram Effect
+================================ */
+@media (min-width: 992px) {
+    .hologram-toggle {
+        display: none !important;
+    }
+
+    /* Hover State - Card transforms to dark */
+    .service-hologram-card:hover {
+        background: var(--black);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        transform: translateY(-5px);
+    }
+
+    .service-hologram-card:hover .hologram-icon {
+        background: transparent;
+    }
+
+    .service-hologram-card:hover .hologram-icon::before {
+        opacity: 1;
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+
+    .service-hologram-card:hover .hologram-title {
+        color: var(--white);
+    }
+
+    .service-hologram-card:hover .hologram-summary {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .service-hologram-card:hover .hologram-body {
+        max-height: 400px;
+        padding: 0 30px 30px;
+        opacity: 1;
+    }
+
+    .service-hologram-card:hover .hologram-description {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .service-hologram-card:hover .hologram-feature-item {
+        opacity: 1;
+        transform: translateX(0);
+        color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+/* ================================
+   MOBILE: Accordion Stack
+   Only shows Icon + Title + Summary by default
+   Tap to expand full content
+================================ */
+@media (max-width: 991.98px) {
+    .services-hero-toolkit {
+        padding: 120px 0 60px;
+        min-height: auto;
+    }
+
+    .toolkit-visual {
+        height: 300px;
+        margin-bottom: 30px;
+    }
+
+    .floating-tool {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        border-radius: 18px;
+    }
+
+    .floating-tool.tool-chart {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .glass-toolkit-card {
+        width: 220px;
+        padding: 20px;
+        transform: perspective(1000px) rotateY(-5deg) rotateX(3deg);
+    }
+
+    .glass-service-item {
+        font-size: 0.9rem;
+    }
+
+    .toolkit-content {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .toolkit-title {
+        font-size: 2rem;
+    }
+
+    .toolkit-subtitle {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    /* Services Grid */
+    .services-grid-section {
+        padding: 50px 0;
+    }
+
+    .services-hologram-grid {
+        gap: 15px;
+    }
+
+    .service-hologram-card {
+        border-radius: 16px;
+    }
+
+    /* Show Toggle Arrow */
+    .hologram-toggle {
+        display: flex;
+    }
+
+    .hologram-header {
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .hologram-icon {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        font-size: 1.25rem;
+        border-radius: 14px;
+    }
+
+    .hologram-title {
+        font-size: 1.1rem;
+    }
+
+    .hologram-summary {
+        font-size: 0.85rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .hologram-body {
+        padding: 0 20px;
+    }
+
+    .hologram-features {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .hologram-feature-item {
+        font-size: 0.85rem;
+    }
+
+    /* Expanded State (via JS toggle) */
+    .service-hologram-card.expanded {
+        background: var(--black);
+    }
+
+    .service-hologram-card.expanded .hologram-icon::before {
+        opacity: 1;
+    }
+
+    .service-hologram-card.expanded .hologram-title {
+        color: var(--white);
+    }
+
+    .service-hologram-card.expanded .hologram-summary {
+        color: rgba(255, 255, 255, 0.6);
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+    }
+
+    .service-hologram-card.expanded .hologram-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+    }
+
+    .service-hologram-card.expanded .hologram-toggle i {
+        transform: rotate(180deg);
+    }
+
+    .service-hologram-card.expanded .hologram-body {
+        max-height: 500px;
+        padding: 0 20px 25px;
+        opacity: 1;
+    }
+
+    .service-hologram-card.expanded .hologram-description {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .service-hologram-card.expanded .hologram-feature-item {
+        opacity: 1;
+        transform: translateX(0);
+        color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .toolkit-visual {
+        height: 260px;
+    }
+
+    .floating-tool {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+        border-radius: 14px;
+    }
+
+    .floating-tool.tool-chart {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+    }
+
+    .glass-toolkit-card {
+        width: 180px;
+        padding: 15px;
+        border-radius: 18px;
+    }
+
+    .glass-service-item {
+        font-size: 0.8rem;
+        gap: 10px;
+    }
+
+    .glass-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .toolkit-title {
+        font-size: 1.6rem;
+    }
+
+    .hologram-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ================================
+   3. CTA SECTION - THE BLUEPRINT
+   Dark background with wireframe overlay
+================================ */
+.cta-blueprint-section {
+    background: linear-gradient(180deg, #0a0f1a 0%, #0d1426 50%, #0a0f1a 100%);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Blueprint Grid Background */
+.blueprint-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.blueprint-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+.blueprint-lines {
+    position: absolute;
+    inset: 0;
+    opacity: 0.6;
+}
+
+.blueprint-lines svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Blueprint Content */
+.blueprint-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.blueprint-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 20px;
+}
+
+.blueprint-text {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+/* Build Your Package Button */
+.btn-build-package {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--white);
+    color: var(--black);
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 0 0 0 rgba(255, 255, 255, 0.4),
+        0 10px 40px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-build-package::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-build-package:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow:
+        0 0 0 10px rgba(255, 255, 255, 0.1),
+        0 20px 60px rgba(255, 255, 255, 0.3);
+    color: var(--black);
+}
+
+.btn-build-package:hover::before {
+    left: 100%;
+}
+
+.btn-build-package .btn-icon {
+    width: 35px;
+    height: 35px;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-build-package:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+/* Mobile Blueprint */
+@media (max-width: 767.98px) {
+    .cta-blueprint-section {
+        padding: 70px 20px;
+    }
+
+    .blueprint-title {
+        font-size: 1.8rem;
+    }
+
+    .blueprint-text {
+        font-size: 1rem;
+    }
+
+    .btn-build-package {
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+
+    .btn-build-package .btn-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .blueprint-grid {
+        background-size: 30px 30px;
+    }
+}
