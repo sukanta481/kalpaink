@@ -46,10 +46,10 @@ $default_gradients = [
                                     <p class="hero-subtitle"><?php echo htmlspecialchars($slide['subtitle'] ?? ''); ?></p>
                                     <div class="hero-buttons">
                                         <?php if (!empty($slide['button1_text'])): ?>
-                                        <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact.php'); ?>" class="btn btn-ghost-white btn-lg"><?php echo htmlspecialchars($slide['button1_text']); ?></a>
+                                        <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact.php'); ?>" class="btn btn-dark btn-lg"><?php echo htmlspecialchars($slide['button1_text']); ?></a>
                                         <?php endif; ?>
                                         <?php if (!empty($slide['button2_text'])): ?>
-                                        <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services.php'); ?>" class="btn btn-outline-white btn-lg"><?php echo htmlspecialchars($slide['button2_text']); ?></a>
+                                        <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services.php'); ?>" class="btn btn-outline-dark btn-lg"><?php echo htmlspecialchars($slide['button2_text']); ?></a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -104,8 +104,8 @@ $default_gradients = [
                                     <h1 class="hero-title">Reimagining with Purpose</h1>
                                     <p class="hero-subtitle">Transform your brand with creative design solutions. We specialize in graphics, branding, and digital marketing.</p>
                                     <div class="hero-buttons">
-                                        <a href="contact.php" class="btn btn-ghost-white btn-lg">Get Quote</a>
-                                        <a href="services.php" class="btn btn-outline-white btn-lg">Services</a>
+                                        <a href="contact.php" class="btn btn-dark btn-lg">Get Quote</a>
+                                        <a href="services.php" class="btn btn-outline-dark btn-lg">Services</a>
                                     </div>
                                 </div>
                             </div>

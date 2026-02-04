@@ -5577,12 +5577,13 @@ textarea.form-control {
         left: 0;
         right: 0;
         bottom: 0;
-        /* Gradient: solid yellow at top, transparent at bottom */
+        /* Gradient: "Vignette" Effect - Top Transparent, Bottom Black */
         background: linear-gradient(to bottom,
-                rgba(253, 215, 40, 0.95) 0%,
-                rgba(253, 215, 40, 0.90) 30%,
-                rgba(253, 215, 40, 0.75) 60%,
-                rgba(253, 215, 40, 0.65) 100%);
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.6) 50%,
+                rgba(0, 0, 0, 1) 100%);
+        backdrop-filter: grayscale(100%) brightness(0.8) contrast(1.2);
+        -webkit-backdrop-filter: grayscale(100%) brightness(0.8) contrast(1.2);
         z-index: 0;
     }
 
@@ -5607,13 +5608,14 @@ textarea.form-control {
         display: none;
     }
 
-    /* Hero text takes full width */
+    /* Hero text takes full width & pushed down */
     .hero-section .hero-text-col {
         flex: 0 0 100%;
         max-width: 100%;
         order: 1;
         z-index: 1;
-        padding-top: 20px;
+        padding-top: 140px;
+        /* "Stop hitting the ceiling" */
     }
 
     .hero-section .hero-content {
@@ -5629,6 +5631,31 @@ textarea.form-control {
 
     .hero-section .hero-buttons {
         justify-content: center;
+        gap: 15px;
+    }
+
+    /* Mobile Hero Buttons & Text */
+    .hero-section h1,
+    .hero-section .display-3,
+    .hero-section .fw-bold {
+        color: var(--white) !important;
+    }
+
+    .hero-section p,
+    .hero-section .lead {
+        color: var(--gray-400) !important;
+    }
+
+    .hero-section .btn-primary {
+        background-color: var(--white) !important;
+        color: var(--black) !important;
+        border-color: var(--white) !important;
+    }
+
+    .hero-section .btn-outline-light {
+        background-color: transparent !important;
+        color: var(--white) !important;
+        border-color: var(--neutral-700) !important;
     }
 
     /* Hide carousel controls on mobile */
@@ -5669,13 +5696,16 @@ textarea.form-control {
         left: 42%;
         transform: translateX(-50%);
         /* Glassmorphism */
-        background: rgba(255, 255, 255, 0.85);
+        /* Glassmorphism Dark */
+        background: rgba(23, 23, 23, 0.9);
+        /* neutral-900 */
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: var(--radius-lg);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
-        padding: 18px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        padding: 15px;
+        /* Compact padding */
         text-align: center;
         transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s ease;
         cursor: grab;
@@ -5726,28 +5756,29 @@ textarea.form-control {
     }
 
     .swipe-card-icon {
-        width: 60px;
-        height: 60px;
-        background: var(--primary-yellow);
+        width: 40px;
+        /* Compact Icon */
+        height: 40px;
+        background: var(--neutral-800);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 15px;
-        font-size: 1.5rem;
-        color: var(--black);
+        margin: 0 auto 10px;
+        font-size: 1.2rem;
+        color: var(--white);
     }
 
     .swipe-card-title {
         font-size: 1.25rem;
         font-weight: 700;
-        color: var(--black);
+        color: var(--white);
         margin-bottom: 8px;
     }
 
     .swipe-card-desc {
         font-size: 0.9rem;
-        color: var(--gray-600);
+        color: var(--gray-400);
         margin-bottom: 0;
         line-height: 1.4;
     }
@@ -5769,7 +5800,7 @@ textarea.form-control {
     }
 
     .swipe-indicator.active {
-        background: var(--black);
+        background: var(--white);
         width: 24px;
         border-radius: 4px;
     }
@@ -5779,7 +5810,7 @@ textarea.form-control {
         text-align: center;
         margin-top: 15px;
         font-size: 0.8rem;
-        color: var(--gray-700);
+        color: var(--gray-500);
         opacity: 0.7;
     }
 
