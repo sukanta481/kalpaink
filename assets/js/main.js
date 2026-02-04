@@ -69,6 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Blog - Trending Section Progress Bar
     initBlogTrendingProgress();
+
+    // Stats Count-Up Animation
+    initStatsCountUp();
+
+    // Magnetic Button Effect
+    initMagneticButtons();
+
+    // Image Comparison Hover Effect
+    initImageComparison();
 });
 
 
@@ -1322,6 +1331,133 @@ function initFloatingToolsParallax() {
     container.addEventListener('mouseleave', function () {
         tools.forEach(tool => {
             tool.style.transform = '';
+        });
+    });
+}
+
+
+/**
+ * Stats Count-Up Animation
+ * Numbers animate from 0 when scrolled into view
+ */
+function initStatsCountUp() {
+    const statNumbers = document.querySelectorAll('.stat-number[data-count]');
+    
+    if (!statNumbers.length) return;
+
+    const animateCount = (element) => {
+        const target = parseInt(element.dataset.count);
+        const suffix = element.dataset.suffix || '';
+        const duration = 2000; // 2 seconds
+        const startTime = performance.now();
+        
+        element.classList.add('counting');
+        
+        const updateCount = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function (ease-out cubic)
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(easeOut * target);
+            
+            element.textContent = current + suffix;
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateCount);
+            } else {
+                element.textContent = target + suffix;
+                element.classList.remove('counting');
+                element.classList.add('counted');
+            }
+        };
+        
+        requestAnimationFrame(updateCount);
+    };
+
+    // Intersection Observer to trigger animation when in view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                animateCount(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    statNumbers.forEach(stat => observer.observe(stat));
+}
+
+
+/**
+ * Magnetic Button Effect
+ * Button moves slightly towards cursor on hover
+ */
+function initMagneticButtons() {
+    const buttons = document.querySelectorAll('.btn-magnetic');
+    
+    if (!buttons.length) return;
+    
+    // Only on desktop
+    if (window.innerWidth < 992) return;
+
+    buttons.forEach(button => {
+        const strength = 0.3; // How strongly it follows the cursor (0-1)
+        const maxMove = 15; // Maximum pixels to move
+        
+        button.addEventListener('mousemove', (e) => {
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const deltaX = (e.clientX - centerX) * strength;
+            const deltaY = (e.clientY - centerY) * strength;
+            
+            // Clamp the movement
+            const moveX = Math.max(-maxMove, Math.min(maxMove, deltaX));
+            const moveY = Math.max(-maxMove, Math.min(maxMove, deltaY));
+            
+            button.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            button.style.transform = 'translate(0, 0)';
+        });
+    });
+}
+
+
+/**
+ * Image Comparison Hover Effect
+ * Simulates before/after reveal on mouse movement
+ */
+function initImageComparison() {
+    const comparisons = document.querySelectorAll('.image-comparison');
+    
+    if (!comparisons.length) return;
+    
+    comparisons.forEach(container => {
+        const overlay = container.querySelector('.comparison-overlay');
+        
+        if (!overlay) return;
+        
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percentage = (x / rect.width) * 100;
+            
+            // Move overlay based on mouse position
+            // When mouse is on left, show more "raw", when on right, show more "polished"
+            overlay.style.left = `${Math.max(0, percentage - 20)}%`;
+            overlay.style.opacity = Math.min(1, (percentage / 100) * 1.5);
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            overlay.style.left = '50%';
+            overlay.style.opacity = '0';
         });
     });
 }

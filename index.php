@@ -46,10 +46,10 @@ $default_gradients = [
                                     <p class="hero-subtitle"><?php echo htmlspecialchars($slide['subtitle'] ?? ''); ?></p>
                                     <div class="hero-buttons">
                                         <?php if (!empty($slide['button1_text'])): ?>
-                                        <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact.php'); ?>" class="btn btn-dark btn-lg"><?php echo htmlspecialchars($slide['button1_text']); ?></a>
+                                        <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact.php'); ?>" class="btn btn-ghost-white btn-lg"><?php echo htmlspecialchars($slide['button1_text']); ?></a>
                                         <?php endif; ?>
                                         <?php if (!empty($slide['button2_text'])): ?>
-                                        <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services.php'); ?>" class="btn btn-outline-dark btn-lg"><?php echo htmlspecialchars($slide['button2_text']); ?></a>
+                                        <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services.php'); ?>" class="btn btn-outline-white btn-lg"><?php echo htmlspecialchars($slide['button2_text']); ?></a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -104,8 +104,8 @@ $default_gradients = [
                                     <h1 class="hero-title">Reimagining with Purpose</h1>
                                     <p class="hero-subtitle">Transform your brand with creative design solutions. We specialize in graphics, branding, and digital marketing.</p>
                                     <div class="hero-buttons">
-                                        <a href="contact.php" class="btn btn-dark btn-lg">Get Quote</a>
-                                        <a href="services.php" class="btn btn-outline-dark btn-lg">Services</a>
+                                        <a href="contact.php" class="btn btn-ghost-white btn-lg">Get Quote</a>
+                                        <a href="services.php" class="btn btn-outline-white btn-lg">Services</a>
                                     </div>
                                 </div>
                             </div>
@@ -207,40 +207,43 @@ $default_gradients = [
                 <!-- Mobile: Sandwich Layout (Headline → Image → Content) -->
                 <div class="welcome-header-mobile d-lg-none text-center">
                     <span class="welcome-badge">Who We Are</span>
-                    <h2 class="fusion-headline">We <span class="text-yellow">Sculpt</span> Brands.</h2>
+                    <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
                     <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
                 </div>
 
                 <div class="row align-items-center">
                     <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col">
-                        <div class="welcome-image fusion-image">
-                            <img src="assets/images/about-fusion.png" alt="Raw Concept to Brand Creation - We transform ideas into masterpieces">
+                        <div class="welcome-image fusion-image image-comparison" data-comparison>
+                            <div class="comparison-container">
+                                <img src="assets/images/about-fusion.png" alt="Raw Concept to Brand Creation - We transform ideas into masterpieces" class="comparison-image">
+                                <div class="comparison-overlay"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-7 welcome-text-col">
                         <!-- Desktop: Show header here -->
                         <div class="welcome-header-desktop d-none d-lg-block">
                             <span class="welcome-badge">Who We Are</span>
-                            <h2 class="fusion-headline">We <span class="text-yellow">Sculpt</span> Brands.</h2>
+                            <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
                             <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
                         </div>
                         <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
                         <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we're the creative studio that brings visions to life.</p>
                         <div class="welcome-stats">
                             <div class="stat-item">
-                                <span class="stat-number">150+</span>
+                                <span class="stat-number" data-count="150" data-suffix="+">0+</span>
                                 <span class="stat-label">Brands Sculpted</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">5+</span>
+                                <span class="stat-number" data-count="5" data-suffix="+">0+</span>
                                 <span class="stat-label">Years Crafting</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">98%</span>
+                                <span class="stat-number" data-count="98" data-suffix="%">0%</span>
                                 <span class="stat-label">Happy Clients</span>
                             </div>
                         </div>
-                        <a href="about.php" class="btn btn-primary">Discover Our Story</a>
+                        <a href="about.php" class="btn btn-primary btn-magnetic">Discover Our Story</a>
                     </div>
                 </div>
             </div>

@@ -37,8 +37,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <a href="<?php echo getAdminUrl('index.php'); ?>" class="sidebar-brand">
-                <i class="fas fa-cube me-2"></i>
-                <span>Kalpoink</span>
+                <img src="<?php echo getSiteUrl(); ?>/assets/images/kalpaink-logo.png" alt="Kalpoink" style="max-height: 40px;">
             </a>
             <button class="sidebar-toggle d-lg-none" id="sidebarClose">
                 <i class="fas fa-times"></i>

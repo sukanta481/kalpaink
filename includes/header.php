@@ -39,7 +39,7 @@
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="index.php">
-                <span class="logo-text">Kalpoink</span>
+                <img src="assets/images/kalpaink-logo.png" alt="Kalpoink" class="navbar-logo">
             </a>
             
             <!-- Mobile Toggle -->
