@@ -5614,7 +5614,7 @@ textarea.form-control {
         max-width: 100%;
         order: 1;
         z-index: 1;
-        padding-top: 140px;
+        padding-top: 50px;
         /* "Stop hitting the ceiling" */
     }
 
