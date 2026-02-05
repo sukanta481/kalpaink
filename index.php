@@ -203,16 +203,16 @@ $default_gradients = [
     <!-- Welcome Section - Fusion Concept -->
     <section class="welcome-section section-padding" id="about">
         <div class="container">
-            <div class="welcome-card" data-aos="fade-up">
+            <div class="welcome-card">
                 <!-- Mobile: Sandwich Layout (Headline → Image → Content) -->
-                <div class="welcome-header-mobile d-lg-none text-center">
+                <div class="welcome-header-mobile d-lg-none text-center" data-aos="fade-up">
                     <span class="welcome-badge">Who We Are</span>
                     <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
                     <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
                 </div>
 
                 <div class="row align-items-center">
-                    <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col">
+                    <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col" data-aos="fade-right" data-aos-duration="1000">
                         <div class="welcome-image fusion-image image-comparison" data-comparison>
                             <div class="comparison-container">
                                 <img src="assets/images/about-fusion.png" alt="Raw Concept to Brand Creation - We transform ideas into masterpieces" class="comparison-image">
@@ -220,7 +220,7 @@ $default_gradients = [
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7 welcome-text-col">
+                    <div class="col-lg-7 welcome-text-col" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
                         <!-- Desktop: Show header here -->
                         <div class="welcome-header-desktop d-none d-lg-block">
                             <span class="welcome-badge">Who We Are</span>
@@ -229,7 +229,7 @@ $default_gradients = [
                         </div>
                         <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
                         <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we're the creative studio that brings visions to life.</p>
-                        <div class="welcome-stats">
+                        <div class="welcome-stats" data-aos="fade-up" data-aos-delay="400">
                             <div class="stat-item">
                                 <span class="stat-number" data-count="150" data-suffix="+">0+</span>
                                 <span class="stat-label">Brands Sculpted</span>
@@ -243,7 +243,7 @@ $default_gradients = [
                                 <span class="stat-label">Happy Clients</span>
                             </div>
                         </div>
-                        <a href="about.php" class="btn btn-primary btn-magnetic">Discover Our Story</a>
+                        <a href="about.php" class="btn btn-primary btn-magnetic" data-aos="fade-up" data-aos-delay="500">Discover Our Story</a>
                     </div>
                 </div>
             </div>
@@ -401,7 +401,41 @@ $default_gradients = [
                             <div class="flip-content">
                                 <h4 class="flip-name"><?php echo $member['name']; ?></h4>
                                 <p class="flip-role"><?php echo $member['position']; ?></p>
-                                <p class="flip-tagline">"<?php echo $member['tagline']; ?>"</p>
+                                <!-- <p class="flip-tagline">"<?php echo $member['tagline']; ?>"</p> -->
+                            </div>
+                            <!-- Social Links at Bottom -->
+                            <div class="flip-social-links">
+                                <?php if (!empty($member['linkedin'])): ?>
+                                <a href="<?php echo $member['linkedin']; ?>" class="flip-social-link linkedin" target="_blank" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <?php endif; ?>
+                                <?php if (!empty($member['twitter'])): ?>
+                                <a href="<?php echo $member['twitter']; ?>" class="flip-social-link twitter" target="_blank" title="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <?php endif; ?>
+                                <?php if (!empty($member['instagram'])): ?>
+                                <a href="<?php echo $member['instagram']; ?>" class="flip-social-link instagram" target="_blank" title="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <?php endif; ?>
+                                <?php if (!empty($member['email'])): ?>
+                                <a href="mailto:<?php echo $member['email']; ?>" class="flip-social-link email" target="_blank" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <?php endif; ?>
+                                <?php if (empty($member['linkedin']) && empty($member['twitter']) && empty($member['instagram']) && empty($member['email'])): ?>
+                                <a href="#" class="flip-social-link linkedin" target="_blank" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="flip-social-link twitter" target="_blank" title="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="flip-social-link instagram" target="_blank" title="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <?php endif; ?>
                             </div>
                             <div class="flip-hint">
                                 <i class="fas fa-hand-pointer"></i> Tap to flip
@@ -435,9 +469,9 @@ $default_gradients = [
                                     ?>
                                 </p>
                             </div>
-                            <a href="<?php echo $member['linkedin']; ?>" class="flip-linkedin" target="_blank">
-                                <i class="fab fa-linkedin-in"></i> Let's Connect!
-                            </a>
+                            <div class="flip-back-hint">
+                                <i class="fas fa-undo"></i> Tap to flip back
+                            </div>
                         </div>
                     </div>
                 </div>
