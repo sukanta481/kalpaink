@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Footer Accordion (Mobile)
     initFooterAccordion();
 
+    // Testimonials Slider
+    initTestimonialsSlider();
+
     // Services Page - Mobile Accordion Cards
     initServiceAccordion();
 
@@ -937,6 +940,126 @@ function initFooterAccordion() {
             });
         }
     });
+}
+
+/**
+ * Testimonials Slider
+ * Static background with sliding text/image content
+ */
+function initTestimonialsSlider() {
+    const wrapper = document.querySelector('.testimonials-wrapper');
+    const dotsContainer = document.querySelector('.testimonials-dots');
+    const prevBtn = document.querySelector('.testimonial-nav-btn.prev');
+    const nextBtn = document.querySelector('.testimonial-nav-btn.next');
+    
+    if (!wrapper) return;
+    
+    const slides = wrapper.querySelectorAll('.testimonial-slide');
+    if (!slides.length) return;
+    
+    let currentIndex = 0;
+    let autoplayInterval;
+    
+    // Create dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+    
+    const dots = dotsContainer.querySelectorAll('.dot');
+    
+    // Go to specific slide with animation
+    function goToSlide(index, direction = 'next') {
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        
+        const prevIndex = currentIndex;
+        currentIndex = index;
+        
+        // Remove all states
+        slides.forEach(slide => {
+            slide.classList.remove('active', 'prev');
+        });
+        
+        // Add prev class to old slide (animates out)
+        if (direction === 'next') {
+            slides[prevIndex].classList.add('prev');
+        }
+        
+        // Add active class to new slide (animates in)
+        slides[currentIndex].classList.add('active');
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    }
+    
+    // Navigation buttons
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            goToSlide(currentIndex - 1, 'prev');
+            resetAutoplay();
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            goToSlide(currentIndex + 1, 'next');
+            resetAutoplay();
+        });
+    }
+    
+    // Autoplay
+    function startAutoplay() {
+        autoplayInterval = setInterval(() => {
+            goToSlide(currentIndex + 1, 'next');
+        }, 5000);
+    }
+    
+    function resetAutoplay() {
+        clearInterval(autoplayInterval);
+        startAutoplay();
+    }
+    
+    // Start autoplay
+    startAutoplay();
+    
+    // Pause on hover
+    wrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+    wrapper.addEventListener('mouseleave', startAutoplay);
+    
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    wrapper.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    wrapper.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next slide
+                goToSlide(currentIndex + 1, 'next');
+            } else {
+                // Swipe right - prev slide
+                goToSlide(currentIndex - 1, 'prev');
+            }
+            resetAutoplay();
+        }
+    }
 }
 
 /**

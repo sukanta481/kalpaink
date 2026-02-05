@@ -441,11 +441,8 @@ $default_gradients = [
                                 <i class="fas fa-hand-pointer"></i> Tap to flip
                             </div>
                         </div>
-                        <!-- Back: Creative/Fun Side -->
+                        <!-- Back: Creative/Fun Side - Content Only -->
                         <div class="flip-mobile-back">
-                            <div class="flip-avatar">
-                                <img src="<?php echo $member['image_fun'] ?? $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo $member['name']; ?> - Creative">
-                            </div>
                             <div class="flip-content">
                                 <h4 class="flip-name"><?php echo $member['name']; ?></h4>
                                 <p class="flip-role flip-role-fun">
@@ -480,6 +477,76 @@ $default_gradients = [
             </div>
         </div>
     </section>
+
+    <!-- Testimonials Section -->
+    <?php if (!empty($testimonials)): ?>
+    <section class="testimonials-section section-padding">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="text-center mb-5">
+                <span class="section-badge" data-aos="fade-up">Client Love</span>
+                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">What Our Clients Say</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Real feedback from real partners who trusted us with their brands</p>
+            </div>
+            
+            <!-- Testimonials - Static Card with Sliding Content -->
+            <div class="testimonials-wrapper" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-static-card">
+                    <!-- Static Quote Icon -->
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    
+                    <!-- Sliding Content -->
+                    <div class="testimonials-slider">
+                        <?php foreach ($testimonials as $index => $testimonial): ?>
+                        <div class="testimonial-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                            <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
+                            <div class="testimonial-rating">
+                                <?php 
+                                $rating = $testimonial['rating'] ?? 5;
+                                for ($i = 0; $i < 5; $i++): 
+                                ?>
+                                <i class="fas fa-star <?php echo $i < $rating ? 'filled' : ''; ?>"></i>
+                                <?php endfor; ?>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <?php if (!empty($testimonial['client_avatar'])): ?>
+                                    <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
+                                    <?php else: ?>
+                                    <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="author-info">
+                                    <h4 class="author-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h4>
+                                    <p class="author-position">
+                                        <?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?>
+                                        <?php if (!empty($testimonial['client_company'])): ?>
+                                        <span class="author-company">at <?php echo htmlspecialchars($testimonial['client_company']); ?></span>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <div class="testimonials-nav">
+                    <button class="testimonial-nav-btn prev" aria-label="Previous testimonial">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="testimonials-dots"></div>
+                    <button class="testimonial-nav-btn next" aria-label="Next testimonial">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
 
     <!-- FAQ Section - Split Screen -->
     <section class="faq-section section-padding">
