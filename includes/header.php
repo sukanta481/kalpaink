@@ -36,7 +36,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top text-white">
+    <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark">
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="index.php">

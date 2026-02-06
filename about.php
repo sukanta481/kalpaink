@@ -12,23 +12,12 @@ foreach ($crm_stats as $stat) {
 
     <!-- About Hero Section -->
     <section class="about-hero about-hero-dark">
-        <!-- Hero Banner Image with Curved Mask -->
+        <!-- Hero Banner Image -->
         <div class="hero-banner-full">
             <img src="assets/images/about-hero-dark.png" 
                  alt="Designer hand drawing on glowing tablet - Digital craftsmanship in the dark" 
                  class="hero-banner-image">
             <div class="hero-banner-overlay"></div>
-        </div>
-        <!-- Curved Bottom Mask - Stage Curtain Effect -->
-        <div class="hero-curved-mask">
-            <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
-                <path d="M0,0 L0,60 Q720,120 1440,60 L1440,0 Z" fill="var(--primary-yellow)"/>
-            </svg>
-        </div>
-        <div class="hero-curved-bottom">
-            <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-                <path d="M0,80 Q720,0 1440,80 L1440,80 L0,80 Z" fill="#ffffff"/>
-            </svg>
         </div>
     </section>
 
