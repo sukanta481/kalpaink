@@ -32,8 +32,8 @@
 /* Toolkit Visual Container */
 .toolkit-visual {
     position: relative;
-    height: 400px;
-    perspective: 1000px;
+    height: 480px;
+    perspective: 1200px;
 }
 
 .floating-tools-container {
@@ -46,153 +46,232 @@
     transform-style: preserve-3d;
 }
 
-/* Floating Tool Icons - 3D Effect */
+/* Floating Tool Icons - Orbiting Around Card */
 .floating-tool {
     position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 24px;
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.7rem;
     color: #fff;
     box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.2),
+        0 15px 35px rgba(0, 0, 0, 0.25),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     transform-style: preserve-3d;
-    animation: floatTool 4s ease-in-out infinite;
+    animation: floatTool 5s ease-in-out infinite;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 5;
 }
 
 .floating-tool:hover {
-    transform: scale(1.1) translateZ(20px);
+    transform: scale(1.15) translateZ(20px) !important;
     box-shadow:
-        0 30px 60px rgba(0, 0, 0, 0.3),
+        0 25px 50px rgba(0, 0, 0, 0.35),
         0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
-/* Individual Tool Positions & Colors */
+/* Tool Positions - Spread around the card edges */
 .floating-tool.tool-pen {
-    top: 10%;
-    left: 10%;
+    top: 2%;
+    left: -5%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     animation-delay: 0s;
 }
 
 .floating-tool.tool-code {
-    top: 5%;
-    right: 20%;
-    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    top: -4%;
+    right: 8%;
+    background: linear-gradient(135deg, #2a2a2a 0%, #444 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     animation-delay: 0.8s;
 }
 
 .floating-tool.tool-megaphone {
-    bottom: 25%;
-    left: 5%;
+    bottom: 18%;
+    left: -8%;
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     animation-delay: 1.6s;
 }
 
 .floating-tool.tool-palette {
-    bottom: 10%;
-    right: 10%;
+    bottom: 2%;
+    right: 0%;
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     animation-delay: 2.4s;
 }
 
 .floating-tool.tool-chart {
-    bottom: 50%;
-    right: 5%;
+    top: 38%;
+    right: -8%;
     background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
     animation-delay: 3.2s;
-    width: 65px;
-    height: 65px;
-    font-size: 1.6rem;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
 }
 
-/* Float Animation */
+/* Float Animation - Gentle bob */
 @keyframes floatTool {
-
-    0%,
-    100% {
-        transform: translateY(0) translateZ(0) rotate(0deg);
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
     }
-
-    25% {
-        transform: translateY(-15px) translateZ(10px) rotate(3deg);
+    33% {
+        transform: translateY(-12px) rotate(2deg);
     }
-
-    50% {
-        transform: translateY(-8px) translateZ(5px) rotate(-2deg);
-    }
-
-    75% {
-        transform: translateY(-20px) translateZ(15px) rotate(2deg);
+    66% {
+        transform: translateY(-6px) rotate(-2deg);
     }
 }
 
-/* Glassmorphism Card - Dark Glass with White Glow */
+/* Glassmorphism Card - Dark Holographic Dashboard */
 .glass-toolkit-card {
     position: relative;
-    width: 280px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 340px;
+    padding: 0;
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
-        0 25px 50px rgba(0, 0, 0, 0.4),
-        0 0 100px rgba(255, 255, 255, 0.05);
-    transform: perspective(1000px) rotateY(-8deg) rotateX(5deg);
+        0 30px 60px rgba(0, 0, 0, 0.5),
+        0 0 80px rgba(41, 98, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: perspective(1000px) rotateY(-5deg) rotateX(3deg);
     animation: cardTilt 6s ease-in-out infinite;
+    overflow: hidden;
+    z-index: 3;
 }
 
-@keyframes cardTilt {
+.glass-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-    0%,
-    100% {
-        transform: perspective(1000px) rotateY(-8deg) rotateX(5deg);
-    }
+.glass-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #43e97b;
+    box-shadow: 0 0 10px rgba(67, 233, 123, 0.5);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
 
-    50% {
-        transform: perspective(1000px) rotateY(-5deg) rotateX(3deg) translateY(-10px);
-    }
+.glass-card-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .glass-card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    padding: 20px 24px 24px;
 }
 
-.glass-service-item {
+/* Metric Row */
+.glass-metric-row {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
-    font-weight: 500;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.glass-metric {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-metric-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.glass-metric-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Progress Bars */
+.glass-progress-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.glass-progress-item {
     opacity: 0;
     transform: translateX(-20px);
     animation: slideInGlow 0.5s ease forwards;
 }
 
-.glass-service-item:nth-child(1) {
-    animation-delay: 0.3s;
+.glass-progress-item:nth-child(1) { animation-delay: 0.3s; }
+.glass-progress-item:nth-child(2) { animation-delay: 0.5s; }
+.glass-progress-item:nth-child(3) { animation-delay: 0.7s; }
+.glass-progress-item:nth-child(4) { animation-delay: 0.9s; }
+
+.glass-progress-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
 }
 
-.glass-service-item:nth-child(2) {
-    animation-delay: 0.5s;
+.glass-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
 }
 
-.glass-service-item:nth-child(3) {
-    animation-delay: 0.7s;
+.glass-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f5576c, #ff6b6b);
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(245, 87, 108, 0.4);
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.glass-service-item:nth-child(4) {
-    animation-delay: 0.9s;
+.glass-progress-fill.fill-blue {
+    background: linear-gradient(90deg, #2962FF, #448aff);
+    box-shadow: 0 0 10px rgba(41, 98, 255, 0.4);
+}
+
+.glass-progress-fill.fill-green {
+    background: linear-gradient(90deg, #43e97b, #38f9d7);
+    box-shadow: 0 0 10px rgba(67, 233, 123, 0.4);
+}
+
+.glass-progress-fill.fill-purple {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    box-shadow: 0 0 10px rgba(118, 75, 162, 0.4);
+}
+
+@keyframes cardTilt {
+    0%, 100% {
+        transform: perspective(1000px) rotateY(-5deg) rotateX(3deg);
+    }
+    50% {
+        transform: perspective(1000px) rotateY(-2deg) rotateX(1deg) translateY(-8px);
+    }
 }
 
 @keyframes slideInGlow {
@@ -202,45 +281,73 @@
     }
 }
 
-.glass-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--white);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-    animation: pulseGlow 2s ease-in-out infinite;
-}
-
 @keyframes pulseGlow {
 
     0%,
     100% {
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        box-shadow: 0 0 10px rgba(67, 233, 123, 0.5);
     }
 
     50% {
-        box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 20px rgba(67, 233, 123, 0.8), 0 0 35px rgba(67, 233, 123, 0.4);
     }
 }
 
-/* Toolkit Content (Right Side) */
+/* Toolkit Content (Left Side) */
 .toolkit-content {
-    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .toolkit-title {
-    font-size: 2.8rem;
+    font-size: 3.2rem;
     font-weight: 800;
-    color: var(--white);
-    line-height: 1.15;
-    margin-bottom: 20px;
+    color: #FFFFFF;
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.toolkit-title .text-accent {
+    color: #2962FF;
+    position: relative;
 }
 
 .toolkit-subtitle {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.6);
     line-height: 1.7;
     max-width: 480px;
+    margin-bottom: 35px;
+}
+
+/* CTA Button */
+.btn-services-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFFFFF;
+    color: #141414;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    border: 2px solid #FFFFFF;
+}
+
+.btn-services-cta:hover {
+    background: transparent;
+    color: #FFFFFF;
+    transform: translateX(5px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+.btn-services-cta i {
+    transition: transform 0.3s ease;
+}
+
+.btn-services-cta:hover i {
+    transform: translateX(5px);
 }
 
 /* ================================
@@ -250,6 +357,14 @@
 .services-grid-section {
     background: var(--white);
     padding: 80px 0;
+}
+
+.services-grid-section .section-title {
+    color: #141414 !important;
+}
+
+.services-grid-section .section-subtitle {
+    color: #555555 !important;
 }
 
 .services-hologram-grid {
@@ -461,40 +576,75 @@
     }
 
     .toolkit-visual {
-        height: 300px;
+        height: 380px;
         margin-bottom: 30px;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .floating-tool {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
-        border-radius: 18px;
+        width: 55px;
+        height: 55px;
+        font-size: 1.3rem;
+        border-radius: 16px;
+    }
+
+    .floating-tool.tool-pen {
+        top: 0%;
+        left: 0%;
+    }
+
+    .floating-tool.tool-code {
+        top: -2%;
+        right: 12%;
+    }
+
+    .floating-tool.tool-megaphone {
+        bottom: 15%;
+        left: -2%;
+    }
+
+    .floating-tool.tool-palette {
+        bottom: 0%;
+        right: 5%;
     }
 
     .floating-tool.tool-chart {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+        top: 40%;
+        right: -2%;
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
     }
 
     .glass-toolkit-card {
-        width: 220px;
-        padding: 20px;
-        transform: perspective(1000px) rotateY(-5deg) rotateX(3deg);
+        width: 280px;
+        transform: perspective(1000px) rotateY(-3deg) rotateX(2deg);
     }
 
-    .glass-service-item {
-        font-size: 0.9rem;
+    .glass-metric-value {
+        font-size: 1.3rem;
     }
 
     .toolkit-content {
-        padding-left: 0;
+        padding-right: 0;
         text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .toolkit-content .toolkit-subtitle {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .toolkit-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
+    }
+
+    .btn-services-cta {
+        margin: 0 auto;
     }
 
     .toolkit-subtitle {
@@ -604,42 +754,185 @@
     }
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 767.98px) {
     .toolkit-visual {
-        height: 260px;
+        height: 340px;
+        max-width: 360px;
     }
 
     .floating-tool {
-        width: 50px;
-        height: 50px;
-        font-size: 1.3rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
         border-radius: 14px;
     }
 
+    .floating-tool.tool-pen {
+        top: 2%;
+        left: 2%;
+    }
+
+    .floating-tool.tool-code {
+        top: 0%;
+        right: 8%;
+    }
+
+    .floating-tool.tool-megaphone {
+        bottom: 12%;
+        left: 0%;
+    }
+
+    .floating-tool.tool-palette {
+        bottom: 2%;
+        right: 2%;
+    }
+
     .floating-tool.tool-chart {
+        top: 42%;
+        right: 0%;
         width: 42px;
         height: 42px;
         font-size: 1rem;
     }
 
     .glass-toolkit-card {
-        width: 180px;
-        padding: 15px;
-        border-radius: 18px;
+        width: 240px;
+        border-radius: 16px;
     }
 
-    .glass-service-item {
-        font-size: 0.8rem;
+    .glass-card-header {
+        padding: 12px 18px;
+    }
+
+    .glass-card-content {
+        padding: 14px 18px 18px;
+    }
+
+    .glass-metric-value {
+        font-size: 1.2rem;
+    }
+
+    .glass-metric {
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .glass-progress-head {
+        font-size: 0.75rem;
+    }
+
+    .glass-progress-bar {
+        height: 5px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .services-hero-toolkit {
+        padding: 110px 0 50px;
+    }
+
+    .toolkit-visual {
+        height: 300px;
+        max-width: 320px;
+    }
+
+    .floating-tool {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+        border-radius: 12px;
+    }
+
+    .floating-tool.tool-pen {
+        top: 4%;
+        left: 3%;
+    }
+
+    .floating-tool.tool-code {
+        top: 2%;
+        right: 5%;
+        width: 42px;
+        height: 42px;
+    }
+
+    .floating-tool.tool-megaphone {
+        bottom: 10%;
+        left: 2%;
+    }
+
+    .floating-tool.tool-palette {
+        bottom: 3%;
+        right: 3%;
+    }
+
+    .floating-tool.tool-chart {
+        top: 45%;
+        right: 0%;
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+
+    .glass-toolkit-card {
+        width: 200px;
+        border-radius: 14px;
+    }
+
+    .glass-card-header {
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .glass-card-label {
+        font-size: 0.65rem;
+    }
+
+    .glass-status-dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .glass-card-content {
+        padding: 12px 14px 14px;
+    }
+
+    .glass-metric-row {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .glass-metric {
+        padding: 6px;
+        border-radius: 8px;
+    }
+
+    .glass-metric-value {
+        font-size: 1rem;
+    }
+
+    .glass-metric-label {
+        font-size: 0.6rem;
+    }
+
+    .glass-progress-section {
         gap: 10px;
     }
 
-    .glass-dot {
-        width: 8px;
-        height: 8px;
+    .glass-progress-head {
+        font-size: 0.7rem;
+        margin-bottom: 4px;
+    }
+
+    .glass-progress-bar {
+        height: 4px;
     }
 
     .toolkit-title {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
+    }
+
+    .toolkit-subtitle {
+        font-size: 0.95rem;
     }
 
     .hologram-features {

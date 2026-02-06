@@ -88,7 +88,17 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right">
-                    <!-- Floating 3D Tools Composition -->
+                    <div class="toolkit-content">
+                        <h1 class="toolkit-title">Everything You Need to <span class="text-accent">Grow</span>.</h1>
+                        <p class="toolkit-subtitle">Comprehensive digital solutions tailored to your needs — from design to development, marketing to branding.</p>
+                        <a href="contact.php" class="btn-services-cta">
+                            <span>Start a Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <!-- Holographic Dashboard Card -->
                     <div class="toolkit-visual">
                         <div class="floating-tools-container">
                             <!-- Floating Tool Icons -->
@@ -108,34 +118,64 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                                 <i class="fas fa-chart-line"></i>
                             </div>
                             
-                            <!-- Glassmorphism Card -->
+                            <!-- Dark Glassmorphism Dashboard -->
                             <div class="glass-toolkit-card">
+                                <div class="glass-card-header">
+                                    <span class="glass-status-dot"></span>
+                                    <span class="glass-card-label">Project Dashboard</span>
+                                </div>
                                 <div class="glass-card-content">
-                                    <div class="glass-service-item">
-                                        <span class="glass-dot"></span>
-                                        <span>Design</span>
+                                    <div class="glass-metric-row">
+                                        <div class="glass-metric">
+                                            <span class="glass-metric-value">98%</span>
+                                            <span class="glass-metric-label">Satisfaction</span>
+                                        </div>
+                                        <div class="glass-metric">
+                                            <span class="glass-metric-value">200+</span>
+                                            <span class="glass-metric-label">Projects</span>
+                                        </div>
                                     </div>
-                                    <div class="glass-service-item">
-                                        <span class="glass-dot"></span>
-                                        <span>Development</span>
-                                    </div>
-                                    <div class="glass-service-item">
-                                        <span class="glass-dot"></span>
-                                        <span>Marketing</span>
-                                    </div>
-                                    <div class="glass-service-item">
-                                        <span class="glass-dot"></span>
-                                        <span>Branding</span>
+                                    <div class="glass-progress-section">
+                                        <div class="glass-progress-item">
+                                            <div class="glass-progress-head">
+                                                <span>Design</span>
+                                                <span>92%</span>
+                                            </div>
+                                            <div class="glass-progress-bar">
+                                                <div class="glass-progress-fill" style="width: 92%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="glass-progress-item">
+                                            <div class="glass-progress-head">
+                                                <span>Development</span>
+                                                <span>87%</span>
+                                            </div>
+                                            <div class="glass-progress-bar">
+                                                <div class="glass-progress-fill fill-blue" style="width: 87%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="glass-progress-item">
+                                            <div class="glass-progress-head">
+                                                <span>Marketing</span>
+                                                <span>95%</span>
+                                            </div>
+                                            <div class="glass-progress-bar">
+                                                <div class="glass-progress-fill fill-green" style="width: 95%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="glass-progress-item">
+                                            <div class="glass-progress-head">
+                                                <span>Branding</span>
+                                                <span>90%</span>
+                                            </div>
+                                            <div class="glass-progress-bar">
+                                                <div class="glass-progress-fill fill-purple" style="width: 90%"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="toolkit-content">
-                        <h1 class="toolkit-title">See What Happens When Creativity Meets Purpose</h1>
-                        <p class="toolkit-subtitle">Every project we take on is a collision of bold thinking and meaningful intent. These are stories where redefined imagination, strategy, and creativity are transformed into impact.</p>
                     </div>
                 </div>
             </div>
