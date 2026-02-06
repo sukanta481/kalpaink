@@ -11,24 +11,84 @@ foreach ($crm_stats as $stat) {
 ?>
 
     <!-- About Hero Section -->
-    <section class="about-hero about-hero-dark">
-        <!-- Hero Banner Image -->
-        <div class="hero-banner-full">
-            <img src="assets/images/about-hero-dark.png" 
-                 alt="Designer hand drawing on glowing tablet - Digital craftsmanship in the dark" 
-                 class="hero-banner-image">
-            <div class="hero-banner-overlay"></div>
+    <section class="about-hero-v3">
+        <!-- Atmosphere -->
+        <div class="about-hero-atm">
+            <div class="about-hero-grain"></div>
+            <div class="about-hero-orb about-hero-orb--1"></div>
+            <div class="about-hero-orb about-hero-orb--2"></div>
+            <div class="about-hero-grid"></div>
+        </div>
+
+        <div class="container position-relative" style="z-index:2;">
+            <div class="row align-items-center min-vh-about-hero">
+                <!-- Text Column -->
+                <div class="col-lg-7" data-aos="fade-up">
+                    <div class="about-hero-content">
+                        <div class="about-hero-eyebrow">
+                            <span class="eyebrow-dot"></span>
+                            Our Story
+                        </div>
+                        <h1 class="about-hero-title">
+                            We craft brands<br>
+                            <span class="about-hero-accent">that resonate.</span>
+                        </h1>
+                        <p class="about-hero-desc">A young, fearless crew of creatives from Kolkata — blending strategy, design, and technology to make businesses unforgettable.</p>
+                        
+                        <!-- Inline Stats -->
+                        <div class="about-hero-stats">
+                            <?php if (!empty($crm_stats)): ?>
+                                <?php foreach (array_slice($crm_stats, 0, 3) as $stat): ?>
+                                <div class="about-hero-stat">
+                                    <span class="about-hero-stat-val"><?php echo htmlspecialchars($stat['value'] . ($stat['suffix'] ?? '')); ?></span>
+                                    <span class="about-hero-stat-lbl"><?php echo htmlspecialchars($stat['label']); ?></span>
+                                </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="about-hero-stat">
+                                    <span class="about-hero-stat-val">200+</span>
+                                    <span class="about-hero-stat-lbl">Projects</span>
+                                </div>
+                                <div class="about-hero-stat">
+                                    <span class="about-hero-stat-val">150+</span>
+                                    <span class="about-hero-stat-lbl">Clients</span>
+                                </div>
+                                <div class="about-hero-stat">
+                                    <span class="about-hero-stat-val">8+</span>
+                                    <span class="about-hero-stat-lbl">Years</span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Column -->
+                <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
+                    <div class="about-hero-visual">
+                        <div class="about-hero-img-card">
+                            <img src="assets/images/about-hero-dark.png" 
+                                 alt="Digital craftsmanship - creative design studio" 
+                                 class="about-hero-img">
+                        </div>
+                        <!-- Floating badge -->
+                        <div class="about-floating-badge" data-aos="fade-up" data-aos-delay="500">
+                            <i class="fas fa-palette"></i>
+                            <span>Since 2018</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- About Card -->
-    <section class="section-padding" style="padding-top: 0;">
+    <section class="section-padding" style="background: #f5f5f7;">
         <div class="container">
             <div class="about-card" data-aos="fade-up">
                 <div class="row">
                     <div class="col-lg-8">
-                        <span class="about-badge">Our Story</span>
-                        <h2 class="about-headline">Behind The Chisel</h2>
+                        <span class="about-badge">Behind The Chisel</span>
+                        <h2 class="about-headline">Who We Really Are</h2>
                         <p>At Kalpoink, creativity isn't just our passion – it's our heartbeat. We're a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p>
                         <p>With fresh ideas and an unbridled enthusiasm, we turn challenges into opportunities and dreams into realities. We are based in Kolkata and serve clients across India and beyond.</p>
                     </div>

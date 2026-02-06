@@ -124,48 +124,74 @@ if (count($gallery_previews) < 4) {
 }
 ?>
 
-    <!-- Case Studies Hero Section - The Trophy Room -->
-    <section class="trophy-room-hero">
+    <!-- Case Studies Hero Section -->
+    <section class="case-hero">
+        <div class="case-hero-noise"></div>
+        <div class="case-hero-glow"></div>
+        <div class="case-hero-glow case-hero-glow--2"></div>
+        
+        <!-- Scattered floating project images -->
+        <div class="case-hero-scattered">
+            <?php 
+            $scattered_positions = [
+                ['class' => 'sc-1', 'size' => '220x150'],
+                ['class' => 'sc-2', 'size' => '180x130'],
+                ['class' => 'sc-3', 'size' => '200x140'],
+                ['class' => 'sc-4', 'size' => '160x120'],
+                ['class' => 'sc-5', 'size' => '190x135'],
+                ['class' => 'sc-6', 'size' => '170x125'],
+            ];
+            foreach (array_slice($portfolio_items, 0, 6) as $i => $item): 
+                $pos = $scattered_positions[$i];
+            ?>
+            <div class="sc-card <?php echo $pos['class']; ?>" data-speed="<?php echo 0.02 + ($i * 0.008); ?>">
+                <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['title']; ?>" loading="lazy">
+                <div class="sc-card-shine"></div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <!-- Floating Gallery -->
-                    <div class="floating-gallery">
-                        <div class="gallery-float-item item-1">
-                            <img src="<?php echo $gallery_previews[0]; ?>" alt="Project Preview">
-                        </div>
-                        <div class="gallery-float-item item-2">
-                            <img src="<?php echo $gallery_previews[1]; ?>" alt="Project Preview">
-                        </div>
-                        <div class="gallery-float-item item-3">
-                            <img src="<?php echo $gallery_previews[2]; ?>" alt="Project Preview">
-                        </div>
-                        <div class="gallery-float-item item-4">
-                            <img src="<?php echo $gallery_previews[3]; ?>" alt="Project Preview">
-                        </div>
-                        <!-- Decorative elements -->
-                        <div class="gallery-decoration dec-circle"></div>
-                        <div class="gallery-decoration dec-dots"></div>
+            <div class="case-hero-content" data-aos="fade-up">
+                <div class="case-hero-eyebrow">
+                    <span class="eyebrow-line"></span>
+                    <span class="eyebrow-text">Our Portfolio</span>
+                    <span class="eyebrow-line"></span>
+                </div>
+                <h1 class="case-hero-title">
+                    <span class="title-line">Proof of</span>
+                    <span class="title-line title-line--accent">Impact<span class="title-dot">.</span></span>
+                </h1>
+                <p class="case-hero-subtitle">Every project we take on is a collision of bold thinking and meaningful intent. Campaigns that didn't just perform—they redefined what's possible.</p>
+                <div class="case-hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">50+</span>
+                        <span class="hero-stat-label">Projects</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">35+</span>
+                        <span class="hero-stat-label">Clients</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">4.9</span>
+                        <span class="hero-stat-label">Rating</span>
                     </div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="trophy-content">
-                        <span class="trophy-badge">Our Portfolio</span>
-                        <h1 class="trophy-title">Proof of Impact.</h1>
-                        <p class="trophy-subtitle">Every project we take on is a collision of bold thinking and meaningful intent. Dive into a showcase of campaigns that didn't just perform—they redefined what's possible for brands.</p>
-                    </div>
-                </div>
+                <a href="#portfolio" class="case-hero-cta">
+                    <span>Explore Work</span>
+                    <i class="fas fa-arrow-down"></i>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Section with Masonry Grid -->
-    <section class="case-studies-section section-padding">
+    <!-- Portfolio Section -->
+    <section class="case-studies-section section-padding" id="portfolio">
         <div class="container">
-            <h2 class="section-title mb-4" data-aos="fade-up">Case Studies</h2>
-            
             <!-- Swipeable Filter Bar -->
-            <div class="filter-scroll-wrapper" data-aos="fade-up" data-aos-delay="100">
+            <div class="filter-scroll-wrapper" data-aos="fade-up">
                 <div class="portfolio-filter-scroll">
                     <?php foreach ($categories as $index => $category): ?>
                     <button class="filter-btn <?php echo $index === 0 ? 'active' : ''; ?>" data-filter="<?php echo $category === 'All' ? 'all' : $category; ?>">
@@ -175,44 +201,32 @@ if (count($gallery_previews) < 4) {
                 </div>
             </div>
             
-            <!-- Custom Cursor for Desktop -->
-            <div class="custom-cursor-view">
-                <span>VIEW</span>
-            </div>
-            
-            <!-- Masonry Portfolio Grid -->
-            <div class="masonry-portfolio-grid">
+            <!-- Portfolio Grid -->
+            <div class="row g-4 portfolio-grid-v3">
                 <?php foreach ($portfolio_items as $index => $item): ?>
-                <div class="masonry-item masonry-<?php echo $item['size']; ?> portfolio-item" data-category="<?php echo $item['category']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 3 + 1) * 100; ?>">
-                    <div class="case-study-card-v2">
-                        <div class="case-study-image-v2">
+                <div class="col-lg-4 col-md-6 portfolio-item" data-category="<?php echo $item['category']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 3 + 1) * 80; ?>">
+                    <div class="case-card-v3">
+                        <div class="case-card-v3-image">
                             <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['title']; ?>" loading="lazy">
-                            <div class="case-study-overlay-v2">
-                                <a href="#" class="overlay-link">
-                                    <span class="sr-only">View Project</span>
+                            <div class="case-card-v3-overlay">
+                                <a href="#" class="case-card-v3-view">
+                                    <i class="fas fa-arrow-up-right-from-square"></i>
                                 </a>
                             </div>
                         </div>
-                        <div class="case-study-content-v2">
-                            <h5 class="case-study-title-v2"><?php echo $item['title']; ?></h5>
-                            <div class="case-study-tags-v2">
+                        <div class="case-card-v3-body">
+                            <h5 class="case-card-v3-title"><?php echo $item['title']; ?></h5>
+                            <div class="case-card-v3-tags">
                                 <?php foreach ($item['tags'] as $tag): ?>
-                                <span class="case-study-tag-v2"><?php echo $tag; ?></span>
+                                <span class="case-card-v3-tag"><?php echo $tag; ?></span>
                                 <?php endforeach; ?>
                             </div>
-                            <p class="case-study-desc-v2"><?php echo $item['description']; ?></p>
-                            <a href="#" class="view-details-link-v2">View Details <i class="fas fa-arrow-right"></i></a>
+                            <p class="case-card-v3-desc"><?php echo $item['description']; ?></p>
+                            <a href="#" class="case-card-v3-link">View Details <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
                 <?php endforeach; ?>
-            </div>
-            
-            <!-- Progress Bar Indicator (Mobile Only) -->
-            <div class="swipe-progress-bar d-lg-none">
-                <div class="progress-track">
-                    <div class="progress-fill" id="caseStudyProgress"></div>
-                </div>
             </div>
         </div>
     </section>

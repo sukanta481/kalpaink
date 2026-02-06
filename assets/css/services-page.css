@@ -355,8 +355,8 @@
    Desktop: Hover Hologram | Mobile: Accordion Stack
 ================================ */
 .services-grid-section {
-    background: var(--white);
-    padding: 80px 0;
+    background: #f5f5f7;
+    padding: 100px 0;
 }
 
 .services-grid-section .section-title {
@@ -368,20 +368,19 @@
 }
 
 .services-hologram-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
+    /* Uses Bootstrap row/col grid — no custom flex override */
 }
 
 /* Hologram Card Base */
 .service-hologram-card {
-    background: var(--white);
-    border-radius: 20px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     position: relative;
+    height: 100%;
 }
 
 /* Card Header - Always Visible */
@@ -416,7 +415,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--white);
+    background: linear-gradient(135deg, #2962FF 0%, #448aff 100%);
     opacity: 0;
     transition: opacity 0.4s ease;
     border-radius: inherit;
@@ -425,6 +424,7 @@
 .hologram-icon i {
     position: relative;
     z-index: 1;
+    transition: color 0.4s ease;
 }
 
 .hologram-title-wrap {
@@ -447,21 +447,23 @@
     transition: color 0.4s ease;
 }
 
-/* Mobile Toggle Arrow */
+/* Toggle / Expand Arrow */
 .hologram-toggle {
     display: none;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: var(--gray-100);
     align-items: center;
     justify-content: center;
-    color: var(--gray-500);
+    color: var(--gray-400);
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .hologram-toggle i {
     transition: transform 0.3s ease;
+    font-size: 0.75rem;
 }
 
 /* Expandable Body */
@@ -503,16 +505,18 @@
 }
 
 .hologram-feature-item i {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
     border-radius: 50%;
-    background: var(--white);
-    color: var(--black);
+    background: rgba(41, 98, 255, 0.12);
+    color: #2962FF;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     flex-shrink: 0;
+    transition: all 0.4s ease;
 }
 
 /* ================================
@@ -523,11 +527,35 @@
         display: none !important;
     }
 
+    /* Desktop arrow hint on inactive cards */
+    .service-hologram-card .hologram-header::after {
+        content: '\f061';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        font-size: 0.8rem;
+        color: var(--gray-400);
+        transition: all 0.4s ease;
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f0f0f2;
+    }
+
     /* Hover State - Card transforms to dark */
     .service-hologram-card:hover {
         background: var(--black);
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         transform: translateY(-5px);
+    }
+
+    .service-hologram-card:hover .hologram-header::after {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+        transform: rotate(-45deg);
     }
 
     .service-hologram-card:hover .hologram-icon {
@@ -536,7 +564,11 @@
 
     .service-hologram-card:hover .hologram-icon::before {
         opacity: 1;
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 25px rgba(41, 98, 255, 0.5), 0 0 50px rgba(41, 98, 255, 0.2);
+    }
+
+    .service-hologram-card:hover .hologram-icon i {
+        color: #fff;
     }
 
     .service-hologram-card:hover .hologram-title {
@@ -561,6 +593,11 @@
         opacity: 1;
         transform: translateX(0);
         color: rgba(255, 255, 255, 0.9);
+    }
+
+    .service-hologram-card:hover .hologram-feature-item i {
+        background: rgba(41, 98, 255, 0.25);
+        color: #5C8AFF;
     }
 }
 
@@ -654,15 +691,11 @@
 
     /* Services Grid */
     .services-grid-section {
-        padding: 50px 0;
-    }
-
-    .services-hologram-grid {
-        gap: 15px;
+        padding: 60px 0;
     }
 
     .service-hologram-card {
-        border-radius: 16px;
+        border-radius: 14px;
     }
 
     /* Show Toggle Arrow */
@@ -716,6 +749,11 @@
 
     .service-hologram-card.expanded .hologram-icon::before {
         opacity: 1;
+        box-shadow: 0 0 20px rgba(41, 98, 255, 0.4);
+    }
+
+    .service-hologram-card.expanded .hologram-icon i {
+        color: #fff;
     }
 
     .service-hologram-card.expanded .hologram-title {
@@ -729,8 +767,8 @@
     }
 
     .service-hologram-card.expanded .hologram-toggle {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--white);
+        background: rgba(41, 98, 255, 0.2);
+        color: #5C8AFF;
     }
 
     .service-hologram-card.expanded .hologram-toggle i {
@@ -751,6 +789,11 @@
         opacity: 1;
         transform: translateX(0);
         color: rgba(255, 255, 255, 0.9);
+    }
+
+    .service-hologram-card.expanded .hologram-feature-item i {
+        background: rgba(41, 98, 255, 0.25);
+        color: #5C8AFF;
     }
 }
 

@@ -18,6 +18,19 @@ $default_gradients = [
 
     <!-- Hero Section with Slider -->
     <section class="hero-section">
+        <!-- Atmospheric Background -->
+        <div class="hero-atmosphere">
+            <div class="hero-atm-grain"></div>
+            <div class="hero-atm-orb hero-atm-orb--blue"></div>
+            <div class="hero-atm-orb hero-atm-orb--purple"></div>
+            <div class="hero-atm-orb hero-atm-orb--cyan"></div>
+            <div class="hero-atm-grid"></div>
+            <!-- Floating micro particles -->
+            <div class="hero-particles">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <!-- Carousel Indicators -->
             <div class="carousel-indicators">

@@ -60,197 +60,225 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-    <!-- Contact Hero Section - "The First Step" -->
-    <section class="contact-hero-v2">
+    <!-- Contact Hero -->
+    <section class="contact-hero-v3">
+        <div class="contact-hero-v3-bg">
+            <div class="ch-orb ch-orb--1"></div>
+            <div class="ch-orb ch-orb--2"></div>
+            <div class="ch-orb ch-orb--3"></div>
+        </div>
         <div class="container">
             <div class="row align-items-center g-5">
-                <!-- Left: Hero Content -->
-                <div class="col-lg-6" data-aos="fade-right">
-                    <span class="hero-label">
-                        <i class="fas fa-paper-plane me-2"></i>
-                        Start Your Journey
-                    </span>
-                    <h1 class="hero-headline">Let's Sculpt<br>Your Vision.</h1>
-                    <p class="hero-subtext">You have the idea. We have the chisel. Fill out the form below to start the transformation.</p>
+                <div class="col-lg-7" data-aos="fade-up">
+                    <div class="ch-eyebrow">
+                        <span class="ch-eyebrow-dot"></span>
+                        <span class="ch-eyebrow-text">Let's Talk</span>
+                    </div>
+                    <h1 class="ch-title">
+                        Got a project?<br>
+                        <span class="ch-title-accent">Let's make it real.</span>
+                    </h1>
+                    <p class="ch-subtitle">Whether it's a bold rebrand, a digital product, or a campaign that breaks the mold — we're ready. Drop us a line and let's start something great.</p>
                     
-                    <!-- Trust Indicators -->
-                    <div class="trust-row">
-                        <div class="trust-item">
+                    <div class="ch-trust-pills">
+                        <div class="ch-pill">
                             <i class="fas fa-shield-alt"></i>
                             <span>100% Confidential</span>
                         </div>
-                        <div class="trust-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Response in 24hrs</span>
+                        <div class="ch-pill">
+                            <i class="fas fa-bolt"></i>
+                            <span>Reply in 24hrs</span>
+                        </div>
+                        <div class="ch-pill">
+                            <i class="fas fa-handshake"></i>
+                            <span>NDA Available</span>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Right: Hero Image -->
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="hero-visual">
-                        <div class="hero-image-wrapper">
-                            <img src="assets/images/hero/contact-hero.jpg" alt="Let's Connect" onerror="this.style.display='none'; this.parentElement.classList.add('fallback-active');">
-                            <!-- Fallback if no image -->
-                            <div class="hero-image-fallback">
-                                <div class="floating-icons">
-                                    <div class="float-icon icon-1"><i class="fas fa-mobile-alt"></i></div>
-                                    <div class="float-icon icon-2"><i class="fas fa-comments"></i></div>
-                                    <div class="float-icon icon-3"><i class="fas fa-handshake"></i></div>
-                                    <div class="float-icon icon-4"><i class="fas fa-lightbulb"></i></div>
-                                </div>
-                                <div class="central-icon">
-                                    <i class="fas fa-rocket"></i>
-                                </div>
-                            </div>
+                <div class="col-lg-5" data-aos="fade-up" data-aos-delay="150">
+                    <div class="ch-quick-connect">
+                        <div class="ch-qc-header">
+                            <div class="ch-qc-dot-row"><span></span><span></span><span></span></div>
+                            <span class="ch-qc-label">Quick Connect</span>
                         </div>
-                        <!-- Decorative Elements -->
-                        <div class="hero-decor decor-1"></div>
-                        <div class="hero-decor decor-2"></div>
+                        <div class="ch-qc-body">
+                            <a href="tel:<?php echo CONTACT_PHONE; ?>" class="ch-qc-item">
+                                <div class="ch-qc-icon"><i class="fas fa-phone"></i></div>
+                                <div class="ch-qc-info">
+                                    <span class="ch-qc-info-label">Call us</span>
+                                    <span class="ch-qc-info-value"><?php echo CONTACT_PHONE; ?></span>
+                                </div>
+                                <i class="fas fa-arrow-right ch-qc-arrow"></i>
+                            </a>
+                            <a href="mailto:<?php echo CONTACT_EMAIL; ?>" class="ch-qc-item">
+                                <div class="ch-qc-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="ch-qc-info">
+                                    <span class="ch-qc-info-label">Email us</span>
+                                    <span class="ch-qc-info-value"><?php echo CONTACT_EMAIL; ?></span>
+                                </div>
+                                <i class="fas fa-arrow-right ch-qc-arrow"></i>
+                            </a>
+                            <a href="https://maps.google.com" target="_blank" class="ch-qc-item">
+                                <div class="ch-qc-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div class="ch-qc-info">
+                                    <span class="ch-qc-info-label">Visit us</span>
+                                    <span class="ch-qc-info-value">Kolkata, India</span>
+                                </div>
+                                <i class="fas fa-arrow-right ch-qc-arrow"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section - "Dark Mode VIP" -->
-    <section class="contact-form-section">
+    <!-- Contact Form Section -->
+    <section class="contact-form-v3">
         <div class="container">
-            <div class="contact-form-card-v2" data-aos="fade-up">
-                <!-- Form Header -->
-                <div class="form-header">
-                    <div class="form-header-badge">
-                        <i class="fas fa-gem"></i>
-                        <span>VIP Inquiry</span>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="cf3-card" data-aos="fade-up">
+                        <div class="cf3-card-glow"></div>
+                        
+                        <!-- Left accent bar -->
+                        <div class="cf3-accent-bar"></div>
+                        
+                        <div class="row g-0">
+                            <!-- Form Side -->
+                            <div class="col-lg-7">
+                                <div class="cf3-form-side">
+                                    <div class="cf3-header">
+                                        <h2 class="cf3-headline">Tell us about your project</h2>
+                                        <p class="cf3-subtext">Fill in the details and we'll get back to you shortly.</p>
+                                    </div>
+                                    
+                                    <?php if ($form_submitted || $form_error): ?>
+                                    <div class="alert alert-<?php echo $form_submitted ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert" style="background: <?php echo $form_submitted ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.15)'; ?>; border: 1px solid <?php echo $form_submitted ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'; ?>; color: <?php echo $form_submitted ? '#22c55e' : '#ef4444'; ?>; border-radius: 12px;">
+                                        <?php echo $form_message; ?>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: <?php echo $form_submitted ? 'invert(59%) sepia(50%) saturate(600%) hue-rotate(100deg)' : 'invert(36%) sepia(80%) saturate(3000%) hue-rotate(345deg)'; ?>"></button>
+                                    </div>
+                                    <?php endif; ?>
+                                    
+                                    <form id="contactForm" method="POST" action="">
+                                        <div class="row g-3">
+                                            <div class="col-sm-6">
+                                                <div class="cf3-field">
+                                                    <label class="cf3-label">Your name <span>*</span></label>
+                                                    <input type="text" class="cf3-input" name="name" placeholder="John Doe" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="cf3-field">
+                                                    <label class="cf3-label">Email address <span>*</span></label>
+                                                    <input type="email" class="cf3-input" name="email" placeholder="john@company.com" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="cf3-field">
+                                                    <label class="cf3-label">Phone number</label>
+                                                    <input type="tel" class="cf3-input" name="phone" placeholder="+91 98765 43210">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="cf3-field">
+                                                    <label class="cf3-label">Location</label>
+                                                    <select class="cf3-input cf3-select" name="country">
+                                                        <option value="India" selected>India</option>
+                                                        <option value="USA">USA</option>
+                                                        <option value="UK">UK</option>
+                                                        <option value="Canada">Canada</option>
+                                                        <option value="Australia">Australia</option>
+                                                        <option value="UAE">UAE</option>
+                                                        <option value="Singapore">Singapore</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="cf3-field">
+                                                    <label class="cf3-label">Project details <span>*</span></label>
+                                                    <textarea class="cf3-input cf3-textarea" name="message" rows="4" placeholder="Tell us about your vision, goals, and timeline..." required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="submit" class="cf3-submit">
+                                                    <span>Send Message</span>
+                                                    <i class="fas fa-paper-plane"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <!-- Info Side -->
+                            <div class="col-lg-5">
+                                <div class="cf3-info-side">
+                                    <div class="cf3-info-content">
+                                        <h3 class="cf3-info-title">Let's connect</h3>
+                                        <p class="cf3-info-desc">We'd love to hear from you. Reach out through any channel that works best for you.</p>
+                                        
+                                        <div class="cf3-info-items">
+                                            <div class="cf3-info-item">
+                                                <div class="cf3-info-icon">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="cf3-info-label">Address</span>
+                                                    <p><?php echo CONTACT_ADDRESS; ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="cf3-info-item">
+                                                <div class="cf3-info-icon">
+                                                    <i class="fas fa-phone"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="cf3-info-label">Phone</span>
+                                                    <p><a href="tel:<?php echo CONTACT_PHONE; ?>"><?php echo CONTACT_PHONE; ?></a></p>
+                                                </div>
+                                            </div>
+                                            <div class="cf3-info-item">
+                                                <div class="cf3-info-icon">
+                                                    <i class="fas fa-envelope"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="cf3-info-label">Email</span>
+                                                    <p><a href="mailto:<?php echo CONTACT_EMAIL; ?>"><?php echo CONTACT_EMAIL; ?></a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="cf3-social-row">
+                                            <span class="cf3-social-label">Follow us</span>
+                                            <div class="cf3-socials">
+                                                <a href="#" class="cf3-social"><i class="fab fa-facebook-f"></i></a>
+                                                <a href="#" class="cf3-social"><i class="fab fa-instagram"></i></a>
+                                                <a href="#" class="cf3-social"><i class="fab fa-linkedin-in"></i></a>
+                                                <a href="#" class="cf3-social"><i class="fab fa-twitter"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h2 class="form-headline">Tell Us About Your Project</h2>
-                    <p class="form-subtext">Every great partnership starts with a conversation.</p>
-                </div>
-                
-                <?php if ($form_submitted || $form_error): ?>
-                <div class="alert alert-<?php echo $form_submitted ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert" style="background: <?php echo $form_submitted ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'; ?>; border: none; color: var(--white);">
-                    <?php echo $form_message; ?>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <?php endif; ?>
-                
-                <form id="contactForm" method="POST" action="">
-                    <div class="row g-4">
-                        <!-- Name Field -->
-                        <div class="col-md-6">
-                            <div class="form-group-dark">
-                                <label for="name" class="form-label-dark">What's your name? <span class="required">*</span></label>
-                                <input type="text" class="form-control-dark" id="name" name="name" placeholder="John Doe" required>
-                            </div>
-                        </div>
-                        
-                        <!-- Email Field -->
-                        <div class="col-md-6">
-                            <div class="form-group-dark">
-                                <label for="email" class="form-label-dark">Where should we send the proposal? <span class="required">*</span></label>
-                                <input type="email" class="form-control-dark" id="email" name="email" placeholder="john@company.com" required>
-                            </div>
-                        </div>
-                        
-                        <!-- Phone Field -->
-                        <div class="col-md-6">
-                            <div class="form-group-dark">
-                                <label for="phone" class="form-label-dark">Best number to reach you?</label>
-                                <input type="tel" class="form-control-dark" id="phone" name="phone" placeholder="+91 98765 43210">
-                            </div>
-                        </div>
-                        
-                        <!-- Country Field -->
-                        <div class="col-md-6">
-                            <div class="form-group-dark">
-                                <label for="country" class="form-label-dark">Where are you based?</label>
-                                <select class="form-select-dark" id="country" name="country">
-                                    <option value="India" selected>India</option>
-                                    <option value="USA">USA</option>
-                                    <option value="UK">UK</option>
-                                    <option value="Canada">Canada</option>
-                                    <option value="Australia">Australia</option>
-                                    <option value="UAE">UAE</option>
-                                    <option value="Singapore">Singapore</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <!-- Message Field -->
-                        <div class="col-12">
-                            <div class="form-group-dark">
-                                <label for="message" class="form-label-dark">Tell us about your dream project... <span class="required">*</span></label>
-                                <textarea class="form-control-dark" id="message" name="message" rows="5" placeholder="I'm looking to create a brand identity that stands out. My target audience is..." required></textarea>
-                            </div>
-                        </div>
-                        
-                        <!-- Submit Button -->
-                        <div class="col-12">
-                            <button type="submit" class="btn-neon-submit">
-                                <span>Let's Make Magic</span>
-                                <i class="fas fa-arrow-right ms-2"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                
-                <!-- Privacy Note -->
-                <div class="privacy-note-dark">
-                    <i class="fas fa-shield-alt"></i>
-                    <p>Your information is 100% confidential. We never share your details. Request an NDA anytime.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Info Section -->
-    <section class="section-padding bg-light-gray">
+    <!-- Map Section -->
+    <section class="contact-map-v3">
         <div class="container">
-            <div class="row g-4 align-items-stretch">
-                <div class="col-lg-5" data-aos="fade-right">
-                    <div class="contact-info-card h-100">
-                        <h3 class="mb-4">Kalpoink</h3>
-                        
-                        <div class="contact-info-item">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <p class="mb-0"><?php echo CONTACT_ADDRESS; ?></p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-info-item">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div>
-                                <a href="tel:<?php echo CONTACT_PHONE; ?>"><?php echo CONTACT_PHONE; ?></a>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-info-item mb-0">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <a href="mailto:<?php echo CONTACT_EMAIL; ?>"><?php echo CONTACT_EMAIL; ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7" data-aos="fade-left">
-                    <div class="map-container h-100" style="min-height: 300px;">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.7567075776!2d88.3788!3d22.5726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzIxLjQiTiA4OMKwMjInNDMuNyJF!5e0!3m2!1sen!2sin!4v1234567890"
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-                </div>
+            <div class="map-card-v3" data-aos="fade-up">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.7567075776!2d88.3788!3d22.5726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzIxLjQiTiA4OMKwMjInNDMuNyJF!5e0!3m2!1sen!2sin!4v1234567890"
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
     </section>

@@ -58,16 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Services Page - Floating Tools Parallax
     initFloatingToolsParallax();
 
-    // Case Studies - Mobile Scroll Spotlight
-    initCaseStudySpotlight();
-
-    // Case Studies - Progress Bar
-    initCaseStudyProgressBar();
-
-    // Case Studies - Custom VIEW Cursor (Desktop)
-    initCustomCursor();
-
-    // Case Studies - Floating Gallery Parallax
+    // Case Studies - Scattered Hero Parallax
+    initScatteredParallax();
     initFloatingGalleryParallax();
 
     // Blog - Trending Section Progress Bar
@@ -316,23 +308,6 @@ function initMobileMenu() {
     // Also apply on toggler click
     navbarToggler.addEventListener('click', function () {
         setTimeout(fixActiveLinksColor, 50);
-    });
-
-    // Close menu when clicking the X pseudo-element area only
-    navbarCollapse.addEventListener('click', function (e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        // Check if click is in the close button area (top right corner)
-        if (x > rect.width - 60 && y < 60 && window.innerWidth < 992) {
-            e.preventDefault();
-            e.stopPropagation();
-            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-            if (bsCollapse) {
-                bsCollapse.hide();
-            }
-        }
     });
 
     // Close menu when clicking outside (not on menu or toggler)
@@ -1133,209 +1108,56 @@ function initFloatingToolsParallax() {
     });
 }
 
-/**
- * Case Studies - Mobile Scroll Spotlight Effect
- * Center card turns full color and scales up
- * Works with horizontal swipe deck on mobile
- */
-function initCaseStudySpotlight() {
-    const cards = document.querySelectorAll('.case-study-card-v2');
-    const grid = document.querySelector('.masonry-portfolio-grid');
-
-    if (!cards.length || !grid) return;
-
-    // Only apply on mobile/tablet
-    function isMobile() {
-        return window.innerWidth < 992;
-    }
-
-    function updateSpotlight() {
-        if (!isMobile()) {
-            // Remove all spotlight states on desktop
-            cards.forEach(card => card.classList.remove('spotlight-active'));
-            return;
-        }
-
-        // For horizontal swipe deck, use horizontal center
-        const viewportCenterX = window.innerWidth / 2;
-        let closestCard = null;
-        let closestDistance = Infinity;
-
-        cards.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const cardCenterX = rect.left + rect.width / 2;
-            const distance = Math.abs(cardCenterX - viewportCenterX);
-
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestCard = card;
-            }
-
-            card.classList.remove('spotlight-active');
-        });
-
-        // Only activate if card is reasonably close to center
-        if (closestCard && closestDistance < window.innerWidth * 0.4) {
-            closestCard.classList.add('spotlight-active');
-        }
-    }
-
-    // Listen to horizontal scroll on the grid container
-    let ticking = false;
-    grid.addEventListener('scroll', function () {
-        if (!ticking) {
-            window.requestAnimationFrame(function () {
-                updateSpotlight();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-
-    // Also listen to window scroll (for page scroll)
-    window.addEventListener('scroll', function () {
-        if (!ticking) {
-            window.requestAnimationFrame(function () {
-                updateSpotlight();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-
-    // Initial check
-    updateSpotlight();
-
-    // Update on resize
-    window.addEventListener('resize', updateSpotlight);
-}
+/* Old case studies spotlight, progress bar, cursor, floating gallery removed */
 
 /**
- * Case Studies - Progress Bar Indicator
- * Updates progress bar as user swipes through cards
+ * Case Studies - Scattered Hero Parallax
+ * Floating project images shift subtly on mouse move
  */
-function initCaseStudyProgressBar() {
-    const grid = document.querySelector('.masonry-portfolio-grid');
-    const progressFill = document.getElementById('caseStudyProgress');
+function initScatteredParallax() {
+    const hero = document.querySelector('.case-hero');
+    const cards = document.querySelectorAll('.sc-card');
 
-    if (!grid || !progressFill) return;
+    if (!hero || !cards.length) return;
+    if (window.innerWidth < 768) return; // Skip on mobile
 
-    function updateProgress() {
-        const scrollLeft = grid.scrollLeft;
-        const scrollWidth = grid.scrollWidth - grid.clientWidth;
-
-        if (scrollWidth > 0) {
-            const progress = (scrollLeft / scrollWidth) * 100;
-            // Ensure minimum of ~11% (first card visible)
-            const displayProgress = Math.max(11, Math.min(100, progress + 11));
-            progressFill.style.width = displayProgress + '%';
-        }
-    }
-
-    grid.addEventListener('scroll', updateProgress);
-
-    // Initial state
-    updateProgress();
-}
-
-/**
- * Case Studies - Custom VIEW Cursor (Desktop)
- * Yellow circle cursor when hovering over masonry grid
- */
-function initCustomCursor() {
-    const cursor = document.querySelector('.custom-cursor-view');
-    const grid = document.querySelector('.masonry-portfolio-grid');
-
-    if (!cursor || !grid) return;
-
-    // Only on desktop
-    if (window.innerWidth < 992) return;
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let cursorX = 0;
-    let cursorY = 0;
-
-    // Smooth cursor following
-    function animateCursor() {
-        const dx = mouseX - cursorX;
-        const dy = mouseY - cursorY;
-
-        cursorX += dx * 0.15;
-        cursorY += dy * 0.15;
-
-        cursor.style.left = cursorX - 40 + 'px';
-        cursor.style.top = cursorY - 40 + 'px';
-
-        requestAnimationFrame(animateCursor);
-    }
-
-    animateCursor();
-
-    // Track mouse movement
-    document.addEventListener('mousemove', function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    // Show/hide cursor on grid
-    grid.addEventListener('mouseenter', function () {
-        cursor.classList.add('active');
-        document.body.style.cursor = 'none';
-    });
-
-    grid.addEventListener('mouseleave', function () {
-        cursor.classList.remove('active');
-        document.body.style.cursor = '';
-    });
-
-    // Hide cursor when hovering links inside cards
-    const links = grid.querySelectorAll('a');
-    links.forEach(link => {
-        link.addEventListener('mouseenter', function () {
-            cursor.classList.remove('active');
-            document.body.style.cursor = 'pointer';
-        });
-        link.addEventListener('mouseleave', function () {
-            cursor.classList.add('active');
-            document.body.style.cursor = 'none';
-        });
-    });
-}
-
-/**
- * Case Studies - Floating Gallery Parallax
- */
-function initFloatingGalleryParallax() {
-    const gallery = document.querySelector('.floating-gallery');
-    const items = document.querySelectorAll('.gallery-float-item');
-
-    if (!gallery || !items.length) return;
-
-    gallery.addEventListener('mousemove', function (e) {
-        const rect = gallery.getBoundingClientRect();
+    hero.addEventListener('mousemove', function (e) {
+        const rect = hero.getBoundingClientRect();
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         const mouseX = e.clientX - rect.left - centerX;
         const mouseY = e.clientY - rect.top - centerY;
 
-        items.forEach((item, index) => {
-            const speed = 0.02 + (index * 0.01);
+        cards.forEach(card => {
+            const speed = parseFloat(card.dataset.speed) || 0.03;
             const x = mouseX * speed;
             const y = mouseY * speed;
-            const baseRotation = item.classList.contains('item-1') ? -8 :
-                item.classList.contains('item-2') ? 5 :
-                    item.classList.contains('item-3') ? 3 : -5;
 
-            item.style.transform = `rotate(${baseRotation}deg) translate(${x}px, ${y}px)`;
+            // Get the card's base rotation from CSS
+            const style = window.getComputedStyle(card);
+            const transform = style.transform;
+
+            card.style.transform = `translate(${x}px, ${y}px)`;
         });
     });
 
-    gallery.addEventListener('mouseleave', function () {
-        items.forEach(item => {
-            item.style.transform = '';
+    hero.addEventListener('mouseleave', function () {
+        cards.forEach(card => {
+            card.style.transform = '';
         });
     });
+
+    // Smooth scroll for "Explore Work" CTA
+    const cta = document.querySelector('.case-hero-cta');
+    if (cta) {
+        cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
 }
 
 /**
