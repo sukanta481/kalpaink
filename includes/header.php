@@ -1,3 +1,4 @@
+
 <?php require_once 'config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,15 +53,29 @@
             
             <!-- Nav Links -->
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Mobile menu header -->
+                <div class="mobile-menu-header d-lg-none">
+                    <a class="mobile-menu-logo" href="index.php">
+                        <img src="assets/images/kalpaink-logo.png" alt="Kalpoink" height="30">
+                    </a>
+                </div>
+
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="index.php">Home</a>
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="index.php">
+                            <span class="nav-icon d-lg-none"><i class="fas fa-home"></i></span>
+                            Home
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="about.php">About Us</a>
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="about.php">
+                            <span class="nav-icon d-lg-none"><i class="fas fa-users"></i></span>
+                            About Us
+                        </a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle <?php echo basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="nav-icon d-lg-none"><i class="fas fa-briefcase"></i></span>
                             Services
                         </a>
                         <ul class="dropdown-menu">
@@ -75,10 +90,16 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'case-studies.php' ? 'active' : ''; ?>" href="case-studies.php">Case Studies</a>
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'case-studies.php' ? 'active' : ''; ?>" href="case-studies.php">
+                            <span class="nav-icon d-lg-none"><i class="fas fa-layer-group"></i></span>
+                            Case Studies
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : ''; ?>" href="blog.php">Blog</a>
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : ''; ?>" href="blog.php">
+                            <span class="nav-icon d-lg-none"><i class="fas fa-pen-nib"></i></span>
+                            Blog
+                        </a>
                     </li>
                     <li class="nav-item d-none d-lg-block">
                         <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">Contact Us</a>
@@ -90,6 +111,16 @@
                     <span class="btn-text">Get Enquiry Now</span>
                     <i class="fas fa-arrow-right btn-arrow"></i>
                 </a>
+
+                <!-- Mobile menu footer -->
+                <div class="mobile-menu-footer d-lg-none">
+                    <div class="mobile-menu-socials">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    <p class="mobile-menu-tagline">Crafting digital experiences ✨</p>
+                </div>
             </div>
         </div>
     </nav>

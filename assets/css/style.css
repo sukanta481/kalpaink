@@ -6247,62 +6247,128 @@ textarea.form-control {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 300px;
+        width: 320px;
         height: 100vh;
-        background: linear-gradient(180deg, #1a1a1a 0%, #222 100%);
+        background: #0d0d1a;
         padding: 0;
         margin-top: 0;
-        box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-        transition: right 0.3s ease-in-out;
+        box-shadow: -10px 0 60px rgba(0, 0, 0, 0.7);
+        transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1050;
         border-radius: 0;
         display: flex;
         flex-direction: column;
         overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* Atmosphere glow inside menu */
+    .navbar-collapse::after {
+        content: '';
+        position: absolute;
+        top: -30%;
+        right: -30%;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(41, 98, 255, 0.08) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        filter: blur(60px);
+        z-index: 0;
     }
 
     .navbar-collapse.show {
         right: 0;
     }
 
-    /* Hide the pseudo-element close (handled by toggler X) */
     .navbar-collapse::before {
         display: none;
     }
 
+    /* Mobile Menu Header */
+    .mobile-menu-header {
+        padding: 22px 28px 0;
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .mobile-menu-logo img {
+        height: 28px;
+        opacity: 0.7;
+    }
+
     .navbar-nav {
         flex: 1;
-        padding: 80px 28px 20px;
+        padding: 30px 28px 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .navbar-nav .nav-item {
+        margin-bottom: 2px;
     }
 
     .navbar-nav .nav-link {
-        padding: 14px 8px;
-        color: var(--white);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 15px 16px;
+        color: rgba(255, 255, 255, 0.7);
+        border-bottom: none;
         font-size: 1.05rem;
         font-weight: 500;
-        letter-spacing: 0.3px;
+        letter-spacing: 0.2px;
         display: flex;
         align-items: center;
-        gap: 12px;
-        transition: all 0.2s ease;
+        gap: 14px;
+        transition: all 0.25s ease;
+        border-radius: 12px;
+        position: relative;
+    }
+
+    /* Nav icon styling */
+    .nav-icon {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.4);
+        transition: all 0.25s ease;
+        flex-shrink: 0;
     }
 
     .navbar-nav .nav-link:hover {
-        padding-left: 14px;
+        padding-left: 16px;
         background: rgba(255, 255, 255, 0.04);
-        border-radius: 8px;
+        color: #FFFFFF;
     }
 
-    .navbar .navbar-nav .nav-link:hover {
-        color: var(--primary-yellow) !important;
+    .navbar-nav .nav-link:hover .nav-icon {
+        background: rgba(41, 98, 255, 0.12);
+        border-color: rgba(41, 98, 255, 0.2);
+        color: #5C8AFF;
     }
 
-    /* Fix active link color on mobile - must be white to be visible */
+    /* Active link */
     .navbar .navbar-nav .nav-link.active,
     .navbar .navbar-nav .nav-link:focus,
     .navbar-nav .nav-link.active {
-        color: var(--white) !important;
+        color: #FFFFFF !important;
+        background: rgba(41, 98, 255, 0.08);
+    }
+
+    .navbar-nav .nav-link.active .nav-icon {
+        background: rgba(41, 98, 255, 0.15);
+        border-color: rgba(41, 98, 255, 0.25);
+        color: #5C8AFF;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+        color: #FFFFFF !important;
     }
 
     .navbar-nav .nav-link::after {
@@ -6314,14 +6380,15 @@ textarea.form-control {
         display: none;
     }
 
-    /* Mobile Dropdown - Show when toggled */
+    /* Mobile Dropdown */
     .navbar .dropdown-menu {
         display: none;
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.2);
         border: none;
-        padding: 0;
+        padding: 4px 0 4px 50px;
         margin: 0;
         box-shadow: none;
+        border-radius: 0 0 12px 12px;
     }
 
     .navbar .dropdown-menu.show {
@@ -6329,32 +6396,89 @@ textarea.form-control {
     }
 
     .navbar .dropdown-item {
-        color: var(--white);
-        padding: 12px 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.5);
+        padding: 10px 16px;
+        border-bottom: none;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
     }
 
     .navbar .dropdown-item:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: var(--primary-yellow);
+        background-color: rgba(41, 98, 255, 0.08);
+        color: #FFFFFF;
     }
 
+    /* CTA Button */
     .navbar .cta-btn {
-        margin: 0 28px 30px;
+        margin: 10px 28px 0;
         width: calc(100% - 56px);
         text-align: center;
         justify-content: center;
-        background-color: #FFFFFF !important;
+        background: #FFFFFF !important;
         color: #141414 !important;
         border-color: #FFFFFF !important;
-        padding: 14px 24px;
+        padding: 15px 24px;
         font-size: 0.95rem;
         font-weight: 700;
         border-radius: 50px;
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+
+    .navbar .cta-btn:hover {
+        background: #f0f0f0 !important;
+        border-color: #f0f0f0 !important;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
     }
 
     .navbar .cta-btn .btn-arrow {
         display: none;
+    }
+
+    /* Mobile Menu Footer */
+    .mobile-menu-footer {
+        padding: 20px 28px 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        margin-top: auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .mobile-menu-socials {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .mobile-menu-socials a {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+
+    .mobile-menu-socials a:hover {
+        background: rgba(41, 98, 255, 0.12);
+        border-color: rgba(41, 98, 255, 0.2);
+        color: #5C8AFF;
+    }
+
+    .mobile-menu-tagline {
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.2);
+        margin: 0;
+        letter-spacing: 0.3px;
     }
 
     /* Remove problematic overlay - use simpler approach */
