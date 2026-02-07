@@ -36,6 +36,6 @@
     <script src="https://cdn.tiny.cloud/1/<?php echo $tinymceKey; ?>/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     
     <!-- Admin JS -->
-    <script src="<?php echo getAdminUrl('assets/js/admin.js'); ?>"></script>
+    <script src="<?php echo getAdminUrl('assets/js/admin.js'); ?>?v=<?php echo filemtime(__DIR__ . '/../assets/js/admin.js'); ?>"></script>
 </body>
 </html>

@@ -142,5 +142,38 @@ echo "\n━━━━━━━━━━━━━━━━━━━━━━━━
 echo "📊 Page Content — Inserted: {$inserted}, Skipped: {$skipped}\n";
 echo "📊 Total rows: " . $db->query("SELECT COUNT(*) FROM page_content")->fetchColumn() . "\n";
 echo "📊 Total settings: " . $db->query("SELECT COUNT(*) FROM settings")->fetchColumn() . "\n";
+
+// ── 4. Create clients table + seed data ──
+echo "\n━━ 4. Clients Table ━━━━━━━━━━━━━━\n";
+try {
+    $db->exec("CREATE TABLE IF NOT EXISTS clients (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        client_name VARCHAR(100) NOT NULL,
+        client_logo VARCHAR(255) DEFAULT NULL,
+        website_url VARCHAR(255) DEFAULT NULL,
+        sort_order INT DEFAULT 0,
+        is_active TINYINT(1) DEFAULT 1,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    echo "✅ clients table created (or already exists)\n";
+    
+    $existing = $db->query("SELECT COUNT(*) FROM clients")->fetchColumn();
+    if ($existing == 0) {
+        $seed_clients = ['Acme Corp', 'TechFlow', 'Brandify', 'DigitalPro', 'MediaMax', 'StartupXYZ', 'CloudNine', 'Innovate Inc'];
+        $stmt = $db->prepare("INSERT INTO clients (client_name, sort_order) VALUES (?, ?)");
+        foreach ($seed_clients as $i => $name) {
+            $stmt->execute([$name, $i + 1]);
+        }
+        echo "✅ Seeded " . count($seed_clients) . " default clients\n";
+    } else {
+        echo "⏭ clients table already has {$existing} rows\n";
+    }
+} catch (Exception $e) {
+    echo "❌ Clients table: " . $e->getMessage() . "\n";
+}
+
+echo "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+echo "📊 Total clients: " . $db->query("SELECT COUNT(*) FROM clients")->fetchColumn() . "\n";
 echo "\n⚠️  DELETE THIS FILE NOW!\n";
 echo "</pre>";

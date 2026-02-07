@@ -27,7 +27,8 @@ $tables = [
     'gallery' => 'Gallery Images',
     'testimonials' => 'Testimonials',
     'faqs' => 'FAQs',
-    'statistics' => 'Statistics'
+    'statistics' => 'Statistics',
+    'clients' => 'Clients'
 ];
 
 if ($tablesExist) {
@@ -184,6 +185,25 @@ if ($tablesExist) {
                 <span class="badge bg-secondary mb-3"><?php echo $counts['statistics']; ?> Stats</span>
                 <div class="d-grid">
                     <a href="<?php echo getAdminUrl('content/statistics.php'); ?>" class="btn btn-outline-secondary">
+                        <i class="fas fa-edit me-2"></i>Manage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Clients / Marquee -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="stat-icon primary mx-auto mb-3">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h5 class="card-title">Clients / Marquee</h5>
+                <p class="text-muted">Manage client brands shown in the homepage scrolling marquee.</p>
+                <span class="badge bg-primary mb-3"><?php echo $counts['clients']; ?> Clients</span>
+                <div class="d-grid">
+                    <a href="<?php echo getAdminUrl('content/clients.php'); ?>" class="btn btn-outline-primary">
                         <i class="fas fa-edit me-2"></i>Manage
                     </a>
                 </div>

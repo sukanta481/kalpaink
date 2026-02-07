@@ -7,6 +7,9 @@ $home_content = getPageContent('home');
 $home_svc = $home_content['services_section'] ?? null;
 $home_cta = $home_content['cta'] ?? null;
 
+// Get clients for marquee (auto-sync)
+$marquee_clients = getClientsFromDB();
+
 // Get hero slides from CRM (auto-sync)
 $crm_hero_slides = getHeroSlides();
 
@@ -197,23 +200,37 @@ $default_gradients = [
     <section class="client-marquee">
         <div class="marquee-track">
             <div class="marquee-content">
-                <span class="client-logo-item">Acme Corp</span>
-                <span class="client-logo-item">TechFlow</span>
-                <span class="client-logo-item">Brandify</span>
-                <span class="client-logo-item">DigitalPro</span>
-                <span class="client-logo-item">MediaMax</span>
-                <span class="client-logo-item">StartupXYZ</span>
-                <span class="client-logo-item">CloudNine</span>
-                <span class="client-logo-item">Innovate Inc</span>
-                <!-- Duplicate for seamless loop -->
-                <span class="client-logo-item">Acme Corp</span>
-                <span class="client-logo-item">TechFlow</span>
-                <span class="client-logo-item">Brandify</span>
-                <span class="client-logo-item">DigitalPro</span>
-                <span class="client-logo-item">MediaMax</span>
-                <span class="client-logo-item">StartupXYZ</span>
-                <span class="client-logo-item">CloudNine</span>
-                <span class="client-logo-item">Innovate Inc</span>
+                <?php
+                // Fallback clients if DB is empty
+                $fallback_clients = [
+                    ['client_name' => 'Acme Corp', 'client_logo' => null],
+                    ['client_name' => 'TechFlow', 'client_logo' => null],
+                    ['client_name' => 'Brandify', 'client_logo' => null],
+                    ['client_name' => 'DigitalPro', 'client_logo' => null],
+                    ['client_name' => 'MediaMax', 'client_logo' => null],
+                    ['client_name' => 'StartupXYZ', 'client_logo' => null],
+                    ['client_name' => 'CloudNine', 'client_logo' => null],
+                    ['client_name' => 'Innovate Inc', 'client_logo' => null],
+                ];
+                $clients_list = !empty($marquee_clients) ? $marquee_clients : $fallback_clients;
+                
+                // Render twice for seamless infinite scroll
+                for ($loop = 0; $loop < 2; $loop++):
+                    foreach ($clients_list as $mc):
+                ?>
+                <span class="client-logo-item">
+                    <?php if (!empty($mc['client_logo'])): ?>
+                        <img src="<?php echo SITE_URL . '/' . $mc['client_logo']; ?>" 
+                             alt="<?php echo htmlspecialchars($mc['client_name']); ?>"
+                             style="max-height: 30px; max-width: 140px; object-fit: contain;">
+                    <?php else: ?>
+                        <?php echo htmlspecialchars($mc['client_name']); ?>
+                    <?php endif; ?>
+                </span>
+                <?php
+                    endforeach;
+                endfor;
+                ?>
             </div>
         </div>
     </section>

@@ -334,6 +334,21 @@ function getPageContent($page_name, $section_key = null) {
 }
 
 /**
+ * Get clients for marquee
+ */
+function getClientsFromDB() {
+    $db = getCRMDatabase();
+    if (!$db) return [];
+    
+    try {
+        $stmt = $db->query("SELECT * FROM clients WHERE is_active = 1 ORDER BY sort_order ASC, client_name ASC");
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        return [];
+    }
+}
+
+/**
  * Get gallery items
  */
 function getGalleryFromDB($category = null, $limit = null) {

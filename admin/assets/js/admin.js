@@ -244,6 +244,12 @@ class FileUploadProgress {
         document.querySelectorAll('form').forEach(form => {
             const fileInputs = form.querySelectorAll('input[type="file"]');
             if (fileInputs.length > 0) {
+                // Track which submit button was clicked
+                form.querySelectorAll('button[type="submit"], input[type="submit"]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        form._clickedSubmit = btn;
+                    });
+                });
                 form.addEventListener('submit', (e) => this.handleFormSubmit(e, form, fileInputs));
             }
         });
@@ -263,9 +269,22 @@ class FileUploadProgress {
 
         if (!hasFiles) return; // No files, proceed with normal submit
 
-        e.preventDefault();
+        // Show upload progress overlay but let the form submit normally
+        // (Don't use XHR — it breaks POST-redirect-GET flow and flash messages)
         this.showProgress(fileInputs, totalFiles);
-        this.uploadWithProgress(form);
+        
+        // Animate progress bar to 90% over a few seconds for visual feedback
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 90) progress = 90;
+            this.updateProgress(Math.round(progress));
+        }, 300);
+        
+        // Store interval so it clears when page unloads
+        window.addEventListener('beforeunload', () => clearInterval(interval));
+        
+        // Let the form submit normally (don't call e.preventDefault())
     }
 
     showProgress(fileInputs, totalFiles) {
@@ -312,6 +331,12 @@ class FileUploadProgress {
 
     uploadWithProgress(form) {
         const formData = new FormData(form);
+        
+        // Include the clicked submit button's name/value (FormData doesn't include it by default)
+        if (form._clickedSubmit && form._clickedSubmit.name) {
+            formData.append(form._clickedSubmit.name, form._clickedSubmit.value || '');
+        }
+        
         const xhr = new XMLHttpRequest();
 
         // Track upload progress
