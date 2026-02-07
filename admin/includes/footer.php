@@ -28,7 +28,12 @@
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     
     <!-- TinyMCE Editor -->
-    <script src="https://cdn.tiny.cloud/1/5xym3iqrlk70fxgju7h3vpelkys6gvx16nvxfe38i4n9mi8j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <?php
+    $tinymceKey = ($_SERVER['SERVER_NAME'] ?? 'localhost') === 'localhost' || ($_SERVER['SERVER_NAME'] ?? '127.0.0.1') === '127.0.0.1'
+        ? '5xym3iqrlk70fxgju7h3vpelkys6gvx16nvxfe38i4n9mi8j'
+        : 'c6dnzoialg8zo3sb0ymi2pq3fwr09mpe8pqy4vtef212k4gf';
+    ?>
+    <script src="https://cdn.tiny.cloud/1/<?php echo $tinymceKey; ?>/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     
     <!-- Admin JS -->
     <script src="<?php echo getAdminUrl('assets/js/admin.js'); ?>"></script>
