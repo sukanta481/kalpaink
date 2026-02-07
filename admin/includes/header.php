@@ -48,7 +48,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             } catch (Exception $e) {}
             ?>
             <a href="<?php echo getAdminUrl('index.php'); ?>" class="sidebar-brand">
-                <img src="<?php echo getSiteUrl() . '/' . $sidebarLogoPath; ?>" alt="Kalpoink" style="max-height: 40px;">
+                <img src="<?php echo getSiteUrl($sidebarLogoPath); ?>" alt="Kalpoink" style="max-height: 40px;">
             </a>
             <button class="sidebar-toggle d-lg-none" id="sidebarClose">
                 <i class="fas fa-times"></i>
