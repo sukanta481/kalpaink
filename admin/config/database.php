@@ -5,7 +5,8 @@
  */
 
 // Auto-detect environment (local vs live server)
-if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
+$serverName = $_SERVER['SERVER_NAME'] ?? 'localhost';
+if ($serverName === 'localhost' || $serverName === '127.0.0.1') {
     // Local Development (XAMPP)
     define('DB_HOST', 'localhost');
     define('DB_NAME', 'kalpoink_crm');

@@ -2,6 +2,11 @@
 $page_title = 'Home';
 include 'includes/header.php'; 
 
+// Get page content from CMS (auto-sync)
+$home_content = getPageContent('home');
+$home_svc = $home_content['services_section'] ?? null;
+$home_cta = $home_content['cta'] ?? null;
+
 // Get hero slides from CRM (auto-sync)
 $crm_hero_slides = getHeroSlides();
 
@@ -267,8 +272,8 @@ $default_gradients = [
     <section class="services-section section-padding" id="services">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Our Services</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Comprehensive digital solutions to elevate your brand</p>
+                <h2 class="section-title" data-aos="fade-up"><?php echo htmlspecialchars($home_svc['content_title'] ?? 'Our Services'); ?></h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_svc['content_body'] ?? 'Comprehensive digital solutions to elevate your brand'); ?></p>
             </div>
             
             <!-- Desktop Grid / Mobile Horizontal Scroll -->
@@ -608,10 +613,10 @@ $default_gradients = [
         <div class="cta-glow-bg"></div>
         <div class="container">
             <div class="cta-content text-center" data-aos="zoom-in" data-aos-duration="1000">
-                <h2 class="cta-headline">Ready to Sculpt Your Legacy?</h2>
-                <p class="cta-subtext">Let's transform your vision into a digital masterpiece</p>
-                <a href="contact.php" class="cta-pulse-btn">
-                    <span class="btn-text">Let's Create Together</span>
+                <h2 class="cta-headline"><?php echo htmlspecialchars($home_cta['content_title'] ?? 'Ready to Sculpt Your Legacy?'); ?></h2>
+                <p class="cta-subtext"><?php echo htmlspecialchars($home_cta['content_body'] ?? 'Let\'s transform your vision into a digital masterpiece'); ?></p>
+                <a href="<?php echo htmlspecialchars($home_cta['extra']['button_link'] ?? 'contact.php'); ?>" class="cta-pulse-btn">
+                    <span class="btn-text"><?php echo htmlspecialchars($home_cta['extra']['button_text'] ?? 'Let\'s Create Together'); ?></span>
                     <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
                 </a>
             </div>

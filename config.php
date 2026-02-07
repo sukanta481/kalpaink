@@ -23,6 +23,10 @@ if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.
 define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpoink');
 define('SITE_TAGLINE', $crm_settings['site_tagline'] ?? 'Creative Digital Solutions');
 
+// Branding - Logo & Favicon (dynamic from admin settings)
+define('SITE_LOGO', !empty($crm_settings['site_logo']) ? $crm_settings['site_logo'] : 'assets/images/kalpaink-logo.png');
+define('SITE_FAVICON', !empty($crm_settings['site_favicon']) ? $crm_settings['site_favicon'] : '');
+
 // Contact Information
 define('CONTACT_ADDRESS', $crm_settings['contact_address'] ?? '225 Bagmari Road, Kolkata - 700054');
 define('CONTACT_PHONE', $crm_settings['contact_phone'] ?? '+91 891 082 1105');

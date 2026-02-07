@@ -2,6 +2,11 @@
 $page_title = 'Contact Us';
 include 'includes/header.php'; 
 
+// Get page content from CMS (auto-sync)
+$contact_content = getPageContent('contact');
+$c_hero = $contact_content['hero'] ?? null;
+$c_form = $contact_content['form_intro'] ?? null;
+
 // Form submission handling
 $form_submitted = false;
 $form_error = false;
@@ -72,13 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-lg-7" data-aos="fade-up">
                     <div class="ch-eyebrow">
                         <span class="ch-eyebrow-dot"></span>
-                        <span class="ch-eyebrow-text">Let's Talk</span>
+                        <span class="ch-eyebrow-text"><?php echo htmlspecialchars($c_hero['extra']['eyebrow'] ?? 'Let\'s Talk'); ?></span>
                     </div>
                     <h1 class="ch-title">
-                        Got a project?<br>
-                        <span class="ch-title-accent">Let's make it real.</span>
+                        <?php echo htmlspecialchars($c_hero['content_title'] ?? 'Got a project?'); ?><br>
+                        <span class="ch-title-accent"><?php echo htmlspecialchars($c_hero['content_body'] ?? 'Let\'s make it real.'); ?></span>
                     </h1>
-                    <p class="ch-subtitle">Whether it's a bold rebrand, a digital product, or a campaign that breaks the mold — we're ready. Drop us a line and let's start something great.</p>
+                    <p class="ch-subtitle"><?php echo htmlspecialchars($c_hero['extra']['subtitle'] ?? 'Whether it\'s a bold rebrand, a digital product, or a campaign that breaks the mold — we\'re ready. Drop us a line and let\'s start something great.'); ?></p>
                     
                     <div class="ch-trust-pills">
                         <div class="ch-pill">

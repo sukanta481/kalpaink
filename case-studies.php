@@ -2,6 +2,10 @@
 $page_title = 'Case Studies';
 include 'includes/header.php'; 
 
+// Get page content from CMS (auto-sync)
+$cs_content = getPageContent('case_studies');
+$cs_hero = $cs_content['hero'] ?? null;
+
 // Get projects from CRM database (auto-sync)
 $projects_from_db = getProjectsFromDB();
 
@@ -155,14 +159,14 @@ if (count($gallery_previews) < 4) {
             <div class="case-hero-content" data-aos="fade-up">
                 <div class="case-hero-eyebrow">
                     <span class="eyebrow-line"></span>
-                    <span class="eyebrow-text">Our Portfolio</span>
+                    <span class="eyebrow-text"><?php echo htmlspecialchars($cs_hero['content_subtitle'] ?? 'Our Portfolio'); ?></span>
                     <span class="eyebrow-line"></span>
                 </div>
                 <h1 class="case-hero-title">
-                    <span class="title-line">Proof of</span>
-                    <span class="title-line title-line--accent">Impact<span class="title-dot">.</span></span>
+                    <span class="title-line"><?php echo htmlspecialchars($cs_hero['content_title'] ?? 'Proof of'); ?></span>
+                    <span class="title-line title-line--accent"><?php echo htmlspecialchars($cs_hero['extra']['accent_text'] ?? 'Impact'); ?><span class="title-dot">.</span></span>
                 </h1>
-                <p class="case-hero-subtitle">Every project we take on is a collision of bold thinking and meaningful intent. Campaigns that didn't just perform—they redefined what's possible.</p>
+                <p class="case-hero-subtitle"><?php echo htmlspecialchars($cs_hero['content_body'] ?? 'Every project we take on is a collision of bold thinking and meaningful intent. Campaigns that didn\'t just perform—they redefined what\'s possible.'); ?></p>
                 <div class="case-hero-stats">
                     <div class="hero-stat">
                         <span class="hero-stat-number">50+</span>

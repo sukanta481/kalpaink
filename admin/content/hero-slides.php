@@ -108,24 +108,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Pre-fetch edit item before header output (so redirect can work)
+$slide = null;
+if ($action === 'edit' && $id > 0) {
+    $stmt = $db->prepare("SELECT * FROM hero_slides WHERE id = ?");
+    $stmt->execute([$id]);
+    $slide = $stmt->fetch();
+    
+    if (!$slide) {
+        setFlashMessage('danger', 'Slide not found.');
+        header('Location: hero-slides.php');
+        exit;
+    }
+}
+
 // NOW include the header (after all redirects are done)
 $page_title = 'Hero Slides';
 require_once __DIR__ . '/../includes/header.php';
 
 // Handle different actions
 if ($action === 'add' || $action === 'edit') {
-    $slide = null;
-    if ($action === 'edit' && $id > 0) {
-        $stmt = $db->prepare("SELECT * FROM hero_slides WHERE id = ?");
-        $stmt->execute([$id]);
-        $slide = $stmt->fetch();
-        
-        if (!$slide) {
-            setFlashMessage('danger', 'Slide not found.');
-            header('Location: hero-slides.php');
-            exit;
-        }
-    }
     ?>
     
     <div class="page-header">

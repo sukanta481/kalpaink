@@ -4,8 +4,8 @@
  * Kalpoink Admin CRM
  */
 
-$page_title = 'Testimonials';
-require_once __DIR__ . '/../includes/header.php';
+// Load auth BEFORE any output
+require_once __DIR__ . '/../config/auth.php';
 requireRole('editor');
 
 $db = getDB();
@@ -107,20 +107,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Pre-fetch edit item before header output
+$testimonial = null;
+if ($action === 'edit' && $id > 0) {
+    $stmt = $db->prepare("SELECT * FROM testimonials WHERE id = ?");
+    $stmt->execute([$id]);
+    $testimonial = $stmt->fetch();
+    if (!$testimonial) {
+        setFlashMessage('danger', 'Testimonial not found.');
+        header('Location: testimonials.php');
+        exit;
+    }
+}
+
+// NOW include header (after all potential redirects)
+$page_title = 'Testimonials';
+require_once __DIR__ . '/../includes/header.php';
+
 // Handle different actions
 if ($action === 'add' || $action === 'edit') {
-    $testimonial = null;
-    if ($action === 'edit' && $id > 0) {
-        $stmt = $db->prepare("SELECT * FROM testimonials WHERE id = ?");
-        $stmt->execute([$id]);
-        $testimonial = $stmt->fetch();
-        
-        if (!$testimonial) {
-            setFlashMessage('danger', 'Testimonial not found.');
-            header('Location: testimonials.php');
-            exit;
-        }
-    }
     ?>
     
     <div class="page-header">

@@ -36,8 +36,19 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
+            <?php
+            // Get logo from settings
+            $sidebarLogoPath = 'assets/images/kalpaink-logo.png';
+            try {
+                $logoDB = getDB();
+                $logoStmt = $logoDB->prepare("SELECT setting_value FROM settings WHERE setting_key = 'site_logo'");
+                $logoStmt->execute();
+                $logoVal = $logoStmt->fetchColumn();
+                if (!empty($logoVal)) $sidebarLogoPath = $logoVal;
+            } catch (Exception $e) {}
+            ?>
             <a href="<?php echo getAdminUrl('index.php'); ?>" class="sidebar-brand">
-                <img src="<?php echo getSiteUrl(); ?>/assets/images/kalpaink-logo.png" alt="Kalpoink" style="max-height: 40px;">
+                <img src="<?php echo getSiteUrl() . '/' . $sidebarLogoPath; ?>" alt="Kalpoink" style="max-height: 40px;">
             </a>
             <button class="sidebar-toggle d-lg-none" id="sidebarClose">
                 <i class="fas fa-times"></i>

@@ -8,6 +8,15 @@ $stats_map = [];
 foreach ($crm_stats as $stat) {
     $stats_map[$stat['stat_key'] ?? $stat['label']] = $stat;
 }
+
+// Get all about page content from CMS (auto-sync)
+$about_content = getPageContent('about');
+$hero = $about_content['hero'] ?? null;
+$about_card = $about_content['about_card'] ?? null;
+$who_we_are = $about_content['who_we_are'] ?? null;
+$join_us = $about_content['join_us'] ?? null;
+$team_sec = $about_content['team_section'] ?? null;
+$testimonials_sec = $about_content['testimonials_section'] ?? null;
 ?>
 
     <!-- About Hero Section -->
@@ -27,13 +36,13 @@ foreach ($crm_stats as $stat) {
                     <div class="about-hero-content">
                         <div class="about-hero-eyebrow">
                             <span class="eyebrow-dot"></span>
-                            Our Story
+                            <?php echo htmlspecialchars($hero['extra']['eyebrow'] ?? 'Our Story'); ?>
                         </div>
                         <h1 class="about-hero-title">
-                            We craft brands<br>
-                            <span class="about-hero-accent">that resonate.</span>
+                            <?php echo htmlspecialchars($hero['content_title'] ?? 'We craft brands'); ?><br>
+                            <span class="about-hero-accent"><?php echo htmlspecialchars($hero['content_subtitle'] ?? 'that resonate.'); ?></span>
                         </h1>
-                        <p class="about-hero-desc">A young, fearless crew of creatives from Kolkata — blending strategy, design, and technology to make businesses unforgettable.</p>
+                        <p class="about-hero-desc"><?php echo htmlspecialchars($hero['content_body'] ?? 'A young, fearless crew of creatives from Kolkata — blending strategy, design, and technology to make businesses unforgettable.'); ?></p>
                         
                         <!-- Inline Stats -->
                         <div class="about-hero-stats">
@@ -66,14 +75,14 @@ foreach ($crm_stats as $stat) {
                 <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
                     <div class="about-hero-visual">
                         <div class="about-hero-img-card">
-                            <img src="assets/images/about-hero-dark.png" 
+                            <img src="<?php echo htmlspecialchars($hero['extra']['hero_image'] ?? 'assets/images/about-hero-dark.png'); ?>" 
                                  alt="Digital craftsmanship - creative design studio" 
                                  class="about-hero-img">
                         </div>
                         <!-- Floating badge -->
                         <div class="about-floating-badge" data-aos="fade-up" data-aos-delay="500">
                             <i class="fas fa-palette"></i>
-                            <span>Since 2018</span>
+                            <span><?php echo htmlspecialchars($hero['extra']['badge_text'] ?? 'Since 2018'); ?></span>
                         </div>
                     </div>
                 </div>
@@ -87,10 +96,14 @@ foreach ($crm_stats as $stat) {
             <div class="about-card" data-aos="fade-up">
                 <div class="row">
                     <div class="col-lg-8">
-                        <span class="about-badge">Behind The Chisel</span>
-                        <h2 class="about-headline">Who We Really Are</h2>
+                        <span class="about-badge"><?php echo htmlspecialchars($about_card['content_subtitle'] ?? 'Behind The Chisel'); ?></span>
+                        <h2 class="about-headline"><?php echo htmlspecialchars($about_card['content_title'] ?? 'Who We Really Are'); ?></h2>
+                        <?php if (!empty($about_card['content_body'])): ?>
+                            <?php echo $about_card['content_body']; ?>
+                        <?php else: ?>
                         <p>At Kalpoink, creativity isn't just our passion – it's our heartbeat. We're a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p>
                         <p>With fresh ideas and an unbridled enthusiasm, we turn challenges into opportunities and dreams into realities. We are based in Kolkata and serve clients across India and beyond.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
                 
@@ -143,16 +156,20 @@ foreach ($crm_stats as $stat) {
                 <div class="col-lg-5" data-aos="fade-right">
                     <div class="digital-desk-image animate-slide-up" data-aos="fade-up" data-aos-duration="800">
                         <!-- Digital Desk Bento Grid - Real workspace imagery -->
-                        <img src="assets/images/digital-desk-bento.png" 
+                        <img src="<?php echo htmlspecialchars($who_we_are['content_image'] ?? 'assets/images/digital-desk-bento.png'); ?>" 
                              alt="Our Digital Workspace - VS Code, Sketchbook with Coffee, and Figma UI Kit" 
                              class="bento-collage">
                     </div>
                 </div>
                 <div class="col-lg-7" data-aos="fade-left">
-                    <h2>Who we are</h2>
+                    <h2><?php echo htmlspecialchars($who_we_are['content_title'] ?? 'Who we are'); ?></h2>
+                    <?php if (!empty($who_we_are['content_body'])): ?>
+                        <?php echo $who_we_are['content_body']; ?>
+                    <?php else: ?>
                     <p>We're your digital dream team – young, inventive, and fearless. <a href="#" class="highlight-link">Kalpoink</a> blends strategy, creativity, and technology to create unique digital experiences that resonate.</p>
                     <p>Our diverse squad includes strategists who live for analytics, creative designers who turn pixels into perfection, and social media wizards who keep trends on a constant watch. When you partner with us, expect authenticity, creative flair, and results-driven creativity.</p>
                     <p>Founded by Suman Kundu and Souvik Das, we bring together years of experience in graphic design, branding, and digital marketing to help businesses stand out in the crowded digital landscape.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -165,11 +182,11 @@ foreach ($crm_stats as $stat) {
                 <div class="join-us-pattern"></div>
                 <div class="row align-items-center position-relative">
                     <div class="col-lg-8">
-                        <h3 class="cta-title">Why Work With Us?</h3>
-                        <p class="mb-0">Ready to elevate your brand? If you're creative, passionate, and driven by innovation, Kalpoink is your perfect partner. Let's disrupt the digital world together!</p>
+                        <h3 class="cta-title"><?php echo htmlspecialchars($join_us['content_title'] ?? 'Why Work With Us?'); ?></h3>
+                        <p class="mb-0"><?php echo htmlspecialchars($join_us['content_body'] ?? 'Ready to elevate your brand? If you\'re creative, passionate, and driven by innovation, Kalpoink is your perfect partner. Let\'s disrupt the digital world together!'); ?></p>
                     </div>
                     <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                        <a href="contact.php" class="btn btn-white btn-pulse-ripple">Get In Touch</a>
+                        <a href="<?php echo htmlspecialchars($join_us['extra']['button_link'] ?? 'contact.php'); ?>" class="btn btn-white btn-pulse-ripple"><?php echo htmlspecialchars($join_us['extra']['button_text'] ?? 'Get In Touch'); ?></a>
                     </div>
                 </div>
             </div>
@@ -181,9 +198,9 @@ foreach ($crm_stats as $stat) {
         <div class="container">
             <!-- Section Header -->
             <div class="text-center mb-5">
-                <span class="section-badge" data-aos="fade-up">The Minds Behind The Magic</span>
-                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Meet The Creators</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Two dreamers who turned their passion into your brand's success story</p>
+                <span class="section-badge" data-aos="fade-up"><?php echo htmlspecialchars($team_sec['content_subtitle'] ?? 'The Minds Behind The Magic'); ?></span>
+                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($team_sec['content_title'] ?? 'Meet The Creators'); ?></h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200"><?php echo htmlspecialchars($team_sec['content_body'] ?? 'Two dreamers who turned their passion into your brand\'s success story'); ?></p>
             </div>
             
             <!-- Desktop: Cutout Style -->
@@ -290,9 +307,9 @@ foreach ($crm_stats as $stat) {
         <div class="container">
             <!-- Section Header -->
             <div class="text-center mb-5">
-                <span class="section-badge" data-aos="fade-up">Client Love</span>
-                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">What Our Clients Say</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Real feedback from real partners who trusted us with their brands</p>
+                <span class="section-badge" data-aos="fade-up"><?php echo htmlspecialchars($testimonials_sec['content_subtitle'] ?? 'Client Love'); ?></span>
+                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($testimonials_sec['content_title'] ?? 'What Our Clients Say'); ?></h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200"><?php echo htmlspecialchars($testimonials_sec['content_body'] ?? 'Real feedback from real partners who trusted us with their brands'); ?></p>
             </div>
             
             <!-- Testimonials - Static Card with Sliding Content -->

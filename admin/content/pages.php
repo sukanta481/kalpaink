@@ -4,8 +4,8 @@
  * Kalpoink Admin CRM
  */
 
-$page_title = 'Page Content';
-require_once __DIR__ . '/../includes/header.php';
+// Load auth BEFORE any output
+require_once __DIR__ . '/../config/auth.php';
 requireRole('editor');
 
 $db = getDB();
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'content_title' => sanitize($_POST['content_title']),
             'content_subtitle' => sanitize($_POST['content_subtitle']),
             'content_body' => $_POST['content_body'],
-            'content_extra' => $_POST['content_extra'] ?? null,
+            'content_extra' => !empty(trim($_POST['content_extra'] ?? '')) ? trim($_POST['content_extra']) : null,
             'is_active' => isset($_POST['is_active']) ? 1 : 0
         ];
         
@@ -50,14 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         if ($id > 0) {
-            // Update
+            // Update — extract image separately to avoid param misalignment
+            $contentImage = $data['content_image'] ?? null;
+            unset($data['content_image']);
+            
             $sql = "UPDATE page_content SET page_name = ?, section_key = ?, content_title = ?, 
                     content_subtitle = ?, content_body = ?, content_extra = ?, is_active = ?";
             $params = array_values($data);
             
-            if (isset($data['content_image'])) {
+            if ($contentImage) {
                 $sql .= ", content_image = ?";
-                $params[] = $data['content_image'];
+                $params[] = $contentImage;
             }
             
             $sql .= ", updated_at = NOW() WHERE id = ?";
@@ -102,30 +105,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// NOW include header (after all potential redirects)
+$page_title = 'Page Content';
+require_once __DIR__ . '/../includes/header.php';
+
 // Pages and sections configuration
 $pages_config = [
-    'home' => ['hero', 'intro', 'about_preview', 'why_choose_us', 'cta'],
-    'about' => ['header', 'story', 'mission', 'vision', 'values', 'team_intro'],
-    'services' => ['header', 'intro', 'process', 'cta'],
-    'contact' => ['header', 'info', 'form_intro'],
-    'blog' => ['header', 'sidebar'],
-    'case_studies' => ['header', 'intro']
+    'home' => [
+        'hero' => 'Hero Banner — main heading, subtext, CTA button',
+        'services_section' => 'Services Section — title, subtitle',
+        'about_preview' => 'About Preview — short intro with link to About page',
+        'cta' => 'Call To Action — bottom CTA banner'
+    ],
+    'about' => [
+        'hero' => 'Hero Banner — title, accent text, description, eyebrow, badge',
+        'about_card' => 'About Card — "Who We Really Are" section',
+        'who_we_are' => 'Who We Are — description with image',
+        'join_us' => 'Join Us CTA — "Why Work With Us?" banner',
+        'team_section' => 'Team Section — title, badge, subtitle',
+        'testimonials_section' => 'Testimonials Section — title, badge, subtitle'
+    ],
+    'services' => [
+        'hero' => 'Hero Banner — heading, subtitle, description',
+        'process' => 'Process Section — "How We Work" heading',
+        'cta' => 'Call To Action — bottom CTA banner'
+    ],
+    'contact' => [
+        'hero' => 'Hero Banner — heading, subtitle, description',
+        'form_intro' => 'Form Introduction — text above contact form'
+    ],
+    'blog' => [
+        'hero' => 'Hero Banner — heading, subtitle, description'
+    ],
+    'case_studies' => [
+        'hero' => 'Hero Banner — heading, subtitle, description'
+    ]
 ];
+
+$page_icons = [
+    'home' => 'fas fa-home',
+    'about' => 'fas fa-users',
+    'services' => 'fas fa-briefcase',
+    'contact' => 'fas fa-envelope',
+    'blog' => 'fas fa-pen-nib',
+    'case_studies' => 'fas fa-layer-group'
+];
+
+// Pre-fetch edit item before header output
+$content = null;
+if ($action === 'edit' && $id > 0) {
+    $stmt = $db->prepare("SELECT * FROM page_content WHERE id = ?");
+    $stmt->execute([$id]);
+    $content = $stmt->fetch();
+    if (!$content) {
+        setFlashMessage('danger', 'Content not found.');
+        header('Location: pages.php');
+        exit;
+    }
+}
+
+// NOW include header (after all potential redirects)
+$page_title = 'Page Content';
+require_once __DIR__ . '/../includes/header.php';
 
 // Handle different actions
 if ($action === 'add' || $action === 'edit') {
-    $content = null;
-    if ($action === 'edit' && $id > 0) {
-        $stmt = $db->prepare("SELECT * FROM page_content WHERE id = ?");
-        $stmt->execute([$id]);
-        $content = $stmt->fetch();
-        
-        if (!$content) {
-            setFlashMessage('danger', 'Content not found.');
-            header('Location: pages.php');
-            exit;
-        }
-    }
     ?>
     
     <div class="page-header">
@@ -161,11 +205,26 @@ if ($action === 'add' || $action === 'edit') {
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="section_key" class="form-label">Section Key *</label>
-                                    <input type="text" class="form-control" id="section_key" name="section_key" required
-                                           placeholder="e.g., hero, about_intro, cta"
-                                           value="<?php echo htmlspecialchars($content['section_key'] ?? ''); ?>">
-                                    <small class="text-muted">Unique identifier for this section</small>
+                                    <label for="section_key" class="form-label">Section *</label>
+                                    <select class="form-select" id="section_key" name="section_key" required>
+                                        <option value="">Select section</option>
+                                        <?php if (!empty($content['page_name']) && isset($pages_config[$content['page_name']])): ?>
+                                        <?php foreach ($pages_config[$content['page_name']] as $key => $desc): ?>
+                                        <option value="<?php echo $key; ?>" <?php echo ($content['section_key'] ?? '') === $key ? 'selected' : ''; ?>>
+                                            <?php echo ucwords(str_replace('_', ' ', $key)); ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                    <small class="text-muted" id="section_desc">
+                                        <?php 
+                                        if (!empty($content['page_name']) && !empty($content['section_key']) && isset($pages_config[$content['page_name']][$content['section_key']])) {
+                                            echo $pages_config[$content['page_name']][$content['section_key']];
+                                        } else {
+                                            echo 'Choose a page to see available sections';
+                                        }
+                                        ?>
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -174,12 +233,14 @@ if ($action === 'add' || $action === 'edit') {
                             <label for="content_title" class="form-label">Title</label>
                             <input type="text" class="form-control" id="content_title" name="content_title"
                                    value="<?php echo htmlspecialchars($content['content_title'] ?? ''); ?>">
+                            <small class="text-muted">Main heading text for this section</small>
                         </div>
                         
                         <div class="mb-3">
-                            <label for="content_subtitle" class="form-label">Subtitle</label>
+                            <label for="content_subtitle" class="form-label">Subtitle / Badge Text</label>
                             <input type="text" class="form-control" id="content_subtitle" name="content_subtitle"
                                    value="<?php echo htmlspecialchars($content['content_subtitle'] ?? ''); ?>">
+                            <small class="text-muted">Secondary heading, badge label, or accent text</small>
                         </div>
                         
                         <div class="mb-3">
@@ -260,8 +321,17 @@ if ($action === 'add' || $action === 'edit') {
                 <i class="fas fa-arrow-left me-2"></i>Back
             </a>
             <a href="<?php echo getAdminUrl('content/pages.php?action=add'); ?>" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Add Content
+                <i class="fas fa-plus me-2"></i>Add Section
             </a>
+        </div>
+    </div>
+    
+    <div class="alert alert-info d-flex align-items-center mb-4" role="alert">
+        <i class="fas fa-info-circle me-3 fs-5"></i>
+        <div>
+            <strong>How it works:</strong> Each page has multiple sections you can edit independently. 
+            Changes here will automatically reflect on the live website. 
+            Click <i class="fas fa-edit"></i> to edit any section's title, text, image, or extra data.
         </div>
     </div>
     
@@ -282,10 +352,14 @@ if ($action === 'add' || $action === 'edit') {
     
     <?php foreach ($grouped as $page_name => $items): ?>
     <div class="card mb-4">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">
-                <i class="fas fa-file me-2"></i><?php echo ucfirst(str_replace('_', ' ', $page_name)); ?> Page
+                <i class="<?php echo $page_icons[$page_name] ?? 'fas fa-file'; ?> me-2"></i><?php echo ucfirst(str_replace('_', ' ', $page_name)); ?> Page
+                <span class="badge bg-secondary ms-2"><?php echo count($items); ?> sections</span>
             </h5>
+            <a href="<?php echo getAdminUrl('content/pages.php?action=add'); ?>" class="btn btn-sm btn-outline-primary">
+                <i class="fas fa-plus me-1"></i>Add Section
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -294,7 +368,7 @@ if ($action === 'add' || $action === 'edit') {
                         <tr>
                             <th>Section</th>
                             <th>Title</th>
-                            <th>Subtitle</th>
+                            <th>Description</th>
                             <th>Status</th>
                             <th>Last Updated</th>
                             <th>Actions</th>
@@ -303,8 +377,13 @@ if ($action === 'add' || $action === 'edit') {
                     <tbody>
                         <?php foreach ($items as $item): ?>
                         <tr>
-                            <td><code><?php echo htmlspecialchars($item['section_key']); ?></code></td>
-                            <td><?php echo htmlspecialchars($item['content_title'] ?: '-'); ?></td>
+                            <td>
+                                <code><?php echo htmlspecialchars($item['section_key']); ?></code>
+                                <?php if (isset($pages_config[$page_name][$item['section_key']])): ?>
+                                <br><small class="text-muted"><?php echo $pages_config[$page_name][$item['section_key']]; ?></small>
+                                <?php endif; ?>
+                            </td>
+                            <td><strong><?php echo htmlspecialchars($item['content_title'] ?: '-'); ?></strong></td>
                             <td><?php echo htmlspecialchars(substr($item['content_subtitle'] ?? '', 0, 50)); ?></td>
                             <td>
                                 <span class="status-dot <?php echo $item['is_active'] ? 'active' : 'inactive'; ?>"></span>
@@ -332,6 +411,28 @@ if ($action === 'add' || $action === 'edit') {
     </div>
     <?php endforeach; ?>
     
+    <?php 
+    // Show pages that have no sections yet
+    $missing_pages = array_diff(array_keys($pages_config), array_keys($grouped));
+    if (!empty($missing_pages)): ?>
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0"><i class="fas fa-plus-circle me-2"></i>Pages Without Content</h5>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-3">These pages don't have any editable content sections yet. Add sections to make them editable from the CMS.</p>
+            <div class="d-flex flex-wrap gap-2">
+                <?php foreach ($missing_pages as $page): ?>
+                <a href="<?php echo getAdminUrl('content/pages.php?action=add'); ?>" class="btn btn-outline-primary">
+                    <i class="<?php echo $page_icons[$page] ?? 'fas fa-file'; ?> me-1"></i>
+                    <?php echo ucfirst(str_replace('_', ' ', $page)); ?>
+                </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+    
     <?php endif; ?>
     
     <?php
@@ -339,3 +440,37 @@ if ($action === 'add' || $action === 'edit') {
 
 require_once __DIR__ . '/../includes/footer.php';
 ?>
+
+<script>
+// Dynamic section dropdown based on page selection
+const pagesConfig = <?php echo json_encode($pages_config); ?>;
+
+document.getElementById('page_name')?.addEventListener('change', function() {
+    const sectionSelect = document.getElementById('section_key');
+    const sectionDesc = document.getElementById('section_desc');
+    const page = this.value;
+    
+    sectionSelect.innerHTML = '<option value="">Select section</option>';
+    sectionDesc.textContent = 'Choose a page to see available sections';
+    
+    if (page && pagesConfig[page]) {
+        Object.entries(pagesConfig[page]).forEach(([key, desc]) => {
+            const opt = document.createElement('option');
+            opt.value = key;
+            opt.textContent = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            sectionSelect.appendChild(opt);
+        });
+    }
+});
+
+document.getElementById('section_key')?.addEventListener('change', function() {
+    const page = document.getElementById('page_name').value;
+    const sectionDesc = document.getElementById('section_desc');
+    
+    if (page && this.value && pagesConfig[page] && pagesConfig[page][this.value]) {
+        sectionDesc.textContent = pagesConfig[page][this.value];
+    } else {
+        sectionDesc.textContent = '';
+    }
+});
+</script>

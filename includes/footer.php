@@ -13,7 +13,7 @@
                 <div class="col-lg-4 col-12 footer-brand-col">
                     <div class="footer-brand">
                         <a href="index.php" class="footer-logo">
-                            <img src="assets/images/kalpaink-logo.png" alt="Kalpoink" class="footer-logo-img">
+                            <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="footer-logo-img">
                         </a>
                         <p class="footer-description">
                             One of the fastest-growing digital marketing agencies in Kolkata. Kalpoink's expertise coupled with their target-oriented approach is what your business requires to reach digital success.

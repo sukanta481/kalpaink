@@ -20,10 +20,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
-    // Update settings
-    foreach ($_POST['settings'] as $key => $value) {
-        $stmt = $db->prepare("UPDATE settings SET setting_value = ? WHERE setting_key = ?");
-        $stmt->execute([$value, $key]);
+    // Handle file uploads (logo, favicon)
+    $uploadDir = dirname(__DIR__) . '/uploads/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+    
+    $fileFields = ['site_logo', 'site_favicon'];
+    foreach ($fileFields as $field) {
+        if (isset($_FILES[$field]) && $_FILES[$field]['error'] === UPLOAD_ERR_OK) {
+            $tmpName = $_FILES[$field]['tmp_name'];
+            $origName = basename($_FILES[$field]['name']);
+            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+            
+            $allowed = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'ico'];
+            if (in_array($ext, $allowed)) {
+                $newName = $field . '_' . time() . '.' . $ext;
+                $destPath = $uploadDir . $newName;
+                
+                if (move_uploaded_file($tmpName, $destPath)) {
+                    // Delete old file if exists
+                    $stmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = ?");
+                    $stmt->execute([$field]);
+                    $oldVal = $stmt->fetchColumn();
+                    if ($oldVal && file_exists(dirname(__DIR__) . '/' . $oldVal)) {
+                        @unlink(dirname(__DIR__) . '/' . $oldVal);
+                    }
+                    
+                    // Save relative path
+                    $relativePath = 'uploads/' . $newName;
+                    $stmt = $db->prepare("UPDATE settings SET setting_value = ? WHERE setting_key = ?");
+                    $stmt->execute([$relativePath, $field]);
+                }
+            }
+        }
+    }
+    
+    // Handle remove logo/favicon
+    if (isset($_POST['remove_site_logo']) && $_POST['remove_site_logo'] === '1') {
+        $stmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'site_logo'");
+        $stmt->execute();
+        $oldVal = $stmt->fetchColumn();
+        if ($oldVal && file_exists(dirname(__DIR__) . '/' . $oldVal)) {
+            @unlink(dirname(__DIR__) . '/' . $oldVal);
+        }
+        $stmt = $db->prepare("UPDATE settings SET setting_value = '' WHERE setting_key = 'site_logo'");
+        $stmt->execute();
+    }
+    if (isset($_POST['remove_site_favicon']) && $_POST['remove_site_favicon'] === '1') {
+        $stmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'site_favicon'");
+        $stmt->execute();
+        $oldVal = $stmt->fetchColumn();
+        if ($oldVal && file_exists(dirname(__DIR__) . '/' . $oldVal)) {
+            @unlink(dirname(__DIR__) . '/' . $oldVal);
+        }
+        $stmt = $db->prepare("UPDATE settings SET setting_value = '' WHERE setting_key = 'site_favicon'");
+        $stmt->execute();
+    }
+    
+    // Update text settings
+    if (isset($_POST['settings'])) {
+        foreach ($_POST['settings'] as $key => $value) {
+            $stmt = $db->prepare("UPDATE settings SET setting_value = ? WHERE setting_key = ?");
+            $stmt->execute([$value, $key]);
+        }
     }
     
     logActivity('update', 'settings', null, 'Updated site settings');
@@ -51,11 +111,87 @@ foreach ($allSettings as $setting) {
     <h1 class="page-title">Site Settings</h1>
 </div>
 
-<form method="POST" action="settings.php">
+<form method="POST" action="settings.php" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+    
+    <?php
+    // Extract file-type settings for the branding card
+    $logoSetting = null;
+    $faviconSetting = null;
+    if (isset($settings['general'])) {
+        foreach ($settings['general'] as $s) {
+            if ($s['setting_key'] === 'site_logo') $logoSetting = $s;
+            if ($s['setting_key'] === 'site_favicon') $faviconSetting = $s;
+        }
+    }
+    $siteUrl = getSiteUrl();
+    ?>
     
     <div class="row">
         <div class="col-lg-8">
+            <!-- Branding Settings -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fas fa-paint-brush me-2"></i>Branding</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Site Logo -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Site Logo</label>
+                            <div class="border rounded p-3 text-center bg-light" style="min-height: 120px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                                <?php if (!empty($logoSetting['setting_value'])): ?>
+                                <img src="<?php echo $siteUrl . '/' . htmlspecialchars($logoSetting['setting_value']); ?>" 
+                                     alt="Current Logo" style="max-height: 80px; max-width: 100%; object-fit: contain;" id="logoPreview">
+                                <?php else: ?>
+                                <img src="<?php echo $siteUrl; ?>/assets/images/kalpaink-logo.png" 
+                                     alt="Default Logo" style="max-height: 80px; max-width: 100%; object-fit: contain; opacity: 0.5;" id="logoPreview">
+                                <small class="text-muted mt-1">Using default logo</small>
+                                <?php endif; ?>
+                            </div>
+                            <input type="file" class="form-control mt-2" name="site_logo" id="site_logo" accept="image/*"
+                                   onchange="if(this.files[0]){var r=new FileReader();r.onload=function(e){document.getElementById('logoPreview').src=e.target.result;document.getElementById('logoPreview').style.opacity='1';};r.readAsDataURL(this.files[0]);}">
+                            <small class="text-muted">Recommended: PNG or SVG, max-height 55px display</small>
+                            <?php if (!empty($logoSetting['setting_value'])): ?>
+                            <div class="mt-2">
+                                <label class="text-danger small" style="cursor: pointer;">
+                                    <input type="checkbox" name="remove_site_logo" value="1" class="form-check-input me-1" style="transform: scale(0.8);">
+                                    Remove current logo (revert to default)
+                                </label>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Site Favicon -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Site Favicon</label>
+                            <div class="border rounded p-3 text-center bg-light" style="min-height: 120px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                                <?php if (!empty($faviconSetting['setting_value'])): ?>
+                                <img src="<?php echo $siteUrl . '/' . htmlspecialchars($faviconSetting['setting_value']); ?>" 
+                                     alt="Current Favicon" style="max-height: 64px; max-width: 64px; object-fit: contain;" id="faviconPreview">
+                                <?php else: ?>
+                                <div id="faviconPreview" style="width: 64px; height: 64px; background: #dee2e6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-globe text-muted fa-2x"></i>
+                                </div>
+                                <small class="text-muted mt-1">No favicon set</small>
+                                <?php endif; ?>
+                            </div>
+                            <input type="file" class="form-control mt-2" name="site_favicon" id="site_favicon" accept="image/*,.ico"
+                                   onchange="if(this.files[0]){var r=new FileReader();r.onload=function(e){var el=document.getElementById('faviconPreview');if(el.tagName==='IMG'){el.src=e.target.result;}else{el.outerHTML='<img id=faviconPreview src='+e.target.result+' style=max-height:64px;max-width:64px;object-fit:contain>';}};r.readAsDataURL(this.files[0]);}">
+                            <small class="text-muted">Recommended: 32x32 or 64x64 PNG/ICO</small>
+                            <?php if (!empty($faviconSetting['setting_value'])): ?>
+                            <div class="mt-2">
+                                <label class="text-danger small" style="cursor: pointer;">
+                                    <input type="checkbox" name="remove_site_favicon" value="1" class="form-check-input me-1" style="transform: scale(0.8);">
+                                    Remove current favicon
+                                </label>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- General Settings -->
             <div class="card">
                 <div class="card-header">
@@ -64,6 +200,7 @@ foreach ($allSettings as $setting) {
                 <div class="card-body">
                     <?php if (isset($settings['general'])): ?>
                     <?php foreach ($settings['general'] as $setting): ?>
+                    <?php if ($setting['setting_type'] === 'file') continue; // Skip file fields, shown in Branding card ?>
                     <div class="mb-3">
                         <label for="<?php echo $setting['setting_key']; ?>" class="form-label">
                             <?php echo ucwords(str_replace('_', ' ', $setting['setting_key'])); ?>

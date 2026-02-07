@@ -4,8 +4,8 @@
  * Kalpoink Admin CRM
  */
 
-$page_title = 'Statistics';
-require_once __DIR__ . '/../includes/header.php';
+// Load auth BEFORE any output
+require_once __DIR__ . '/../config/auth.php';
 requireRole('editor');
 
 $db = getDB();
@@ -86,20 +86,25 @@ $common_icons = [
     'fas fa-hand-holding-usd' => 'Revenue'
 ];
 
+// Pre-fetch edit item before header output
+$stat = null;
+if ($action === 'edit' && $id > 0) {
+    $stmt = $db->prepare("SELECT * FROM statistics WHERE id = ?");
+    $stmt->execute([$id]);
+    $stat = $stmt->fetch();
+    if (!$stat) {
+        setFlashMessage('danger', 'Statistic not found.');
+        header('Location: statistics.php');
+        exit;
+    }
+}
+
+// NOW include header (after all potential redirects)
+$page_title = 'Statistics';
+require_once __DIR__ . '/../includes/header.php';
+
 // Handle different actions
 if ($action === 'add' || $action === 'edit') {
-    $stat = null;
-    if ($action === 'edit' && $id > 0) {
-        $stmt = $db->prepare("SELECT * FROM statistics WHERE id = ?");
-        $stmt->execute([$id]);
-        $stat = $stmt->fetch();
-        
-        if (!$stat) {
-            setFlashMessage('danger', 'Statistic not found.');
-            header('Location: statistics.php');
-            exit;
-        }
-    }
     ?>
     
     <div class="page-header">

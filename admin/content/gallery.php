@@ -4,8 +4,8 @@
  * Kalpoink Admin CRM
  */
 
-$page_title = 'Gallery';
-require_once __DIR__ . '/../includes/header.php';
+// Load auth BEFORE any output
+require_once __DIR__ . '/../config/auth.php';
 requireRole('editor');
 
 $db = getDB();
@@ -173,23 +173,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Pre-fetch edit item before header output
+$item = null;
+if ($action === 'edit' && $id > 0) {
+    $stmt = $db->prepare("SELECT * FROM gallery WHERE id = ?");
+    $stmt->execute([$id]);
+    $item = $stmt->fetch();
+    if (!$item) {
+        setFlashMessage('danger', 'Gallery item not found.');
+        header('Location: gallery.php');
+        exit;
+    }
+}
+
+// NOW include header (after all potential redirects)
+$page_title = 'Gallery';
+require_once __DIR__ . '/../includes/header.php';
+
 // Gallery categories
 $categories = ['portfolio', 'team', 'office', 'events', 'clients', 'other'];
 
 // Handle different actions
 if ($action === 'add' || $action === 'edit') {
-    $item = null;
-    if ($action === 'edit' && $id > 0) {
-        $stmt = $db->prepare("SELECT * FROM gallery WHERE id = ?");
-        $stmt->execute([$id]);
-        $item = $stmt->fetch();
-        
-        if (!$item) {
-            setFlashMessage('danger', 'Gallery item not found.');
-            header('Location: gallery.php');
-            exit;
-        }
-    }
     ?>
     
     <div class="page-header">

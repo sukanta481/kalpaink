@@ -2,6 +2,11 @@
 $page_title = 'Services';
 include 'includes/header.php'; 
 
+// Get page content from CMS (auto-sync)
+$svc_content = getPageContent('services');
+$svc_hero = $svc_content['hero'] ?? null;
+$svc_cta = $svc_content['cta'] ?? null;
+
 // Get services from CRM database (auto-sync)
 $services_from_db = getServicesFromDB(false);
 
@@ -89,10 +94,10 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right">
                     <div class="toolkit-content">
-                        <h1 class="toolkit-title">Everything You Need to <span class="text-accent">Grow</span>.</h1>
-                        <p class="toolkit-subtitle">Comprehensive digital solutions tailored to your needs — from design to development, marketing to branding.</p>
+                        <h1 class="toolkit-title"><?php echo $svc_hero['content_title'] ?? 'Everything You Need to <span class="text-accent">Grow</span>.'; ?></h1>
+                        <p class="toolkit-subtitle"><?php echo htmlspecialchars($svc_hero['content_body'] ?? 'Comprehensive digital solutions tailored to your needs — from design to development, marketing to branding.'); ?></p>
                         <a href="contact.php" class="btn-services-cta">
-                            <span>Start a Project</span>
+                            <span><?php echo htmlspecialchars($svc_hero['extra']['button_text'] ?? 'Start a Project'); ?></span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -249,10 +254,10 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         
         <div class="container">
             <div class="blueprint-content text-center" data-aos="fade-up">
-                <h3 class="blueprint-title">Need a Custom Solution?</h3>
-                <p class="blueprint-text">We understand that every business is unique. Let's discuss your specific needs and create a tailored solution for you.</p>
-                <a href="contact.php" class="btn-build-package">
-                    <span class="btn-text">Build Your Package</span>
+                <h3 class="blueprint-title"><?php echo htmlspecialchars($svc_cta['content_title'] ?? 'Need a Custom Solution?'); ?></h3>
+                <p class="blueprint-text"><?php echo htmlspecialchars($svc_cta['content_body'] ?? 'We understand that every business is unique. Let\'s discuss your specific needs and create a tailored solution for you.'); ?></p>
+                <a href="<?php echo htmlspecialchars($svc_cta['extra']['button_link'] ?? 'contact.php'); ?>" class="btn-build-package">
+                    <span class="btn-text"><?php echo htmlspecialchars($svc_cta['extra']['button_text'] ?? 'Build Your Package'); ?></span>
                     <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
                 </a>
             </div>

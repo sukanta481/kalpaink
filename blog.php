@@ -2,6 +2,10 @@
 $page_title = 'Blog';
 include 'includes/header.php'; 
 
+// Get page content from CMS (auto-sync)
+$blog_content = getPageContent('blog');
+$blog_hero = $blog_content['hero'] ?? null;
+
 // Category colors for typography cards
 $category_colors = [
     'Design' => ['bg' => '#fdd728', 'text' => '#1a1a1a'],

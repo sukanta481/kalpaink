@@ -10,8 +10,13 @@
     <title><?php echo isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME . ' - ' . SITE_TAGLINE; ?></title>
     
     <!-- Favicon -->
+    <?php if (defined('SITE_FAVICON') && SITE_FAVICON): ?>
+    <link rel="icon" href="<?php echo SITE_FAVICON; ?>">
+    <link rel="apple-touch-icon" href="<?php echo SITE_FAVICON; ?>">
+    <?php else: ?>
     <link rel="icon" type="image/png" href="assets/images/kalpaink favicon.png">
     <link rel="apple-touch-icon" href="assets/images/kalpaink favicon.png">
+    <?php endif; ?>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +46,7 @@
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="index.php">
-                <img src="assets/images/kalpaink-logo.png" alt="Kalpoink" class="navbar-logo">
+                <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="navbar-logo">
             </a>
             
             <!-- Mobile Toggle (CSS transforms into X when open) -->
@@ -56,7 +61,7 @@
                 <!-- Mobile menu header -->
                 <div class="mobile-menu-header d-lg-none">
                     <a class="mobile-menu-logo" href="index.php">
-                        <img src="assets/images/kalpaink-logo.png" alt="Kalpoink" height="30">
+                        <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" height="30">
                     </a>
                 </div>
 
