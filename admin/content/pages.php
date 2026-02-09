@@ -274,6 +274,7 @@ if ($action === 'add' || $action === 'edit') {
                         <div class="mb-3">
                             <label for="content_image" class="form-label">Upload Image</label>
                             <input type="file" class="form-control" id="content_image" name="content_image" accept="image/*">
+                            <small class="text-muted"><strong>Size:</strong> 800×600px or larger &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
                         </div>
                     </div>
                 </div>

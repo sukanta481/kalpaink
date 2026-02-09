@@ -221,7 +221,7 @@ if ($action === 'add' || $action === 'edit') {
                             </div>
                             <?php endfor; ?>
                         </div>
-                        <small class="text-muted">Upload images for the masonry grid display. Recommended size: 400x500 pixels.</small>
+                        <small class="text-muted">Upload images for the masonry grid display.<br><strong>Size:</strong> 400×500px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
                     </div>
                 </div>
             </div>

@@ -207,7 +207,7 @@ if ($action === 'add' || $action === 'edit') {
                         <?php endif; ?>
                         
                         <input type="file" class="form-control" name="client_avatar" accept="image/*">
-                        <small class="text-muted d-block mt-2">Square image recommended (150x150 px)</small>
+                        <small class="text-muted d-block mt-2"><strong>Size:</strong> 150×150px (square) &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 500KB</small>
                     </div>
                 </div>
                 

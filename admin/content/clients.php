@@ -212,7 +212,7 @@ if ($action === 'add' || $action === 'edit') {
                                 </div>
                             <?php endif; ?>
                             <input type="file" class="form-control" id="client_logo" name="client_logo" accept="image/*,.svg">
-                            <small class="text-muted">Recommended: Transparent PNG or SVG, max width 200px. If no logo is uploaded, the client name will display as text in the marquee.</small>
+                            <small class="text-muted"><strong>Size:</strong> 200×60px &nbsp;|&nbsp; <strong>Format:</strong> PNG, SVG (transparent background) &nbsp;|&nbsp; <strong>Max:</strong> 500KB<br>If no logo is uploaded, the client name will display as text in the marquee.</small>
                         </div>
                     </div>
                 </div>

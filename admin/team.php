@@ -238,6 +238,7 @@ if ($action === 'add' || $action === 'edit') {
                         </div>
                         <?php endif; ?>
                         <input type="file" class="form-control" id="image_pro" name="image_pro" accept="image/*">
+                        <small class="text-muted"><strong>Size:</strong> 400×500px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
                     </div>
                 </div>
                 
@@ -253,6 +254,7 @@ if ($action === 'add' || $action === 'edit') {
                         </div>
                         <?php endif; ?>
                         <input type="file" class="form-control" id="image_fun" name="image_fun" accept="image/*">
+                        <small class="text-muted"><strong>Size:</strong> 400×500px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
                     </div>
                 </div>
                 

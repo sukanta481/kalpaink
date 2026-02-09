@@ -597,7 +597,7 @@ body {
    HERO SECTION - ATMOSPHERIC
 ================================ */
 .hero-section {
-    background: #050510;
+    background: #0f1b3d;
     min-height: 100vh;
     padding-top: 40px;
     position: relative;
@@ -2225,8 +2225,9 @@ body {
     backface-visibility: hidden;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-    border: 1px solid #333333;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border: none;
+    background: #F5F5F5;
 }
 
 .flip-card-front img,
@@ -2234,13 +2235,13 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(20%);
+    filter: none;
     transition: filter 0.3s ease;
 }
 
 .creator-flip-card:hover .flip-card-front img,
 .creator-flip-card:hover .flip-card-back img {
-    filter: grayscale(0%);
+    filter: none;
 }
 
 .flip-card-back {
@@ -2252,9 +2253,9 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    background: rgba(0, 0, 0, 0.6);
     color: var(--white);
-    padding: 20px 15px 15px;
+    padding: 10px 15px;
     font-size: 0.85rem;
     font-weight: 500;
 }
@@ -2294,19 +2295,19 @@ body {
 .creator-name {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--white);
+    color: var(--black);
     margin-bottom: 5px;
 }
 
 .creator-role {
-    color: var(--gray-400);
+    color: var(--gray-600);
     font-weight: 600;
     font-size: 0.95rem;
     margin-bottom: 10px;
 }
 
 .creator-tagline {
-    color: var(--gray-500);
+    color: var(--gray-600);
     font-style: italic;
     font-size: 0.9rem;
     margin-bottom: 15px;
@@ -2393,14 +2394,14 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Front is relative - determines height */
 .flip-mobile-front {
     position: relative;
-    background: #141414;
-    border: 1px solid #333333;
+    background: #1A1A1A;
+    border: 1px solid #2A2A2A;
     padding: 0;
 }
 
@@ -2426,14 +2427,7 @@ body {
 }
 
 .flip-avatar::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    background: linear-gradient(to top, #141414 0%, transparent 100%);
-    pointer-events: none;
+    display: none;
 }
 
 .flip-avatar img {
@@ -2458,14 +2452,14 @@ body {
 }
 
 .flip-role {
-    color: #A0A0A0;
+    color: #B0B0B0;
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 10px;
 }
 
 .flip-tagline {
-    color: #808080;
+    color: #888888;
     font-size: 0.85rem;
     font-style: italic;
     margin-bottom: 0;
@@ -2478,14 +2472,14 @@ body {
     justify-content: center;
     gap: 12px;
     padding: 15px 24px 20px;
-    border-top: 1px solid #333333;
+    border-top: 1px solid #2A2A2A;
 }
 
 .flip-social-link {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #1A1A1A;
+    background: #252525;
     border: 1px solid #333333;
     display: flex;
     align-items: center;
@@ -2523,8 +2517,8 @@ body {
     bottom: 75px;
     right: 15px;
     font-size: 0.75rem;
-    color: #666666;
-    background: rgba(20, 20, 20, 0.9);
+    color: #999999;
+    background: rgba(26, 26, 26, 0.9);
     padding: 6px 12px;
     border-radius: 20px;
     animation: pulse-hint 2s infinite;
@@ -2532,9 +2526,9 @@ body {
 
 /* Back Card: Creative/Fun Side - No Image, Content Only */
 .flip-mobile-back {
-    background: linear-gradient(145deg, #1A1A1A 0%, #0F0F0F 100%);
+    background: #1A1A1A;
     transform: rotateY(180deg);
-    border: 1px solid #2962FF;
+    border: 1px solid #2A2A2A;
     padding: 40px 30px;
     display: flex;
     flex-direction: column;
@@ -2581,7 +2575,7 @@ body {
 .flip-back-hint {
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid #333333;
+    border-top: 1px solid #2A2A2A;
     width: 100%;
 }
 
@@ -2589,8 +2583,8 @@ body {
     text-align: center;
     padding: 15px 24px 20px;
     font-size: 0.75rem;
-    color: #666666;
-    border-top: 1px solid #333333;
+    color: #888888;
+    border-top: 1px solid #2A2A2A;
 }
 
 .flip-back-hint i {
@@ -2622,7 +2616,7 @@ body {
 
 /* Back card social links styling */
 .flip-mobile-back .flip-social-links {
-    border-top-color: #2962FF;
+    border-top-color: #2A2A2A;
 }
 
 .tap-hint {
@@ -6875,11 +6869,12 @@ textarea.form-control {
         background-size: cover;
         background-position: center top;
         background-repeat: no-repeat;
+        background-color: #0f1b3d !important;
         display: flex;
         flex-direction: column;
     }
 
-    /* Dark overlay with gradient for text readability */
+    /* Dark overlay with navy blue tint for text readability */
     .hero-section::before {
         content: '';
         position: absolute;
@@ -6888,9 +6883,9 @@ textarea.form-control {
         right: 0;
         bottom: 0;
         background: linear-gradient(to bottom,
-                rgba(0, 0, 0, 0.5) 0%,
-                rgba(0, 0, 0, 0.6) 40%,
-                rgba(0, 0, 0, 0.95) 100%);
+                rgba(15, 27, 61, 0.6) 0%,
+                rgba(15, 27, 61, 0.7) 40%,
+                rgba(15, 27, 61, 0.95) 100%);
         backdrop-filter: grayscale(100%) brightness(0.7);
         -webkit-backdrop-filter: grayscale(100%) brightness(0.7);
         z-index: 1;
@@ -8057,9 +8052,9 @@ textarea.form-control {
     --zebra-card-dark: #1A1A1A;
 }
 
-/* 1. Hero Section (Dark) */
+/* 1. Hero Section (Dark Navy Blue) */
 .hero-section {
-    background-color: var(--zebra-dark) !important;
+    background-color: #0f1b3d !important;
 }
 
 .hero-title,

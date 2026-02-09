@@ -151,7 +151,7 @@ foreach ($allSettings as $setting) {
                             </div>
                             <input type="file" class="form-control mt-2" name="site_logo" id="site_logo" accept="image/*"
                                    onchange="if(this.files[0]){var r=new FileReader();r.onload=function(e){document.getElementById('logoPreview').src=e.target.result;document.getElementById('logoPreview').style.opacity='1';};r.readAsDataURL(this.files[0]);}">
-                            <small class="text-muted">Recommended: PNG or SVG, max-height 55px display</small>
+                            <small class="text-muted"><strong>Size:</strong> 200×55px &nbsp;|&nbsp; <strong>Format:</strong> PNG, SVG (transparent background) &nbsp;|&nbsp; <strong>Max:</strong> 500KB</small>
                             <?php if (!empty($logoSetting['setting_value'])): ?>
                             <div class="mt-2">
                                 <label class="text-danger small" style="cursor: pointer;">
@@ -178,7 +178,7 @@ foreach ($allSettings as $setting) {
                             </div>
                             <input type="file" class="form-control mt-2" name="site_favicon" id="site_favicon" accept="image/*,.ico"
                                    onchange="if(this.files[0]){var r=new FileReader();r.onload=function(e){var el=document.getElementById('faviconPreview');if(el.tagName==='IMG'){el.src=e.target.result;}else{el.outerHTML='<img id=faviconPreview src='+e.target.result+' style=max-height:64px;max-width:64px;object-fit:contain>';}};r.readAsDataURL(this.files[0]);}">
-                            <small class="text-muted">Recommended: 32x32 or 64x64 PNG/ICO</small>
+                            <small class="text-muted"><strong>Size:</strong> 32×32px or 64×64px &nbsp;|&nbsp; <strong>Format:</strong> PNG, ICO &nbsp;|&nbsp; <strong>Max:</strong> 100KB</small>
                             <?php if (!empty($faviconSetting['setting_value'])): ?>
                             <div class="mt-2">
                                 <label class="text-danger small" style="cursor: pointer;">

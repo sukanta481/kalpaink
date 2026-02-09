@@ -248,7 +248,7 @@ if ($action === 'add' || $action === 'edit') {
                                     <?php endif; ?>
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*"
                                            <?php echo $action === 'add' ? 'required' : ''; ?>>
-                                    <small class="text-muted">Recommended: 800x600 pixels or larger</small>
+                                    <small class="text-muted"><strong>Size:</strong> 800×600px or larger &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 5MB</small>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -261,7 +261,7 @@ if ($action === 'add' || $action === 'edit') {
                                     </div>
                                     <?php endif; ?>
                                     <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
-                                    <small class="text-muted">Small preview image (300x300 px)</small>
+                                    <small class="text-muted"><strong>Size:</strong> 300×300px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 1MB</small>
                                 </div>
                             </div>
                         </div>
@@ -435,7 +435,7 @@ if ($action === 'add' || $action === 'edit') {
                             <label for="bulk_images" class="form-label">Select Images</label>
                             <input type="file" class="form-control" id="bulk_images" name="bulk_images[]" 
                                    accept="image/*" multiple required>
-                            <small class="text-muted">Select multiple images to upload at once. Filenames will be used as titles.</small>
+                            <small class="text-muted">Select multiple images to upload at once. Filenames will be used as titles.<br><strong>Size:</strong> 800×600px or larger &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 5MB each</small>
                         </div>
                     </div>
                     <div class="modal-footer">

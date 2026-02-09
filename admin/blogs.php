@@ -258,7 +258,7 @@ if ($action === 'add' || $action === 'edit') {
                         <?php endif; ?>
                         <input type="file" class="form-control image-upload" id="featured_image" 
                                name="featured_image" accept="image/*" data-preview="imagePreview">
-                        <small class="text-muted">Recommended size: 1200x630 pixels.</small>
+                        <small class="text-muted"><strong>Size:</strong> 1200×630px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
                     </div>
                 </div>
                 
