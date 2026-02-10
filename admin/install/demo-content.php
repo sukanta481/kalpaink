@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 /**
  * Demo Content Installer
  * Populates all CRM tables with the current website demo content
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 error_reporting(E_ALL);
@@ -315,7 +315,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'image' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
                 'image_fun' => 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop',
                 'tagline' => 'Turning caffeine into creativity since 2016',
-                'email' => 'suman@kalpoink.com',
+                'email' => 'suman@kalpanik.com',
                 'phone' => null,
                 'linkedin' => '#',
                 'twitter' => null,
@@ -330,7 +330,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'image' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop',
                 'image_fun' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop',
                 'tagline' => 'Making brands unforgettable, one pixel at a time',
-                'email' => 'souvik@kalpoink.com',
+                'email' => 'souvik@kalpanik.com',
                 'phone' => null,
                 'linkedin' => '#',
                 'twitter' => null,
@@ -354,14 +354,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $faqs = [
             [
                 'category' => 'general',
-                'question' => 'What services does Kalpoink offer?',
-                'answer' => '<p>Kalpoink specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing. Our primary expertise is in all types of graphics work.</p>',
+                'question' => 'What services does Kalpanik offer?',
+                'answer' => '<p>Kalpanik specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing. Our primary expertise is in all types of graphics work.</p>',
                 'sort_order' => 1,
                 'is_active' => 1
             ],
             [
                 'category' => 'general',
-                'question' => 'Where is Kalpoink located?',
+                'question' => 'Where is Kalpanik located?',
                 'answer' => '<p>We are based in Kolkata, West Bengal, India. Our office is located at 225 Bagmari Road, Kolkata - 700054.</p>',
                 'sort_order' => 2,
                 'is_active' => 1
@@ -382,7 +382,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ],
             [
                 'category' => 'general',
-                'question' => 'What makes Kalpoink different from other agencies?',
+                'question' => 'What makes Kalpanik different from other agencies?',
                 'answer' => '<p>Our focus on creative excellence combined with strategic thinking sets us apart. With our partners\' combined experience, we deliver work that not only looks great but also drives real business results.</p>',
                 'sort_order' => 5,
                 'is_active' => 1
@@ -424,7 +424,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'client_position' => 'CEO',
                 'client_company' => 'TechStart India',
                 'client_avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
-                'testimonial_text' => 'Kalpoink transformed our brand identity completely. Their creative team understood our vision perfectly and delivered beyond expectations. Highly recommended for any business looking for top-notch design work!',
+                'testimonial_text' => 'Kalpanik transformed our brand identity completely. Their creative team understood our vision perfectly and delivered beyond expectations. Highly recommended for any business looking for top-notch design work!',
                 'rating' => 5,
                 'sort_order' => 1,
                 'is_featured' => 1,
@@ -435,7 +435,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'client_position' => 'Marketing Director',
                 'client_company' => 'Fashion Forward',
                 'client_avatar' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
-                'testimonial_text' => 'Working with Kalpoink on our social media strategy was a game-changer. Our engagement increased by 300% within just two months. They really know how to connect brands with audiences.',
+                'testimonial_text' => 'Working with Kalpanik on our social media strategy was a game-changer. Our engagement increased by 300% within just two months. They really know how to connect brands with audiences.',
                 'rating' => 5,
                 'sort_order' => 2,
                 'is_featured' => 1,
@@ -446,7 +446,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'client_position' => 'Founder',
                 'client_company' => 'GreenEats',
                 'client_avatar' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop',
-                'testimonial_text' => 'The website Kalpoink designed for us is not only beautiful but also highly functional. Our online orders have increased significantly since the launch. Great team to work with!',
+                'testimonial_text' => 'The website Kalpanik designed for us is not only beautiful but also highly functional. Our online orders have increased significantly since the launch. Great team to work with!',
                 'rating' => 5,
                 'sort_order' => 3,
                 'is_featured' => 0,
@@ -472,9 +472,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ['home', 'cta', 'Ready to Transform Your Brand?', 'Let\'s create something amazing together. Get in touch with us today!', null, null, '{"button_text": "Get Started", "button_link": "contact.php"}', 1],
             
             // About page sections
-            ['about', 'hero_title', 'About Us', null, '<p>At Kalpoink, creativity isn\'t just our passion – it\'s our heartbeat. We\'re a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p><p>With fresh ideas and an unbridled enthusiasm, we turn challenges into opportunities and dreams into realities. We are based in Kolkata and serve clients across India and beyond.</p>', null, null, 1],
-            ['about', 'who_we_are', 'Who we are', null, '<p>We\'re your digital dream team – young, inventive, and fearless. <a href="#" class="highlight-link">Kalpoink</a> blends strategy, creativity, and technology to create unique digital experiences that resonate.</p><p>Our diverse squad includes strategists who live for analytics, creative designers who turn pixels into perfection, and social media wizards who keep trends on a constant watch. When you partner with us, expect authenticity, creative flair, and results-driven creativity.</p><p>Founded by Suman Kundu and Souvik Das, we bring together years of experience in graphic design, branding, and digital marketing to help businesses stand out in the crowded digital landscape.</p>', null, null, 1],
-            ['about', 'cta', 'Why Work With Us?', 'Ready to elevate your brand? If you\'re creative, passionate, and driven by innovation, Kalpoink is your perfect partner. Let\'s disrupt the digital world together!', null, null, '{"button_text": "Get In Touch", "button_link": "contact.php"}', 1],
+            ['about', 'hero_title', 'About Us', null, '<p>At Kalpanik, creativity isn\'t just our passion – it\'s our heartbeat. We\'re a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p><p>With fresh ideas and an unbridled enthusiasm, we turn challenges into opportunities and dreams into realities. We are based in Kolkata and serve clients across India and beyond.</p>', null, null, 1],
+            ['about', 'who_we_are', 'Who we are', null, '<p>We\'re your digital dream team – young, inventive, and fearless. <a href="#" class="highlight-link">Kalpanik</a> blends strategy, creativity, and technology to create unique digital experiences that resonate.</p><p>Our diverse squad includes strategists who live for analytics, creative designers who turn pixels into perfection, and social media wizards who keep trends on a constant watch. When you partner with us, expect authenticity, creative flair, and results-driven creativity.</p><p>Founded by Suman Kundu and Souvik Das, we bring together years of experience in graphic design, branding, and digital marketing to help businesses stand out in the crowded digital landscape.</p>', null, null, 1],
+            ['about', 'cta', 'Why Work With Us?', 'Ready to elevate your brand? If you\'re creative, passionate, and driven by innovation, Kalpanik is your perfect partner. Let\'s disrupt the digital world together!', null, null, '{"button_text": "Get In Touch", "button_link": "contact.php"}', 1],
             
             // Services page sections
             ['services', 'hero', 'See What Happens When Creativity Meets Purpose', 'Every project we take on is a collision of bold thinking and meaningful intent.', '<p>These are stories where redefined imagination, strategy, and creativity are transformed into impact.</p>', null, null, 1],
@@ -495,7 +495,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ========================================
         // Update existing settings
         $settings = [
-            ['site_name', 'Kalpoink'],
+            ['site_name', 'Kalpanik'],
             ['site_tagline', 'Creative Digital Solutions'],
             ['contact_address', '225 Bagmari Road, Kolkata - 700054'],
             ['contact_phone', '+91 891 082 1105'],
@@ -504,7 +504,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ['social_instagram', '#'],
             ['social_linkedin', '#'],
             ['social_twitter', '#'],
-            ['footer_copyright', '© 2024 Kalpoink. All Rights Reserved.']
+            ['footer_copyright', '© 2024 Kalpanik. All Rights Reserved.']
         ];
         
         foreach ($settings as $setting) {
@@ -543,7 +543,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Import Demo Content - Kalpoink Admin</title>
+    <title>Import Demo Content - Kalpanik Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>

@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Settings Management
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 // Load auth BEFORE any output

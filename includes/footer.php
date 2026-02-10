@@ -1,4 +1,4 @@
-    <!-- Footer -->
+﻿    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <!-- Mobile: Social Icons at TOP (visible only on mobile) -->
@@ -16,7 +16,7 @@
                             <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="footer-logo-img">
                         </a>
                         <p class="footer-description">
-                            One of the fastest-growing digital marketing agencies in Kolkata. Kalpoink's expertise coupled with their target-oriented approach is what your business requires to reach digital success.
+                            One of the fastest-growing digital marketing agencies in Kolkata. Kalpanik's expertise coupled with their target-oriented approach is what your business requires to reach digital success.
                         </p>
                         <a href="about.php" class="know-more-link d-none d-lg-inline-block">KNOW MORE</a>
                     </div>
@@ -95,7 +95,7 @@
                 <div class="footer-bottom-content">
                     <!-- Line 1: Copyright -->
                     <div class="footer-line">
-                        <span>&copy; <?php echo date('Y'); ?> <strong>Kalpoink</strong></span>
+                        <span>&copy; <?php echo date('Y'); ?> <strong>Kalpanik</strong></span>
                         <span class="dot">•</span>
                         <span>All Rights Reserved</span>
                     </div>
@@ -114,7 +114,7 @@
         </div>
         
         <!-- Giant Watermark -->
-        <div class="footer-watermark">KALPOINK</div>
+        <div class="footer-watermark">KALPANIK</div>
     </footer>
 
     <!-- Back to Top Button -->

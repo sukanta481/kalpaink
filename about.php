@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 $page_title = 'About Us';
 include 'includes/header.php'; 
 
@@ -101,7 +101,7 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                         <?php if (!empty($about_card['content_body'])): ?>
                             <?php echo $about_card['content_body']; ?>
                         <?php else: ?>
-                        <p>At Kalpoink, creativity isn't just our passion – it's our heartbeat. We're a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p>
+                        <p>At Kalpanik, creativity isn't just our passion – it's our heartbeat. We're a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p>
                         <p>With fresh ideas and an unbridled enthusiasm, we turn challenges into opportunities and dreams into realities. We are based in Kolkata and serve clients across India and beyond.</p>
                         <?php endif; ?>
                     </div>
@@ -166,7 +166,7 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                     <?php if (!empty($who_we_are['content_body'])): ?>
                         <?php echo $who_we_are['content_body']; ?>
                     <?php else: ?>
-                    <p>We're your digital dream team – young, inventive, and fearless. <a href="#" class="highlight-link">Kalpoink</a> blends strategy, creativity, and technology to create unique digital experiences that resonate.</p>
+                    <p>We're your digital dream team – young, inventive, and fearless. <a href="#" class="highlight-link">Kalpanik</a> blends strategy, creativity, and technology to create unique digital experiences that resonate.</p>
                     <p>Our diverse squad includes strategists who live for analytics, creative designers who turn pixels into perfection, and social media wizards who keep trends on a constant watch. When you partner with us, expect authenticity, creative flair, and results-driven creativity.</p>
                     <p>Founded by Suman Kundu and Souvik Das, we bring together years of experience in graphic design, branding, and digital marketing to help businesses stand out in the crowded digital landscape.</p>
                     <?php endif; ?>
@@ -183,7 +183,7 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                 <div class="row align-items-center position-relative">
                     <div class="col-lg-8">
                         <h3 class="cta-title"><?php echo htmlspecialchars($join_us['content_title'] ?? 'Why Work With Us?'); ?></h3>
-                        <p class="mb-0"><?php echo htmlspecialchars($join_us['content_body'] ?? 'Ready to elevate your brand? If you\'re creative, passionate, and driven by innovation, Kalpoink is your perfect partner. Let\'s disrupt the digital world together!'); ?></p>
+                        <p class="mb-0"><?php echo htmlspecialchars($join_us['content_body'] ?? 'Ready to elevate your brand? If you\'re creative, passionate, and driven by innovation, Kalpanik is your perfect partner. Let\'s disrupt the digital world together!'); ?></p>
                     </div>
                     <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
                         <a href="<?php echo htmlspecialchars($join_us['extra']['button_link'] ?? 'contact.php'); ?>" class="btn btn-white btn-pulse-ripple"><?php echo htmlspecialchars($join_us['extra']['button_text'] ?? 'Get In Touch'); ?></a>

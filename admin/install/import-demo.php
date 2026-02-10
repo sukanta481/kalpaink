@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * CLI Demo Content Import
  * Imports all demo content from command line
@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 try {
-    $db = new PDO('mysql:host=localhost;dbname=kalpoink_crm;charset=utf8mb4', 'root', '', [
+    $db = new PDO('mysql:host=localhost;dbname=kalpanik_crm;charset=utf8mb4', 'root', '', [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
     
@@ -84,8 +84,8 @@ try {
     $db->exec("TRUNCATE TABLE team_members");
     
     $team = [
-        ['Suman Kundu', 'Co-Founder & Creative Director', 'Turning caffeine into creativity since 2016.', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop', 'Turning caffeine into creativity since 2016', 'suman@kalpoink.com', null, '#', null, null, 1, 1],
-        ['Souvik Das', 'Co-Founder & Strategy Lead', 'Making brands unforgettable, one pixel at a time.', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop', 'Making brands unforgettable, one pixel at a time', 'souvik@kalpoink.com', null, '#', null, null, 2, 1]
+        ['Suman Kundu', 'Co-Founder & Creative Director', 'Turning caffeine into creativity since 2016.', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop', 'Turning caffeine into creativity since 2016', 'suman@kalpanik.com', null, '#', null, null, 1, 1],
+        ['Souvik Das', 'Co-Founder & Strategy Lead', 'Making brands unforgettable, one pixel at a time.', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop', 'Making brands unforgettable, one pixel at a time', 'souvik@kalpanik.com', null, '#', null, null, 2, 1]
     ];
     
     $stmt = $db->prepare("INSERT INTO team_members (name, position, bio, image, image_fun, tagline, email, phone, linkedin, twitter, instagram, sort_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -101,11 +101,11 @@ try {
     $db->exec("TRUNCATE TABLE faqs");
     
     $faqs = [
-        ['general', 'What services does Kalpoink offer?', '<p>Kalpoink specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing.</p>', 1, 1],
-        ['general', 'Where is Kalpoink located?', '<p>We are based in Kolkata, West Bengal, India. Our office is at 225 Bagmari Road, Kolkata - 700054.</p>', 2, 1],
+        ['general', 'What services does Kalpanik offer?', '<p>Kalpanik specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing.</p>', 1, 1],
+        ['general', 'Where is Kalpanik located?', '<p>We are based in Kolkata, West Bengal, India. Our office is at 225 Bagmari Road, Kolkata - 700054.</p>', 2, 1],
         ['process', 'How long does a typical project take?', '<p>Project timelines vary. Logo design: 1-2 weeks. Complete brand identity: 4-6 weeks.</p>', 3, 1],
         ['general', 'Do you work with clients outside Kolkata?', '<p>Yes! We work with clients across India and internationally.</p>', 4, 1],
-        ['general', 'What makes Kalpoink different?', '<p>Our focus on creative excellence combined with strategic thinking sets us apart.</p>', 5, 1]
+        ['general', 'What makes Kalpanik different?', '<p>Our focus on creative excellence combined with strategic thinking sets us apart.</p>', 5, 1]
     ];
     
     $stmt = $db->prepare("INSERT INTO faqs (category, question, answer, sort_order, is_active) VALUES (?, ?, ?, ?, ?)");
@@ -140,8 +140,8 @@ try {
     $db->exec("TRUNCATE TABLE testimonials");
     
     $testimonials = [
-        ['Rajesh Kumar', 'CEO', 'TechStart India', null, 'Kalpoink transformed our brand identity completely. Their attention to detail and creative approach exceeded our expectations.', 5, 1, 1, 1],
-        ['Priya Sharma', 'Marketing Head', 'Fashion Hub', null, 'Working with Kalpoink was a game-changer for our social media presence. Highly recommended!', 5, 2, 1, 1],
+        ['Rajesh Kumar', 'CEO', 'TechStart India', null, 'Kalpanik transformed our brand identity completely. Their attention to detail and creative approach exceeded our expectations.', 5, 1, 1, 1],
+        ['Priya Sharma', 'Marketing Head', 'Fashion Hub', null, 'Working with Kalpanik was a game-changer for our social media presence. Highly recommended!', 5, 2, 1, 1],
         ['Amit Patel', 'Founder', 'Foodie Express', null, 'The team delivered an amazing website that perfectly captures our brand essence. Great work!', 5, 3, 0, 1]
     ];
     
@@ -158,8 +158,8 @@ try {
     $db->exec("TRUNCATE TABLE page_content");
     
     $pages = [
-        ['home', 'about_section', 'About Kalpoink', 'Who We Are', '<p>Kalpoink is a creative digital agency based in Kolkata, specializing in graphics design, brand identity, and digital marketing.</p>', null, null, 1],
-        ['about', 'main', 'About Us', 'Our Story', '<p>Founded by creative professionals, Kalpoink has grown to become a trusted partner for businesses.</p>', null, null, 1],
+        ['home', 'about_section', 'About Kalpanik', 'Who We Are', '<p>Kalpanik is a creative digital agency based in Kolkata, specializing in graphics design, brand identity, and digital marketing.</p>', null, null, 1],
+        ['about', 'main', 'About Us', 'Our Story', '<p>Founded by creative professionals, Kalpanik has grown to become a trusted partner for businesses.</p>', null, null, 1],
         ['services', 'intro', 'Our Services', 'What We Offer', '<p>We offer a comprehensive range of creative and digital services to help your business grow.</p>', null, null, 1]
     ];
     
@@ -188,7 +188,7 @@ try {
     echo "  ✓ " . count($gallery) . " gallery items added\n";
     
     echo "\n=== Demo Content Import Complete! ===\n";
-    echo "\nVisit: http://localhost/kalpoink/admin/\n";
+    echo "\nVisit: http://localhost/kalpanik/admin/\n";
     echo "Login: admin / admin123\n";
     
 } catch (PDOException $e) {

@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * User Profile
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'My Profile';

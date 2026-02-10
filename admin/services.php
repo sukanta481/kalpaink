@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Services Management
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'Services';

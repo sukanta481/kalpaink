@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 /**
  * Content Tables Installer
  * Run this after initial setup to add content management tables
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 error_reporting(E_ALL);
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $check = $db->query("SELECT COUNT(*) FROM faqs")->fetchColumn();
         if ($check == 0) {
             $db->exec("INSERT INTO faqs (category, question, answer, sort_order, is_active) VALUES
-                ('general', 'What services does Kalpoink offer?', '<p>We offer a comprehensive range of digital services including web design, web development, branding, UI/UX design, digital marketing, SEO, and content creation. Our team can handle projects from concept to completion.</p>', 1, 1),
+                ('general', 'What services does Kalpanik offer?', '<p>We offer a comprehensive range of digital services including web design, web development, branding, UI/UX design, digital marketing, SEO, and content creation. Our team can handle projects from concept to completion.</p>', 1, 1),
                 ('process', 'What is your typical project timeline?', '<p>Project timelines vary based on scope and complexity. A simple website might take 2-4 weeks, while a complex web application could take 2-3 months. We provide detailed timelines during our initial consultation.</p>', 2, 1),
                 ('pricing', 'How do you price your projects?', '<p>We offer both fixed-price and hourly billing options depending on the project type. We always provide detailed quotes after understanding your requirements. Contact us for a free consultation and estimate.</p>', 3, 1)");
         }
@@ -131,8 +131,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $check = $db->query("SELECT COUNT(*) FROM testimonials")->fetchColumn();
         if ($check == 0) {
             $db->exec("INSERT INTO testimonials (client_name, client_position, client_company, testimonial_text, rating, is_featured, is_active) VALUES
-                ('John Smith', 'CEO', 'TechCorp Inc.', 'Kalpoink transformed our online presence completely. Their team was professional, creative, and delivered beyond our expectations. Highly recommended!', 5, 1, 1),
-                ('Sarah Johnson', 'Marketing Director', 'Growth Labs', 'Working with Kalpoink was a pleasure. They understood our vision and brought it to life with stunning design and flawless execution.', 5, 0, 1)");
+                ('John Smith', 'CEO', 'TechCorp Inc.', 'Kalpanik transformed our online presence completely. Their team was professional, creative, and delivered beyond our expectations. Highly recommended!', 5, 1, 1),
+                ('Sarah Johnson', 'Marketing Director', 'Growth Labs', 'Working with Kalpanik was a pleasure. They understood our vision and brought it to life with stunning design and flawless execution.', 5, 0, 1)");
         }
         
         $success = true;
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Install Content Tables - Kalpoink Admin</title>
+    <title>Install Content Tables - Kalpanik Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>

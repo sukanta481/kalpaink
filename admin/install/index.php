@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Database Installer
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  * 
  * Run this file once to set up the database
  */
@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$dbname = 'kalpoink_crm';
+$dbname = 'kalpanik_crm';
 
 $message = '';
 $success = false;
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['install'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Install - Kalpoink Admin CRM</title>
+    <title>Install - Kalpanik Admin CRM</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['install'])) {
 <body>
     <div class="install-card">
         <div class="install-logo">
-            <h1><i class="fas fa-cube me-2"></i>Kalpoink</h1>
+            <h1><i class="fas fa-cube me-2"></i>Kalpanik</h1>
             <p class="text-muted">Admin CRM Installation</p>
         </div>
         

@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Admin Dashboard
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'Dashboard';

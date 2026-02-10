@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Team Members Management
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'Team Members';

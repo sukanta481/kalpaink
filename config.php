@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * Kalpoink - Configuration File
+ * Kalpanik - Configuration File
  * Digital Marketing Agency Website
  */
 
@@ -12,7 +12,7 @@ $crm_settings = getSettings();
 
 // Auto-detect environment for SITE_URL
 if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
-    define('SITE_URL', 'http://localhost/kalpoink');
+    define('SITE_URL', 'http://localhost/kalpanik');
 } else {
     // Use HTTPS and actual domain on live server
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
@@ -20,7 +20,7 @@ if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.
 }
 
 // Site Configuration
-define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpoink');
+define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpanik');
 define('SITE_TAGLINE', $crm_settings['site_tagline'] ?? 'Creative Digital Solutions');
 
 // Branding - Logo & Favicon (dynamic from admin settings)
@@ -157,11 +157,11 @@ $case_studies = !empty($case_studies_db) ? $case_studies_db : [
 $faqs_db = getFAQsFromDB();
 $faqs = !empty($faqs_db) ? $faqs_db : [
     [
-        'question' => 'What services does Kalpoink offer?',
-        'answer' => 'Kalpoink specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing. Our primary expertise is in all types of graphics work.'
+        'question' => 'What services does Kalpanik offer?',
+        'answer' => 'Kalpanik specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing. Our primary expertise is in all types of graphics work.'
     ],
     [
-        'question' => 'Where is Kalpoink located?',
+        'question' => 'Where is Kalpanik located?',
         'answer' => 'We are based in Kolkata, West Bengal, India. Our office is located at 225 Bagmari Road, Kolkata - 700054.'
     ],
     [
@@ -173,7 +173,7 @@ $faqs = !empty($faqs_db) ? $faqs_db : [
         'answer' => 'Yes! We work with clients across India and internationally. Our digital workflow allows us to collaborate seamlessly regardless of location.'
     ],
     [
-        'question' => 'What makes Kalpoink different from other agencies?',
+        'question' => 'What makes Kalpanik different from other agencies?',
         'answer' => 'Our focus on creative excellence combined with strategic thinking sets us apart. With our partners\' combined experience, we deliver work that not only looks great but also drives real business results.'
     ]
 ];

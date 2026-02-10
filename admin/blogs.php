@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Blog Posts Management
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'Blog Posts';

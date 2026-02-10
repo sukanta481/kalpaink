@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Admin Login Page
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 // Start session only if not already started
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Kalpoink Admin</title>
+    <title>Login - Kalpanik Admin</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-wrapper">
         <div class="login-card">
             <div class="login-logo">
-                <img src="../assets/images/kalpaink-logo.png" alt="Kalpoink" style="max-height: 60px; margin-bottom: 15px;">
+                <img src="../assets/images/kalpaink-logo.png" alt="Kalpanik" style="max-height: 60px; margin-bottom: 15px;">
                 <p class="text-muted">Admin CRM Panel</p>
             </div>
             

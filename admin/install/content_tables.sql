@@ -1,7 +1,7 @@
--- Kalpoink CRM - Content Management Tables
+﻿-- Kalpanik CRM - Content Management Tables
 -- Run this in phpMyAdmin or use the update script
 
-USE kalpoink_crm;
+USE kalpanik_crm;
 
 -- Page Content Table (for managing text content on all pages)
 CREATE TABLE IF NOT EXISTS page_content (
@@ -110,23 +110,23 @@ INSERT INTO statistics (stat_label, stat_value, stat_suffix, stat_icon, sort_ord
 
 -- Insert Default FAQs
 INSERT INTO faqs (question, answer, sort_order) VALUES
-('What services does Kalpoink offer?', 'Kalpoink specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing. Our primary expertise is in all types of graphics work.', 1),
-('Where is Kalpoink located?', 'We are based in Kolkata, West Bengal, India. Our office is located at 225 Bagmari Road, Kolkata - 700054.', 2),
+('What services does Kalpanik offer?', 'Kalpanik specializes in graphics design, brand identity, social media marketing, web development, SEO services, and content marketing. Our primary expertise is in all types of graphics work.', 1),
+('Where is Kalpanik located?', 'We are based in Kolkata, West Bengal, India. Our office is located at 225 Bagmari Road, Kolkata - 700054.', 2),
 ('How long does a typical project take?', 'Project timelines vary based on complexity. A logo design might take 1-2 weeks, while a complete brand identity package could take 4-6 weeks. We will provide a detailed timeline after understanding your requirements.', 3),
 ('Do you work with clients outside Kolkata?', 'Yes! We work with clients across India and internationally. Our digital workflow allows us to collaborate seamlessly regardless of location.', 4),
-('What makes Kalpoink different from other agencies?', 'Our focus on creative excellence combined with strategic thinking sets us apart. With our partners combined experience, we deliver work that not only looks great but also drives real business results.', 5);
+('What makes Kalpanik different from other agencies?', 'Our focus on creative excellence combined with strategic thinking sets us apart. With our partners combined experience, we deliver work that not only looks great but also drives real business results.', 5);
 
 -- Insert Default Page Content
 INSERT INTO page_content (page_name, section_name, content_key, content_type, content_value, sort_order) VALUES
 -- Homepage
-('home', 'intro', 'welcome_title', 'text', 'Welcome to Kalpoink', 1),
+('home', 'intro', 'welcome_title', 'text', 'Welcome to Kalpanik', 1),
 ('home', 'intro', 'welcome_subtitle', 'textarea', 'We are a creative digital agency specializing in graphics design, branding, and digital marketing solutions.', 2),
 
 -- About Page
 ('about', 'hero', 'title', 'text', 'About Us', 1),
 ('about', 'hero', 'subtitle', 'textarea', 'We are a passionate team of creative minds dedicated to transforming brands through innovative design and strategic marketing.', 2),
 ('about', 'story', 'title', 'text', 'Our Story', 3),
-('about', 'story', 'content', 'html', '<p>Founded in Kolkata, Kalpoink started as a small design studio with big dreams. Today, we have grown into a full-service creative agency, helping businesses across India and beyond establish their digital presence.</p><p>Our journey has been driven by a simple belief: great design can transform businesses. We combine creativity with strategy to deliver results that matter.</p>', 4),
+('about', 'story', 'content', 'html', '<p>Founded in Kolkata, Kalpanik started as a small design studio with big dreams. Today, we have grown into a full-service creative agency, helping businesses across India and beyond establish their digital presence.</p><p>Our journey has been driven by a simple belief: great design can transform businesses. We combine creativity with strategy to deliver results that matter.</p>', 4),
 ('about', 'mission', 'title', 'text', 'Our Mission', 5),
 ('about', 'mission', 'content', 'textarea', 'To empower businesses with creative solutions that drive growth and create lasting impressions.', 6),
 ('about', 'vision', 'title', 'text', 'Our Vision', 7),

@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Leads Management
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'Leads';

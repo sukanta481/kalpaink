@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Content Management - Main Hub
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'Content Management';

@@ -1,5 +1,5 @@
-/**
- * Kalpoink Admin CRM JavaScript
+﻿/**
+ * Kalpanik Admin CRM JavaScript
  */
 
 document.addEventListener('DOMContentLoaded', function() {

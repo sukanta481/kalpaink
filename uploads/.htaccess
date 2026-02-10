@@ -1,4 +1,4 @@
-# Kalpoink Admin CRM - Upload Directory Security
+﻿# Kalpanik Admin CRM - Upload Directory Security
 
 # Prevent script execution
 <FilesMatch "\.(php|php5|php7|phtml|pl|py|jsp|asp|htm|html|shtml|sh|cgi)$">

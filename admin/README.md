@@ -1,4 +1,4 @@
-# Kalpoink Admin CRM
+﻿# Kalpanik Admin CRM
 # Comprehensive Admin CRM System for managing leads, content, projects, and more.
 
 ## Features
@@ -26,7 +26,7 @@
 
 2. Navigate to the installer:
    ```
-   http://localhost/kalpoink/admin/install/
+   http://localhost/kalpanik/admin/install/
    ```
 
 3. Click "Install Database" to create the database and tables
@@ -42,7 +42,7 @@
 ## Access Admin Panel
 
 ```
-http://localhost/kalpoink/admin/
+http://localhost/kalpanik/admin/
 ```
 
 ## User Roles
@@ -98,7 +98,7 @@ Edit `admin/config/database.php` to change database settings:
 
 ```php
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'kalpoink_crm');
+define('DB_NAME', 'kalpanik_crm');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 ```

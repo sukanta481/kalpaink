@@ -1,5 +1,5 @@
-/**
- * Kalpoink - Main JavaScript
+﻿/**
+ * Kalpanik - Main JavaScript
  * Digital Marketing Agency Website
  */
 

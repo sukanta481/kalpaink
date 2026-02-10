@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Projects/Case Studies Management
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'Projects';

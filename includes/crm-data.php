@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 /**
  * CRM Data Helper
  * Fetches content from the CRM database for the website
- * Kalpoink Website
+ * Kalpanik Website
  */
 
 // Database connection for website
@@ -14,7 +14,7 @@ function getCRMDatabase() {
         if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
             // Local Development (XAMPP)
             $host = 'localhost';
-            $dbname = 'kalpoink_crm';
+            $dbname = 'kalpanik_crm';
             $user = 'root';
             $pass = '';
         } else {

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Check Database Tables
  * Quick check script
@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 try {
-    $db = new PDO('mysql:host=localhost;dbname=kalpoink_crm;charset=utf8mb4', 'root', '', [
+    $db = new PDO('mysql:host=localhost;dbname=kalpanik_crm;charset=utf8mb4', 'root', '', [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
     echo "<h3>Database connected successfully!</h3>";

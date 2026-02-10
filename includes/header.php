@@ -1,11 +1,11 @@
-
+﻿
 <?php require_once 'config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kalpoink - Creative Digital Marketing Agency in Kolkata. Specializing in graphics design, branding, and digital marketing services.">
+    <meta name="description" content="Kalpanik - Creative Digital Marketing Agency in Kolkata. Specializing in graphics design, branding, and digital marketing services.">
     <meta name="keywords" content="digital marketing, graphics design, branding, Kolkata, web development, SEO">
     <title><?php echo isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME . ' - ' . SITE_TAGLINE; ?></title>
     

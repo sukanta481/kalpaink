@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Hero Slides Management
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 // Include auth first (without HTML output) to handle redirects

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Live Server Migration
  * Run once on Hostinger to sync database changes
@@ -7,7 +7,7 @@
 require_once __DIR__ . '/../config/database.php';
 $db = getDB();
 
-echo "<h2>🔄 Kalpoink Live Migration</h2><pre>";
+echo "<h2>🔄 Kalpanik Live Migration</h2><pre>";
 
 // ── 1. Add 'file' to settings.setting_type enum (if not already) ──
 try {
@@ -51,15 +51,15 @@ $sections = [
      null, '{"eyebrow": "Our Story", "hero_image": "assets/images/about-hero-dark.png", "badge_text": "Since 2018"}', 1],
     
     ['about', 'about_card', 'Who We Really Are', 'Behind The Chisel', 
-     '<p>At Kalpoink, creativity isn\'t just our passion – it\'s our heartbeat. We\'re a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p><p>With fresh ideas and an unbridled enthusiasm, we turn challenges into opportunities and dreams into realities. We are based in Kolkata and serve clients across India and beyond.</p>', 
+     '<p>At Kalpanik, creativity isn\'t just our passion – it\'s our heartbeat. We\'re a dynamic crew of young minds from diverse backgrounds, united by a shared love for all things digital. From creating visual content to designing brand new identities, our talented team lives to push the limits of digital storytelling.</p><p>With fresh ideas and an unbridled enthusiasm, we turn challenges into opportunities and dreams into realities. We are based in Kolkata and serve clients across India and beyond.</p>', 
      null, null, 1],
     
     ['about', 'who_we_are', 'Who we are', null, 
-     '<p>We\'re your digital dream team – young, inventive, and fearless. <a href="#" class="highlight-link">Kalpoink</a> blends strategy, creativity, and technology to create unique digital experiences that resonate.</p><p>Our diverse squad includes strategists who live for analytics, creative designers who turn pixels into perfection, and social media wizards who keep trends on a constant watch. When you partner with us, expect authenticity, creative flair, and results-driven creativity.</p><p>Founded by Suman Kundu and Souvik Das, we bring together years of experience in graphic design, branding, and digital marketing to help businesses stand out in the crowded digital landscape.</p>', 
+     '<p>We\'re your digital dream team – young, inventive, and fearless. <a href="#" class="highlight-link">Kalpanik</a> blends strategy, creativity, and technology to create unique digital experiences that resonate.</p><p>Our diverse squad includes strategists who live for analytics, creative designers who turn pixels into perfection, and social media wizards who keep trends on a constant watch. When you partner with us, expect authenticity, creative flair, and results-driven creativity.</p><p>Founded by Suman Kundu and Souvik Das, we bring together years of experience in graphic design, branding, and digital marketing to help businesses stand out in the crowded digital landscape.</p>', 
      'assets/images/digital-desk-bento.png', null, 1],
     
     ['about', 'join_us', 'Why Work With Us?', null, 
-     'Ready to elevate your brand? If you\'re creative, passionate, and driven by innovation, Kalpoink is your perfect partner. Let\'s disrupt the digital world together!', 
+     'Ready to elevate your brand? If you\'re creative, passionate, and driven by innovation, Kalpanik is your perfect partner. Let\'s disrupt the digital world together!', 
      null, '{"button_text": "Get In Touch", "button_link": "contact.php"}', 1],
     
     ['about', 'team_section', 'Meet The Creators', 'The Minds Behind The Magic', 
@@ -70,7 +70,7 @@ $sections = [
      'Real feedback from real partners who trusted us with their brands', 
      null, null, 1],
 
-    ['home', 'hero', 'Creative Digital Solutions', 'Kalpoink', 
+    ['home', 'hero', 'Creative Digital Solutions', 'Kalpanik', 
      'We create stunning digital experiences that drive results for your business.', 
      null, '{"button_text": "Get Started", "button_link": "contact.php"}', 1],
 

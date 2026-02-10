@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Admin Header Template
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 require_once __DIR__ . '/../config/auth.php';
@@ -15,7 +15,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($page_title) ? $page_title . ' - ' : ''; ?>Kalpoink Admin</title>
+    <title><?php echo isset($page_title) ? $page_title . ' - ' : ''; ?>Kalpanik Admin</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -48,7 +48,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             } catch (Exception $e) {}
             ?>
             <a href="<?php echo getAdminUrl('index.php'); ?>" class="sidebar-brand">
-                <img src="<?php echo getSiteUrl($sidebarLogoPath); ?>" alt="Kalpoink" style="max-height: 40px;">
+                <img src="<?php echo getSiteUrl($sidebarLogoPath); ?>" alt="Kalpanik" style="max-height: 40px;">
             </a>
             <button class="sidebar-toggle d-lg-none" id="sidebarClose">
                 <i class="fas fa-times"></i>

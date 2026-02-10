@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 /**
  * Activity Log
- * Kalpoink Admin CRM
+ * Kalpanik Admin CRM
  */
 
 $page_title = 'Activity Log';
