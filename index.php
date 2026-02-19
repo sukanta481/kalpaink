@@ -12,213 +12,54 @@ $marquee_clients = getClientsFromDB();
 
 // Get hero slides from CRM (auto-sync)
 $crm_hero_slides = getHeroSlides();
-
-// Default gradient icons for slides without images
-$default_gradients = [
-    ['gradient-1', 'fa-palette'],
-    ['gradient-2', 'fa-code'],
-    ['gradient-3', 'fa-bullhorn'],
-    ['gradient-5', 'fa-gem'],
-    ['gradient-6', 'fa-swatchbook'],
-    ['gradient-7', 'fa-layer-group'],
-];
 ?>
 
-    <!-- Hero Section with Slider -->
-    <section class="hero-section">
-        <!-- Atmospheric Background -->
-        <div class="hero-atmosphere">
-            <div class="hero-atm-grain"></div>
-            <div class="hero-atm-orb hero-atm-orb--blue"></div>
-            <div class="hero-atm-orb hero-atm-orb--purple"></div>
-            <div class="hero-atm-orb hero-atm-orb--cyan"></div>
-            <div class="hero-atm-grid"></div>
-            <!-- Floating micro particles -->
-            <div class="hero-particles">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-            </div>
-        </div>
-
-        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-            <!-- Carousel Indicators -->
-            <div class="carousel-indicators">
-                <?php if (!empty($crm_hero_slides)): ?>
-                    <?php foreach ($crm_hero_slides as $index => $slide): ?>
-                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="<?php echo $index; ?>" <?php echo $index === 0 ? 'class="active" aria-current="true"' : ''; ?> aria-label="Slide <?php echo $index + 1; ?>"></button>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <?php endif; ?>
-            </div>
-
-            <!-- Carousel Slides -->
-            <div class="carousel-inner">
-                <?php if (!empty($crm_hero_slides)): ?>
-                    <?php foreach ($crm_hero_slides as $index => $slide): ?>
-                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                    <div class="container">
-                        <div class="row align-items-center min-vh-hero">
-                            <div class="col-lg-6 hero-text-col">
-                                <div class="hero-content" <?php echo $index === 0 ? 'data-aos="fade-right"' : ''; ?>>
-                                    <span class="hero-badge"><?php echo htmlspecialchars($slide['badge_text'] ?? ''); ?></span>
-                                    <h1 class="hero-title"><?php echo htmlspecialchars($slide['title']); ?></h1>
-                                    <p class="hero-subtitle"><?php echo htmlspecialchars($slide['subtitle'] ?? ''); ?></p>
-                                    <div class="hero-buttons">
-                                        <?php if (!empty($slide['button1_text'])): ?>
-                                        <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact.php'); ?>" class="btn btn-ghost-white btn-lg"><?php echo htmlspecialchars($slide['button1_text']); ?></a>
-                                        <?php endif; ?>
-                                        <?php if (!empty($slide['button2_text'])): ?>
-                                        <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services.php'); ?>" class="btn btn-outline-white btn-lg"><?php echo htmlspecialchars($slide['button2_text']); ?></a>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 hero-visual-col">
-                                <div class="hero-masonry" data-parallax-container>
-                                    <?php 
-                                    // Check if slide has uploaded images
-                                    $hasImages = !empty($slide['image1']) || !empty($slide['image2']) || !empty($slide['image3']);
-                                    
-                                    if ($hasImages): 
-                                        $images = [$slide['image1'] ?? '', $slide['image2'] ?? '', $slide['image3'] ?? ''];
-                                        $parallax = ['0.03', '0.05', '0.04'];
-                                        foreach ($images as $imgIndex => $img): 
-                                            if (!empty($img)):
-                                    ?>
-                                    <div class="masonry-item item-<?php echo $imgIndex + 1; ?>" data-parallax="<?php echo $parallax[$imgIndex]; ?>">
-                                        <img src="<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($slide['title']); ?>">
-                                    </div>
-                                    <?php 
-                                            endif;
-                                        endforeach; 
-                                    else: 
-                                        // Use placeholder gradients
-                                        $gradientSet = $index % 2 === 0 ? [['gradient-1', 'fa-palette'], ['gradient-2', 'fa-code'], ['gradient-3', 'fa-bullhorn']] : [['gradient-5', 'fa-gem'], ['gradient-6', 'fa-swatchbook'], ['gradient-7', 'fa-layer-group']];
-                                        $parallax = ['0.03', '0.05', '0.04'];
-                                        foreach ($gradientSet as $gIndex => $gradient):
-                                    ?>
-                                    <div class="masonry-item item-<?php echo $gIndex + 1; ?>" data-parallax="<?php echo $parallax[$gIndex]; ?>">
-                                        <div class="masonry-placeholder <?php echo $gradient[0]; ?>">
-                                            <i class="fas <?php echo $gradient[1]; ?>"></i>
-                                        </div>
-                                    </div>
-                                    <?php 
-                                        endforeach;
-                                    endif; 
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
+    <!-- Hero Section - Blue Rounded Card -->
+    <section class="hero-section-v2-wrapper">
+        <div class="container">
+            <div class="hero-section-v2-card">
+                <div class="hero-v2-content text-center">
+                    <h1 class="hero-v2-title" data-aos="fade-up">
+                        We <span class="hero-highlight">Design</span> Ideas<br>
+                        That Think Before <span class="hero-outline">They</span> Speak.
+                    </h1>
+                    <p class="hero-v2-subtitle" data-aos="fade-up" data-aos-delay="100">
+                        <strong>Branding</strong> · <span class="hero-cursive">Design</span> · <strong>VISUAL THINKING</strong>
+                    </p>
+                    <div class="hero-v2-buttons" data-aos="fade-up" data-aos-delay="200">
+                        <a href="contact.php" class="btn-hero-white">get start <i class="fas fa-arrow-down-left"></i></a>
                     </div>
                 </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                <!-- Fallback: Default slides if no CRM data -->
-                <div class="carousel-item active">
-                    <div class="container">
-                        <div class="row align-items-center min-vh-hero">
-                            <div class="col-lg-6 hero-text-col">
-                                <div class="hero-content" data-aos="fade-right">
-                                    <span class="hero-badge">Creative Design Studio</span>
-                                    <h1 class="hero-title">Reimagining with Purpose</h1>
-                                    <p class="hero-subtitle">Transform your brand with creative design solutions. We specialize in graphics, branding, and digital marketing.</p>
-                                    <div class="hero-buttons">
-                                        <a href="contact.php" class="btn btn-ghost-white btn-lg">Get Quote</a>
-                                        <a href="services.php" class="btn btn-outline-white btn-lg">Services</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 hero-visual-col">
-                                <div class="hero-masonry" data-parallax-container>
-                                    <div class="masonry-item item-1" data-parallax="0.03">
-                                        <div class="masonry-placeholder gradient-1"><i class="fas fa-palette"></i></div>
-                                    </div>
-                                    <div class="masonry-item item-2" data-parallax="0.05">
-                                        <div class="masonry-placeholder gradient-2"><i class="fas fa-code"></i></div>
-                                    </div>
-                                    <div class="masonry-item item-3" data-parallax="0.04">
-                                        <div class="masonry-placeholder gradient-3"><i class="fas fa-bullhorn"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- Carousel Controls (hidden on mobile) -->
-            <button class="carousel-control-prev hero-nav" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next hero-nav" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-        <!-- Mobile Swipe Deck (visible only on mobile/tablet) -->
-        <div class="mobile-hero-deck">
-            <div class="swipe-deck-container" id="swipeDeck">
-                <div class="swipe-card" data-index="0" data-service="logo">
-                    <div class="swipe-card-icon">
-                        <i class="fas fa-paint-brush"></i>
-                    </div>
-                    <h4 class="swipe-card-title">Logo Design</h4>
-                    <p class="swipe-card-desc">Unique brand identities that make lasting impressions</p>
-                </div>
-                <div class="swipe-card" data-index="1" data-service="web">
-                    <div class="swipe-card-icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h4 class="swipe-card-title">Web Development</h4>
-                    <p class="swipe-card-desc">Modern, responsive websites that convert visitors</p>
-                </div>
-                <div class="swipe-card" data-index="2" data-service="marketing">
-                    <div class="swipe-card-icon">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
-                    <h4 class="swipe-card-title">Digital Marketing</h4>
-                    <p class="swipe-card-desc">Strategic campaigns that grow your online presence</p>
-                </div>
-            </div>
-            <div class="swipe-indicators">
-                <span class="swipe-indicator active" data-index="0"></span>
-                <span class="swipe-indicator" data-index="1"></span>
-                <span class="swipe-indicator" data-index="2"></span>
-            </div>
-            <div class="swipe-hint">
-                <i class="fas fa-hand-point-left"></i> Swipe to explore <i class="fas fa-hand-point-right"></i>
             </div>
         </div>
     </section>
 
-    <!-- Client Trust Bar - Infinite Marquee -->
-    <section class="client-marquee">
-        <div class="marquee-track">
-            <div class="marquee-content">
+    <!-- Client Trust Bar -->
+    <section class="client-trust-bar">
+        <p class="trust-text" data-aos="fade-up">Trusted by 50+ business worldwide.</p>
+        <div class="brands-ticker">
+            <div class="brands-ticker-track">
                 <?php
-                // Fallback clients if DB is empty
                 $fallback_clients = [
-                    ['client_name' => 'Acme Corp', 'client_logo' => null],
-                    ['client_name' => 'TechFlow', 'client_logo' => null],
-                    ['client_name' => 'Brandify', 'client_logo' => null],
-                    ['client_name' => 'DigitalPro', 'client_logo' => null],
-                    ['client_name' => 'MediaMax', 'client_logo' => null],
-                    ['client_name' => 'StartupXYZ', 'client_logo' => null],
-                    ['client_name' => 'CloudNine', 'client_logo' => null],
-                    ['client_name' => 'Innovate Inc', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
+                    ['client_name' => 'BRANDS', 'client_logo' => null],
                 ];
                 $clients_list = !empty($marquee_clients) ? $marquee_clients : $fallback_clients;
                 
-                // Render twice for seamless infinite scroll
                 for ($loop = 0; $loop < 2; $loop++):
                     foreach ($clients_list as $mc):
                 ?>
-                <span class="client-logo-item">
+                <span class="brand-name-item">
                     <?php if (!empty($mc['client_logo'])): ?>
                         <img src="<?php echo SITE_URL . '/' . $mc['client_logo']; ?>" 
                              alt="<?php echo htmlspecialchars($mc['client_name']); ?>"
@@ -235,413 +76,232 @@ $default_gradients = [
         </div>
     </section>
 
-    <!-- Welcome Section - Fusion Concept -->
-    <section class="welcome-section section-padding" id="about">
+    <!-- Welcome Section -->
+    <section class="welcome-section-v2 section-padding" id="about">
         <div class="container">
-            <div class="welcome-card">
-                <!-- Mobile: Sandwich Layout (Headline → Image → Content) -->
-                <div class="welcome-header-mobile d-lg-none text-center" data-aos="fade-up">
-                    <span class="welcome-badge">Who We Are</span>
-                    <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
-                    <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
-                </div>
-
-                <div class="row align-items-center">
-                    <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col" data-aos="fade-right" data-aos-duration="1000">
-                        <div class="welcome-image fusion-image image-comparison" data-comparison>
-                            <div class="comparison-container">
-                                <img src="assets/images/about-fusion.png" alt="Raw Concept to Brand Creation - We transform ideas into masterpieces" class="comparison-image">
-                                <div class="comparison-overlay"></div>
-                            </div>
-                        </div>
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right">
+                    <div class="welcome-image-placeholder">
+                        <?php if (file_exists('assets/images/about-fusion.png')): ?>
+                            <img src="assets/images/about-fusion.png" alt="Welcome to Kalpanik Digital">
+                        <?php else: ?>
+                            <div class="img-placeholder-box"></div>
+                        <?php endif; ?>
                     </div>
-                    <div class="col-lg-7 welcome-text-col" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-                        <!-- Desktop: Show header here -->
-                        <div class="welcome-header-desktop d-none d-lg-block">
-                            <span class="welcome-badge">Who We Are</span>
-                            <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
-                            <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
-                        </div>
+                </div>
+                <div class="col-lg-7" data-aos="fade-left">
+                    <div class="welcome-text-v2">
+                        <h2 class="welcome-title-v2">WELCOME TO<br>KALPANIK DIGITAL!</h2>
                         <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
                         <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we're the creative studio that brings visions to life.</p>
-                        <div class="welcome-stats" data-aos="fade-up" data-aos-delay="400">
-                            <div class="stat-item">
-                                <span class="stat-number" data-count="150" data-suffix="+">0+</span>
-                                <span class="stat-label">Brands Sculpted</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number" data-count="5" data-suffix="+">0+</span>
-                                <span class="stat-label">Years Crafting</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number" data-count="98" data-suffix="%">0%</span>
-                                <span class="stat-label">Happy Clients</span>
-                            </div>
-                        </div>
-                        <a href="about.php" class="btn btn-primary btn-magnetic" data-aos="fade-up" data-aos-delay="500">Discover Our Story</a>
+                        <a href="about.php" class="btn-outline-v2">know more <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section - Horizontal Gallery -->
-    <section class="services-section section-padding" id="services">
+    <!-- Our Services Section -->
+    <section class="services-section-v2 section-padding" id="services">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up"><?php echo htmlspecialchars($home_svc['content_title'] ?? 'Our Services'); ?></h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_svc['content_body'] ?? 'Comprehensive digital solutions to elevate your brand'); ?></p>
+                <h2 class="section-title-v2" data-aos="fade-up"><?php echo htmlspecialchars($home_svc['content_title'] ?? 'OUR SERVICES'); ?></h2>
+                <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_svc['content_body'] ?? 'Comprehensive digital solutions to help your business grow and thrive in the digital landscape.'); ?></p>
             </div>
             
-            <!-- Desktop Grid / Mobile Horizontal Scroll -->
-            <div class="services-gallery" data-aos="fade-up">
-                <div class="services-track">
-                    <?php foreach ($services as $index => $service): ?>
-                    <div class="service-card-wrapper">
-                        <div class="service-card">
-                            <div class="service-icon-3d">
-                                <i class="fas <?php echo $service['icon']; ?>"></i>
-                            </div>
-                            <h4 class="service-title"><?php echo $service['title']; ?></h4>
-                            <p class="service-description"><?php echo $service['description']; ?></p>
-                            <a href="services.php" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            <div class="services-grid-v2" data-aos="fade-up" data-aos-delay="200">
+                <?php 
+                // SVG illustration icons for each service type
+                $service_illustrations = [
+                    'fa-palette' => [
+                        'gradient' => 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        'svg' => '<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="52" r="28" fill="rgba(255,255,255,0.15)"/><path d="M45 52c0-8.28 6.72-15 15-15s15 6.72 15 15c0 5.8-3.3 10.83-8.12 13.31" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><circle cx="50" cy="47" r="3.5" fill="#FFD166"/><circle cx="60" cy="42" r="3.5" fill="#06D6A0"/><circle cx="70" cy="47" r="3.5" fill="#EF476F"/><circle cx="55" cy="58" r="3.5" fill="#118AB2"/><rect x="62" y="58" width="4" height="20" rx="2" transform="rotate(-30 62 58)" fill="rgba(255,255,255,0.9)"/><circle cx="60" cy="85" r="3" fill="rgba(255,255,255,0.3)"/><circle cx="45" cy="80" r="2" fill="rgba(255,255,255,0.2)"/><circle cx="78" cy="82" r="2.5" fill="rgba(255,255,255,0.2)"/></svg>'
+                    ],
+                    'fa-bullhorn' => [
+                        'gradient' => 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                        'svg' => '<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="40" width="24" height="24" rx="4" fill="rgba(255,255,255,0.2)"/><rect x="33" y="43" width="18" height="18" rx="2" fill="rgba(255,255,255,0.9)"/><text x="42" y="55" text-anchor="middle" fill="#f5576c" font-size="10" font-weight="bold">K</text><path d="M62 38l20-8v44l-20-8" fill="rgba(255,255,255,0.25)" stroke="#fff" stroke-width="2"/><rect x="58" y="38" width="6" height="28" rx="2" fill="rgba(255,255,255,0.85)"/><path d="M82 46c4 3 6 8 6 14s-2 11-6 14" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M88 40c6 5 10 13 10 20s-4 15-10 20" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="36" cy="78" r="5" fill="rgba(255,255,255,0.3)"/><circle cx="75" cy="80" r="3" fill="rgba(255,255,255,0.2)"/></svg>'
+                    ],
+                    'fa-share-nodes' => [
+                        'gradient' => 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                        'svg' => '<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="38" y="30" width="44" height="56" rx="8" fill="rgba(255,255,255,0.2)" stroke="#fff" stroke-width="2"/><circle cx="60" cy="50" r="12" fill="rgba(255,255,255,0.15)"/><path d="M55 50a5 5 0 1 1 10 0a5 5 0 1 1 -10 0" fill="#fff"/><path d="M48 68h24" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/><path d="M52 74h16" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/><circle cx="78" cy="36" r="8" fill="rgba(255,255,255,0.9)"/><text x="78" y="39" text-anchor="middle" fill="#4facfe" font-size="9" font-weight="bold">♥</text><circle cx="85" cy="65" r="6" fill="rgba(255,255,255,0.3)"/><circle cx="35" cy="72" r="4" fill="rgba(255,255,255,0.2)"/><path d="M30 42l-6-6M90 42l6-6" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/></svg>'
+                    ],
+                    'fa-code' => [
+                        'gradient' => 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                        'svg' => '<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="32" width="70" height="50" rx="6" fill="rgba(255,255,255,0.2)" stroke="#fff" stroke-width="2"/><rect x="25" y="32" width="70" height="12" rx="6" fill="rgba(255,255,255,0.3)"/><circle cx="34" cy="38" r="2.5" fill="#EF476F"/><circle cx="42" cy="38" r="2.5" fill="#FFD166"/><circle cx="50" cy="38" r="2.5" fill="#06D6A0"/><path d="M38 56l-8 8l8 8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M82 56l8 8l-8 8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M65 50l-10 28" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/><circle cx="60" cy="92" r="3" fill="rgba(255,255,255,0.3)"/><rect x="48" cy="88" width="24" height="3" rx="1.5" fill="rgba(255,255,255,0.2)"/></svg>'
+                    ],
+                    'fa-magnifying-glass' => [
+                        'gradient' => 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                        'svg' => '<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="52" cy="50" r="20" fill="rgba(255,255,255,0.15)" stroke="#fff" stroke-width="2.5"/><path d="M66 64l18 18" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M42 70v-5l5 3l5-8l5 5l5-12l5 10l5-3v10" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M42 70l5 3l5-8l5 5l5-12l5 10l5-3" fill="rgba(255,255,255,0.15)"/><circle cx="82" cy="32" r="6" fill="rgba(255,255,255,0.3)"/><text x="82" y="35" text-anchor="middle" fill="#fff" font-size="8">★</text><circle cx="35" cy="82" r="4" fill="rgba(255,255,255,0.2)"/><path d="M76 85l6 0l-3-5z" fill="rgba(255,255,255,0.3)"/></svg>'
+                    ],
+                    'fa-pen-nib' => [
+                        'gradient' => 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+                        'svg' => '<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="35" y="30" width="50" height="62" rx="4" fill="rgba(255,255,255,0.2)" stroke="#fff" stroke-width="2"/><line x1="42" y1="42" x2="78" y2="42" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/><line x1="42" y1="50" x2="70" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/><line x1="42" y1="58" x2="75" y2="58" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/><line x1="42" y1="66" x2="62" y2="66" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/><path d="M72 60l15-15l8 8l-15 15l-10 2z" fill="rgba(255,255,255,0.85)" stroke="#fff" stroke-width="1.5"/><path d="M72 60l8 8" stroke="rgba(160,140,209,0.5)" stroke-width="1.5"/><circle cx="32" cy="80" r="3" fill="rgba(255,255,255,0.25)"/><path d="M80 85l8 0l-4-7z" fill="rgba(255,255,255,0.2)"/></svg>'
+                    ]
+                ];
+                
+                foreach ($services as $index => $service): 
+                    $icon_key = $service['icon'] ?? 'fa-palette';
+                    $illustration = $service_illustrations[$icon_key] ?? $service_illustrations['fa-palette'];
+                ?>
+                <div class="service-card-v2">
+                    <div class="service-card-v2-img">
+                        <div class="service-illustration-box" style="background: <?php echo $illustration['gradient']; ?>">
+                            <?php echo $illustration['svg']; ?>
                         </div>
                     </div>
-                    <?php endforeach; ?>
+                    <h4 class="service-card-v2-title"><?php echo htmlspecialchars($service['title']); ?></h4>
                 </div>
-            </div>
-
-            <!-- Mobile Scroll Indicator -->
-            <div class="services-scroll-hint d-lg-none">
-                <i class="fas fa-hand-point-left"></i> Swipe for more <i class="fas fa-hand-point-right"></i>
-            </div>
-            
-            <div class="text-center mt-5" data-aos="fade-up">
-                <a href="services.php" class="btn btn-primary">View All Services</a>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-    <!-- Case Studies Section - Interactive Gallery -->
-    <section class="case-studies-section section-padding" id="portfolio">
+    <!-- About Section -->
+    <section class="about-section-v2 section-padding">
         <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Case Studies</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Some of our recent creative work</p>
-            </div>
-            
-            <!-- Pinterest-Style Masonry Layout -->
-            <?php 
-            $displayed_cases = array_slice($case_studies, 0, 8);
-            
-            // Masonry pattern for 8 items - fills grid perfectly
-            $masonry_sizes = ['tall', 'normal', 'wide', 'normal', 'tall', 'normal', 'wide', 'normal'];
-            ?>
-            <div class="case-gallery" data-aos="fade-up">
-                <div class="case-masonry-grid">
-                    <?php foreach ($displayed_cases as $index => $case): ?>
-                    <?php $size_class = $masonry_sizes[$index]; ?>
-                    <div class="case-masonry-item case-<?php echo $size_class; ?>">
-                        <div class="case-card">
-                            <div class="case-card-image">
-                                <img src="<?php echo $case['image']; ?>" alt="<?php echo $case['title']; ?>" loading="lazy">
-                                <div class="case-card-overlay">
-                                    <a href="case-studies.php" class="btn btn-white">View Case Study</a>
-                                </div>
-                            </div>
-                            <div class="case-card-content">
-                                <h5 class="case-card-title"><?php echo $case['title']; ?></h5>
-                                <div class="case-card-tags">
-                                    <?php foreach ($case['tags'] as $tag): ?>
-                                    <span class="case-tag"><?php echo $tag; ?></span>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        </div>
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right">
+                    <div class="about-image-placeholder">
+                        <div class="img-placeholder-box img-placeholder-tall"></div>
                     </div>
-                    <?php endforeach; ?>
                 </div>
-            </div>
-
-            <!-- Mobile Scroll Indicator -->
-            <div class="case-scroll-hint d-lg-none">
-                <i class="fas fa-hand-point-left"></i> Swipe to explore <i class="fas fa-hand-point-right"></i>
-            </div>
-            
-            <div class="text-center mt-5" data-aos="fade-up">
-                <a href="case-studies.php" class="btn btn-primary">View All Projects</a>
+                <div class="col-lg-7" data-aos="fade-left">
+                    <div class="about-text-v2">
+                        <h2 class="about-title-v2">ABOUT</h2>
+                        <p>We are a collective of young, curious minds brought together by a shared respect for thoughtful creativity. At Kalpanik, strategy, design, and digital thinking work side by side, each informing the other.</p>
+                        <p>Our team includes planners who value clarity, designers who care deeply about form and meaning, and digital storytellers who understand how brands speak in today's world. We work collaboratively, guided by intent rather than urgency, with enthusiasm grounded in understanding.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- The Creators Section -->
-    <section class="creators-section section-padding">
+    <!-- Meet The Creators / Our Team Section -->
+    <section class="creators-section-v2 section-padding">
         <div class="container">
-            <!-- Section Header -->
             <div class="text-center mb-5">
-                <span class="section-badge" data-aos="fade-up">The Minds Behind The Magic</span>
-                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Meet The Creators</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Two dreamers who turned their passion into your brand's success story</p>
+                <span class="section-badge-v2" data-aos="fade-up"># OUR TEAM</span>
+                <h2 class="section-title-v2" data-aos="fade-up" data-aos-delay="100">MEET THE CREATORS</h2>
+                <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="200">Two dreamers who turned their passion into your brand's success story</p>
             </div>
             
-            <!-- Desktop: Cutout Style -->
-            <div class="creators-showcase d-none d-lg-block" data-aos="fade-up">
-                <div class="creators-grid">
-                    <?php foreach ($team_members as $index => $member): ?>
-                    <div class="creator-cutout" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 150; ?>">
-                        <div class="creator-photo-wrapper">
-                            <!-- Flip Card -->
-                            <div class="creator-flip-card">
-                                <div class="flip-card-inner">
-                                    <div class="flip-card-front">
-                                        <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo $member['name']; ?> - Professional">
-                                        <div class="photo-label">Professional Mode 🎯</div>
-                                    </div>
-                                    <div class="flip-card-back">
-                                        <img src="<?php echo $member['image_fun']; ?>" alt="<?php echo $member['name']; ?> - Creative">
-                                        <div class="photo-label">Creative Mode 🎨</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Decorative Elements -->
-                            <div class="creator-decoration">
-                                <span class="deco-circle"></span>
-                                <span class="deco-dots"></span>
-                            </div>
-                        </div>
-                        <div class="creator-info">
-                            <h3 class="creator-name"><?php echo $member['name']; ?></h3>
-                            <p class="creator-role"><?php echo $member['position']; ?></p>
-                            <p class="creator-tagline">"<?php echo $member['tagline']; ?>"</p>
-                            <a href="<?php echo $member['linkedin']; ?>" class="creator-linkedin" target="_blank">
-                                <i class="fab fa-linkedin-in"></i> Connect
-                            </a>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-                <p class="hover-hint text-center mt-4"><i class="fas fa-hand-pointer"></i> Hover to see our creative side!</p>
-            </div>
-            
-            <!-- Mobile: Flip Cards (Tap to reveal Creative Side) -->
-            <div class="creators-mobile d-lg-none">
+            <div class="creators-grid-v2" data-aos="fade-up" data-aos-delay="300">
                 <?php foreach ($team_members as $index => $member): ?>
-                <div class="creator-flip-mobile" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
-                    <div class="flip-mobile-inner">
-                        <!-- Front: Professional Side -->
-                        <div class="flip-mobile-front">
-                            <div class="flip-avatar">
-                                <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo $member['name']; ?>">
-                            </div>
-                            <div class="flip-content">
-                                <h4 class="flip-name"><?php echo $member['name']; ?></h4>
-                                <p class="flip-role"><?php echo $member['position']; ?></p>
-                                <!-- <p class="flip-tagline">"<?php echo $member['tagline']; ?>"</p> -->
-                            </div>
-                            <!-- Social Links at Bottom -->
-                            <div class="flip-social-links">
-                                <?php if (!empty($member['linkedin'])): ?>
-                                <a href="<?php echo $member['linkedin']; ?>" class="flip-social-link linkedin" target="_blank" title="LinkedIn">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <?php endif; ?>
-                                <?php if (!empty($member['twitter'])): ?>
-                                <a href="<?php echo $member['twitter']; ?>" class="flip-social-link twitter" target="_blank" title="Twitter">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <?php endif; ?>
-                                <?php if (!empty($member['instagram'])): ?>
-                                <a href="<?php echo $member['instagram']; ?>" class="flip-social-link instagram" target="_blank" title="Instagram">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <?php endif; ?>
-                                <?php if (!empty($member['email'])): ?>
-                                <a href="mailto:<?php echo $member['email']; ?>" class="flip-social-link email" target="_blank" title="Email">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                                <?php endif; ?>
-                                <?php if (empty($member['linkedin']) && empty($member['twitter']) && empty($member['instagram']) && empty($member['email'])): ?>
-                                <a href="#" class="flip-social-link linkedin" target="_blank" title="LinkedIn">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="#" class="flip-social-link twitter" target="_blank" title="Twitter">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="#" class="flip-social-link instagram" target="_blank" title="Instagram">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <?php endif; ?>
-                            </div>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i> Tap to flip
-                            </div>
+                <div class="creator-card-v2">
+                    <div class="creator-photo-v2">
+                        <?php if (!empty($member['image_pro'])): ?>
+                            <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo $member['name']; ?>">
+                        <?php else: ?>
+                            <div class="img-placeholder-box img-placeholder-tall"></div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <!-- Extra placeholder cards to match design (4 cards) -->
+                <?php for ($i = count($team_members); $i < 4; $i++): ?>
+                <div class="creator-card-v2">
+                    <div class="creator-photo-v2">
+                        <div class="img-placeholder-box img-placeholder-tall"></div>
+                    </div>
+                </div>
+                <?php endfor; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section class="case-studies-section-v2 section-padding" id="portfolio">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title-v2" data-aos="fade-up">CASE STUDIES</h2>
+            </div>
+            
+            <?php 
+            $displayed_cases = array_slice($case_studies, 0, 3);
+            ?>
+            <div class="case-studies-grid-v2" data-aos="fade-up" data-aos-delay="100">
+                <?php foreach ($displayed_cases as $index => $case): ?>
+                <div class="case-card-v2">
+                    <div class="case-card-v2-image">
+                        <img src="<?php echo $case['image']; ?>" alt="<?php echo $case['title']; ?>" loading="lazy">
+                    </div>
+                    <div class="case-card-v2-content">
+                        <h5 class="case-card-v2-title">Brand Name</h5>
+                        <div class="case-card-v2-tags">
+                            <?php foreach ($case['tags'] as $tag): ?>
+                            <span class="case-tag-v2"><?php echo $tag; ?></span>
+                            <?php endforeach; ?>
                         </div>
-                        <!-- Back: Creative/Fun Side - Content Only -->
-                        <div class="flip-mobile-back">
-                            <div class="flip-content">
-                                <h4 class="flip-name"><?php echo $member['name']; ?></h4>
-                                <p class="flip-role flip-role-fun">
-                                    <?php 
-                                    // Fun titles based on position
-                                    $fun_titles = [
-                                        'Co-Founder & Creative Director' => '✨ Chief Visionary & Pixel Perfectionist',
-                                        'Co-Founder & Strategy Lead' => '🚀 Master of Ideas & Caffeine Addict'
-                                    ];
-                                    echo $fun_titles[$member['position']] ?? '🎨 Creative Genius';
-                                    ?>
-                                </p>
-                                <p class="flip-fact">
-                                    <?php 
-                                    // Fun facts
-                                    $fun_facts = [
-                                        0 => "☕ Runs on coffee & creative chaos. Has probably redesigned this card 47 times.",
-                                        1 => "🎯 Believes every brand has a story. Also believes pineapple belongs on pizza."
-                                    ];
-                                    echo $fun_facts[$index] ?? "🎨 Making magic happen, one pixel at a time!";
-                                    ?>
-                                </p>
-                            </div>
-                            <div class="flip-back-hint">
-                                <i class="fas fa-undo"></i> Tap to flip back
-                            </div>
+                        <a href="case-studies.php" class="case-link-v2">View Details</a>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="case-studies.php" class="btn-outline-v2">view more <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vlog & Reel Section -->
+    <section class="vlog-reel-section section-padding" id="vlog-reel">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title-v2" data-aos="fade-up">VLOG & REEL</h2>
+            </div>
+            
+            <div class="vlog-reel-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="vlog-card">
+                    <div class="img-placeholder-box img-placeholder-vlog"></div>
+                </div>
+                <div class="vlog-card">
+                    <div class="img-placeholder-box img-placeholder-vlog"></div>
+                </div>
+                <div class="vlog-card">
+                    <div class="img-placeholder-box img-placeholder-vlog"></div>
+                </div>
+                <div class="vlog-card">
+                    <div class="img-placeholder-box img-placeholder-vlog"></div>
+                </div>
+                <div class="vlog-card">
+                    <div class="img-placeholder-box img-placeholder-vlog"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Our Clients Say / Testimonials -->
+    <?php if (!empty($testimonials)): ?>
+    <section class="testimonials-section-v2 section-padding">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title-v2" data-aos="fade-up">WHAT OUR CLIENTS SAY</h2>
+                <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="100">Real feedback from real partners who trusted us with their brands</p>
+            </div>
+            
+            <div class="testimonials-row-v2" data-aos="fade-up" data-aos-delay="200">
+                <?php foreach ($testimonials as $index => $testimonial): ?>
+                <div class="testimonial-card-v2">
+                    <div class="testimonial-card-v2-inner">
+                        <div class="testimonial-avatar-v2">
+                            <?php if (!empty($testimonial['client_avatar'])): ?>
+                            <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
+                            <?php else: ?>
+                            <div class="avatar-placeholder-v2"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <p class="testimonial-text-v2">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
+                        <div class="testimonial-author-v2">
+                            <h5><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h5>
+                            <p><?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?></p>
                         </div>
                     </div>
                 </div>
                 <?php endforeach; ?>
-                <p class="tap-hint text-center mt-3"><i class="fas fa-sync-alt"></i> Tap cards to see our creative side!</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <?php if (!empty($testimonials)): ?>
-    <section class="testimonials-section section-padding">
-        <div class="container">
-            <!-- Section Header -->
-            <div class="text-center mb-5">
-                <span class="section-badge" data-aos="fade-up">Client Love</span>
-                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">What Our Clients Say</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Real feedback from real partners who trusted us with their brands</p>
-            </div>
-            
-            <!-- Testimonials - Static Card with Sliding Content -->
-            <div class="testimonials-wrapper" data-aos="fade-up" data-aos-delay="300">
-                <div class="testimonial-static-card">
-                    <!-- Static Quote Icon -->
-                    <div class="quote-icon">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
-                    
-                    <!-- Sliding Content -->
-                    <div class="testimonials-slider">
-                        <?php foreach ($testimonials as $index => $testimonial): ?>
-                        <div class="testimonial-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                            <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
-                            <div class="testimonial-rating">
-                                <?php 
-                                $rating = $testimonial['rating'] ?? 5;
-                                for ($i = 0; $i < 5; $i++): 
-                                ?>
-                                <i class="fas fa-star <?php echo $i < $rating ? 'filled' : ''; ?>"></i>
-                                <?php endfor; ?>
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <?php if (!empty($testimonial['client_avatar'])): ?>
-                                    <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
-                                    <?php else: ?>
-                                    <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="author-info">
-                                    <h4 class="author-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h4>
-                                    <p class="author-position">
-                                        <?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?>
-                                        <?php if (!empty($testimonial['client_company'])): ?>
-                                        <span class="author-company">at <?php echo htmlspecialchars($testimonial['client_company']); ?></span>
-                                        <?php endif; ?>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                
-                <!-- Navigation -->
-                <div class="testimonials-nav">
-                    <button class="testimonial-nav-btn prev" aria-label="Previous testimonial">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="testimonials-dots"></div>
-                    <button class="testimonial-nav-btn next" aria-label="Next testimonial">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
             </div>
         </div>
     </section>
     <?php endif; ?>
-
-    <!-- FAQ Section - Split Screen -->
-    <section class="faq-section section-padding">
-        <div class="container">
-            <div class="row">
-                <!-- Left: Sticky Headline -->
-                <div class="col-lg-5 mb-4 mb-lg-0">
-                    <div class="faq-sticky-header" data-aos="fade-right">
-                        <div class="faq-icon-float">
-                            <i class="fas fa-question"></i>
-                        </div>
-                        <h2 class="faq-headline">Got Questions?</h2>
-                        <p class="faq-subtext">We've got answers. Find quick solutions to your most common queries.</p>
-                        <a href="contact.php" class="faq-contact-link">
-                            <span>Still have questions?</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Right: Accordion -->
-                <div class="col-lg-7">
-                    <div class="accordion faq-accordion" id="faqAccordion">
-                        <?php foreach ($faqs as $index => $faq): ?>
-                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 50; ?>">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button <?php echo $index > 0 ? 'collapsed' : ''; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#faq<?php echo $index; ?>">
-                                    <?php echo $faq['question']; ?>
-                                </button>
-                            </h2>
-                            <div id="faq<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index === 0 ? 'show' : ''; ?>" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    <?php echo $faq['answer']; ?>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Holographic CTA Section -->
-    <section class="cta-holographic">
-        <div class="cta-glow-bg"></div>
-        <div class="container">
-            <div class="cta-content text-center" data-aos="zoom-in" data-aos-duration="1000">
-                <h2 class="cta-headline"><?php echo htmlspecialchars($home_cta['content_title'] ?? 'Ready to Sculpt Your Legacy?'); ?></h2>
-                <p class="cta-subtext"><?php echo htmlspecialchars($home_cta['content_body'] ?? 'Let\'s transform your vision into a digital masterpiece'); ?></p>
-                <a href="<?php echo htmlspecialchars($home_cta['extra']['button_link'] ?? 'contact.php'); ?>" class="cta-pulse-btn">
-                    <span class="btn-text"><?php echo htmlspecialchars($home_cta['extra']['button_text'] ?? 'Let\'s Create Together'); ?></span>
-                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                </a>
-            </div>
-        </div>
-        <!-- Floating particles for depth -->
-        <div class="cta-particles">
-            <span></span><span></span><span></span><span></span><span></span>
-        </div>
-    </section>
 
 <?php include 'includes/footer.php'; ?>

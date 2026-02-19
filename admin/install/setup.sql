@@ -1,8 +1,8 @@
 ﻿-- Kalpanik CRM Database Setup
 -- Run this SQL in phpMyAdmin or MySQL CLI
 
-CREATE DATABASE IF NOT EXISTS kalpanik_crm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE kalpanik_crm;
+CREATE DATABASE IF NOT EXISTS kalpoink_crm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE kalpoink_crm;
 
 -- Users Table (Admin Users)
 CREATE TABLE IF NOT EXISTS users (
@@ -143,13 +143,13 @@ CREATE TABLE IF NOT EXISTS activity_log (
 
 -- Insert Default Admin User (password: admin123)
 INSERT INTO users (username, email, password, full_name, role) VALUES 
-('admin', 'admin@kalpanik.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin');
+('admin', 'admin@kalpoink.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin');
 
 -- Insert Default Settings
 INSERT INTO settings (setting_key, setting_value, setting_type, category) VALUES
 ('site_name', 'Kalpanik', 'text', 'general'),
 ('site_tagline', 'Creative Digital Solutions', 'text', 'general'),
-('site_url', 'http://localhost/kalpanik', 'text', 'general'),
+('site_url', 'http://localhost/kalpoink', 'text', 'general'),
 ('contact_email', 'kalpoinc@gmail.com', 'text', 'contact'),
 ('contact_phone', '+91 891 082 1105', 'text', 'contact'),
 ('contact_address', '225 Bagmari Road, Kolkata - 700054', 'textarea', 'contact'),

@@ -14,7 +14,7 @@ function getCRMDatabase() {
         if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
             // Local Development (XAMPP)
             $host = 'localhost';
-            $dbname = 'kalpanik_crm';
+            $dbname = 'kalpoink_crm';
             $user = 'root';
             $pass = '';
         } else {

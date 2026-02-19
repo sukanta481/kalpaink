@@ -1,7 +1,7 @@
 ﻿-- Kalpanik CRM - Content Management Tables
 -- Run this in phpMyAdmin or use the update script
 
-USE kalpanik_crm;
+USE kalpoink_crm;
 
 -- Page Content Table (for managing text content on all pages)
 CREATE TABLE IF NOT EXISTS page_content (

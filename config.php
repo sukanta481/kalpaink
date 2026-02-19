@@ -12,7 +12,7 @@ $crm_settings = getSettings();
 
 // Auto-detect environment for SITE_URL
 if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
-    define('SITE_URL', 'http://localhost/kalpanik');
+    define('SITE_URL', 'http://localhost/kalpoink');
 } else {
     // Use HTTPS and actual domain on live server
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';

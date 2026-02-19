@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 try {
-    $db = new PDO('mysql:host=localhost;dbname=kalpanik_crm;charset=utf8mb4', 'root', '', [
+    $db = new PDO('mysql:host=localhost;dbname=kalpoink_crm;charset=utf8mb4', 'root', '', [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
     
@@ -84,8 +84,8 @@ try {
     $db->exec("TRUNCATE TABLE team_members");
     
     $team = [
-        ['Suman Kundu', 'Co-Founder & Creative Director', 'Turning caffeine into creativity since 2016.', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop', 'Turning caffeine into creativity since 2016', 'suman@kalpanik.com', null, '#', null, null, 1, 1],
-        ['Souvik Das', 'Co-Founder & Strategy Lead', 'Making brands unforgettable, one pixel at a time.', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop', 'Making brands unforgettable, one pixel at a time', 'souvik@kalpanik.com', null, '#', null, null, 2, 1]
+        ['Suman Kundu', 'Co-Founder & Creative Director', 'Turning caffeine into creativity since 2016.', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop', 'Turning caffeine into creativity since 2016', 'suman@kalpoink.com', null, '#', null, null, 1, 1],
+        ['Souvik Das', 'Co-Founder & Strategy Lead', 'Making brands unforgettable, one pixel at a time.', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop', 'Making brands unforgettable, one pixel at a time', 'souvik@kalpoink.com', null, '#', null, null, 2, 1]
     ];
     
     $stmt = $db->prepare("INSERT INTO team_members (name, position, bio, image, image_fun, tagline, email, phone, linkedin, twitter, instagram, sort_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -188,7 +188,7 @@ try {
     echo "  ✓ " . count($gallery) . " gallery items added\n";
     
     echo "\n=== Demo Content Import Complete! ===\n";
-    echo "\nVisit: http://localhost/kalpanik/admin/\n";
+    echo "\nVisit: http://localhost/kalpoink/admin/\n";
     echo "Login: admin / admin123\n";
     
 } catch (PDOException $e) {

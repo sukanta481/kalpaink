@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$dbname = 'kalpanik_crm';
+$dbname = 'kalpoink_crm';
 
 $message = '';
 $success = false;
