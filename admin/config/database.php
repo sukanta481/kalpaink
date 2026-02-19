@@ -15,8 +15,8 @@ if ($serverName === 'localhost' || $serverName === '127.0.0.1') {
 } else {
     // Live Server (Hostinger)
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'u286257250_kalpaink_crm');
-    define('DB_USER', 'u286257250_kalpaink_crm');
+    define('DB_NAME', 'u286257250_2Nw8n');
+    define('DB_USER', 'u286257250_iB9pK');
     define('DB_PASS', 'Sukanta@8961');
 }
 

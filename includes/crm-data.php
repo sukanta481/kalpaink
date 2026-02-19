@@ -20,8 +20,8 @@ function getCRMDatabase() {
         } else {
             // Live Server (Hostinger)
             $host = 'localhost';
-            $dbname = 'u286257250_kalpaink_crm';
-            $user = 'u286257250_kalpaink_crm';
+            $dbname = 'u286257250_2Nw8n';
+            $user = 'u286257250_iB9pK';
             $pass = 'Sukanta@8961';
         }
         
