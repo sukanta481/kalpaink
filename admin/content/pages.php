@@ -113,8 +113,14 @@ require_once __DIR__ . '/../includes/header.php';
 $pages_config = [
     'home' => [
         'hero' => 'Hero Banner — main heading, subtext, CTA button',
+        'trust_bar' => 'Trust Bar — "Trusted by 50+ business" text',
+        'welcome' => 'Welcome Section — title, body paragraphs, button',
         'services_section' => 'Services Section — title, subtitle',
-        'about_preview' => 'About Preview — short intro with link to About page',
+        'about' => 'About Section — title, body paragraphs',
+        'team' => 'Team Section — badge, title, subtitle',
+        'case_studies' => 'Case Studies Section — title',
+        'vlog_reel' => 'Vlog & Reel Section — title',
+        'testimonials' => 'Testimonials Section — title, subtitle',
         'cta' => 'Call To Action — bottom CTA banner'
     ],
     'about' => [

@@ -8880,6 +8880,58 @@ textarea.form-control {
     transform: scale(1.1);
 }
 
+/* Image-based service illustrations */
+.service-illustration-img {
+    padding: 12px;
+    background: #f0f4ff;
+    border-radius: 16px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.4s ease,
+        background 0.4s ease;
+}
+
+.service-illustration-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    transition: transform 0.4s ease;
+}
+
+.service-card-v2:hover .service-illustration-img {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+}
+
+.service-card-v2:hover .service-illustration-img img {
+    transform: scale(1.05);
+}
+
+/* Per-service background colors */
+.service-card-v2:nth-child(1) .service-illustration-img {
+    background: #eef3ff;
+}
+
+.service-card-v2:nth-child(1):hover .service-illustration-img {
+    background: #e0eaff;
+}
+
+.service-card-v2:nth-child(2) .service-illustration-img {
+    background: #f3eeff;
+}
+
+.service-card-v2:nth-child(2):hover .service-illustration-img {
+    background: #e8deff;
+}
+
+.service-card-v2:nth-child(3) .service-illustration-img {
+    background: #eef8ff;
+}
+
+.service-card-v2:nth-child(3):hover .service-illustration-img {
+    background: #ddf0ff;
+}
+
 .service-card-v2-title {
     font-family: 'Poppins', sans-serif;
     font-size: 0.85rem;
@@ -9544,25 +9596,7 @@ textarea.form-control {
     width: 50px;
 }
 
-/* Brands ticker infinite scroll animation */
-.brands-ticker-track {
-    animation: tickerScroll 20s linear infinite;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 30px;
-    width: max-content;
-}
-
-@keyframes tickerScroll {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
+/* Brands static layout */
 .brand-name-item {
     flex-shrink: 0;
     transition: color 0.3s ease;

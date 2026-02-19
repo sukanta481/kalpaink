@@ -2,37 +2,37 @@
  * Kalpanik Admin CRM JavaScript
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Sidebar Toggle
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebarClose = document.getElementById('sidebarClose');
     const mainContent = document.getElementById('mainContent');
-    
+
     // Create overlay
     const overlay = document.createElement('div');
     overlay.className = 'sidebar-overlay';
     document.body.appendChild(overlay);
-    
+
     if (sidebarToggle) {
-        sidebarToggle.addEventListener('click', function() {
+        sidebarToggle.addEventListener('click', function () {
             sidebar.classList.add('show');
             overlay.classList.add('show');
         });
     }
-    
+
     if (sidebarClose) {
-        sidebarClose.addEventListener('click', function() {
+        sidebarClose.addEventListener('click', function () {
             sidebar.classList.remove('show');
             overlay.classList.remove('show');
         });
     }
-    
-    overlay.addEventListener('click', function() {
+
+    overlay.addEventListener('click', function () {
         sidebar.classList.remove('show');
         overlay.classList.remove('show');
     });
-    
+
     // Initialize DataTables
     if ($.fn.DataTable) {
         $('.datatable').DataTable({
@@ -44,11 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 lengthMenu: "Show _MENU_ entries"
             },
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                 "<'row'<'col-sm-12'tr>>" +
-                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
         });
     }
-    
+
     // Initialize TinyMCE
     if (typeof tinymce !== 'undefined') {
         tinymce.init({
@@ -61,45 +61,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
             ],
             toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter ' +
-                     'alignright alignjustify | bullist numlist outdent indent | ' +
-                     'removeformat | link image | code | help',
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | link image | code | help',
             content_style: 'body { font-family: Inter, sans-serif; font-size: 14px; }',
             branding: false
         });
     }
-    
+
     // Delete Confirmation
-    document.querySelectorAll('.delete-btn').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
+    document.querySelectorAll('.delete-btn').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
             if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
                 e.preventDefault();
             }
         });
     });
-    
+
     // Auto-generate slug from title
     const titleInput = document.getElementById('title');
     const slugInput = document.getElementById('slug');
-    
+
     if (titleInput && slugInput) {
-        titleInput.addEventListener('input', function() {
+        titleInput.addEventListener('input', function () {
             if (!slugInput.dataset.edited) {
                 slugInput.value = generateSlug(this.value);
             }
         });
-        
-        slugInput.addEventListener('input', function() {
+
+        slugInput.addEventListener('input', function () {
             this.dataset.edited = 'true';
         });
     }
-    
+
     // Image Preview
-    document.querySelectorAll('.image-upload').forEach(function(input) {
-        input.addEventListener('change', function(e) {
+    document.querySelectorAll('.image-upload').forEach(function (input) {
+        input.addEventListener('change', function (e) {
             const preview = document.getElementById(this.dataset.preview);
             if (preview && this.files && this.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
                 };
@@ -107,11 +107,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Form validation
     const forms = document.querySelectorAll('.needs-validation');
-    forms.forEach(function(form) {
-        form.addEventListener('submit', function(event) {
+    forms.forEach(function (form) {
+        form.addEventListener('submit', function (event) {
             if (!form.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -119,16 +119,16 @@ document.addEventListener('DOMContentLoaded', function() {
             form.classList.add('was-validated');
         });
     });
-    
+
     // Tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    tooltipTriggerList.forEach(function(tooltipTriggerEl) {
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
         new bootstrap.Tooltip(tooltipTriggerEl);
     });
-    
+
     // Auto-dismiss alerts
-    setTimeout(function() {
-        document.querySelectorAll('.alert-dismissible').forEach(function(alert) {
+    setTimeout(function () {
+        document.querySelectorAll('.alert-dismissible').forEach(function (alert) {
             const bsAlert = new bootstrap.Alert(alert);
             bsAlert.close();
         });
@@ -153,11 +153,11 @@ async function ajaxRequest(url, method = 'GET', data = null) {
             'X-Requested-With': 'XMLHttpRequest'
         }
     };
-    
+
     if (data) {
         options.body = JSON.stringify(data);
     }
-    
+
     try {
         const response = await fetch(url, options);
         return await response.json();
@@ -170,7 +170,7 @@ async function ajaxRequest(url, method = 'GET', data = null) {
 // Toast notification
 function showToast(message, type = 'success') {
     const toastContainer = document.getElementById('toastContainer') || createToastContainer();
-    
+
     const toast = document.createElement('div');
     toast.className = `toast align-items-center text-white bg-${type} border-0`;
     toast.setAttribute('role', 'alert');
@@ -180,12 +180,12 @@ function showToast(message, type = 'success') {
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     `;
-    
+
     toastContainer.appendChild(toast);
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
-    
-    toast.addEventListener('hidden.bs.toast', function() {
+
+    toast.addEventListener('hidden.bs.toast', function () {
         toast.remove();
     });
 }
@@ -256,10 +256,13 @@ class FileUploadProgress {
     }
 
     handleFormSubmit(e, form, fileInputs) {
+        // Don't show progress if form is invalid (validation handler will block submission)
+        if (!form.checkValidity()) return;
+
         // Check if any files are selected
         let hasFiles = false;
         let totalFiles = 0;
-        
+
         fileInputs.forEach(input => {
             if (input.files && input.files.length > 0) {
                 hasFiles = true;
@@ -272,7 +275,7 @@ class FileUploadProgress {
         // Show upload progress overlay but let the form submit normally
         // (Don't use XHR — it breaks POST-redirect-GET flow and flash messages)
         this.showProgress(fileInputs, totalFiles);
-        
+
         // Animate progress bar to 90% over a few seconds for visual feedback
         let progress = 0;
         const interval = setInterval(() => {
@@ -280,10 +283,21 @@ class FileUploadProgress {
             if (progress > 90) progress = 90;
             this.updateProgress(Math.round(progress));
         }, 300);
-        
+
         // Store interval so it clears when page unloads
         window.addEventListener('beforeunload', () => clearInterval(interval));
-        
+
+        // Safety timeout: if page hasn't navigated after 30s, hide modal and show error
+        setTimeout(() => {
+            clearInterval(interval);
+            this.completeUpload(false);
+            showToast('Upload timed out. The page may have reloaded — please check.', 'warning');
+            setTimeout(() => {
+                this.hideProgress();
+                window.location.reload();
+            }, 2000);
+        }, 30000);
+
         // Let the form submit normally (don't call e.preventDefault())
     }
 
@@ -298,7 +312,7 @@ class FileUploadProgress {
                     const fileId = `file-${fileIndex}`;
                     const fileSize = this.formatFileSize(file.size);
                     const fileIcon = this.getFileIcon(file.type);
-                    
+
                     const progressItem = document.createElement('div');
                     progressItem.className = 'upload-file-item';
                     progressItem.id = fileId;
@@ -331,12 +345,12 @@ class FileUploadProgress {
 
     uploadWithProgress(form) {
         const formData = new FormData(form);
-        
+
         // Include the clicked submit button's name/value (FormData doesn't include it by default)
         if (form._clickedSubmit && form._clickedSubmit.name) {
             formData.append(form._clickedSubmit.name, form._clickedSubmit.value || '');
         }
-        
+
         const xhr = new XMLHttpRequest();
 
         // Track upload progress
@@ -386,13 +400,13 @@ class FileUploadProgress {
         // Update individual file progress (simulate distribution)
         const fileItems = this.progressBody.querySelectorAll('.upload-file-item');
         const progressPerFile = 100 / fileItems.length;
-        
+
         fileItems.forEach((item, index) => {
             const fileProgress = Math.min(100, Math.round((percent / 100) * ((index + 1) * progressPerFile) * (100 / progressPerFile)));
             const bar = item.querySelector('.progress-bar');
             const percentText = item.querySelector('.file-percent');
             const status = item.querySelector('.file-status');
-            
+
             if (bar) {
                 bar.style.width = `${fileProgress}%`;
                 bar.classList.add('progress-bar-animated', 'progress-bar-striped');
@@ -420,7 +434,7 @@ class FileUploadProgress {
             this.overallProgress.textContent = '100%';
             this.overallProgress.classList.remove('progress-bar-animated');
             this.overallProgress.classList.add('bg-success');
-            
+
             document.querySelector('.upload-status-text').textContent = 'Upload complete! Redirecting...';
             document.querySelector('.upload-progress-header i').className = 'fas fa-check-circle text-success';
         } else {
@@ -463,7 +477,7 @@ class FileUploadProgress {
 }
 
 // Initialize upload progress on DOM ready
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     new FileUploadProgress();
 });
 
