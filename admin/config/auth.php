@@ -154,6 +154,9 @@ function getAdminUrl($path = '') {
  * Get site URL
  */
 function getSiteUrl($path = '') {
+    if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0) {
+        return $path;
+    }
     $baseUrl = getBaseUrl();
     return $baseUrl . ltrim($path, '/');
 }

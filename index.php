@@ -32,13 +32,13 @@ $crm_hero_slides = getHeroSlides();
             <div class="hero-section-v2-card">
                 <div class="hero-v2-content text-center">
                     <h1 class="hero-v2-title" data-aos="fade-up">
-                        <?php echo $home_hero['content_title'] ?? 'We <span class="hero-highlight">Design</span> Ideas<br>That Think Before <span class="hero-outline">They</span> Speak.'; ?>
+                        We <span class="hero-highlight">Design</span> Ideas<br>That Think Before <span class="hero-outline">They</span> Speak.
                     </h1>
                     <p class="hero-v2-subtitle" data-aos="fade-up" data-aos-delay="100">
-                        <?php echo $home_hero['content_subtitle'] ?? '<strong>Branding</strong> · <span class="hero-cursive">Design</span> · <strong>VISUAL THINKING</strong>'; ?>
+                        <strong>Branding</strong> · <span class="hero-cursive">Design</span> · <strong>VISUAL THINKING</strong>
                     </p>
                     <div class="hero-v2-buttons" data-aos="fade-up" data-aos-delay="200">
-                        <a href="<?php echo $hero_extra['button_link'] ?? 'contact.php'; ?>" class="btn-hero-white"><?php echo $hero_extra['button_text'] ?? 'get start'; ?> <i class="fas fa-arrow-down-left"></i></a>
+                        <a href="<?php echo $hero_extra['button_link'] ?? 'contact.php'; ?>" class="btn-hero-white"><?php echo $hero_extra['button_text'] ?? 'get start'; ?></a>
                     </div>
                 </div>
             </div>
@@ -125,6 +125,9 @@ $crm_hero_slides = getHeroSlides();
                     'Graphics Design' => 'Graphics Design.png',
                     'Brand Identity' => 'Brand Identity.png',
                     'Social Media Marketing' => 'Social Media Marketing.png',
+                    'Web Development' => 'Web Development.png',
+                    'SEO Services' => 'SEO Services.png',
+                    'Content Marketing' => 'Content Marketing.png',
                 ];
                 
                 // SVG fallback gradients for services without images
@@ -187,26 +190,37 @@ $crm_hero_slides = getHeroSlides();
                 <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="200"><?php echo htmlspecialchars($home_team['content_body'] ?? 'Two dreamers who turned their passion into your brand\'s success story'); ?></p>
             </div>
             
-            <div class="creators-grid-v2" data-aos="fade-up" data-aos-delay="300">
-                <?php foreach ($team_members as $index => $member): ?>
-                <div class="creator-card-v2">
-                    <div class="creator-photo-v2">
-                        <?php if (!empty($member['image_pro'])): ?>
-                            <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo $member['name']; ?>">
-                        <?php else: ?>
-                            <div class="img-placeholder-box img-placeholder-tall"></div>
-                        <?php endif; ?>
+            <div class="swiper creators-swiper">
+                <div class="swiper-wrapper creators-grid-v2" data-aos="fade-up" data-aos-delay="300">
+                    <?php foreach ($team_members as $index => $member): ?>
+                    <div class="swiper-slide creator-card-v2">
+                        <div class="creator-photo-v2">
+                            <?php if (!empty($member['image_pro'])): ?>
+                                <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo htmlspecialchars($member['name']); ?>">
+                            <?php else: ?>
+                                <div class="img-placeholder-box img-placeholder-tall"></div>
+                            <?php endif; ?>
+                            
+                            <div class="creator-info-v2">
+                                <div class="creator-details-v2">
+                                    <h3><?php echo htmlspecialchars($member['name'] ?? 'Creator Name', ENT_QUOTES, 'UTF-8', false); ?></h3>
+                                    <span><?php echo htmlspecialchars($member['position'] ?? 'Role / Position', ENT_QUOTES, 'UTF-8', false); ?></span>
+                                </div>
+                                <div class="creator-social-v2">
+                                    <?php if (!empty($member['linkedin'])): ?>
+                                        <a href="<?php echo htmlspecialchars($member['linkedin']); ?>" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($member['twitter'])): ?>
+                                        <a href="<?php echo htmlspecialchars($member['twitter']); ?>" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
-                <!-- Extra placeholder cards to match design (4 cards) -->
-                <?php for ($i = count($team_members); $i < 4; $i++): ?>
-                <div class="creator-card-v2">
-                    <div class="creator-photo-v2">
-                        <div class="img-placeholder-box img-placeholder-tall"></div>
-                    </div>
-                </div>
-                <?php endfor; ?>
+                <!-- Pagination for mobile -->
+                <div class="swiper-pagination creators-pagination"></div>
             </div>
         </div>
     </section>

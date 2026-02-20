@@ -73,6 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Image Comparison Hover Effect
     initImageComparison();
+
+    // Creators Mobile Swiper
+    initCreatorsSwiper();
 });
 
 
@@ -926,15 +929,15 @@ function initTestimonialsSlider() {
     const dotsContainer = document.querySelector('.testimonials-dots');
     const prevBtn = document.querySelector('.testimonial-nav-btn.prev');
     const nextBtn = document.querySelector('.testimonial-nav-btn.next');
-    
+
     if (!wrapper) return;
-    
+
     const slides = wrapper.querySelectorAll('.testimonial-slide');
     if (!slides.length) return;
-    
+
     let currentIndex = 0;
     let autoplayInterval;
-    
+
     // Create dots
     slides.forEach((_, index) => {
         const dot = document.createElement('span');
@@ -943,36 +946,36 @@ function initTestimonialsSlider() {
         dot.addEventListener('click', () => goToSlide(index));
         dotsContainer.appendChild(dot);
     });
-    
+
     const dots = dotsContainer.querySelectorAll('.dot');
-    
+
     // Go to specific slide with animation
     function goToSlide(index, direction = 'next') {
         if (index < 0) index = slides.length - 1;
         if (index >= slides.length) index = 0;
-        
+
         const prevIndex = currentIndex;
         currentIndex = index;
-        
+
         // Remove all states
         slides.forEach(slide => {
             slide.classList.remove('active', 'prev');
         });
-        
+
         // Add prev class to old slide (animates out)
         if (direction === 'next') {
             slides[prevIndex].classList.add('prev');
         }
-        
+
         // Add active class to new slide (animates in)
         slides[currentIndex].classList.add('active');
-        
+
         // Update dots
         dots.forEach((dot, i) => {
             dot.classList.toggle('active', i === currentIndex);
         });
     }
-    
+
     // Navigation buttons
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
@@ -980,50 +983,50 @@ function initTestimonialsSlider() {
             resetAutoplay();
         });
     }
-    
+
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             goToSlide(currentIndex + 1, 'next');
             resetAutoplay();
         });
     }
-    
+
     // Autoplay
     function startAutoplay() {
         autoplayInterval = setInterval(() => {
             goToSlide(currentIndex + 1, 'next');
         }, 5000);
     }
-    
+
     function resetAutoplay() {
         clearInterval(autoplayInterval);
         startAutoplay();
     }
-    
+
     // Start autoplay
     startAutoplay();
-    
+
     // Pause on hover
     wrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
     wrapper.addEventListener('mouseleave', startAutoplay);
-    
+
     // Touch swipe support
     let touchStartX = 0;
     let touchEndX = 0;
-    
+
     wrapper.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
-    
+
     wrapper.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
     }, { passive: true });
-    
+
     function handleSwipe() {
         const swipeThreshold = 50;
         const diff = touchStartX - touchEndX;
-        
+
         if (Math.abs(diff) > swipeThreshold) {
             if (diff > 0) {
                 // Swipe left - next slide
@@ -1287,7 +1290,7 @@ function initFloatingToolsParallax() {
  */
 function initStatsCountUp() {
     const statNumbers = document.querySelectorAll('.stat-number[data-count]');
-    
+
     if (!statNumbers.length) return;
 
     const animateCount = (element) => {
@@ -1295,19 +1298,19 @@ function initStatsCountUp() {
         const suffix = element.dataset.suffix || '';
         const duration = 2000; // 2 seconds
         const startTime = performance.now();
-        
+
         element.classList.add('counting');
-        
+
         const updateCount = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            
+
             // Easing function (ease-out cubic)
             const easeOut = 1 - Math.pow(1 - progress, 3);
             const current = Math.floor(easeOut * target);
-            
+
             element.textContent = current + suffix;
-            
+
             if (progress < 1) {
                 requestAnimationFrame(updateCount);
             } else {
@@ -1316,7 +1319,7 @@ function initStatsCountUp() {
                 element.classList.add('counted');
             }
         };
-        
+
         requestAnimationFrame(updateCount);
     };
 
@@ -1343,31 +1346,31 @@ function initStatsCountUp() {
  */
 function initMagneticButtons() {
     const buttons = document.querySelectorAll('.btn-magnetic');
-    
+
     if (!buttons.length) return;
-    
+
     // Only on desktop
     if (window.innerWidth < 992) return;
 
     buttons.forEach(button => {
         const strength = 0.3; // How strongly it follows the cursor (0-1)
         const maxMove = 15; // Maximum pixels to move
-        
+
         button.addEventListener('mousemove', (e) => {
             const rect = button.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
-            
+
             const deltaX = (e.clientX - centerX) * strength;
             const deltaY = (e.clientY - centerY) * strength;
-            
+
             // Clamp the movement
             const moveX = Math.max(-maxMove, Math.min(maxMove, deltaX));
             const moveY = Math.max(-maxMove, Math.min(maxMove, deltaY));
-            
+
             button.style.transform = `translate(${moveX}px, ${moveY}px)`;
         });
-        
+
         button.addEventListener('mouseleave', () => {
             button.style.transform = 'translate(0, 0)';
         });
@@ -1381,28 +1384,74 @@ function initMagneticButtons() {
  */
 function initImageComparison() {
     const comparisons = document.querySelectorAll('.image-comparison');
-    
+
     if (!comparisons.length) return;
-    
+
     comparisons.forEach(container => {
         const overlay = container.querySelector('.comparison-overlay');
-        
+
         if (!overlay) return;
-        
+
         container.addEventListener('mousemove', (e) => {
             const rect = container.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const percentage = (x / rect.width) * 100;
-            
+
             // Move overlay based on mouse position
             // When mouse is on left, show more "raw", when on right, show more "polished"
             overlay.style.left = `${Math.max(0, percentage - 20)}%`;
             overlay.style.opacity = Math.min(1, (percentage / 100) * 1.5);
         });
-        
+
         container.addEventListener('mouseleave', () => {
             overlay.style.left = '50%';
             overlay.style.opacity = '0';
         });
     });
 }
+
+/**
+ * Creators Mobile Swiper
+ * Self-invoking since script loads after DOM is ready
+ */
+(function initCreatorsSwiper() {
+    const creatorsSwiperElement = document.querySelector('.creators-swiper');
+    if (!creatorsSwiperElement) return;
+
+    if (typeof Swiper === 'undefined') return;
+
+    let creatorsSwiper = null;
+
+    function initOrDestroySwiper() {
+        if (window.innerWidth < 992) {
+            if (!creatorsSwiper) {
+                creatorsSwiper = new Swiper('.creators-swiper', {
+                    slidesPerView: 1.2,
+                    spaceBetween: 20,
+                    loop: false,
+                    grabCursor: true,
+                    autoHeight: true,
+                    pagination: {
+                        el: '.creators-pagination',
+                        clickable: true,
+                    },
+                    breakpoints: {
+                        576: {
+                            slidesPerView: 2.2,
+                            spaceBetween: 24,
+                        }
+                    }
+                });
+            }
+        } else {
+            if (creatorsSwiper !== null) {
+                creatorsSwiper.destroy(true, true);
+                creatorsSwiper = null;
+            }
+        }
+    }
+
+    initOrDestroySwiper();
+    window.addEventListener('resize', initOrDestroySwiper);
+})();
+

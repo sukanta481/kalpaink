@@ -5,7 +5,8 @@
  */
 
 $page_title = 'Team Members';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/config/auth.php';
+requireAuth();
 requireRole('editor');
 
 $db = getDB();
@@ -138,6 +139,7 @@ if ($action === 'add' || $action === 'edit') {
         }
     }
     ?>
+    <?php require_once __DIR__ . '/includes/header.php'; ?>
     
     <div class="page-header">
         <h1 class="page-title"><?php echo $action === 'add' ? 'Add Team Member' : 'Edit Team Member'; ?></h1>
@@ -273,6 +275,7 @@ if ($action === 'add' || $action === 'edit') {
     // List view
     $stmt = $db->query("SELECT * FROM team_members ORDER BY sort_order ASC, created_at DESC");
     $members = $stmt->fetchAll();
+    require_once __DIR__ . '/includes/header.php';
     ?>
     
     <div class="page-header">
