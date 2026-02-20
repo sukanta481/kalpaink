@@ -8969,14 +8969,31 @@ textarea.form-control {
     text-align: center;
 }
 
+/* Desktop: override Swiper library's height:100% on wrapper & slides */
+.creators-swiper .swiper-wrapper {
+    height: auto !important;
+}
+
+.creators-swiper .swiper-slide {
+    height: auto !important;
+}
+
+.creators-pagination {
+    display: none;
+}
+
 /* On mobile, reset grid to flex for Swiper */
 @media (max-width: 991.98px) {
     .creators-swiper {
-        padding-bottom: 16px;
+        padding-bottom: 30px;
     }
 
     .creators-section-v2 {
         padding-bottom: 20px !important;
+    }
+
+    .creators-pagination {
+        display: block;
     }
 
     .creators-swiper .creators-grid-v2 {
