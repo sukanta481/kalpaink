@@ -8960,12 +8960,15 @@ textarea.form-control {
 }
 
 .creators-grid-v2 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 24px;
 }
 
 .creator-card-v2 {
+    width: calc(25% - 18px);
+    /* 4 columns minus gaps */
     text-align: center;
 }
 
@@ -9787,8 +9790,12 @@ textarea.form-control {
 
     /* Creators */
     .creators-grid-v2 {
-        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
+    }
+
+    .creator-card-v2 {
+        width: calc(50% - 10px);
+        /* 2 columns */
     }
 
     .creator-photo-v2 img,
@@ -9952,8 +9959,12 @@ textarea.form-control {
 
     /* Creators */
     .creators-grid-v2 {
-        grid-template-columns: repeat(2, 1fr);
         gap: 16px;
+    }
+
+    .creator-card-v2 {
+        width: calc(50% - 8px);
+        /* 2 columns */
     }
 
     .creator-photo-v2 img,
@@ -10136,8 +10147,12 @@ textarea.form-control {
 
     /* Creators */
     .creators-grid-v2 {
-        grid-template-columns: repeat(2, 1fr);
         gap: 12px;
+    }
+
+    .creator-card-v2 {
+        width: calc(50% - 6px);
+        /* 2 columns */
     }
 
     .creator-photo-v2 img,

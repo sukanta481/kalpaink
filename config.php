@@ -23,9 +23,16 @@ if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.
 define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpanik');
 define('SITE_TAGLINE', $crm_settings['site_tagline'] ?? 'Creative Digital Solutions');
 
+// Helper to make URLs absolute
+function getAbsoluteUrl($path) {
+    if (empty($path)) return '';
+    if (filter_var($path, FILTER_VALIDATE_URL)) return $path;
+    return rtrim(SITE_URL, '/') . '/' . ltrim($path, '/');
+}
+
 // Branding - Logo & Favicon (dynamic from admin settings)
-define('SITE_LOGO', !empty($crm_settings['site_logo']) ? $crm_settings['site_logo'] : 'assets/images/kalpaink-logo.png');
-define('SITE_FAVICON', !empty($crm_settings['site_favicon']) ? $crm_settings['site_favicon'] : '');
+define('SITE_LOGO', getAbsoluteUrl(!empty($crm_settings['site_logo']) ? $crm_settings['site_logo'] : 'assets/images/kalpaink-logo.png'));
+define('SITE_FAVICON', getAbsoluteUrl(!empty($crm_settings['site_favicon']) ? $crm_settings['site_favicon'] : 'assets/images/kalpaink-favicon.png'));
 
 // Contact Information
 define('CONTACT_ADDRESS', $crm_settings['contact_address'] ?? '225 Bagmari Road, Kolkata - 700054');
