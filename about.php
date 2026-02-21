@@ -243,10 +243,12 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
             </div>
             
             <!-- Mobile: Flip Cards (Tap to reveal Creative Side) -->
-            <div class="creators-mobile d-lg-none">
+            <div class="creators-mobile d-lg-none swiper creators-swiper" style="padding-bottom: 30px; overflow: hidden;">
+                <div class="swiper-wrapper">
                 <?php foreach ($team_members as $index => $member): ?>
-                <div class="creator-flip-mobile" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
-                    <div class="flip-mobile-inner">
+                <div class="swiper-slide">
+                    <div class="creator-flip-mobile" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
+                        <div class="flip-mobile-inner">
                         <!-- Front: Professional Side -->
                         <div class="flip-mobile-front">
                             <div class="flip-avatar">
@@ -295,7 +297,11 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php endforeach; ?>
+                </div>
+                <!-- Pagination for mobile -->
+                <div class="swiper-pagination creators-pagination"></div>
                 <p class="tap-hint text-center mt-3"><i class="fas fa-sync-alt"></i> Tap cards to see our creative side!</p>
             </div>
         </div>
