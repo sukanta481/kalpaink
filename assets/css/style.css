@@ -8597,8 +8597,8 @@ textarea.form-control {
 .hero-section-v2-card {
     background: #0033E0;
     border-radius: 24px;
-    padding: 80px 40px;
-    min-height: 400px;
+    padding: clamp(36px, 6vw, 80px) clamp(16px, 4vw, 40px);
+    min-height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8613,7 +8613,7 @@ textarea.form-control {
 
 .hero-v2-title {
     font-family: 'Poppins', sans-serif;
-    font-size: 4rem;
+    font-size: clamp(1.4rem, 5vw, 4rem);
     font-weight: 900;
     color: #fff;
     line-height: 1.15;
@@ -8684,6 +8684,18 @@ textarea.form-control {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
+/* Ensure touch targets are at least 44px tall */
+@media (max-width: 767.98px) {
+    .btn-hero-white,
+    .btn-outline-v2,
+    .btn-footer-green,
+    .case-link-v2 {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
 .btn-hero-white i {
     font-size: 0.85rem;
     color: #0a7c2e;
@@ -8712,7 +8724,7 @@ textarea.form-control {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px 30px;
+    gap: 12px 24px;
     padding: 0 20px;
 }
 
@@ -8727,7 +8739,7 @@ textarea.form-control {
 /* ---- Welcome Section V2 ---- */
 .welcome-section-v2 {
     background: #fff;
-    padding: 80px 0;
+    padding: clamp(40px, 6vw, 80px) 0;
 }
 
 .welcome-image-placeholder img {
@@ -8735,6 +8747,8 @@ textarea.form-control {
     height: auto;
     border-radius: 16px;
     object-fit: cover;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .welcome-image-placeholder .img-placeholder-box {
@@ -8742,7 +8756,7 @@ textarea.form-control {
 }
 
 .welcome-title-v2 {
-    font-size: 2rem;
+    font-size: clamp(1.3rem, 3vw, 2rem);
     font-weight: 800;
     color: #141414;
     margin-bottom: 20px;
@@ -8799,13 +8813,14 @@ textarea.form-control {
 }
 
 .img-placeholder-box.img-placeholder-vlog {
-    height: 340px;
-    border-radius: 16px;
+    height: 0;
+    padding-bottom: 150%;
+    border-radius: 20px;
 }
 
 /* ---- Section Titles V2 ---- */
 .section-title-v2 {
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
     font-weight: 800;
     color: #141414;
     text-transform: uppercase;
@@ -8834,17 +8849,22 @@ textarea.form-control {
 /* ---- Services Section V2 ---- */
 .services-section-v2 {
     background: #fff;
-    padding: 80px 0;
+    padding: clamp(40px, 6vw, 80px) 0;
 }
 
 .services-grid-v2 {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 20px;
 }
 
 .service-card-v2 {
     text-align: center;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .service-card-v2-img {
@@ -8859,8 +8879,9 @@ textarea.form-control {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 0.4s ease;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1),
+        box-shadow 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .service-illustration-box svg {
@@ -8868,16 +8889,11 @@ textarea.form-control {
     height: 100%;
     max-width: 120px;
     max-height: 120px;
-    transition: transform 0.4s ease;
-}
-
-.service-card-v2:hover .service-illustration-box {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .service-card-v2:hover .service-illustration-box svg {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 /* Image-based service illustrations */
@@ -8885,9 +8901,6 @@ textarea.form-control {
     padding: 12px;
     background: #f0f4ff;
     border-radius: 16px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 0.4s ease,
-        background 0.4s ease;
 }
 
 .service-illustration-img img {
@@ -8895,31 +8908,27 @@ textarea.form-control {
     height: 100%;
     object-fit: contain;
     border-radius: 10px;
-    transition: transform 0.4s ease;
-}
-
-.service-card-v2:hover .service-illustration-img {
-    transform: translateY(-6px);
-    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .service-card-v2:hover .service-illustration-img img {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
-/* Uniform hover color */
 .service-card-v2:hover .service-illustration-img {
-    background: #e0eaff;
+    background: #e8eeff;
 }
 
 .service-card-v2-title {
     font-family: 'Poppins', sans-serif;
-    font-size: 0.85rem;
+    font-size: clamp(0.72rem, 1.5vw, 0.85rem);
     font-weight: 600;
     color: #141414;
-    margin-top: 14px;
+    margin-top: 12px;
     margin-bottom: 0;
     letter-spacing: 0.3px;
+    word-break: break-word;
+    transition: color 0.4s ease;
 }
 
 .service-card-v2-img .img-placeholder-box {
@@ -8929,7 +8938,7 @@ textarea.form-control {
 /* ---- About Section V2 ---- */
 .about-section-v2 {
     background: #fff;
-    padding: 80px 0;
+    padding: clamp(40px, 6vw, 80px) 0;
 }
 
 .about-image-placeholder {
@@ -8938,7 +8947,7 @@ textarea.form-control {
 }
 
 .about-title-v2 {
-    font-size: 2rem;
+    font-size: clamp(1.3rem, 3vw, 2rem);
     font-weight: 800;
     color: #141414;
     margin-bottom: 20px;
@@ -8956,7 +8965,7 @@ textarea.form-control {
 /* ---- Creators Section V2 ---- */
 .creators-section-v2 {
     background: #fff;
-    padding: 80px 0 30px;
+    padding: clamp(40px, 6vw, 80px) 0 30px;
 }
 
 .creators-grid-v2 {
@@ -8970,6 +8979,10 @@ textarea.form-control {
     width: calc(25% - 18px);
     /* 4 columns minus gaps */
     text-align: center;
+    position: relative;
+    cursor: pointer;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 /* Desktop: override Swiper library's height:100% on wrapper & slides */
@@ -8988,15 +9001,35 @@ textarea.form-control {
 /* On mobile, reset grid to flex for Swiper */
 @media (max-width: 991.98px) {
     .creators-swiper {
-        padding-bottom: 30px;
+        padding-bottom: 40px;
+        overflow: visible;
+    }
+
+    .creators-swiper .swiper-wrapper {
+        transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
     }
 
     .creators-section-v2 {
         padding-bottom: 20px !important;
+        overflow: hidden;
     }
 
     .creators-pagination {
         display: block;
+    }
+
+    .creators-pagination .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        background: #ccc;
+        opacity: 1;
+        transition: all 0.3s ease;
+    }
+
+    .creators-pagination .swiper-pagination-bullet-active {
+        background: #0033E0;
+        width: 24px;
+        border-radius: 4px;
     }
 
     .creators-swiper .creators-grid-v2,
@@ -9009,6 +9042,7 @@ textarea.form-control {
 
     .creators-swiper .creator-card-v2 {
         height: auto;
+        transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
     /* On mobile, make the info always visible since there's no hover */
@@ -9023,13 +9057,7 @@ textarea.form-control {
     overflow: hidden;
     position: relative;
     aspect-ratio: 4/5;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.creator-card-v2:hover .creator-photo-v2,
-.creator-cutout:hover .creator-photo-wrapper {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .creator-photo-v2 img {
@@ -9039,6 +9067,8 @@ textarea.form-control {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .creator-photo-v2 .img-placeholder-box {
@@ -9053,7 +9083,7 @@ textarea.form-control {
 /* ---- Case Studies Section V2 ---- */
 .case-studies-section-v2 {
     background: #fff;
-    padding: 80px 0;
+    padding: clamp(40px, 6vw, 80px) 0;
 }
 
 .case-studies-grid-v2 {
@@ -9064,20 +9094,26 @@ textarea.form-control {
 
 .case-card-v2 {
     text-align: center;
+    cursor: pointer;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .case-card-v2-image {
     border-radius: 16px;
     overflow: hidden;
     margin-bottom: 16px;
-    height: 280px;
+    aspect-ratio: 16/10;
+    position: relative;
+    transition: box-shadow 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .case-card-v2-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1);
+    will-change: transform;
 }
 
 .case-card-v2:hover .case-card-v2-image img {
@@ -9125,7 +9161,7 @@ textarea.form-control {
 /* ---- Vlog & Reel Section ---- */
 .vlog-reel-section {
     background: #fff;
-    padding: 80px 0;
+    padding: clamp(40px, 6vw, 80px) 0;
 }
 
 .vlog-reel-grid {
@@ -9137,14 +9173,12 @@ textarea.form-control {
 
 .vlog-card {
     flex: 0 0 calc(20% - 16px);
-    border-radius: 16px;
+    min-width: 0;
+    border-radius: 20px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.vlog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    position: relative;
+    cursor: pointer;
+    will-change: transform;
 }
 
 @media (max-width: 991.98px) {
@@ -9153,8 +9187,10 @@ textarea.form-control {
         justify-content: flex-start;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding-bottom: 20px;
+        padding: 0 20px 20px;
+        gap: 16px;
     }
 
     .vlog-reel-grid::-webkit-scrollbar {
@@ -9162,15 +9198,21 @@ textarea.form-control {
     }
 
     .vlog-card {
-        flex: 0 0 280px;
-        scroll-snap-align: start;
+        flex: 0 0 55vw;
+        scroll-snap-align: center;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .vlog-card {
+        flex: 0 0 70vw;
     }
 }
 
 /* ---- Testimonials Section V2 ---- */
 .testimonials-section-v2 {
     background: #fff;
-    padding: 80px 0;
+    padding: clamp(40px, 6vw, 80px) 0;
 }
 
 .testimonials-row-v2 {
@@ -9181,6 +9223,8 @@ textarea.form-control {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     padding-bottom: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
     justify-content: center;
 }
 
@@ -9195,7 +9239,7 @@ textarea.form-control {
 }
 
 .testimonial-card-v2 {
-    flex: 0 0 320px;
+    flex: 0 0 min(320px, 85vw);
     scroll-snap-align: start;
 }
 
@@ -9204,13 +9248,13 @@ textarea.form-control {
     border-radius: 16px;
     padding: 30px;
     height: 100%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid transparent;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1),
+        box-shadow 0.5s cubic-bezier(0.33, 0, 0.2, 1),
+        border-color 0.5s ease;
 }
 
-.testimonial-card-v2-inner:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
 
 .testimonial-avatar-v2 {
     width: 50px;
@@ -9351,7 +9395,7 @@ textarea.form-control {
 }
 
 .footer-v2-cta-title {
-    font-size: 1.8rem;
+    font-size: clamp(1.1rem, 3vw, 1.8rem);
     font-weight: 800;
     color: #fff;
     margin-bottom: 12px;
@@ -9410,156 +9454,124 @@ textarea.form-control {
 
 /* ================================
    HOMEPAGE V2 — HOVER & ANIMATION EFFECTS
+   Creative Design Agency Level
 ================================ */
 
-/* Hero highlight pulse */
+/* --- Hero Animations --- */
 .hero-highlight {
     animation: heroHighlightPulse 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.hero-highlight:hover {
+    transform: scale(1.05);
 }
 
 @keyframes heroHighlightPulse {
-
-    0%,
-    100% {
-        box-shadow: 0 0 0 0 rgba(123, 255, 0, 0.4);
-    }
-
-    50% {
-        box-shadow: 0 0 20px 4px rgba(123, 255, 0, 0.2);
-    }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(123, 255, 0, 0.4); }
+    50% { box-shadow: 0 0 25px 6px rgba(123, 255, 0, 0.25); }
 }
 
-/* Hero outline gentle float */
 .hero-outline {
     animation: heroOutlineFloat 4s ease-in-out infinite;
 }
 
 @keyframes heroOutlineFloat {
-
-    0%,
-    100% {
-        transform: rotate(-2deg) translateY(0);
-    }
-
-    50% {
-        transform: rotate(-1deg) translateY(-3px);
-    }
+    0%, 100% { transform: rotate(-2deg) translateY(0); }
+    50% { transform: rotate(-1deg) translateY(-4px); }
 }
 
-/* Hero button hover bounce arrow */
+
 .btn-hero-white:hover i {
     animation: arrowBounce 0.6s ease infinite;
 }
 
 @keyframes arrowBounce {
-
-    0%,
-    100% {
-        transform: translate(0, 0);
-    }
-
-    50% {
-        transform: translate(-3px, 3px);
-    }
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(3px, 0); }
 }
 
-/* Service card hover lift + shadow */
-.service-card-v2 {
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 0.4s ease;
-    border-radius: 12px;
-    cursor: pointer;
-}
-
+/* --- Service Cards — Hover --- */
 .service-card-v2:hover {
     transform: translateY(-8px);
 }
 
+.service-card-v2:hover .service-card-v2-title {
+    color: #0033E0;
+}
 
-/* Welcome image hover zoom */
+.service-card-v2:hover .service-illustration-box {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 32px rgba(0, 51, 224, 0.1);
+}
+
+/* --- Welcome Image — Parallax Reveal --- */
 .welcome-image-placeholder {
     overflow: hidden;
     border-radius: 16px;
-}
-
-.welcome-image-placeholder img {
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
 }
 
 .welcome-image-placeholder:hover img {
     transform: scale(1.05);
 }
 
-/* About image hover */
+/* --- About Section hover --- */
 .about-image-placeholder .img-placeholder-box {
-    transition: transform 0.5s ease;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1),
+        box-shadow 0.5s cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .about-image-placeholder:hover .img-placeholder-box {
     transform: scale(1.03);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
 }
 
-/* Creator card hover — overlay + scale */
-.creator-card-v2 {
-    position: relative;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-}
-
+/* --- Creator Cards — Cinematic Hover --- */
 .creator-card-v2:hover {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
 }
 
-.creator-photo-v2 {
-    position: relative;
-    transition: box-shadow 0.4s ease;
+.creator-photo-v2::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+    border-radius: 16px;
+    pointer-events: none;
+}
+
+.creator-card-v2:hover .creator-photo-v2::before {
+    opacity: 1;
 }
 
 .creator-card-v2:hover .creator-photo-v2 {
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
-}
-
-.creator-photo-v2 img {
-    transition: transform 0.5s ease;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
 }
 
 .creator-card-v2:hover .creator-photo-v2 img {
-    transform: scale(1.05);
-}
-
-/* Case Studies card hover */
-.case-card-v2 {
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-}
-
-.case-card-v2:hover {
-    transform: translateY(-6px);
-}
-
-.case-card-v2-image {
-    transition: box-shadow 0.4s ease;
-}
-
-.case-card-v2:hover .case-card-v2-image {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    transform: scale(1.06);
 }
 
 /* Creator Info Overlay */
-
 .creator-info-v2 {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     padding: 30px 24px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     transform: translateY(20px);
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
 }
 
 .creator-card-v2:hover .creator-info-v2 {
@@ -9594,15 +9606,36 @@ textarea.form-control {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
     backdrop-filter: blur(4px);
 }
 
 .creator-social-v2 a:hover {
-    background: var(--blue-600);
+    background: #0033E0;
     color: #fff;
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 51, 224, 0.4);
+}
+
+/* --- Case Studies — Image Zoom + Overlay --- */
+.case-card-v2:hover {
+    transform: translateY(-8px);
+}
+
+
+.case-card-v2:hover .case-card-v2-image {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Case tags hover */
+.case-tag-v2 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.case-card-v2:hover .case-tag-v2 {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(123, 255, 0, 0.3);
 }
 
 /* Case link hover arrow */
@@ -9611,6 +9644,7 @@ textarea.form-control {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    transition: color 0.3s ease, gap 0.3s ease;
 }
 
 .case-link-v2::after {
@@ -9619,39 +9653,45 @@ textarea.form-control {
     display: inline-block;
 }
 
+.case-link-v2:hover {
+    color: #0033E0;
+    gap: 10px;
+}
+
 .case-link-v2:hover::after {
     transform: translateX(4px);
 }
 
-/* Vlog card hover */
-.vlog-card {
-    position: relative;
-    cursor: pointer;
-}
-
+/* --- Vlog Cards — Smooth Hover --- */
 .vlog-card .img-placeholder-box {
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1),
+        box-shadow 0.5s cubic-bezier(0.33, 0, 0.2, 1);
+    will-change: transform;
 }
 
 .vlog-card:hover .img-placeholder-box {
     transform: scale(1.04);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
 }
 
-/* Testimonial card hover glow */
-.testimonial-card-v2-inner {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
+/* --- Testimonial Cards — Soft Glow --- */
 .testimonial-card-v2:hover .testimonial-card-v2-inner {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 51, 224, 0.08);
+    border-color: rgba(0, 51, 224, 0.1);
 }
 
-/* Button outline hover animation */
+.testimonial-card-v2:hover .testimonial-avatar-v2,
+.testimonial-card-v2:hover .avatar-placeholder-v2 {
+    transform: scale(1.1);
+    transition: transform 0.4s ease;
+}
+
+/* --- Buttons — Shine + Ripple --- */
 .btn-outline-v2 {
     position: relative;
     overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-outline-v2::before {
@@ -9661,18 +9701,24 @@ textarea.form-control {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent);
-    transition: left 0.5s ease;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent);
+    transition: left 0.6s ease;
 }
 
 .btn-outline-v2:hover::before {
     left: 100%;
 }
 
-/* Footer social icons pulse on hover */
+/* Footer social icons — scale + glow */
 .footer-v2-socials a {
     position: relative;
     overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-v2-socials a:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 20px rgba(123, 255, 0, 0.3);
 }
 
 .footer-v2-socials a::before {
@@ -9689,10 +9735,11 @@ textarea.form-control {
     transform: scale(1);
 }
 
-/* Footer CTA button hover */
+/* Footer CTA button */
 .btn-footer-green {
     position: relative;
     overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-footer-green::after {
@@ -9704,16 +9751,21 @@ textarea.form-control {
     height: 0;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.2);
-    transition: width 0.4s ease, height 0.4s ease;
+    transition: width 0.5s ease, height 0.5s ease;
     transform: translate(-50%, -50%);
 }
 
 .btn-footer-green:hover::after {
-    width: 200%;
-    height: 200%;
+    width: 250%;
+    height: 250%;
 }
 
-/* Section title underline animation on scroll */
+.btn-footer-green:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(123, 255, 0, 0.3);
+}
+
+/* --- Section Title — Animated Underline --- */
 .section-title-v2 {
     position: relative;
     display: inline-block;
@@ -9727,13 +9779,42 @@ textarea.form-control {
     transform: translateX(-50%);
     width: 0;
     height: 3px;
-    background: #0033E0;
+    background: linear-gradient(90deg, #0033E0, #7BFF00);
     border-radius: 2px;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .section-title-v2.aos-animate::after {
     width: 50px;
+}
+
+
+/* --- Trust Bar Brand Hover --- */
+.brand-name-item {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.brand-name-item:hover {
+    color: #0033E0;
+    transform: scale(1.08);
+}
+
+/* --- Smooth Scrollbar Indicator for horizontal sections --- */
+.vlog-reel-grid::after,
+.testimonials-row-v2::after {
+    content: '';
+    flex-shrink: 0;
+    width: 1px;
+}
+
+/* --- Reduce motion for accessibility --- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /* Brands static layout */
@@ -9755,18 +9836,6 @@ textarea.form-control {
 
 /* --- LG: Large tablets / small laptops ≤1199px --- */
 @media (max-width: 1199.98px) {
-    .hero-v2-title {
-        font-size: 3.2rem;
-    }
-
-    .hero-section-v2-card {
-        padding: 70px 36px;
-    }
-
-    .services-grid-v2 {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
     .vlog-card {
         flex: 0 0 calc(25% - 15px);
     }
@@ -9785,13 +9854,8 @@ textarea.form-control {
     }
 
     .hero-section-v2-card {
-        padding: 60px 28px;
         min-height: auto;
         border-radius: 20px;
-    }
-
-    .hero-v2-title {
-        font-size: 2.6rem;
     }
 
     .hero-v2-subtitle {
@@ -9799,34 +9863,8 @@ textarea.form-control {
         letter-spacing: 1px;
     }
 
-    /* Sections padding */
-    .welcome-section-v2,
-    .services-section-v2,
-    .about-section-v2,
-    .creators-section-v2,
-    .case-studies-section-v2,
-    .vlog-reel-section,
-    .testimonials-section-v2 {
-        padding: 60px 0;
-    }
-
-    /* Welcome */
-    .welcome-title-v2 {
-        font-size: 1.8rem;
-    }
-
     .welcome-text-v2 p {
         font-size: 0.9rem;
-    }
-
-    /* Services */
-    .services-grid-v2 {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    /* About */
-    .about-title-v2 {
-        font-size: 1.8rem;
     }
 
     .about-text-v2 p {
@@ -9854,10 +9892,6 @@ textarea.form-control {
         gap: 24px;
     }
 
-    .case-card-v2-image {
-        height: 220px;
-    }
-
     /* Vlog section converted to slider on smaller devices */
 
     /* Footer */
@@ -9868,15 +9902,6 @@ textarea.form-control {
 
     .footer-v2-right {
         text-align: left;
-    }
-
-    .footer-v2-cta-title {
-        font-size: 1.5rem;
-    }
-
-    /* Section titles */
-    .section-title-v2 {
-        font-size: 1.7rem;
     }
 
     .section-subtitle-v2 {
@@ -9893,13 +9918,7 @@ textarea.form-control {
     }
 
     .hero-section-v2-card {
-        padding: 50px 20px;
         border-radius: 18px;
-    }
-
-    .hero-v2-title {
-        font-size: 1.85rem;
-        line-height: 1.2;
     }
 
     .hero-v2-title br {
@@ -9926,23 +9945,6 @@ textarea.form-control {
         font-size: 0.88rem;
     }
 
-    /* Sections padding mobile */
-    .welcome-section-v2,
-    .services-section-v2,
-    .about-section-v2,
-    .creators-section-v2,
-    .case-studies-section-v2,
-    .vlog-reel-section,
-    .testimonials-section-v2 {
-        padding: 50px 0;
-    }
-
-    /* Section titles */
-    .section-title-v2 {
-        font-size: 1.5rem;
-        letter-spacing: 0.5px;
-    }
-
     .section-subtitle-v2 {
         font-size: 0.85rem;
     }
@@ -9953,7 +9955,6 @@ textarea.form-control {
 
     /* Welcome */
     .welcome-title-v2 {
-        font-size: 1.5rem;
         text-align: center;
     }
 
@@ -9967,22 +9968,22 @@ textarea.form-control {
 
     .welcome-image-placeholder img,
     .welcome-image-placeholder .img-placeholder-box {
-        height: 220px;
+        height: auto;
+        min-height: 200px;
+        aspect-ratio: 4/3;
     }
 
     /* Services */
     .services-grid-v2 {
-        grid-template-columns: repeat(2, 1fr);
         gap: 14px;
     }
 
     .service-illustration-box {
-        height: 180px;
+        height: 160px;
     }
 
     /* About */
     .about-title-v2 {
-        font-size: 1.5rem;
         text-align: center;
     }
 
@@ -9996,7 +9997,9 @@ textarea.form-control {
     }
 
     .about-image-placeholder .img-placeholder-box {
-        height: 250px;
+        height: auto;
+        min-height: 220px;
+        aspect-ratio: 4/3;
     }
 
     /* Creators */
@@ -10018,26 +10021,12 @@ textarea.form-control {
     .case-studies-grid-v2 {
         grid-template-columns: 1fr;
         gap: 24px;
-        max-width: 400px;
-        margin: 0 auto;
     }
 
-    .case-card-v2-image {
-        height: 200px;
-    }
-
-    /* Vlog */
-    .vlog-card {
-        flex: 0 0 240px;
-    }
-
-    .img-placeholder-box.img-placeholder-vlog {
-        height: 260px;
-    }
 
     /* Testimonials - single row horizontal scroll */
     .testimonial-card-v2 {
-        flex: 0 0 280px;
+        flex: 0 0 min(280px, 85vw);
     }
 
     .testimonial-card-v2-inner {
@@ -10065,10 +10054,6 @@ textarea.form-control {
     .footer-v2-contact-info {
         flex-direction: column;
         gap: 16px;
-    }
-
-    .footer-v2-cta-title {
-        font-size: 1.35rem;
     }
 
     .footer-v2-cta-text {
@@ -10114,13 +10099,7 @@ textarea.form-control {
     }
 
     .hero-section-v2-card {
-        padding: 40px 16px;
         border-radius: 14px;
-    }
-
-    .hero-v2-title {
-        font-size: 1.5rem;
-        line-height: 1.25;
     }
 
     .hero-highlight {
@@ -10150,39 +10129,17 @@ textarea.form-control {
         gap: 6px;
     }
 
-    /* Section padding XS */
-    .welcome-section-v2,
-    .services-section-v2,
-    .about-section-v2,
-    .creators-section-v2,
-    .case-studies-section-v2,
-    .vlog-reel-section,
-    .testimonials-section-v2 {
-        padding: 40px 0;
-    }
-
-    /* Titles */
-    .section-title-v2 {
-        font-size: 1.3rem;
-    }
-
     .section-subtitle-v2 {
         font-size: 0.8rem;
     }
 
-    .welcome-title-v2,
-    .about-title-v2 {
-        font-size: 1.3rem;
-    }
-
-    /* Services — 2 cols tight */
+    /* Services — auto-fit handles columns */
     .services-grid-v2 {
-        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
     }
 
     .service-illustration-box {
-        height: 140px;
+        height: 120px;
         border-radius: 10px;
     }
 
@@ -10207,7 +10164,6 @@ textarea.form-control {
     }
 
     .case-card-v2-image {
-        height: 180px;
         border-radius: 12px;
     }
 
@@ -10224,16 +10180,9 @@ textarea.form-control {
         font-size: 0.8rem;
     }
 
-    /* Vlog */
-
-    .img-placeholder-box.img-placeholder-vlog {
-        height: 200px;
-        border-radius: 12px;
-    }
-
     /* Testimonials */
     .testimonial-card-v2 {
-        flex: 0 0 260px;
+        flex: 0 0 min(260px, 85vw);
     }
 
     .testimonial-card-v2-inner {
@@ -10271,10 +10220,6 @@ textarea.form-control {
 
     .footer-v2-main {
         gap: 30px;
-    }
-
-    .footer-v2-cta-title {
-        font-size: 1.2rem;
     }
 
     .footer-v2-cta-text {
@@ -10330,12 +10275,7 @@ textarea.form-control {
 
 /* --- XXS: Very small phones ≤400px --- */
 @media (max-width: 400px) {
-    .hero-v2-title {
-        font-size: 1.25rem;
-    }
-
     .hero-section-v2-card {
-        padding: 32px 12px;
         border-radius: 12px;
     }
 
@@ -10343,33 +10283,16 @@ textarea.form-control {
         font-size: 0.65rem;
     }
 
-    .section-title-v2 {
-        font-size: 1.15rem;
-    }
-
-    .welcome-title-v2,
-    .about-title-v2 {
-        font-size: 1.15rem;
-    }
-
     .services-grid-v2 {
         gap: 8px;
     }
 
     .service-illustration-box {
-        height: 120px;
+        height: 100px;
     }
 
     .creators-grid-v2 {
         gap: 8px;
     }
 
-    .creator-photo-v2 img,
-    .creator-photo-v2 .img-placeholder-box {
-        height: 100%;
-    }
-
-    .footer-v2-cta-title {
-        font-size: 1.05rem;
-    }
 }

@@ -76,6 +76,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Creators Mobile Swiper
     initCreatorsSwiper();
+
+    // GSAP Scroll-triggered section reveals
+    initScrollRevealEffects();
 });
 
 
@@ -1426,19 +1429,36 @@ function initImageComparison() {
         if (window.innerWidth < 992) {
             if (!creatorsSwiper) {
                 creatorsSwiper = new Swiper('.creators-swiper', {
-                    slidesPerView: 1.2,
-                    spaceBetween: 20,
+                    slidesPerView: 1.3,
+                    spaceBetween: 16,
                     loop: false,
                     grabCursor: true,
                     autoHeight: true,
+                    speed: 600,
+                    freeMode: {
+                        enabled: true,
+                        momentum: true,
+                        momentumRatio: 0.8,
+                        momentumBounce: true,
+                        momentumBounceRatio: 0.6,
+                    },
                     pagination: {
                         el: '.creators-pagination',
                         clickable: true,
+                        dynamicBullets: true,
                     },
                     breakpoints: {
+                        480: {
+                            slidesPerView: 1.8,
+                            spaceBetween: 18,
+                        },
                         576: {
-                            slidesPerView: 2.2,
-                            spaceBetween: 24,
+                            slidesPerView: 2.3,
+                            spaceBetween: 20,
+                        },
+                        768: {
+                            slidesPerView: 2.8,
+                            spaceBetween: 22,
                         }
                     }
                 });
@@ -1454,4 +1474,23 @@ function initImageComparison() {
     initOrDestroySwiper();
     window.addEventListener('resize', initOrDestroySwiper);
 })();
+
+
+/**
+ * GSAP Scroll Reveal Effects
+ * Smooth entrance for hero only — lightweight
+ */
+function initScrollRevealEffects() {
+    if (typeof gsap === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Hero card entrance
+    const heroCard = document.querySelector('.hero-section-v2-card');
+    if (heroCard) {
+        gsap.fromTo(heroCard,
+            { scale: 0.96, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.15 }
+        );
+    }
+}
 
