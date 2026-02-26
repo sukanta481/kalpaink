@@ -119,3 +119,5 @@
             </div>
         </div>
     </nav>
+    <!-- Mobile menu backdrop -->
+    <div class="navbar-backdrop" id="navbarBackdrop"></div>

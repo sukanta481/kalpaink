@@ -184,12 +184,21 @@ $crm_hero_slides = getHeroSlides();
     <!-- Meet The Creators / Our Team Section -->
     <section class="creators-section-v2 section-padding">
         <div class="container">
-            <div class="text-center mb-5">
+            <!-- Desktop header -->
+            <div class="text-center mb-5 d-none d-lg-block">
                 <span class="section-badge-v2" data-aos="fade-up"><?php echo htmlspecialchars($home_team['content_subtitle'] ?? '# OUR TEAM'); ?></span>
                 <h2 class="section-title-v2" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_team['content_title'] ?? 'MEET THE CREATORS'); ?></h2>
                 <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="200"><?php echo htmlspecialchars($home_team['content_body'] ?? 'Two dreamers who turned their passion into your brand\'s success story'); ?></p>
             </div>
-            
+            <!-- Mobile header with nav arrows -->
+            <div class="creators-mobile-header d-lg-none" data-aos="fade-up">
+                <h2 class="creators-mobile-title">Our Team</h2>
+                <div class="creators-nav-arrows">
+                    <button class="creators-arrow-btn creators-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                    <button class="creators-arrow-btn creators-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
             <div class="swiper creators-swiper">
                 <div class="swiper-wrapper creators-grid-v2" data-aos="fade-up" data-aos-delay="300">
                     <?php foreach ($team_members as $index => $member): ?>
@@ -200,20 +209,19 @@ $crm_hero_slides = getHeroSlides();
                             <?php else: ?>
                                 <div class="img-placeholder-box img-placeholder-tall"></div>
                             <?php endif; ?>
-                            
-                            <div class="creator-info-v2">
-                                <div class="creator-details-v2">
-                                    <h3><?php echo htmlspecialchars($member['name'] ?? 'Creator Name', ENT_QUOTES, 'UTF-8', false); ?></h3>
-                                    <span><?php echo htmlspecialchars($member['position'] ?? 'Role / Position', ENT_QUOTES, 'UTF-8', false); ?></span>
-                                </div>
-                                <div class="creator-social-v2">
-                                    <?php if (!empty($member['linkedin'])): ?>
-                                        <a href="<?php echo htmlspecialchars($member['linkedin']); ?>" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-                                    <?php endif; ?>
-                                    <?php if (!empty($member['twitter'])): ?>
-                                        <a href="<?php echo htmlspecialchars($member['twitter']); ?>" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
-                                    <?php endif; ?>
-                                </div>
+                        </div>
+                        <div class="creator-info-v2">
+                            <div class="creator-details-v2">
+                                <h3><?php echo htmlspecialchars($member['name'] ?? 'Creator Name', ENT_QUOTES, 'UTF-8', false); ?></h3>
+                                <span><?php echo htmlspecialchars($member['position'] ?? 'Role / Position', ENT_QUOTES, 'UTF-8', false); ?></span>
+                            </div>
+                            <div class="creator-social-v2">
+                                <?php if (!empty($member['linkedin'])): ?>
+                                    <a href="<?php echo htmlspecialchars($member['linkedin']); ?>" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                                <?php endif; ?>
+                                <?php if (!empty($member['twitter'])): ?>
+                                    <a href="<?php echo htmlspecialchars($member['twitter']); ?>" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -228,8 +236,14 @@ $crm_hero_slides = getHeroSlides();
     <!-- Case Studies Section -->
     <section class="case-studies-section-v2 section-padding" id="portfolio">
         <div class="container">
-            <div class="text-center mb-5">
+            <!-- Desktop header -->
+            <div class="text-center mb-5 d-none d-lg-block">
                 <h2 class="section-title-v2" data-aos="fade-up"><?php echo htmlspecialchars($home_cases['content_title'] ?? 'CASE STUDIES'); ?></h2>
+            </div>
+            <!-- Mobile header with View All -->
+            <div class="cases-mobile-header d-lg-none" data-aos="fade-up">
+                <h2 class="cases-mobile-title">Case Studies</h2>
+                <a href="case-studies.php" class="cases-viewall-btn">View All</a>
             </div>
             
             <?php 
@@ -296,7 +310,37 @@ $crm_hero_slides = getHeroSlides();
                 <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_testimonials['content_subtitle'] ?? 'Real feedback from real partners who trusted us with their brands'); ?></p>
             </div>
             
-            <div class="testimonials-row-v2" data-aos="fade-up" data-aos-delay="200">
+            <div class="swiper testimonials-swiper d-lg-none">
+                <div class="swiper-wrapper">
+                    <?php foreach ($testimonials as $index => $testimonial): ?>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card-v2-mobile">
+                            <div class="testimonial-mobile-top">
+                                <div class="testimonial-mobile-avatar">
+                                    <?php if (!empty($testimonial['client_avatar'])): ?>
+                                    <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
+                                    <?php else: ?>
+                                    <div class="avatar-placeholder-v2"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="testimonial-mobile-body">
+                                <p class="testimonial-mobile-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
+                                <h5 class="testimonial-mobile-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h5>
+                                <p class="testimonial-mobile-role"><?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?></p>
+                            </div>
+                            <div class="testimonial-mobile-nav">
+                                <button class="testimonial-nav-btn testimonial-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                                <button class="testimonial-nav-btn testimonial-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Desktop testimonials row -->
+            <div class="testimonials-row-v2 d-none d-lg-flex" data-aos="fade-up" data-aos-delay="200">
                 <?php foreach ($testimonials as $index => $testimonial): ?>
                 <div class="testimonial-card-v2">
                     <div class="testimonial-card-v2-inner">

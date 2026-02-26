@@ -290,43 +290,49 @@ function showAlert(type, message) {
 }
 
 /**
- * Mobile menu - simplified handler for proper navigation
+ * Mobile menu - slide-in panel with backdrop
  */
 function initMobileMenu() {
     const navbarCollapse = document.querySelector('.navbar-collapse');
     const navbarToggler = document.querySelector('.navbar-toggler');
+    const backdrop = document.getElementById('navbarBackdrop');
 
     if (!navbarCollapse || !navbarToggler) return;
 
-    // Fix active link color on mobile menu open
-    function fixActiveLinksColor() {
+    function openMenu() {
+        if (backdrop) backdrop.classList.add('active');
+        document.body.classList.add('menu-open');
         if (window.innerWidth < 992) {
-            const activeLinks = document.querySelectorAll('.navbar-nav .nav-link.active');
-            activeLinks.forEach(link => {
+            document.querySelectorAll('.navbar-nav .nav-link.active').forEach(link => {
                 link.style.color = '#ffffff';
             });
         }
     }
 
-    // Apply fix when menu is shown
-    navbarCollapse.addEventListener('shown.bs.collapse', fixActiveLinksColor);
+    function closeMenu() {
+        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+        if (bsCollapse) bsCollapse.hide();
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
 
-    // Also apply on toggler click
-    navbarToggler.addEventListener('click', function () {
-        setTimeout(fixActiveLinksColor, 50);
+    // Bootstrap events
+    navbarCollapse.addEventListener('shown.bs.collapse', openMenu);
+    navbarCollapse.addEventListener('hidden.bs.collapse', function () {
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.classList.remove('menu-open');
     });
 
-    // Close menu when clicking outside (not on menu or toggler)
-    document.addEventListener('click', function (e) {
-        if (window.innerWidth < 992 &&
-            navbarCollapse.classList.contains('show') &&
-            !navbarCollapse.contains(e.target) &&
-            !navbarToggler.contains(e.target)) {
-            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-            if (bsCollapse) {
-                bsCollapse.hide();
-            }
-        }
+    // Backdrop click closes menu
+    if (backdrop) {
+        backdrop.addEventListener('click', closeMenu);
+    }
+
+    // Close on nav link click (for same-page anchor links)
+    navbarCollapse.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function () {
+            if (window.innerWidth < 992) closeMenu();
+        });
     });
 }
 
@@ -1429,18 +1435,13 @@ function initImageComparison() {
         if (window.innerWidth < 992) {
             if (!creatorsSwiper) {
                 creatorsSwiper = new Swiper('.creators-swiper', {
-                    slidesPerView: 1.3,
+                    slidesPerView: 1.15,
                     spaceBetween: 16,
-                    loop: false,
                     grabCursor: true,
-                    autoHeight: true,
-                    speed: 600,
-                    freeMode: {
-                        enabled: true,
-                        momentum: true,
-                        momentumRatio: 0.8,
-                        momentumBounce: true,
-                        momentumBounceRatio: 0.6,
+                    speed: 400,
+                    navigation: {
+                        nextEl: '.creators-next',
+                        prevEl: '.creators-prev',
                     },
                     pagination: {
                         el: '.creators-pagination',
@@ -1449,15 +1450,15 @@ function initImageComparison() {
                     },
                     breakpoints: {
                         480: {
-                            slidesPerView: 1.8,
+                            slidesPerView: 1.5,
                             spaceBetween: 18,
                         },
                         576: {
-                            slidesPerView: 2.3,
+                            slidesPerView: 2,
                             spaceBetween: 20,
                         },
                         768: {
-                            slidesPerView: 2.8,
+                            slidesPerView: 2.5,
                             spaceBetween: 22,
                         }
                     }
@@ -1473,6 +1474,28 @@ function initImageComparison() {
 
     initOrDestroySwiper();
     window.addEventListener('resize', initOrDestroySwiper);
+})();
+
+
+/**
+ * Testimonials Mobile Swiper
+ */
+(function initTestimonialsSwiper() {
+    const testimonialsSwiperEl = document.querySelector('.testimonials-swiper');
+    if (!testimonialsSwiperEl || typeof Swiper === 'undefined') return;
+
+    new Swiper('.testimonials-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: false,
+        speed: 400,
+        grabCursor: true,
+        autoHeight: true,
+        navigation: {
+            nextEl: '.testimonial-next',
+            prevEl: '.testimonial-prev',
+        },
+    });
 })();
 
 
