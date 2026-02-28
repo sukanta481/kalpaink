@@ -68,42 +68,59 @@ $team_members = !empty($team_members_db) ? $team_members_db : [
 
 // Get Services from CRM (with fallback to static data)
 $services_db = getServicesFromDB(true);
-$services = !empty($services_db) ? array_map(function($s) {
+// Image map for service illustrations
+$service_images = [
+    'Graphics Design' => 'assets/images/services/Graphics Design.png',
+    'Brand Identity' => 'assets/images/services/Brand Identity.png',
+    'Social Media Marketing' => 'assets/images/services/Social Media Marketing.png',
+    'Web Development' => 'assets/images/services/Web Development.png',
+    'SEO Services' => 'assets/images/services/SEO Services.png',
+    'Content Marketing' => 'assets/images/services/Content Marketing.png',
+];
+
+$services = !empty($services_db) ? array_map(function($s) use ($service_images) {
     return [
         'icon' => $s['icon'],
         'title' => $s['title'],
-        'description' => $s['short_description']
+        'description' => $s['short_description'],
+        'image' => $service_images[$s['title']] ?? 'assets/images/services/Graphics Design.png'
     ];
 }, $services_db) : [
     [
         'icon' => 'fa-palette',
         'title' => 'Graphics Design',
-        'description' => 'Eye-catching visuals that capture your brand essence. From logos to complete brand identity packages.'
+        'description' => 'Eye-catching visuals that capture your brand essence. From logos to complete brand identity packages.',
+        'image' => 'assets/images/services/Graphics Design.png'
     ],
     [
         'icon' => 'fa-bullhorn',
         'title' => 'Brand Identity',
-        'description' => 'Build a memorable brand with consistent visual identity across all touchpoints.'
+        'description' => 'Build a memorable brand with consistent visual identity across all touchpoints.',
+        'image' => 'assets/images/services/Brand Identity.png'
     ],
     [
         'icon' => 'fa-share-nodes',
         'title' => 'Social Media Marketing',
-        'description' => 'Strategic social media campaigns that engage audiences and drive conversions.'
+        'description' => 'Strategic social media campaigns that engage audiences and drive conversions.',
+        'image' => 'assets/images/services/Social Media Marketing.png'
     ],
     [
         'icon' => 'fa-code',
         'title' => 'Web Development',
-        'description' => 'Modern, responsive websites that deliver exceptional user experiences.'
+        'description' => 'Modern, responsive websites that deliver exceptional user experiences.',
+        'image' => 'assets/images/services/Web Development.png'
     ],
     [
         'icon' => 'fa-magnifying-glass',
         'title' => 'SEO Services',
-        'description' => 'Improve your search rankings and drive organic traffic to your website.'
+        'description' => 'Improve your search rankings and drive organic traffic to your website.',
+        'image' => 'assets/images/services/SEO Services.png'
     ],
     [
         'icon' => 'fa-pen-nib',
         'title' => 'Content Marketing',
-        'description' => 'Compelling content that tells your story and connects with your audience.'
+        'description' => 'Compelling content that tells your story and connects with your audience.',
+        'image' => 'assets/images/services/Content Marketing.png'
     ]
 ];
 

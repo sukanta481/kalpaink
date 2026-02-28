@@ -31,17 +31,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Mobile menu close on link click
     initMobileMenu();
 
-    // Mouse parallax effect for hero masonry
-    initParallaxEffect();
+    // Hero Carousel
+    initHeroCarousel();
 
-    // GSAP Text reveal animation
-    initTextReveal();
-
-    // Mobile Hero Swipe Deck
-    initMobileHeroSwipe();
-
-    // Mobile Creator Flip Cards
-    initCreatorFlipCards();
+    // Grid reveal (scroll intersection for v2 sections)
+    initGridReveal();
 
     // Mobile Services Neon Spotlight
     initServicesSpotlight();
@@ -79,6 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // GSAP Scroll-triggered section reveals
     initScrollRevealEffects();
+
+    // Trusted Brands staggered scroll reveal
+    initBrandsScrollReveal();
 });
 
 
@@ -438,402 +435,138 @@ function initParallax() {
 initParallax();
 
 /**
- * Mouse Parallax Effect for Hero Masonry Grid
- * Creates subtle movement opposite to mouse direction
+ * Hero Carousel
+ * Custom carousel with fade+slide transitions, auto-slide, arrows, and dots
  */
-function initParallaxEffect() {
-    // Only run on desktop
-    if (window.innerWidth < 992) return;
+function initHeroCarousel() {
+    const carousel = document.getElementById('heroCarousel');
+    if (!carousel) return;
 
-    const containers = document.querySelectorAll('[data-parallax-container]');
-    if (containers.length === 0) return;
+    const slides = carousel.querySelectorAll('.hero-slide');
+    const dots = carousel.querySelectorAll('.hero-dot');
+    const prevBtn = carousel.querySelector('.hero-arrow-prev');
+    const nextBtn = carousel.querySelector('.hero-arrow-next');
 
-    document.addEventListener('mousemove', function (e) {
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-
-        containers.forEach(container => {
-            const items = container.querySelectorAll('[data-parallax]');
-            items.forEach(item => {
-                const speed = parseFloat(item.dataset.parallax) || 0.05;
-                const x = (centerX - mouseX) * speed;
-                const y = (centerY - mouseY) * speed;
-
-                // Apply transform with existing animation
-                item.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        });
-    });
-
-    // Reset on mouse leave
-    document.addEventListener('mouseleave', function () {
-        containers.forEach(container => {
-            const items = container.querySelectorAll('[data-parallax]');
-            items.forEach(item => {
-                item.style.transform = 'translate(0, 0)';
-            });
-        });
-    });
-}
-
-/**
- * GSAP Text Reveal Animation
- * Words slide up one by one from behind a mask
- */
-function initTextReveal() {
-    // Check if GSAP is loaded
-    if (typeof gsap === 'undefined') {
-        console.warn('GSAP not loaded, skipping text reveal animation');
-        return;
-    }
-
-    const heroTitles = document.querySelectorAll('.hero-title');
-
-    heroTitles.forEach((title, index) => {
-        // Get original text and wrap each word
-        const text = title.textContent.trim();
-        const words = text.split(' ');
-
-        // Clear and rebuild with wrapped words
-        title.innerHTML = words.map(word =>
-            `<span class="word"><span class="word-inner">${word}</span></span>`
-        ).join(' ');
-
-        // Only animate the first (visible) slide immediately
-        if (index === 0) {
-            const wordInners = title.querySelectorAll('.word-inner');
-
-            // GSAP animation for each word
-            gsap.to(wordInners, {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "power3.out",
-                delay: 0.3,
-                onComplete: () => {
-                    title.classList.add('revealed');
-                }
-            });
-        }
-    });
-
-    // Re-animate on slide change
-    const heroCarousel = document.getElementById('heroCarousel');
-    if (heroCarousel) {
-        heroCarousel.addEventListener('slid.bs.carousel', function (event) {
-            const activeSlide = event.relatedTarget;
-            const title = activeSlide.querySelector('.hero-title');
-
-            if (title) {
-                const wordInners = title.querySelectorAll('.word-inner');
-
-                // Reset and animate
-                gsap.fromTo(wordInners,
-                    { y: '100%', opacity: 0 },
-                    {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: "power3.out",
-                        onComplete: () => {
-                            title.classList.add('revealed');
-                        }
-                    }
-                );
-            }
-        });
-    }
-}
-
-/**
- * Mobile Hero Swipe Deck
- * Touch-enabled card swiping like Tinder/Instagram Stories
- */
-function initMobileHeroSwipe() {
-    // Only run on mobile/tablet
-    if (window.innerWidth >= 992) return;
-
-    const deck = document.getElementById('swipeDeck');
-    if (!deck) return;
-
-    const cards = deck.querySelectorAll('.swipe-card');
-    const indicators = document.querySelectorAll('.swipe-indicator');
-
-    if (cards.length === 0) return;
+    if (slides.length === 0) return;
 
     let currentIndex = 0;
-    let startX = 0;
-    let startY = 0;
-    let currentX = 0;
-    let isDragging = false;
-    let autoRotateInterval;
+    let autoSlideInterval;
+    let isTransitioning = false;
 
-    // Update card positions based on current index
-    function updateCardPositions(skipAnimation = false) {
-        cards.forEach((card, index) => {
-            // Calculate the relative position (0, 1, 2) from current index
-            const relativeIndex = (index - currentIndex + cards.length) % cards.length;
+    function goToSlide(index) {
+        if (isTransitioning || index === currentIndex) return;
+        isTransitioning = true;
 
-            if (skipAnimation) {
-                card.style.transition = 'none';
-            } else {
-                card.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
-            }
+        // Remove active from current slide
+        slides[currentIndex].classList.remove('active');
+        dots[currentIndex].classList.remove('active');
 
-            // Reset inline styles - CSS will handle positioning via data-index
-            card.style.transform = '';
-            card.style.opacity = '';
+        // Set new active
+        currentIndex = index;
+        slides[currentIndex].classList.add('active');
+        dots[currentIndex].classList.add('active');
 
-            card.setAttribute('data-index', relativeIndex);
-        });
-
-        // Update indicators
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentIndex);
-        });
-    }
-
-    // Move to next card with Tinder-style animation
-    function nextCard() {
-        const oldCard = deck.querySelector('.swipe-card[data-index="0"]');
-
-        // Update index
-        currentIndex = (currentIndex + 1) % cards.length;
-
-        // First, update positions without animation for the card coming to front
-        cards.forEach((card, index) => {
-            const relativeIndex = (index - currentIndex + cards.length) % cards.length;
-
-            if (card === oldCard) {
-                // Keep the old card off-screen, it will animate back later
-                card.style.transition = 'none';
-                card.style.transform = 'translateX(-50%) scale(0.84) translateY(30px)';
-                card.style.opacity = '0';
-            } else {
-                card.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
-                card.style.transform = '';
-                card.style.opacity = '';
-            }
-
-            card.setAttribute('data-index', relativeIndex);
-        });
-
-        // Fade in the old card at back after a delay
+        // Allow transitions to complete
         setTimeout(() => {
-            if (oldCard) {
-                oldCard.style.transition = 'opacity 0.3s ease';
-                oldCard.style.opacity = '';
-            }
-        }, 400);
+            isTransitioning = false;
+        }, 600);
+    }
 
-        // Update indicators
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentIndex);
+    function nextSlide() {
+        goToSlide((currentIndex + 1) % slides.length);
+    }
+
+    function prevSlide() {
+        goToSlide((currentIndex - 1 + slides.length) % slides.length);
+    }
+
+    function startAutoSlide() {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(nextSlide, 4000);
+    }
+
+    function resetAutoSlide() {
+        startAutoSlide();
+    }
+
+    // Arrow buttons
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetAutoSlide();
         });
     }
 
-    // Move to previous card
-    function prevCard() {
-        const oldCard = deck.querySelector('.swipe-card[data-index="0"]');
-
-        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-
-        cards.forEach((card, index) => {
-            const relativeIndex = (index - currentIndex + cards.length) % cards.length;
-
-            if (card === oldCard) {
-                card.style.transition = 'none';
-                card.style.transform = 'translateX(-50%) scale(0.84) translateY(30px)';
-                card.style.opacity = '0';
-            } else {
-                card.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
-                card.style.transform = '';
-                card.style.opacity = '';
-            }
-
-            card.setAttribute('data-index', relativeIndex);
-        });
-
-        setTimeout(() => {
-            if (oldCard) {
-                oldCard.style.transition = 'opacity 0.3s ease';
-                oldCard.style.opacity = '';
-            }
-        }, 400);
-
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentIndex);
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetAutoSlide();
         });
     }
 
-    // Handle touch start
-    function handleTouchStart(e) {
-        if (window.innerWidth >= 992) return;
-
-        const card = e.target.closest('.swipe-card');
-        if (!card || card.getAttribute('data-index') !== '0') return;
-
-        isDragging = true;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        currentX = startX;
-
-        // Pause auto-rotate while dragging
-        clearInterval(autoRotateInterval);
-
-        // Disable transition during drag for responsiveness
-        card.style.transition = 'none';
-    }
-
-    // Handle touch move
-    function handleTouchMove(e) {
-        if (!isDragging || window.innerWidth >= 992) return;
-
-        const card = deck.querySelector('.swipe-card[data-index="0"]');
-        if (!card) return;
-
-        currentX = e.touches[0].clientX;
-        const diffX = currentX - startX;
-        const diffY = e.touches[0].clientY - startY;
-
-        // Only handle horizontal swipes
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            e.preventDefault();
-
-            // Apply transform during drag with requestAnimationFrame for smoothness
-            requestAnimationFrame(() => {
-                const rotation = diffX * 0.08;
-                const opacity = 1 - Math.abs(diffX) / 400;
-
-                card.style.transform = `translateX(calc(-50% + ${diffX}px)) rotate(${rotation}deg) scale(1)`;
-                card.style.opacity = Math.max(0.6, opacity);
-            });
-        }
-    }
-
-    // Handle touch end
-    function handleTouchEnd(e) {
-        if (!isDragging || window.innerWidth >= 992) return;
-
-        isDragging = false;
-
-        const card = deck.querySelector('.swipe-card[data-index="0"]');
-        if (!card) return;
-
-        const diffX = currentX - startX;
-        const threshold = 60; // Minimum swipe distance
-
-        // Re-enable transition for fly-off animation
-        card.style.transition = 'transform 0.35s ease-out, opacity 0.35s ease-out';
-
-        if (Math.abs(diffX) > threshold) {
-            if (diffX > 0) {
-                // Swiped right - fly off to right
-                card.style.transform = 'translateX(120%) rotate(15deg) scale(0.9)';
-                card.style.opacity = '0';
-                setTimeout(() => {
-                    prevCard();
-                }, 300);
-            } else {
-                // Swiped left - fly off to left
-                card.style.transform = 'translateX(-170%) rotate(-15deg) scale(0.9)';
-                card.style.opacity = '0';
-                setTimeout(() => {
-                    nextCard();
-                }, 300);
-            }
-        } else {
-            // Reset position if not swiped enough
-            card.style.transform = 'translateX(-50%) scale(1) translateY(0)';
-            card.style.opacity = '1';
-        }
-
-        // Restart auto-rotate
-        startAutoRotate();
-    }
-
-    // Auto-rotate cards
-    function startAutoRotate() {
-        clearInterval(autoRotateInterval);
-        autoRotateInterval = setInterval(() => {
-            if (window.innerWidth < 992) {
-                nextCard();
-            }
-        }, 4000);
-    }
-
-    // Click on indicators
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            currentIndex = index;
-            updateCardPositions();
-            startAutoRotate();
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            goToSlide(index);
+            resetAutoSlide();
         });
     });
 
-    // Add event listeners
-    deck.addEventListener('touchstart', handleTouchStart, { passive: true });
-    deck.addEventListener('touchmove', handleTouchMove, { passive: false });
-    deck.addEventListener('touchend', handleTouchEnd, { passive: true });
+    // Pause on hover (desktop)
+    carousel.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+    carousel.addEventListener('mouseleave', startAutoSlide);
 
-    // Initial setup
-    updateCardPositions();
-    startAutoRotate();
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-    // Handle resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 992) {
-            clearInterval(autoRotateInterval);
-        } else {
-            startAutoRotate();
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        clearInterval(autoSlideInterval);
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
         }
-    });
+        resetAutoSlide();
+    }, { passive: true });
+
+    // Start auto-slide
+    startAutoSlide();
 }
 
 /**
  * Mobile Creator Flip Cards
  * Tap to flip between Professional and Creative sides
  */
-function initCreatorFlipCards() {
-    const flipCards = document.querySelectorAll('.creator-flip-mobile');
+function initGridReveal() {
+    const items = document.querySelectorAll('.grid-reveal-item');
+    if (!items.length) return;
 
-    if (!flipCards.length) return;
-
-    flipCards.forEach(card => {
-        // Tap to flip
-        card.addEventListener('click', function (e) {
-            // Don't flip if clicking on the LinkedIn button
-            if (e.target.closest('.flip-linkedin')) return;
-
-            this.classList.toggle('flipped');
-
-            // Add a subtle haptic feedback feel with a small animation
-            this.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-            }, 100);
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
         });
+    }, { threshold: 0.15 });
 
-        // Also support touch events for better mobile response
-        card.addEventListener('touchend', function (e) {
-            // Prevent double-triggering with click
-            if (e.target.closest('.flip-linkedin')) return;
-        });
+    items.forEach(function (item, index) {
+        // Stagger delay: items in same row get cascading delays
+        var columnsPerRow = 3;
+        if (item.closest('.creators-v2-grid')) columnsPerRow = 4;
+        var delay = (index % columnsPerRow) * 100;
+        item.style.transitionDelay = delay + 'ms';
+        observer.observe(item);
     });
-
-    // Optional: Auto-flip hint animation on first card after 3 seconds
-    setTimeout(() => {
-        if (flipCards[0] && window.innerWidth < 992) {
-            flipCards[0].classList.add('flipped');
-            setTimeout(() => {
-                flipCards[0].classList.remove('flipped');
-            }, 1500);
-        }
-    }, 3000);
 }
 
 /**
@@ -1421,9 +1154,9 @@ function initImageComparison() {
 
 /**
  * Creators Mobile Swiper
- * Self-invoking since script loads after DOM is ready
+ * Initializes Swiper on mobile, destroys on desktop
  */
-(function initCreatorsSwiper() {
+function initCreatorsSwiper() {
     const creatorsSwiperElement = document.querySelector('.creators-swiper');
     if (!creatorsSwiperElement) return;
 
@@ -1438,7 +1171,11 @@ function initImageComparison() {
                     slidesPerView: 1.15,
                     spaceBetween: 16,
                     grabCursor: true,
-                    speed: 400,
+                    speed: 500,
+                    cssMode: false,
+                    touchRatio: 1,
+                    resistance: true,
+                    resistanceRatio: 0.85,
                     navigation: {
                         nextEl: '.creators-next',
                         prevEl: '.creators-prev',
@@ -1474,7 +1211,7 @@ function initImageComparison() {
 
     initOrDestroySwiper();
     window.addEventListener('resize', initOrDestroySwiper);
-})();
+}
 
 
 /**
@@ -1515,5 +1252,62 @@ function initScrollRevealEffects() {
             { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.15 }
         );
     }
+}
+
+
+/**
+ * Trusted Brands - Staggered Scroll Reveal
+ * Logos fade-in-up sequentially when section enters viewport
+ */
+function initBrandsScrollReveal() {
+    var brandsGrid = document.querySelector('.brands-grid');
+    if (!brandsGrid) return;
+
+    var brandItems = brandsGrid.querySelectorAll('.brand-item');
+    if (!brandItems.length) return;
+
+    // Apply hidden state immediately
+    brandItems.forEach(function (item) {
+        item.classList.add('fade-up-hidden');
+    });
+
+    // Delay observer start so the page renders first
+    // This prevents the animation from firing before the user can see it
+    setTimeout(function () {
+        var brandsObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    // Stagger each logo with 150ms delay for dramatic wave effect
+                    brandItems.forEach(function (item, index) {
+                        item.style.transitionDelay = (index * 150) + 'ms';
+                    });
+
+                    // Double-rAF to ensure browser paints the hidden state first
+                    requestAnimationFrame(function () {
+                        requestAnimationFrame(function () {
+                            brandItems.forEach(function (item) {
+                                item.classList.add('fade-up-visible');
+                            });
+                        });
+                    });
+
+                    // Unobserve (one-shot animation)
+                    brandsObserver.unobserve(entry.target);
+
+                    // Clean up transition-delay after all animations finish
+                    setTimeout(function () {
+                        brandItems.forEach(function (item) {
+                            item.style.transitionDelay = '';
+                        });
+                    }, brandItems.length * 150 + 1000);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        brandsObserver.observe(brandsGrid);
+    }, 600);
 }
 

@@ -1,367 +1,432 @@
-<?php 
+<?php
 $page_title = 'Home';
-include 'includes/header.php'; 
+include 'includes/header.php';
 
 // Get page content from CMS (auto-sync)
 $home_content = getPageContent('home');
-$home_hero = $home_content['hero'] ?? null;
-$home_trust = $home_content['trust_bar'] ?? null;
-$home_welcome = $home_content['welcome'] ?? null;
 $home_svc = $home_content['services_section'] ?? null;
-$home_about = $home_content['about'] ?? null;
-$home_team = $home_content['team'] ?? null;
-$home_cases = $home_content['case_studies'] ?? null;
-$home_vlog = $home_content['vlog_reel'] ?? null;
-$home_testimonials = $home_content['testimonials'] ?? null;
 $home_cta = $home_content['cta'] ?? null;
-
-// Parse JSON extras
-$hero_extra = !empty($home_hero['content_extra']) ? json_decode($home_hero['content_extra'], true) : [];
-$welcome_extra = !empty($home_welcome['content_extra']) ? json_decode($home_welcome['content_extra'], true) : [];
 
 // Get clients for marquee (auto-sync)
 $marquee_clients = getClientsFromDB();
-
-// Get hero slides from CRM (auto-sync)
-$crm_hero_slides = getHeroSlides();
 ?>
 
-    <!-- Hero Section - Blue Rounded Card -->
-    <section class="hero-section-v2-wrapper">
-        <div class="container">
-            <div class="hero-section-v2-card">
-                <div class="hero-v2-content text-center">
-                    <h1 class="hero-v2-title" data-aos="fade-up">
-                        We <span class="hero-highlight">Design</span> Ideas<br>That Think Before <span class="hero-outline">They</span> Speak.
-                    </h1>
-                    <p class="hero-v2-subtitle" data-aos="fade-up" data-aos-delay="100">
-                        <strong>Branding</strong> · <span class="hero-cursive">Design</span> · <strong>VISUAL THINKING</strong>
-                    </p>
-                    <div class="hero-v2-buttons" data-aos="fade-up" data-aos-delay="200">
-                        <a href="<?php echo $hero_extra['button_link'] ?? 'contact.php'; ?>" class="btn-hero-white"><?php echo $hero_extra['button_text'] ?? 'get start'; ?></a>
+    <!-- Hero Section - Royal Blue Carousel -->
+    <section class="hero-section">
+        <div class="hero-carousel" id="heroCarousel">
+            <!-- Slide 1 — Brand Identity -->
+            <div class="hero-slide hero-slide-bg-1 active" data-slide="0">
+                <div class="hero-slide-overlay"></div>
+                <div class="hero-slide-inner">
+                    <div class="hero-text-col">
+                        <div class="hero-content">
+                            <span class="hero-pill">Creative Design Studio</span>
+                            <h1 class="hero-headline">
+                                We Design Ideas<br>
+                                That Think Before<br>
+                                They Speak.
+                            </h1>
+                            <p class="hero-subtext">Branding &middot; Design &middot; VISUAL THINKING</p>
+                            <div class="hero-buttons">
+                                <a href="contact.php" class="hero-btn hero-btn-primary">Get Started</a>
+                                <a href="services.php" class="hero-btn hero-btn-secondary">Our Services</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Client Trust Bar -->
-    <section class="client-trust-bar">
-        <p class="trust-text" data-aos="fade-up"><?php echo htmlspecialchars($home_trust['content_title'] ?? 'Trusted by 50+ business worldwide.'); ?></p>
-        <div class="brands-ticker">
-            <div class="brands-ticker-track">
-                <?php
-                $fallback_clients = [
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                    ['client_name' => 'BRANDS', 'client_logo' => null],
-                ];
-                $clients_list = !empty($marquee_clients) ? $marquee_clients : $fallback_clients;
-                
-                foreach ($clients_list as $mc):
-                ?>
-                <span class="brand-name-item">
-                    <?php if (!empty($mc['client_logo'])): ?>
-                        <img src="<?php echo SITE_URL . '/' . $mc['client_logo']; ?>" 
-                             alt="<?php echo htmlspecialchars($mc['client_name']); ?>"
-                             style="max-height: 30px; max-width: 140px; object-fit: contain;">
-                    <?php else: ?>
-                        <?php echo htmlspecialchars($mc['client_name']); ?>
-                    <?php endif; ?>
-                </span>
-                <?php
-                endforeach;
-                ?>
+            <!-- Slide 2 — Digital Marketing -->
+            <div class="hero-slide hero-slide-bg-2" data-slide="1">
+                <div class="hero-slide-overlay"></div>
+                <div class="hero-slide-inner">
+                    <div class="hero-text-col">
+                        <div class="hero-content">
+                            <span class="hero-pill">Social Media &amp; Growth</span>
+                            <h1 class="hero-headline">
+                                Reimagining<br>
+                                Brands with<br>
+                                Purpose
+                            </h1>
+                            <p class="hero-subtext">Strategy &middot; Content &middot; DIGITAL PRESENCE</p>
+                            <div class="hero-buttons">
+                                <a href="contact.php" class="hero-btn hero-btn-primary">Get Quote</a>
+                                <a href="case-studies.php" class="hero-btn hero-btn-secondary">Case Studies</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 — Web Development -->
+            <div class="hero-slide hero-slide-bg-3" data-slide="2">
+                <div class="hero-slide-overlay"></div>
+                <div class="hero-slide-inner">
+                    <div class="hero-text-col">
+                        <div class="hero-content">
+                            <span class="hero-pill">Web &amp; Digital Experience</span>
+                            <h1 class="hero-headline">
+                                Strategy First.<br>
+                                Design<br>
+                                Always.
+                            </h1>
+                            <p class="hero-subtext">Development &middot; SEO &middot; VISUAL EXPERIENCE</p>
+                            <div class="hero-buttons">
+                                <a href="case-studies.php" class="hero-btn hero-btn-primary">View Work</a>
+                                <a href="contact.php" class="hero-btn hero-btn-secondary">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <button class="hero-arrow hero-arrow-prev" aria-label="Previous slide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="hero-arrow hero-arrow-next" aria-label="Next slide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <!-- Navigation Dots -->
+            <div class="hero-dots">
+                <button class="hero-dot active" data-slide="0" aria-label="Slide 1"></button>
+                <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
+                <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
             </div>
         </div>
     </section>
 
-    <!-- Welcome Section -->
-    <section class="welcome-section-v2 section-padding" id="about">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right">
-                    <div class="welcome-image-placeholder">
-                        <?php if (file_exists('assets/images/about-fusion.png')): ?>
-                            <img src="assets/images/about-fusion.png" alt="Welcome to Kalpanik Digital">
+    <!-- Trusted Brands Section -->
+    <section class="trusted-brands">
+        <div class="trusted-brands-header">
+            <p class="trusted-brands-heading">Trusted by 250+ business worldwide</p>
+            <span class="trusted-brands-divider"></span>
+        </div>
+
+        <?php
+        $fallback_clients = [
+            ['client_name' => 'Acme Corp', 'client_logo' => null],
+            ['client_name' => 'TechFlow', 'client_logo' => null],
+            ['client_name' => 'Brandify', 'client_logo' => null],
+            ['client_name' => 'DigitalPro', 'client_logo' => null],
+            ['client_name' => 'MediaMax', 'client_logo' => null],
+            ['client_name' => 'StartupXYZ', 'client_logo' => null],
+            ['client_name' => 'CloudNine', 'client_logo' => null],
+            ['client_name' => 'Innovate Inc', 'client_logo' => null],
+        ];
+        $clients_list = !empty($marquee_clients) ? $marquee_clients : $fallback_clients;
+        ?>
+
+        <!-- Desktop: Static Grid -->
+        <div class="brands-grid">
+            <?php foreach ($clients_list as $mc): ?>
+            <span class="brand-item">
+                <?php if (!empty($mc['client_logo'])): ?>
+                    <img src="<?php echo SITE_URL . '/' . $mc['client_logo']; ?>"
+                         alt="<?php echo htmlspecialchars($mc['client_name']); ?>">
+                <?php else: ?>
+                    <?php echo htmlspecialchars($mc['client_name']); ?>
+                <?php endif; ?>
+            </span>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Mobile: Marquee Strip -->
+        <div class="brands-marquee">
+            <div class="brands-marquee-track">
+                <?php for ($loop = 0; $loop < 2; $loop++): ?>
+                    <?php foreach ($clients_list as $mc): ?>
+                    <span class="brand-item-mobile">
+                        <?php if (!empty($mc['client_logo'])): ?>
+                            <img src="<?php echo SITE_URL . '/' . $mc['client_logo']; ?>"
+                                 alt="<?php echo htmlspecialchars($mc['client_name']); ?>">
                         <?php else: ?>
-                            <div class="img-placeholder-box"></div>
+                            <?php echo htmlspecialchars($mc['client_name']); ?>
                         <?php endif; ?>
-                    </div>
+                    </span>
+                    <?php endforeach; ?>
+                <?php endfor; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome Section - Fusion Concept -->
+    <section class="welcome-section section-padding" id="about">
+        <div class="container">
+            <div class="welcome-card">
+                <!-- Mobile: Sandwich Layout (Headline → Image → Content) -->
+                <div class="welcome-header-mobile d-lg-none text-center" data-aos="fade-up">
+                    <span class="welcome-badge">Who We Are</span>
+                    <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
+                    <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
                 </div>
-                <div class="col-lg-7" data-aos="fade-left">
-                    <div class="welcome-text-v2">
-                        <h2 class="welcome-title-v2"><?php echo $home_welcome['content_title'] ?? 'WELCOME TO<br>KALPANIK DIGITAL!'; ?></h2>
-                        <?php echo $home_welcome['content_body'] ?? '<p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
-                        <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we\'re the creative studio that brings visions to life.</p>'; ?>
-                        <a href="<?php echo $welcome_extra['button_link'] ?? 'about.php'; ?>" class="btn-outline-v2"><?php echo $welcome_extra['button_text'] ?? 'know more'; ?> <i class="fas fa-arrow-right"></i></a>
+
+                <div class="row align-items-center">
+                    <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col" data-aos="fade-right" data-aos-duration="1000">
+                        <div class="welcome-image fusion-image image-comparison" data-comparison>
+                            <div class="comparison-container">
+                                <img src="assets/images/about-fusion.png" alt="Raw Concept to Brand Creation - We transform ideas into masterpieces" class="comparison-image">
+                                <div class="comparison-overlay"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 welcome-text-col" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                        <!-- Desktop: Show header here -->
+                        <div class="welcome-header-desktop d-none d-lg-block">
+                            <span class="welcome-badge">Who We Are</span>
+                            <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
+                            <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
+                        </div>
+                        <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
+                        <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we're the creative studio that brings visions to life.</p>
+                        <div class="welcome-stats" data-aos="fade-up" data-aos-delay="400">
+                            <div class="stat-item">
+                                <span class="stat-number" data-count="150" data-suffix="+">0+</span>
+                                <span class="stat-label">Brands Sculpted</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-count="5" data-suffix="+">0+</span>
+                                <span class="stat-label">Years Crafting</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-count="98" data-suffix="%">0%</span>
+                                <span class="stat-label">Happy Clients</span>
+                            </div>
+                        </div>
+                        <a href="about.php" class="btn btn-primary btn-magnetic" data-aos="fade-up" data-aos-delay="500">Discover Our Story</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Our Services Section -->
-    <section class="services-section-v2 section-padding" id="services">
+    <!-- Services Section - Illustration Cards -->
+    <section class="services-section section-padding" id="services-section">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title-v2" data-aos="fade-up"><?php echo htmlspecialchars($home_svc['content_title'] ?? 'OUR SERVICES'); ?></h2>
-                <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_svc['content_body'] ?? 'Comprehensive digital solutions to help your business grow and thrive in the digital landscape.'); ?></p>
+                <h2 class="section-title" data-aos="fade-up"><?php echo htmlspecialchars($home_svc['content_title'] ?? 'Our Services'); ?></h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_svc['content_body'] ?? 'Comprehensive digital solutions to help your business grow and thrive in the digital landscape.'); ?></p>
             </div>
             
-            <div class="services-grid-v2" data-aos="fade-up" data-aos-delay="200">
-                <?php 
-                // Map service titles to illustration image filenames
-                $service_images = [
-                    'Graphics Design' => 'Graphics Design.png',
-                    'Brand Identity' => 'Brand Identity.png',
-                    'Social Media Marketing' => 'Social Media Marketing.png',
-                    'Web Development' => 'Web Development.png',
-                    'SEO Services' => 'SEO Services.png',
-                    'Content Marketing' => 'Content Marketing.png',
-                ];
-                
-                // SVG fallback gradients for services without images
-                $service_gradients = [
-                    'fa-code' => 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-                    'fa-magnifying-glass' => 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-                    'fa-pen-nib' => 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
-                ];
-                
-                foreach ($services as $index => $service): 
-                    $title = $service['title'];
-                    $has_image = isset($service_images[$title]);
-                ?>
-                <div class="service-card-v2">
-                    <div class="service-card-v2-img">
-                        <?php if ($has_image): ?>
-                        <div class="service-illustration-box service-illustration-img">
-                            <img src="<?php echo SITE_URL; ?>/assets/images/Services/<?php echo rawurlencode($service_images[$title]); ?>" 
-                                 alt="<?php echo htmlspecialchars($title); ?>" loading="lazy">
-                        </div>
-                        <?php else: ?>
-                        <div class="service-illustration-box" style="background: <?php echo $service_gradients[$service['icon']] ?? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; ?>">
-                            <i class="fas <?php echo htmlspecialchars($service['icon']); ?>" style="font-size: 3rem; color: rgba(255,255,255,0.9);"></i>
-                        </div>
-                        <?php endif; ?>
-                    </div>
-                    <h4 class="service-card-v2-title"><?php echo htmlspecialchars($title); ?></h4>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about-section-v2 section-padding">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right">
-                    <div class="about-image-placeholder">
-                        <div class="img-placeholder-box img-placeholder-tall"></div>
-                    </div>
-                </div>
-                <div class="col-lg-7" data-aos="fade-left">
-                    <div class="about-text-v2">
-                        <h2 class="about-title-v2"><?php echo htmlspecialchars($home_about['content_title'] ?? 'ABOUT'); ?></h2>
-                        <?php echo $home_about['content_body'] ?? '<p>We are a collective of young, curious minds brought together by a shared respect for thoughtful creativity. At Kalpanik, strategy, design, and digital thinking work side by side, each informing the other.</p>
-                        <p>Our team includes planners who value clarity, designers who care deeply about form and meaning, and digital storytellers who understand how brands speak in today\'s world. We work collaboratively, guided by intent rather than urgency, with enthusiasm grounded in understanding.</p>'; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Meet The Creators / Our Team Section -->
-    <section class="creators-section-v2 section-padding">
-        <div class="container">
-            <!-- Desktop header -->
-            <div class="text-center mb-5 d-none d-lg-block">
-                <span class="section-badge-v2" data-aos="fade-up"><?php echo htmlspecialchars($home_team['content_subtitle'] ?? '# OUR TEAM'); ?></span>
-                <h2 class="section-title-v2" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_team['content_title'] ?? 'MEET THE CREATORS'); ?></h2>
-                <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="200"><?php echo htmlspecialchars($home_team['content_body'] ?? 'Two dreamers who turned their passion into your brand\'s success story'); ?></p>
-            </div>
-            <!-- Mobile header with nav arrows -->
-            <div class="creators-mobile-header d-lg-none" data-aos="fade-up">
-                <h2 class="creators-mobile-title">Our Team</h2>
-                <div class="creators-nav-arrows">
-                    <button class="creators-arrow-btn creators-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-                    <button class="creators-arrow-btn creators-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
-
-            <div class="swiper creators-swiper">
-                <div class="swiper-wrapper creators-grid-v2" data-aos="fade-up" data-aos-delay="300">
-                    <?php foreach ($team_members as $index => $member): ?>
-                    <div class="swiper-slide creator-card-v2">
-                        <div class="creator-photo-v2">
-                            <?php if (!empty($member['image_pro'])): ?>
-                                <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo htmlspecialchars($member['name']); ?>">
-                            <?php else: ?>
-                                <div class="img-placeholder-box img-placeholder-tall"></div>
-                            <?php endif; ?>
-                        </div>
-                        <div class="creator-info-v2">
-                            <div class="creator-details-v2">
-                                <h3><?php echo htmlspecialchars($member['name'] ?? 'Creator Name', ENT_QUOTES, 'UTF-8', false); ?></h3>
-                                <span><?php echo htmlspecialchars($member['position'] ?? 'Role / Position', ENT_QUOTES, 'UTF-8', false); ?></span>
+            <div class="services-gallery" data-aos="fade-up">
+                <div class="services-track">
+                    <?php foreach ($services as $index => $service): ?>
+                    <div class="service-card-wrapper">
+                        <div class="service-card">
+                            <div class="service-illustration-wrap">
+                                <img src="<?php echo $service['image']; ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" class="service-illustration" loading="lazy">
                             </div>
-                            <div class="creator-social-v2">
-                                <?php if (!empty($member['linkedin'])): ?>
-                                    <a href="<?php echo htmlspecialchars($member['linkedin']); ?>" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-                                <?php endif; ?>
-                                <?php if (!empty($member['twitter'])): ?>
-                                    <a href="<?php echo htmlspecialchars($member['twitter']); ?>" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
-                                <?php endif; ?>
+                            <h4 class="service-title"><?php echo $service['title']; ?></h4>
+                            <div class="service-card-details">
+                                <p class="service-description"><?php echo $service['description']; ?></p>
+                                <a href="services.php" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
                     <?php endforeach; ?>
                 </div>
-                <!-- Pagination for mobile -->
-                <div class="swiper-pagination creators-pagination"></div>
+            </div>
+            
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="services.php" class="btn btn-primary">View All Services</a>
             </div>
         </div>
     </section>
 
-    <!-- Case Studies Section -->
-    <section class="case-studies-section-v2 section-padding" id="portfolio">
+    <!-- Meet The Creators Section — Clean Light Grid -->
+    <section class="creators-section-v2" id="team">
         <div class="container">
-            <!-- Desktop header -->
-            <div class="text-center mb-5 d-none d-lg-block">
-                <h2 class="section-title-v2" data-aos="fade-up"><?php echo htmlspecialchars($home_cases['content_title'] ?? 'CASE STUDIES'); ?></h2>
+            <div class="creators-v2-header">
+                <span class="v2-pill">● Our Team</span>
+                <h2 class="v2-heading">Meet The Creators</h2>
+                <p class="v2-subtext">Two dreamers who turned their passion into your brand's success story</p>
             </div>
-            <!-- Mobile header with View All -->
-            <div class="cases-mobile-header d-lg-none" data-aos="fade-up">
-                <h2 class="cases-mobile-title">Case Studies</h2>
-                <a href="case-studies.php" class="cases-viewall-btn">View All</a>
-            </div>
-            
-            <?php 
-            $displayed_cases = array_slice($case_studies, 0, 3);
-            ?>
-            <div class="case-studies-grid-v2" data-aos="fade-up" data-aos-delay="100">
-                <?php foreach ($displayed_cases as $index => $case): ?>
-                <div class="case-card-v2">
-                    <div class="case-card-v2-image">
-                        <img src="<?php echo $case['image']; ?>" alt="<?php echo $case['title']; ?>" loading="lazy">
+
+            <div class="creators-v2-grid">
+                <?php foreach ($team_members as $index => $member): ?>
+                <div class="creator-v2-card grid-reveal-item">
+                    <div class="creator-v2-img">
+                        <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo htmlspecialchars($member['name']); ?>" loading="lazy">
                     </div>
-                    <div class="case-card-v2-content">
-                        <h5 class="case-card-v2-title">Brand Name</h5>
-                        <div class="case-card-v2-tags">
-                            <?php foreach ($case['tags'] as $tag): ?>
-                            <span class="case-tag-v2"><?php echo $tag; ?></span>
-                            <?php endforeach; ?>
+                    <div class="creator-v2-info">
+                        <h3 class="creator-v2-name"><?php echo htmlspecialchars($member['name']); ?></h3>
+                        <p class="creator-v2-role"><?php echo htmlspecialchars($member['position']); ?></p>
+                        <?php if (!empty($member['linkedin'])): ?>
+                        <a href="<?php echo $member['linkedin']; ?>" class="creator-v2-social" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section — Clean 3-Column Grid -->
+    <section class="case-studies-v2" id="portfolio">
+        <div class="container">
+            <div class="cases-v2-header">
+                <h2 class="v2-heading">Case Studies</h2>
+                <p class="v2-subtext">Some of our recent creative work</p>
+            </div>
+
+            <?php $displayed_cases = array_slice($case_studies, 0, 6); ?>
+            <div class="cases-v2-grid">
+                <?php foreach ($displayed_cases as $index => $case): ?>
+                <div class="case-v2-card grid-reveal-item">
+                    <div class="case-v2-img">
+                        <img src="<?php echo $case['image']; ?>" alt="<?php echo htmlspecialchars($case['title']); ?>" loading="lazy">
+                    </div>
+                    <div class="case-v2-content">
+                        <h3 class="case-v2-title"><?php echo htmlspecialchars($case['title']); ?></h3>
+                        <div class="case-v2-tags">
+                            <?php if (!empty($case['tags'])): ?>
+                            <span class="case-v2-pill"><?php echo htmlspecialchars($case['tags'][0]); ?></span>
+                            <?php endif; ?>
                         </div>
-                        <a href="case-studies.php" class="case-link-v2">View Details</a>
+                        <a href="case-studies.php" class="case-v2-link">View Details <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <?php endforeach; ?>
             </div>
 
-            <div class="text-center mt-5" data-aos="fade-up">
-                <a href="case-studies.php" class="btn-outline-v2">view more <i class="fas fa-chevron-right"></i></a>
+            <div class="text-center" style="margin-top: 48px;">
+                <a href="case-studies.php" class="btn btn-primary">View All Projects</a>
             </div>
         </div>
     </section>
 
-    <!-- Vlog & Reel Section -->
-    <section class="vlog-reel-section section-padding" id="vlog-reel">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title-v2" data-aos="fade-up"><?php echo htmlspecialchars($home_vlog['content_title'] ?? 'VLOG & REEL'); ?></h2>
-            </div>
-            
-            <div class="vlog-reel-grid" data-aos="fade-up" data-aos-delay="100">
-                <div class="vlog-card">
-                    <div class="img-placeholder-box img-placeholder-vlog"></div>
-                </div>
-                <div class="vlog-card">
-                    <div class="img-placeholder-box img-placeholder-vlog"></div>
-                </div>
-                <div class="vlog-card">
-                    <div class="img-placeholder-box img-placeholder-vlog"></div>
-                </div>
-                <div class="vlog-card">
-                    <div class="img-placeholder-box img-placeholder-vlog"></div>
-                </div>
-                <div class="vlog-card">
-                    <div class="img-placeholder-box img-placeholder-vlog"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- What Our Clients Say / Testimonials -->
+    <!-- Testimonials Section -->
     <?php if (!empty($testimonials)): ?>
-    <section class="testimonials-section-v2 section-padding">
+    <section class="testimonials-section section-padding">
         <div class="container">
+            <!-- Section Header -->
             <div class="text-center mb-5">
-                <h2 class="section-title-v2" data-aos="fade-up"><?php echo htmlspecialchars($home_testimonials['content_title'] ?? 'WHAT OUR CLIENTS SAY'); ?></h2>
-                <p class="section-subtitle-v2" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_testimonials['content_subtitle'] ?? 'Real feedback from real partners who trusted us with their brands'); ?></p>
+                <span class="section-badge" data-aos="fade-up">Client Love</span>
+                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">What Our Clients Say</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Real feedback from real partners who trusted us with their brands</p>
             </div>
             
-            <div class="swiper testimonials-swiper d-lg-none">
-                <div class="swiper-wrapper">
-                    <?php foreach ($testimonials as $index => $testimonial): ?>
-                    <div class="swiper-slide">
-                        <div class="testimonial-card-v2-mobile">
-                            <div class="testimonial-mobile-top">
-                                <div class="testimonial-mobile-avatar">
+            <!-- Testimonials - Static Card with Sliding Content -->
+            <div class="testimonials-wrapper" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-static-card">
+                    <!-- Static Quote Icon -->
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    
+                    <!-- Sliding Content -->
+                    <div class="testimonials-slider">
+                        <?php foreach ($testimonials as $index => $testimonial): ?>
+                        <div class="testimonial-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                            <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
+                            <div class="testimonial-rating">
+                                <?php 
+                                $rating = $testimonial['rating'] ?? 5;
+                                for ($i = 0; $i < 5; $i++): 
+                                ?>
+                                <i class="fas fa-star <?php echo $i < $rating ? 'filled' : ''; ?>"></i>
+                                <?php endfor; ?>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
                                     <?php if (!empty($testimonial['client_avatar'])): ?>
                                     <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
                                     <?php else: ?>
-                                    <div class="avatar-placeholder-v2"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
+                                    <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
                                     <?php endif; ?>
                                 </div>
-                            </div>
-                            <div class="testimonial-mobile-body">
-                                <p class="testimonial-mobile-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
-                                <h5 class="testimonial-mobile-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h5>
-                                <p class="testimonial-mobile-role"><?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?></p>
-                            </div>
-                            <div class="testimonial-mobile-nav">
-                                <button class="testimonial-nav-btn testimonial-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-                                <button class="testimonial-nav-btn testimonial-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                                <div class="author-info">
+                                    <h4 class="author-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h4>
+                                    <p class="author-position">
+                                        <?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?>
+                                        <?php if (!empty($testimonial['client_company'])): ?>
+                                        <span class="author-company">at <?php echo htmlspecialchars($testimonial['client_company']); ?></span>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <!-- Desktop testimonials row -->
-            <div class="testimonials-row-v2 d-none d-lg-flex" data-aos="fade-up" data-aos-delay="200">
-                <?php foreach ($testimonials as $index => $testimonial): ?>
-                <div class="testimonial-card-v2">
-                    <div class="testimonial-card-v2-inner">
-                        <div class="testimonial-avatar-v2">
-                            <?php if (!empty($testimonial['client_avatar'])): ?>
-                            <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
-                            <?php else: ?>
-                            <div class="avatar-placeholder-v2"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
-                            <?php endif; ?>
-                        </div>
-                        <p class="testimonial-text-v2">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
-                        <div class="testimonial-author-v2">
-                            <h5><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h5>
-                            <p><?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?></p>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-                <?php endforeach; ?>
+                
+                <!-- Navigation -->
+                <div class="testimonials-nav">
+                    <button class="testimonial-nav-btn prev" aria-label="Previous testimonial">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="testimonials-dots"></div>
+                    <button class="testimonial-nav-btn next" aria-label="Next testimonial">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
     <?php endif; ?>
+
+    <!-- FAQ Section - Split Screen -->
+    <section class="faq-section section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Left: Sticky Headline -->
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="faq-sticky-header" data-aos="fade-right">
+                        <div class="faq-icon-float">
+                            <i class="fas fa-question"></i>
+                        </div>
+                        <h2 class="faq-headline">Got Questions?</h2>
+                        <p class="faq-subtext">We've got answers. Find quick solutions to your most common queries.</p>
+                        <a href="contact.php" class="faq-contact-link">
+                            <span>Still have questions?</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right: Accordion -->
+                <div class="col-lg-7">
+                    <div class="accordion faq-accordion" id="faqAccordion">
+                        <?php foreach ($faqs as $index => $faq): ?>
+                        <div class="accordion-item" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 50; ?>">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button <?php echo $index > 0 ? 'collapsed' : ''; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#faq<?php echo $index; ?>">
+                                    <?php echo $faq['question']; ?>
+                                </button>
+                            </h2>
+                            <div id="faq<?php echo $index; ?>" class="accordion-collapse collapse <?php echo $index === 0 ? 'show' : ''; ?>" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <?php echo $faq['answer']; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Holographic CTA Section -->
+    <section class="cta-holographic">
+        <div class="cta-glow-bg"></div>
+        <div class="container">
+            <div class="cta-content text-center" data-aos="zoom-in" data-aos-duration="1000">
+                <h2 class="cta-headline"><?php echo htmlspecialchars($home_cta['content_title'] ?? 'Ready to Sculpt Your Legacy?'); ?></h2>
+                <p class="cta-subtext"><?php echo htmlspecialchars($home_cta['content_body'] ?? 'Let\'s transform your vision into a digital masterpiece'); ?></p>
+                <a href="<?php echo htmlspecialchars($home_cta['extra']['button_link'] ?? 'contact.php'); ?>" class="cta-pulse-btn">
+                    <span class="btn-text"><?php echo htmlspecialchars($home_cta['extra']['button_text'] ?? 'Let\'s Create Together'); ?></span>
+                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+        <!-- Floating particles for depth -->
+        <div class="cta-particles">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </section>
 
 <?php include 'includes/footer.php'; ?>

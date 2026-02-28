@@ -14,14 +14,14 @@
     <link rel="icon" href="<?php echo SITE_FAVICON; ?>">
     <link rel="apple-touch-icon" href="<?php echo SITE_FAVICON; ?>">
     <?php else: ?>
-    <link rel="icon" type="image/png" href="<?php echo SITE_URL; ?>/assets/images/kalpaink favicon.png">
-    <link rel="apple-touch-icon" href="<?php echo SITE_URL; ?>/assets/images/kalpaink favicon.png">
+    <link rel="icon" type="image/png" href="assets/images/kalpaink favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/kalpaink favicon.png">
     <?php endif; ?>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,9 +31,6 @@
     
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     
     <!-- Custom CSS (with auto cache-busting) -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo filemtime('assets/css/style.css'); ?>">
@@ -52,7 +49,7 @@
                 <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="navbar-logo">
             </a>
             
-            <!-- Mobile Toggle -->
+            <!-- Mobile Toggle (CSS transforms into X when open) -->
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="toggler-bar"></span>
                 <span class="toggler-bar"></span>
@@ -78,14 +75,24 @@
                     <li class="nav-item">
                         <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="about.php">
                             <span class="nav-icon d-lg-none"><i class="fas fa-users"></i></span>
-                            About us
+                            About Us
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : ''; ?>" href="services.php">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <?php echo basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="nav-icon d-lg-none"><i class="fas fa-briefcase"></i></span>
-                            Service
+                            Services
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="services.php">All Services</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="services.php#graphics">Graphics Design</a></li>
+                            <li><a class="dropdown-item" href="services.php#branding">Brand Identity</a></li>
+                            <li><a class="dropdown-item" href="services.php#smm">Social Media Marketing</a></li>
+                            <li><a class="dropdown-item" href="services.php#web">Web Development</a></li>
+                            <li><a class="dropdown-item" href="services.php#seo">SEO Services</a></li>
+                            <li><a class="dropdown-item" href="services.php#content">Content Marketing</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'case-studies.php' ? 'active' : ''; ?>" href="case-studies.php">
@@ -94,16 +101,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'vlog-reels.php' ? 'active' : ''; ?>" href="#vlog-reel">
-                            <span class="nav-icon d-lg-none"><i class="fas fa-video"></i></span>
-                            Vlog & Reels
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : ''; ?>" href="blog.php">
+                            <span class="nav-icon d-lg-none"><i class="fas fa-pen-nib"></i></span>
+                            Blog
                         </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">Contact Us</a>
                     </li>
                 </ul>
                 
                 <!-- CTA Button -->
                 <a href="contact.php" class="btn btn-primary cta-btn">
-                    <span class="btn-text">Contact us</span>
+                    <span class="btn-text">Get Enquiry Now</span>
                     <i class="fas fa-arrow-right btn-arrow"></i>
                 </a>
 
@@ -119,5 +129,3 @@
             </div>
         </div>
     </nav>
-    <!-- Mobile menu backdrop -->
-    <div class="navbar-backdrop" id="navbarBackdrop"></div>

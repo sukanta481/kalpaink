@@ -188,34 +188,46 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
     </section>
 
     <!-- Services Grid -->
-    <section class="services-grid-section section-padding">
+    <section class="services-grid-section section-padding" id="services-section">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="section-title" data-aos="fade-up">Our Services</h2>
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Comprehensive digital solutions tailored to your needs</p>
             </div>
             
-            <!-- Desktop: Hover Hologram Grid | Mobile: Accordion Stack -->
-            <div class="row g-4 services-hologram-grid">
+            <!-- Desktop: Flex Row with Expanding Hover | Mobile: Grid -->
+            <div class="services-hologram-grid">
+                <?php 
+                // Service illustration map
+                $svc_illustrations = [
+                    'Graphics Design' => 'assets/images/services/Graphics Design.png',
+                    'Brand Identity' => 'assets/images/services/Brand Identity.png',
+                    'Social Media Marketing' => 'assets/images/services/Social Media Marketing.png',
+                    'Web Development' => 'assets/images/services/Web Development.png',
+                    'SEO Services' => 'assets/images/services/SEO Services.png',
+                    'Content Marketing' => 'assets/images/services/Content Marketing.png',
+                ];
+                ?>
                 <?php foreach ($detailed_services as $index => $service): ?>
-                <div class="col-lg-6" id="<?php echo $service['id']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 4 + 1) * 100; ?>">
+                <div class="service-hologram-item" id="<?php echo $service['id']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 4 + 1) * 100; ?>">
                     <div class="service-hologram-card" data-service-id="<?php echo $service['id']; ?>">
-                        <!-- Card Header (Always Visible) -->
-                        <div class="hologram-header">
-                            <div class="hologram-icon">
-                                <i class="fas <?php echo $service['icon']; ?>"></i>
-                            </div>
-                            <div class="hologram-title-wrap">
-                                <h4 class="hologram-title"><?php echo $service['title']; ?></h4>
-                                <p class="hologram-summary"><?php echo $service['summary']; ?></p>
-                            </div>
+                        <!-- Illustration -->
+                        <div class="svc-illustration-wrap">
+                            <img src="<?php echo $svc_illustrations[$service['title']] ?? 'assets/images/services/Graphics Design.png'; ?>" 
+                                 alt="<?php echo htmlspecialchars($service['title']); ?>" 
+                                 class="svc-illustration" loading="lazy">
+                        </div>
+                        <!-- Title (always visible) -->
+                        <h4 class="svc-title"><?php echo $service['title']; ?></h4>
+                        <!-- Details (hidden on desktop, visible on mobile) -->
+                        <div class="svc-details">
+                            <p class="svc-summary"><?php echo $service['summary']; ?></p>
                             <!-- Mobile Expand Toggle -->
                             <div class="hologram-toggle">
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                         </div>
-                        
-                        <!-- Expandable Content (Mobile: Hidden by default, Desktop: Slides in on hover) -->
+                        <!-- Expandable Content -->
                         <div class="hologram-body">
                             <p class="hologram-description"><?php echo $service['description']; ?></p>
                             <div class="hologram-features">

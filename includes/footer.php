@@ -1,48 +1,120 @@
 ﻿    <!-- Footer -->
-    <footer class="footer-v2">
+    <footer class="footer">
         <div class="container">
-            <div class="footer-v2-main">
-                <!-- Left: Logo + Social + Contact -->
-                <div class="footer-v2-left">
-                    <a href="index.php" class="footer-v2-logo">
-                        <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>">
-                    </a>
-                    <div class="footer-v2-socials">
-                        <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <div class="footer-v2-contact-info">
-                        <div class="footer-v2-contact-item">
-                            <span class="footer-v2-label">Email</span>
-                            <a href="mailto:<?php echo CONTACT_EMAIL; ?>"><?php echo CONTACT_EMAIL; ?></a>
-                        </div>
-                        <div class="footer-v2-contact-item">
-                            <span class="footer-v2-label">Phone Number</span>
-                            <a href="tel:<?php echo CONTACT_PHONE; ?>"><?php echo CONTACT_PHONE; ?></a>
-                        </div>
+            <!-- Mobile: Social Icons at TOP (visible only on mobile) -->
+            <div class="footer-social-top d-lg-none">
+                <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            
+            <div class="row footer-main-row">
+                <!-- Company Info -->
+                <div class="col-lg-4 col-12 footer-brand-col">
+                    <div class="footer-brand">
+                        <a href="index.php" class="footer-logo">
+                            <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="footer-logo-img">
+                        </a>
+                        <p class="footer-description">
+                            One of the fastest-growing digital marketing agencies in Kolkata. Kalpanik's expertise coupled with their target-oriented approach is what your business requires to reach digital success.
+                        </p>
+                        <a href="about.php" class="know-more-link d-none d-lg-inline-block">KNOW MORE</a>
                     </div>
                 </div>
                 
-                <!-- Right: CTA -->
-                <div class="footer-v2-right">
-                    <h2 class="footer-v2-cta-title">READY TO TRANSFORM<br>YOUR BRAND?</h2>
-                    <p class="footer-v2-cta-text">Let's create something extraordinary together. Get in touch with us today and start your digital journey.</p>
-                    <a href="contact.php" class="btn-footer-green">Gate enquiry now <i class="fas fa-check"></i></a>
+                <!-- Services (Accordion on Mobile) -->
+                <div class="col-lg-2 col-12 footer-accordion-col">
+                    <div class="footer-accordion-item">
+                        <h5 class="footer-title footer-accordion-trigger" data-target="footer-services">
+                            Services
+                            <i class="fas fa-plus d-lg-none"></i>
+                        </h5>
+                        <ul class="footer-links footer-accordion-content" id="footer-services">
+                            <li><a href="services.php#graphics">Graphics Design</a></li>
+                            <li><a href="services.php#branding">Branding</a></li>
+                            <li><a href="services.php#smm">SMM</a></li>
+                            <li><a href="services.php#seo">SEO</a></li>
+                            <li><a href="services.php#content">Content Marketing</a></li>
+                            <li><a href="services.php#web">Web Development</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Quick Links (Accordion on Mobile) -->
+                <div class="col-lg-2 col-12 footer-accordion-col">
+                    <div class="footer-accordion-item">
+                        <h5 class="footer-title footer-accordion-trigger" data-target="footer-links">
+                            Quick Links
+                            <i class="fas fa-plus d-lg-none"></i>
+                        </h5>
+                        <ul class="footer-links footer-accordion-content" id="footer-links">
+                            <li><a href="about.php">About Us</a></li>
+                            <li><a href="case-studies.php">Case Studies</a></li>
+                            <li><a href="blog.php">Blog</a></li>
+                            <li><a href="contact.php">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Contact Info (Accordion on Mobile) -->
+                <div class="col-lg-4 col-12 footer-accordion-col footer-contact-col">
+                    <div class="footer-accordion-item">
+                        <h5 class="footer-title footer-accordion-trigger" data-target="footer-contact">
+                            Contact Us
+                            <i class="fas fa-plus d-lg-none"></i>
+                        </h5>
+                        <div class="footer-accordion-content" id="footer-contact">
+                            <ul class="footer-contact">
+                                <li>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span><?php echo CONTACT_ADDRESS; ?></span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-phone"></i>
+                                    <a href="tel:<?php echo CONTACT_PHONE; ?>"><?php echo CONTACT_PHONE; ?></a>
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope"></i>
+                                    <a href="mailto:<?php echo CONTACT_EMAIL; ?>"><?php echo CONTACT_EMAIL; ?></a>
+                                </li>
+                            </ul>
+                            
+                            <!-- Desktop: Editorial Social Links -->
+                            <div class="social-editorial d-none d-lg-flex">
+                                <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank">Facebook <i class="fas fa-arrow-up-right"></i></a>
+                                <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank">Instagram <i class="fas fa-arrow-up-right"></i></a>
+                                <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank">LinkedIn <i class="fas fa-arrow-up-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <!-- Footer Bottom -->
-            <div class="footer-v2-bottom">
-                <span>&copy; <?php echo date('Y'); ?> Kalpanik</span>
-                <span class="footer-v2-sep">·</span>
-                <span>All Rights Reserved</span>
-                <span class="footer-v2-sep">·</span>
-                <a href="#">Terms & Conditions</a>
-                <span class="footer-v2-sep">·</span>
-                <a href="#">Privacy Policy</a>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <!-- Line 1: Copyright -->
+                    <div class="footer-line">
+                        <span>&copy; <?php echo date('Y'); ?> <strong>Kalpanik</strong></span>
+                        <span class="dot">•</span>
+                        <span>All Rights Reserved</span>
+                    </div>
+                    <!-- Line 2: Legal Links -->
+                    <div class="footer-line">
+                        <a href="#">Terms & Conditions</a>
+                        <span class="dot">•</span>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                    <!-- Line 3: Credits -->
+                    <div class="footer-line">
+                        <span>Design by <a href="https://biznexa.tech" target="_blank" class="designer-link">Biznexa</a></span>
+                    </div>
+                </div>
             </div>
         </div>
+        
+        <!-- Giant Watermark -->
+        <div class="footer-watermark">KALPANIK</div>
     </footer>
 
     <!-- Back to Top Button -->
@@ -58,9 +130,6 @@
     
     <!-- GSAP Animation Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <!-- Custom JS (with auto cache-busting) -->
     <script src="assets/js/main.js?v=<?php echo filemtime('assets/js/main.js'); ?>"></script>
