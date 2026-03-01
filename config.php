@@ -70,12 +70,12 @@ $team_members = !empty($team_members_db) ? $team_members_db : [
 $services_db = getServicesFromDB(true);
 // Image map for service illustrations
 $service_images = [
-    'Graphics Design' => 'assets/images/services/Graphics Design.png',
-    'Brand Identity' => 'assets/images/services/Brand Identity.png',
-    'Social Media Marketing' => 'assets/images/services/Social Media Marketing.png',
-    'Web Development' => 'assets/images/services/Web Development.png',
-    'SEO Services' => 'assets/images/services/SEO Services.png',
-    'Content Marketing' => 'assets/images/services/Content Marketing.png',
+    'Graphics Design' => 'assets/images/services/graphics-design.png',
+    'Brand Identity' => 'assets/images/services/brand-identity.png',
+    'Social Media Marketing' => 'assets/images/services/social-media-marketing.png',
+    'Web Development' => 'assets/images/services/web-development.png',
+    'SEO Services' => 'assets/images/services/seo-services.png',
+    'Content Marketing' => 'assets/images/services/content-marketing.png',
 ];
 
 $services = !empty($services_db) ? array_map(function($s) use ($service_images) {
@@ -83,44 +83,44 @@ $services = !empty($services_db) ? array_map(function($s) use ($service_images) 
         'icon' => $s['icon'],
         'title' => $s['title'],
         'description' => $s['short_description'],
-        'image' => $service_images[$s['title']] ?? 'assets/images/services/Graphics Design.png'
+        'image' => $service_images[$s['title']] ?? 'assets/images/services/graphics-design.png'
     ];
 }, $services_db) : [
     [
         'icon' => 'fa-palette',
         'title' => 'Graphics Design',
         'description' => 'Eye-catching visuals that capture your brand essence. From logos to complete brand identity packages.',
-        'image' => 'assets/images/services/Graphics Design.png'
+        'image' => 'assets/images/services/graphics-design.png'
     ],
     [
         'icon' => 'fa-bullhorn',
         'title' => 'Brand Identity',
         'description' => 'Build a memorable brand with consistent visual identity across all touchpoints.',
-        'image' => 'assets/images/services/Brand Identity.png'
+        'image' => 'assets/images/services/brand-identity.png'
     ],
     [
         'icon' => 'fa-share-nodes',
         'title' => 'Social Media Marketing',
         'description' => 'Strategic social media campaigns that engage audiences and drive conversions.',
-        'image' => 'assets/images/services/Social Media Marketing.png'
+        'image' => 'assets/images/services/social-media-marketing.png'
     ],
     [
         'icon' => 'fa-code',
         'title' => 'Web Development',
         'description' => 'Modern, responsive websites that deliver exceptional user experiences.',
-        'image' => 'assets/images/services/Web Development.png'
+        'image' => 'assets/images/services/web-development.png'
     ],
     [
         'icon' => 'fa-magnifying-glass',
         'title' => 'SEO Services',
         'description' => 'Improve your search rankings and drive organic traffic to your website.',
-        'image' => 'assets/images/services/SEO Services.png'
+        'image' => 'assets/images/services/seo-services.png'
     ],
     [
         'icon' => 'fa-pen-nib',
         'title' => 'Content Marketing',
         'description' => 'Compelling content that tells your story and connects with your audience.',
-        'image' => 'assets/images/services/Content Marketing.png'
+        'image' => 'assets/images/services/content-marketing.png'
     ]
 ];
 

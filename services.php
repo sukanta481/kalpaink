@@ -200,12 +200,12 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                 <?php 
                 // Service illustration map
                 $svc_illustrations = [
-                    'Graphics Design' => 'assets/images/services/Graphics Design.png',
-                    'Brand Identity' => 'assets/images/services/Brand Identity.png',
-                    'Social Media Marketing' => 'assets/images/services/Social Media Marketing.png',
-                    'Web Development' => 'assets/images/services/Web Development.png',
-                    'SEO Services' => 'assets/images/services/SEO Services.png',
-                    'Content Marketing' => 'assets/images/services/Content Marketing.png',
+                    'Graphics Design' => 'assets/images/services/graphics-design.png',
+                    'Brand Identity' => 'assets/images/services/brand-identity.png',
+                    'Social Media Marketing' => 'assets/images/services/social-media-marketing.png',
+                    'Web Development' => 'assets/images/services/web-development.png',
+                    'SEO Services' => 'assets/images/services/seo-services.png',
+                    'Content Marketing' => 'assets/images/services/content-marketing.png',
                 ];
                 ?>
                 <?php foreach ($detailed_services as $index => $service): ?>
@@ -213,7 +213,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                     <div class="service-hologram-card" data-service-id="<?php echo $service['id']; ?>">
                         <!-- Illustration -->
                         <div class="svc-illustration-wrap">
-                            <img src="<?php echo $svc_illustrations[$service['title']] ?? 'assets/images/services/Graphics Design.png'; ?>" 
+                            <img src="<?php echo $svc_illustrations[$service['title']] ?? 'assets/images/services/graphics-design.png'; ?>" 
                                  alt="<?php echo htmlspecialchars($service['title']); ?>" 
                                  class="svc-illustration" loading="lazy">
                         </div>
