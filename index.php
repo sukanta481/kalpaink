@@ -298,72 +298,86 @@ $marquee_clients = getClientsFromDB();
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Vlog & Reel Section -->
+    <section class="vlog-section">
+        <div class="container">
+            <h2 class="vlog-heading">VLOG & REEL</h2>
+            <div class="vlog-grid">
+                <?php
+                $reels = [
+                    ['thumb' => 'assets/images/reels/reel-1.jpg', 'title' => 'Brand Identity Process'],
+                    ['thumb' => 'assets/images/reels/reel-2.jpg', 'title' => 'Social Media Tips'],
+                    ['thumb' => 'assets/images/reels/reel-3.jpg', 'title' => 'Web Design Timelapse'],
+                    ['thumb' => 'assets/images/reels/reel-4.jpg', 'title' => 'Client Testimonial'],
+                    ['thumb' => 'assets/images/reels/reel-5.jpg', 'title' => 'Behind The Scenes'],
+                ];
+                foreach ($reels as $reel):
+                ?>
+                <div class="vlog-card">
+                    <img src="<?php echo $reel['thumb']; ?>" alt="<?php echo htmlspecialchars($reel['title']); ?>" loading="lazy">
+                    <button class="vlog-play" aria-label="Play <?php echo htmlspecialchars($reel['title']); ?>">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section — Peek Slider -->
     <?php if (!empty($testimonials)): ?>
     <section class="testimonials-section section-padding">
         <div class="container">
-            <!-- Section Header -->
             <div class="text-center mb-5">
-                <span class="section-badge" data-aos="fade-up">Client Love</span>
-                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">What Our Clients Say</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Real feedback from real partners who trusted us with their brands</p>
+                <span class="section-badge">Client Love</span>
+                <h2 class="section-title">What Our Clients Say</h2>
+                <p class="section-subtitle">Real feedback from real partners who trusted us with their brands</p>
             </div>
-            
-            <!-- Testimonials - Static Card with Sliding Content -->
-            <div class="testimonials-wrapper" data-aos="fade-up" data-aos-delay="300">
-                <div class="testimonial-static-card">
-                    <!-- Static Quote Icon -->
+        </div>
+        <div class="testimonials-slider-wrapper">
+            <button class="testimonial-arrow testimonial-arrow-prev" aria-label="Previous testimonial">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="testimonials-peek-track">
+                <?php foreach ($testimonials as $index => $testimonial): ?>
+                <div class="testimonial-peek-card <?php echo $index === 0 ? 'is-center' : ''; ?>">
                     <div class="quote-icon">
                         <i class="fas fa-quote-left"></i>
                     </div>
-                    
-                    <!-- Sliding Content -->
-                    <div class="testimonials-slider">
-                        <?php foreach ($testimonials as $index => $testimonial): ?>
-                        <div class="testimonial-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                            <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
-                            <div class="testimonial-rating">
-                                <?php 
-                                $rating = $testimonial['rating'] ?? 5;
-                                for ($i = 0; $i < 5; $i++): 
-                                ?>
-                                <i class="fas fa-star <?php echo $i < $rating ? 'filled' : ''; ?>"></i>
-                                <?php endfor; ?>
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <?php if (!empty($testimonial['client_avatar'])): ?>
-                                    <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
-                                    <?php else: ?>
-                                    <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="author-info">
-                                    <h4 class="author-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h4>
-                                    <p class="author-position">
-                                        <?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?>
-                                        <?php if (!empty($testimonial['client_company'])): ?>
-                                        <span class="author-company">at <?php echo htmlspecialchars($testimonial['client_company']); ?></span>
-                                        <?php endif; ?>
-                                    </p>
-                                </div>
-                            </div>
+                    <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
+                    <div class="testimonial-rating">
+                        <?php
+                        $rating = $testimonial['rating'] ?? 5;
+                        for ($i = 0; $i < 5; $i++):
+                        ?>
+                        <i class="fas fa-star <?php echo $i < $rating ? 'filled' : ''; ?>"></i>
+                        <?php endfor; ?>
+                    </div>
+                    <div class="testimonial-divider"></div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <?php if (!empty($testimonial['client_avatar'])): ?>
+                            <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
+                            <?php else: ?>
+                            <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
+                            <?php endif; ?>
                         </div>
-                        <?php endforeach; ?>
+                        <div class="author-info">
+                            <h4 class="author-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h4>
+                            <p class="author-position">
+                                <?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?>
+                                <?php if (!empty($testimonial['client_company'])): ?>
+                                <span class="author-company">at <?php echo htmlspecialchars($testimonial['client_company']); ?></span>
+                                <?php endif; ?>
+                            </p>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Navigation -->
-                <div class="testimonials-nav">
-                    <button class="testimonial-nav-btn prev" aria-label="Previous testimonial">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="testimonials-dots"></div>
-                    <button class="testimonial-nav-btn next" aria-label="Next testimonial">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
+                <?php endforeach; ?>
             </div>
+            <button class="testimonial-arrow testimonial-arrow-next" aria-label="Next testimonial">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </section>
     <?php endif; ?>
@@ -407,25 +421,6 @@ $marquee_clients = getClientsFromDB();
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Holographic CTA Section -->
-    <section class="cta-holographic">
-        <div class="cta-glow-bg"></div>
-        <div class="container">
-            <div class="cta-content text-center" data-aos="zoom-in" data-aos-duration="1000">
-                <h2 class="cta-headline"><?php echo htmlspecialchars($home_cta['content_title'] ?? 'Ready to Sculpt Your Legacy?'); ?></h2>
-                <p class="cta-subtext"><?php echo htmlspecialchars($home_cta['content_body'] ?? 'Let\'s transform your vision into a digital masterpiece'); ?></p>
-                <a href="<?php echo htmlspecialchars($home_cta['extra']['button_link'] ?? 'contact.php'); ?>" class="cta-pulse-btn">
-                    <span class="btn-text"><?php echo htmlspecialchars($home_cta['extra']['button_text'] ?? 'Let\'s Create Together'); ?></span>
-                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                </a>
-            </div>
-        </div>
-        <!-- Floating particles for depth -->
-        <div class="cta-particles">
-            <span></span><span></span><span></span><span></span><span></span>
         </div>
     </section>
 

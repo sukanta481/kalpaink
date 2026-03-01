@@ -664,122 +664,179 @@ function initFooterAccordion() {
 
 /**
  * Testimonials Slider
- * Static background with sliding text/image content
+ * Auto-slide + arrows + scroll-position center detection + drag-to-scroll
  */
 function initTestimonialsSlider() {
-    const wrapper = document.querySelector('.testimonials-wrapper');
-    const dotsContainer = document.querySelector('.testimonials-dots');
-    const prevBtn = document.querySelector('.testimonial-nav-btn.prev');
-    const nextBtn = document.querySelector('.testimonial-nav-btn.next');
+    var track = document.querySelector('.testimonials-peek-track');
+    if (!track) return;
 
-    if (!wrapper) return;
+    var cards = track.querySelectorAll('.testimonial-peek-card');
+    if (!cards.length) return;
 
-    const slides = wrapper.querySelectorAll('.testimonial-slide');
-    if (!slides.length) return;
+    var currentCenter = null;
+    var currentIndex = 0;
+    var ticking = false;
+    var autoSlideTimer = null;
+    var AUTO_SLIDE_INTERVAL = 4000;
 
-    let currentIndex = 0;
-    let autoplayInterval;
+    /* ---- Center Detection ---- */
+    function updateCenterCard() {
+        var trackRect = track.getBoundingClientRect();
+        var centerX = trackRect.left + trackRect.width / 2;
+        var closest = null;
+        var closestDist = Infinity;
 
-    // Create dots
-    slides.forEach((_, index) => {
-        const dot = document.createElement('span');
-        dot.classList.add('dot');
-        if (index === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(index));
-        dotsContainer.appendChild(dot);
-    });
-
-    const dots = dotsContainer.querySelectorAll('.dot');
-
-    // Go to specific slide with animation
-    function goToSlide(index, direction = 'next') {
-        if (index < 0) index = slides.length - 1;
-        if (index >= slides.length) index = 0;
-
-        const prevIndex = currentIndex;
-        currentIndex = index;
-
-        // Remove all states
-        slides.forEach(slide => {
-            slide.classList.remove('active', 'prev');
+        cards.forEach(function (card, i) {
+            var rect = card.getBoundingClientRect();
+            var cardCenter = rect.left + rect.width / 2;
+            var dist = Math.abs(centerX - cardCenter);
+            if (dist < closestDist) {
+                closestDist = dist;
+                closest = card;
+                currentIndex = i;
+            }
         });
 
-        // Add prev class to old slide (animates out)
-        if (direction === 'next') {
-            slides[prevIndex].classList.add('prev');
+        if (closest !== currentCenter) {
+            if (currentCenter) currentCenter.classList.remove('is-center');
+            if (closest) closest.classList.add('is-center');
+            currentCenter = closest;
         }
-
-        // Add active class to new slide (animates in)
-        slides[currentIndex].classList.add('active');
-
-        // Update dots
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentIndex);
-        });
+        ticking = false;
     }
 
-    // Navigation buttons
+    track.addEventListener('scroll', function () {
+        if (!ticking) {
+            requestAnimationFrame(updateCenterCard);
+            ticking = true;
+        }
+    }, { passive: true });
+
+    updateCenterCard();
+
+    /* ---- Navigate to card by index ---- */
+    var isAnimating = false;
+
+    function goToCard(index) {
+        if (isAnimating) return;
+        if (index < 0) index = cards.length - 1;
+        if (index >= cards.length) index = 0;
+
+        var card = cards[index];
+        var trackRect = track.getBoundingClientRect();
+        var cardRect = card.getBoundingClientRect();
+        var targetScroll = track.scrollLeft + (cardRect.left - trackRect.left) - (trackRect.width / 2 - cardRect.width / 2);
+
+        // Disable snap so it doesn't fight the animation
+        track.style.scrollSnapType = 'none';
+        isAnimating = true;
+
+        // Smooth scroll with CSS scroll-behavior
+        track.style.scrollBehavior = 'smooth';
+        track.scrollLeft = targetScroll;
+
+        // Re-enable snap after scroll finishes
+        function onScrollEnd() {
+            track.style.scrollSnapType = 'x mandatory';
+            track.style.scrollBehavior = '';
+            isAnimating = false;
+            track.removeEventListener('scrollend', onScrollEnd);
+            clearTimeout(fallback);
+        }
+
+        track.addEventListener('scrollend', onScrollEnd, { once: true });
+        // Fallback for browsers without scrollend
+        var fallback = setTimeout(onScrollEnd, 600);
+    }
+
+    /* ---- Arrow Buttons ---- */
+    var prevBtn = document.querySelector('.testimonial-arrow-prev');
+    var nextBtn = document.querySelector('.testimonial-arrow-next');
+
     if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            goToSlide(currentIndex - 1, 'prev');
-            resetAutoplay();
+        prevBtn.addEventListener('click', function () {
+            goToCard(currentIndex - 1);
+            resetAutoSlide();
         });
     }
 
     if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            goToSlide(currentIndex + 1, 'next');
-            resetAutoplay();
+        nextBtn.addEventListener('click', function () {
+            goToCard(currentIndex + 1);
+            resetAutoSlide();
         });
     }
 
-    // Autoplay
-    function startAutoplay() {
-        autoplayInterval = setInterval(() => {
-            goToSlide(currentIndex + 1, 'next');
-        }, 5000);
+    /* ---- Auto-Slide ---- */
+    function startAutoSlide() {
+        stopAutoSlide();
+        autoSlideTimer = setInterval(function () {
+            var nextIndex = currentIndex + 1;
+            if (nextIndex >= cards.length) nextIndex = 0;
+            goToCard(nextIndex);
+        }, AUTO_SLIDE_INTERVAL);
     }
 
-    function resetAutoplay() {
-        clearInterval(autoplayInterval);
-        startAutoplay();
-    }
-
-    // Start autoplay
-    startAutoplay();
-
-    // Pause on hover
-    wrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
-    wrapper.addEventListener('mouseleave', startAutoplay);
-
-    // Touch swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    wrapper.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    wrapper.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swipe left - next slide
-                goToSlide(currentIndex + 1, 'next');
-            } else {
-                // Swipe right - prev slide
-                goToSlide(currentIndex - 1, 'prev');
-            }
-            resetAutoplay();
+    function stopAutoSlide() {
+        if (autoSlideTimer) {
+            clearInterval(autoSlideTimer);
+            autoSlideTimer = null;
         }
     }
+
+    function resetAutoSlide() {
+        stopAutoSlide();
+        startAutoSlide();
+    }
+
+    // Pause on hover, resume on leave
+    track.addEventListener('mouseenter', stopAutoSlide);
+    track.addEventListener('mouseleave', startAutoSlide);
+
+    // Pause on touch
+    track.addEventListener('touchstart', stopAutoSlide, { passive: true });
+    track.addEventListener('touchend', function () {
+        // Delay restart so snap completes first
+        setTimeout(startAutoSlide, 1000);
+    }, { passive: true });
+
+    startAutoSlide();
+
+    /* ---- Desktop drag-to-scroll ---- */
+    var isDragging = false;
+    var startX = 0;
+    var scrollStart = 0;
+
+    track.addEventListener('mousedown', function (e) {
+        isDragging = true;
+        startX = e.pageX;
+        scrollStart = track.scrollLeft;
+        track.style.cursor = 'grabbing';
+        track.style.scrollSnapType = 'none';
+        stopAutoSlide();
+    });
+
+    document.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        track.scrollLeft = scrollStart - (e.pageX - startX);
+    });
+
+    document.addEventListener('mouseup', function () {
+        if (!isDragging) return;
+        isDragging = false;
+        track.style.cursor = '';
+        track.style.scrollSnapType = 'x mandatory';
+    });
+
+    /* ---- Click side card to scroll to center ---- */
+    cards.forEach(function (card, i) {
+        card.addEventListener('click', function () {
+            if (card.classList.contains('is-center')) return;
+            goToCard(i);
+            resetAutoSlide();
+        });
+    });
 }
 
 /**

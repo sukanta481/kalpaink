@@ -235,23 +235,4 @@ if (count($gallery_previews) < 4) {
         </div>
     </section>
 
-    <!-- Holographic CTA Section (Black Hole) -->
-    <section class="cta-holographic">
-        <div class="cta-glow-bg"></div>
-        <div class="container">
-            <div class="cta-content text-center" data-aos="zoom-in" data-aos-duration="1000">
-                <h2 class="cta-headline">Have a Project in Mind?</h2>
-                <p class="cta-subtext">Let's collaborate and create something amazing together. Your brand deserves the best!</p>
-                <a href="contact.php" class="cta-pulse-btn">
-                    <span class="btn-text">Start a Project</span>
-                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                </a>
-            </div>
-        </div>
-        <!-- Floating particles for depth -->
-        <div class="cta-particles">
-            <span></span><span></span><span></span><span></span><span></span>
-        </div>
-    </section>
-
 <?php include 'includes/footer.php'; ?>
