@@ -279,31 +279,4 @@ if (!empty($blogs_from_db)) {
         </div>
     </section>
 
-    <!-- Newsletter Section - The Insider Club -->
-    <section class="newsletter-insider-section">
-        <div class="newsletter-glow-bg"></div>
-        <div class="container">
-            <div class="newsletter-content text-center" data-aos="zoom-in">
-                <span class="newsletter-badge">Join the Insider Club</span>
-                <h2 class="newsletter-headline">Get Unfair Advantages</h2>
-                <p class="newsletter-subtext">Join 5,000+ marketers getting exclusive insights, tips, and strategies delivered straight to their inbox.</p>
-                
-                <form class="newsletter-form">
-                    <div class="newsletter-input-group">
-                        <input type="email" placeholder="Enter your email" required>
-                        <button type="submit">
-                            <span class="btn-text">Subscribe</span>
-                            <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                        </button>
-                    </div>
-                    <p class="newsletter-disclaimer">No spam. Unsubscribe anytime.</p>
-                </form>
-            </div>
-        </div>
-        <!-- Floating particles -->
-        <div class="newsletter-particles">
-            <span></span><span></span><span></span><span></span><span></span>
-        </div>
-    </section>
-
 <?php include 'includes/footer.php'; ?>

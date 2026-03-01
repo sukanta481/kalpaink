@@ -193,186 +193,92 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
         </div>
     </section>
 
-    <!-- The Creators Section -->
-    <section class="creators-section section-padding">
+    <!-- Meet The Creators Section — Same as Homepage -->
+    <section class="creators-section-v2" id="team">
         <div class="container">
-            <!-- Section Header -->
-            <div class="text-center mb-5">
-                <span class="section-badge" data-aos="fade-up"><?php echo htmlspecialchars($team_sec['content_subtitle'] ?? 'The Minds Behind The Magic'); ?></span>
-                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($team_sec['content_title'] ?? 'Meet The Creators'); ?></h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200"><?php echo htmlspecialchars($team_sec['content_body'] ?? 'Two dreamers who turned their passion into your brand\'s success story'); ?></p>
+            <div class="creators-v2-header">
+                <span class="v2-pill">● Our Team</span>
+                <h2 class="v2-heading"><?php echo htmlspecialchars($team_sec['content_title'] ?? 'Meet The Creators'); ?></h2>
+                <p class="v2-subtext"><?php echo htmlspecialchars($team_sec['content_body'] ?? 'Two dreamers who turned their passion into your brand\'s success story'); ?></p>
             </div>
-            
-            <!-- Desktop: Cutout Style -->
-            <div class="creators-showcase d-none d-lg-block" data-aos="fade-up">
-                <div class="creators-grid">
-                    <?php foreach ($team_members as $index => $member): ?>
-                    <div class="creator-cutout" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 150; ?>">
-                        <div class="creator-photo-wrapper">
-                            <!-- Flip Card -->
-                            <div class="creator-flip-card">
-                                <div class="flip-card-inner">
-                                    <div class="flip-card-front">
-                                        <img src="<?php echo $member['image_pro']; ?>" alt="<?php echo $member['name']; ?> - Professional">
-                                        <div class="photo-label">Professional Mode 🎯</div>
-                                    </div>
-                                    <div class="flip-card-back">
-                                        <img src="<?php echo $member['image_fun']; ?>" alt="<?php echo $member['name']; ?> - Creative">
-                                        <div class="photo-label">Creative Mode 🎨</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Decorative Elements -->
-                            <div class="creator-decoration">
-                                <span class="deco-circle"></span>
-                                <span class="deco-dots"></span>
-                            </div>
-                        </div>
-                        <div class="creator-info">
-                            <h3 class="creator-name"><?php echo $member['name']; ?></h3>
-                            <p class="creator-role"><?php echo $member['position']; ?></p>
-                            <p class="creator-tagline">"<?php echo $member['tagline']; ?>"</p>
-                            <a href="<?php echo $member['linkedin']; ?>" class="creator-linkedin" target="_blank">
-                                <i class="fab fa-linkedin-in"></i> Connect
-                            </a>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-                <p class="hover-hint text-center mt-4"><i class="fas fa-hand-pointer"></i> Hover to see our creative side!</p>
-            </div>
-            
-            <!-- Mobile: Flip Cards (Tap to reveal Creative Side) -->
-            <div class="creators-mobile d-lg-none swiper creators-swiper" style="padding-bottom: 30px; overflow: hidden;">
-                <div class="swiper-wrapper">
+
+            <div class="creators-v2-grid">
                 <?php foreach ($team_members as $index => $member): ?>
-                <div class="swiper-slide">
-                    <div class="creator-flip-mobile" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
-                        <div class="flip-mobile-inner">
-                        <!-- Front: Professional Side -->
-                        <div class="flip-mobile-front">
-                            <div class="flip-avatar">
-                                <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo $member['name']; ?>">
-                            </div>
-                            <div class="flip-content">
-                                <h4 class="flip-name"><?php echo $member['name']; ?></h4>
-                                <p class="flip-role"><?php echo $member['position']; ?></p>
-                                <p class="flip-tagline">"<?php echo $member['tagline']; ?>"</p>
-                            </div>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i> Tap to flip
-                            </div>
-                        </div>
-                        <!-- Back: Creative/Fun Side -->
-                        <div class="flip-mobile-back">
-                            <div class="flip-avatar">
-                                <img src="<?php echo $member['image_fun'] ?? $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo $member['name']; ?> - Creative">
-                            </div>
-                            <div class="flip-content">
-                                <h4 class="flip-name"><?php echo $member['name']; ?></h4>
-                                <p class="flip-role flip-role-fun">
-                                    <?php 
-                                    // Fun titles based on position
-                                    $fun_titles = [
-                                        'Co-Founder & Creative Director' => '✨ Chief Visionary & Pixel Perfectionist',
-                                        'Co-Founder & Strategy Lead' => '🚀 Master of Ideas & Caffeine Addict'
-                                    ];
-                                    echo $fun_titles[$member['position']] ?? '🎨 Creative Genius';
-                                    ?>
-                                </p>
-                                <p class="flip-fact">
-                                    <?php 
-                                    // Fun facts
-                                    $fun_facts = [
-                                        0 => "☕ Runs on coffee & creative chaos. Has probably redesigned this card 47 times.",
-                                        1 => "🎯 Believes every brand has a story. Also believes pineapple belongs on pizza."
-                                    ];
-                                    echo $fun_facts[$index] ?? "🎨 Making magic happen, one pixel at a time!";
-                                    ?>
-                                </p>
-                            </div>
-                            <a href="<?php echo $member['linkedin']; ?>" class="flip-linkedin" target="_blank">
-                                <i class="fab fa-linkedin-in"></i> Let's Connect!
-                            </a>
-                        </div>
+                <div class="creator-v2-card grid-reveal-item">
+                    <div class="creator-v2-img">
+                        <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo htmlspecialchars($member['name']); ?>" loading="lazy">
                     </div>
-                </div>
+                    <div class="creator-v2-info">
+                        <h3 class="creator-v2-name"><?php echo htmlspecialchars($member['name']); ?></h3>
+                        <p class="creator-v2-role"><?php echo htmlspecialchars($member['position']); ?></p>
+                    </div>
+                    <?php if (!empty($member['linkedin'])): ?>
+                    <div class="creator-v2-socials">
+                        <a href="<?php echo $member['linkedin']; ?>" class="creator-v2-social" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                    <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
-                </div>
-                <!-- Pagination for mobile -->
-                <div class="swiper-pagination creators-pagination"></div>
-                <p class="tap-hint text-center mt-3"><i class="fas fa-sync-alt"></i> Tap cards to see our creative side!</p>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials Section — Same Peek Slider as Homepage -->
     <?php if (!empty($testimonials)): ?>
     <section class="testimonials-section section-padding">
         <div class="container">
-            <!-- Section Header -->
             <div class="text-center mb-5">
-                <span class="section-badge" data-aos="fade-up"><?php echo htmlspecialchars($testimonials_sec['content_subtitle'] ?? 'Client Love'); ?></span>
-                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($testimonials_sec['content_title'] ?? 'What Our Clients Say'); ?></h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200"><?php echo htmlspecialchars($testimonials_sec['content_body'] ?? 'Real feedback from real partners who trusted us with their brands'); ?></p>
+                <span class="section-badge"><?php echo htmlspecialchars($testimonials_sec['content_subtitle'] ?? 'Client Love'); ?></span>
+                <h2 class="section-title"><?php echo htmlspecialchars($testimonials_sec['content_title'] ?? 'What Our Clients Say'); ?></h2>
+                <p class="section-subtitle"><?php echo htmlspecialchars($testimonials_sec['content_body'] ?? 'Real feedback from real partners who trusted us with their brands'); ?></p>
             </div>
-            
-            <!-- Testimonials - Static Card with Sliding Content -->
-            <div class="testimonials-wrapper" data-aos="fade-up" data-aos-delay="300">
-                <div class="testimonial-static-card">
-                    <!-- Static Quote Icon -->
+        </div>
+        <div class="testimonials-slider-wrapper">
+            <button class="testimonial-arrow testimonial-arrow-prev" aria-label="Previous testimonial">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="testimonials-peek-track">
+                <?php foreach ($testimonials as $index => $testimonial): ?>
+                <div class="testimonial-peek-card <?php echo $index === 0 ? 'is-center' : ''; ?>">
                     <div class="quote-icon">
                         <i class="fas fa-quote-left"></i>
                     </div>
-                    
-                    <!-- Sliding Content -->
-                    <div class="testimonials-slider">
-                        <?php foreach ($testimonials as $index => $testimonial): ?>
-                        <div class="testimonial-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                            <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
-                            <div class="testimonial-rating">
-                                <?php 
-                                $rating = $testimonial['rating'] ?? 5;
-                                for ($i = 0; $i < 5; $i++): 
-                                ?>
-                                <i class="fas fa-star <?php echo $i < $rating ? 'filled' : ''; ?>"></i>
-                                <?php endfor; ?>
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <?php if (!empty($testimonial['client_avatar'])): ?>
-                                    <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
-                                    <?php else: ?>
-                                    <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="author-info">
-                                    <h4 class="author-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h4>
-                                    <p class="author-position">
-                                        <?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?>
-                                        <?php if (!empty($testimonial['client_company'])): ?>
-                                        <span class="author-company">at <?php echo htmlspecialchars($testimonial['client_company']); ?></span>
-                                        <?php endif; ?>
-                                    </p>
-                                </div>
-                            </div>
+                    <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['testimonial_text'] ?? ''); ?>"</p>
+                    <div class="testimonial-rating">
+                        <?php
+                        $rating = $testimonial['rating'] ?? 5;
+                        for ($i = 0; $i < 5; $i++):
+                        ?>
+                        <i class="fas fa-star <?php echo $i < $rating ? 'filled' : ''; ?>"></i>
+                        <?php endfor; ?>
+                    </div>
+                    <div class="testimonial-divider"></div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <?php if (!empty($testimonial['client_avatar'])): ?>
+                            <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
+                            <?php else: ?>
+                            <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
+                            <?php endif; ?>
                         </div>
-                        <?php endforeach; ?>
+                        <div class="author-info">
+                            <h4 class="author-name"><?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?></h4>
+                            <p class="author-position">
+                                <?php echo htmlspecialchars($testimonial['client_position'] ?? ''); ?>
+                                <?php if (!empty($testimonial['client_company'])): ?>
+                                <span class="author-company">at <?php echo htmlspecialchars($testimonial['client_company']); ?></span>
+                                <?php endif; ?>
+                            </p>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Navigation -->
-                <div class="testimonials-nav">
-                    <button class="testimonial-nav-btn prev" aria-label="Previous testimonial">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="testimonials-dots"></div>
-                    <button class="testimonial-nav-btn next" aria-label="Next testimonial">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
+                <?php endforeach; ?>
             </div>
+            <button class="testimonial-arrow testimonial-arrow-next" aria-label="Next testimonial">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </section>
     <?php endif; ?>

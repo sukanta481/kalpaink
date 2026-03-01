@@ -1563,7 +1563,7 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 30px 20px 20px;
+    padding: 40px 20px 20px;
     background: linear-gradient(to top,
         rgba(0, 0, 0, 0.9) 0%,
         rgba(0, 0, 0, 0.6) 50%,
@@ -1586,32 +1586,47 @@ body {
     margin: 0;
 }
 
-/* LinkedIn icon — hidden by default, slides up on hover */
+/* Social bar — inside card at bottom, slides up on hover */
+.creator-v2-socials {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 4;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.35s ease;
+}
+
+.creator-v2-card:hover .creator-v2-socials {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .creator-v2-social {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.15);
     color: #FFFFFF;
     font-size: 0.85rem;
     text-decoration: none;
-    margin-top: 10px;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: all 0.4s ease;
-}
-
-.creator-v2-card:hover .creator-v2-social {
-    opacity: 1;
-    transform: translateY(0);
+    transition: all 0.3s ease;
 }
 
 .creator-v2-social:hover {
     background: #0077b5;
     color: #fff;
+    transform: scale(1.1);
 }
 
 @media (max-width: 992px) {
@@ -1648,10 +1663,14 @@ body {
         scroll-snap-align: center;
     }
 
-    /* Always show LinkedIn on touch devices */
-    .creator-v2-social {
+    /* Always show social bar on touch devices */
+    .creator-v2-socials {
         opacity: 1;
         transform: translateY(0);
+    }
+
+    .creator-v2-info {
+        padding-bottom: 52px;
     }
 }
 

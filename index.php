@@ -252,12 +252,14 @@ $marquee_clients = getClientsFromDB();
                     <div class="creator-v2-info">
                         <h3 class="creator-v2-name"><?php echo htmlspecialchars($member['name']); ?></h3>
                         <p class="creator-v2-role"><?php echo htmlspecialchars($member['position']); ?></p>
-                        <?php if (!empty($member['linkedin'])): ?>
+                    </div>
+                    <?php if (!empty($member['linkedin'])): ?>
+                    <div class="creator-v2-socials">
                         <a href="<?php echo $member['linkedin']; ?>" class="creator-v2-social" target="_blank" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <?php endif; ?>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
             </div>

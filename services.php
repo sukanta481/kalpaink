@@ -246,34 +246,4 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         </div>
     </section>
 
-    <!-- CTA Section - The Blueprint -->
-    <section class="cta-blueprint-section">
-        <!-- Blueprint Grid Background -->
-        <div class="blueprint-bg">
-            <div class="blueprint-grid"></div>
-            <div class="blueprint-lines">
-                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Wireframe shapes -->
-                    <rect x="5%" y="10%" width="120" height="80" fill="none" stroke="rgba(253,215,40,0.15)" stroke-width="1" rx="8"/>
-                    <circle cx="85%" cy="25%" r="45" fill="none" stroke="rgba(253,215,40,0.1)" stroke-width="1"/>
-                    <polygon points="15,180 75,130 135,180" fill="none" stroke="rgba(253,215,40,0.12)" stroke-width="1" transform="translate(50, 50)"/>
-                    <rect x="70%" y="60%" width="100" height="60" fill="none" stroke="rgba(253,215,40,0.1)" stroke-width="1" rx="4" transform="rotate(-15, 75%, 70%)"/>
-                    <line x1="20%" y1="80%" x2="40%" y2="60%" stroke="rgba(253,215,40,0.08)" stroke-width="1" stroke-dasharray="5,5"/>
-                    <line x1="60%" y1="85%" x2="80%" y2="75%" stroke="rgba(253,215,40,0.08)" stroke-width="1" stroke-dasharray="5,5"/>
-                </svg>
-            </div>
-        </div>
-        
-        <div class="container">
-            <div class="blueprint-content text-center" data-aos="fade-up">
-                <h3 class="blueprint-title"><?php echo htmlspecialchars($svc_cta['content_title'] ?? 'Need a Custom Solution?'); ?></h3>
-                <p class="blueprint-text"><?php echo htmlspecialchars($svc_cta['content_body'] ?? 'We understand that every business is unique. Let\'s discuss your specific needs and create a tailored solution for you.'); ?></p>
-                <a href="<?php echo htmlspecialchars($svc_cta['extra']['button_link'] ?? 'contact.php'); ?>" class="btn-build-package">
-                    <span class="btn-text"><?php echo htmlspecialchars($svc_cta['extra']['button_text'] ?? 'Build Your Package'); ?></span>
-                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                </a>
-            </div>
-        </div>
-    </section>
-
 <?php include 'includes/footer.php'; ?>
