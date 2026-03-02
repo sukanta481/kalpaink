@@ -12,73 +12,58 @@ $marquee_clients = getClientsFromDB();
 ?>
 
     <!-- Hero Section - Royal Blue Carousel -->
+    <?php
+    // Fallback hero slides if CRM has none
+    $fallback_hero_slides = [
+        [
+            'badge_text' => 'Creative Design Studio',
+            'title' => "We Design Ideas\nThat Think Before\nThey Speak.",
+            'subtitle' => 'Branding &middot; Design &middot; VISUAL THINKING',
+            'button1_text' => 'Get Started', 'button1_link' => 'contact.php',
+            'button2_text' => 'Our Services', 'button2_link' => 'services.php',
+            'background_class' => 'hero-slide-bg-1'
+        ],
+        [
+            'badge_text' => 'Social Media & Growth',
+            'title' => "Reimagining\nBrands with\nPurpose",
+            'subtitle' => 'Strategy &middot; Content &middot; DIGITAL PRESENCE',
+            'button1_text' => 'Get Quote', 'button1_link' => 'contact.php',
+            'button2_text' => 'Case Studies', 'button2_link' => 'case-studies.php',
+            'background_class' => 'hero-slide-bg-2'
+        ],
+        [
+            'badge_text' => 'Web & Digital Experience',
+            'title' => "Strategy First.\nDesign\nAlways.",
+            'subtitle' => 'Development &middot; SEO &middot; VISUAL EXPERIENCE',
+            'button1_text' => 'View Work', 'button1_link' => 'case-studies.php',
+            'button2_text' => 'Contact Us', 'button2_link' => 'contact.php',
+            'background_class' => 'hero-slide-bg-3'
+        ]
+    ];
+    $active_slides = !empty($hero_slides) ? $hero_slides : $fallback_hero_slides;
+    ?>
     <section class="hero-section">
         <div class="hero-carousel" id="heroCarousel">
-            <!-- Slide 1 — Brand Identity -->
-            <div class="hero-slide hero-slide-bg-1 active" data-slide="0">
+            <?php foreach ($active_slides as $slideIndex => $slide): ?>
+            <div class="hero-slide <?php echo htmlspecialchars($slide['background_class'] ?? 'hero-slide-bg-' . ($slideIndex + 1)); ?> <?php echo $slideIndex === 0 ? 'active' : ''; ?>" data-slide="<?php echo $slideIndex; ?>"<?php if (!empty($slide['background_image'])): ?> style="background-image: url('<?php echo htmlspecialchars($slide['background_image']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
                 <div class="hero-slide-overlay"></div>
                 <div class="hero-slide-inner">
                     <div class="hero-text-col">
                         <div class="hero-content">
-                            <span class="hero-pill">Creative Design Studio</span>
+                            <span class="hero-pill"><?php echo htmlspecialchars($slide['badge_text'] ?? ''); ?></span>
                             <h1 class="hero-headline">
-                                We Design Ideas<br>
-                                That Think Before<br>
-                                They Speak.
+                                <?php echo nl2br(htmlspecialchars($slide['title'] ?? '')); ?>
                             </h1>
-                            <p class="hero-subtext">Branding &middot; Design &middot; VISUAL THINKING</p>
+                            <p class="hero-subtext"><?php echo $slide['subtitle'] ?? ''; ?></p>
                             <div class="hero-buttons">
-                                <a href="contact.php" class="hero-btn hero-btn-primary">Get Started</a>
-                                <a href="services.php" class="hero-btn hero-btn-secondary">Our Services</a>
+                                <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact.php'); ?>" class="hero-btn hero-btn-primary"><?php echo htmlspecialchars($slide['button1_text'] ?? 'Get Started'); ?></a>
+                                <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services.php'); ?>" class="hero-btn hero-btn-secondary"><?php echo htmlspecialchars($slide['button2_text'] ?? 'Our Services'); ?></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Slide 2 — Digital Marketing -->
-            <div class="hero-slide hero-slide-bg-2" data-slide="1">
-                <div class="hero-slide-overlay"></div>
-                <div class="hero-slide-inner">
-                    <div class="hero-text-col">
-                        <div class="hero-content">
-                            <span class="hero-pill">Social Media &amp; Growth</span>
-                            <h1 class="hero-headline">
-                                Reimagining<br>
-                                Brands with<br>
-                                Purpose
-                            </h1>
-                            <p class="hero-subtext">Strategy &middot; Content &middot; DIGITAL PRESENCE</p>
-                            <div class="hero-buttons">
-                                <a href="contact.php" class="hero-btn hero-btn-primary">Get Quote</a>
-                                <a href="case-studies.php" class="hero-btn hero-btn-secondary">Case Studies</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3 — Web Development -->
-            <div class="hero-slide hero-slide-bg-3" data-slide="2">
-                <div class="hero-slide-overlay"></div>
-                <div class="hero-slide-inner">
-                    <div class="hero-text-col">
-                        <div class="hero-content">
-                            <span class="hero-pill">Web &amp; Digital Experience</span>
-                            <h1 class="hero-headline">
-                                Strategy First.<br>
-                                Design<br>
-                                Always.
-                            </h1>
-                            <p class="hero-subtext">Development &middot; SEO &middot; VISUAL EXPERIENCE</p>
-                            <div class="hero-buttons">
-                                <a href="case-studies.php" class="hero-btn hero-btn-primary">View Work</a>
-                                <a href="contact.php" class="hero-btn hero-btn-secondary">Contact Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
 
             <!-- Navigation Arrows -->
             <button class="hero-arrow hero-arrow-prev" aria-label="Previous slide">
@@ -90,9 +75,9 @@ $marquee_clients = getClientsFromDB();
 
             <!-- Navigation Dots -->
             <div class="hero-dots">
-                <button class="hero-dot active" data-slide="0" aria-label="Slide 1"></button>
-                <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
-                <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
+                <?php foreach ($active_slides as $dotIndex => $slide): ?>
+                <button class="hero-dot <?php echo $dotIndex === 0 ? 'active' : ''; ?>" data-slide="<?php echo $dotIndex; ?>" aria-label="Slide <?php echo $dotIndex + 1; ?>"></button>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
@@ -181,6 +166,14 @@ $marquee_clients = getClientsFromDB();
                         <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
                         <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we're the creative studio that brings visions to life.</p>
                         <div class="welcome-stats" data-aos="fade-up" data-aos-delay="400">
+                            <?php if (!empty($statistics)): ?>
+                                <?php foreach (array_slice($statistics, 0, 3) as $stat): ?>
+                                <div class="stat-item">
+                                    <span class="stat-number" data-count="<?php echo htmlspecialchars($stat['value']); ?>" data-suffix="<?php echo htmlspecialchars($stat['suffix'] ?? ''); ?>">0<?php echo htmlspecialchars($stat['suffix'] ?? ''); ?></span>
+                                    <span class="stat-label"><?php echo htmlspecialchars($stat['label']); ?></span>
+                                </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
                             <div class="stat-item">
                                 <span class="stat-number" data-count="150" data-suffix="+">0+</span>
                                 <span class="stat-label">Brands Sculpted</span>
@@ -193,6 +186,7 @@ $marquee_clients = getClientsFromDB();
                                 <span class="stat-number" data-count="98" data-suffix="%">0%</span>
                                 <span class="stat-label">Happy Clients</span>
                             </div>
+                            <?php endif; ?>
                         </div>
                         <a href="about.php" class="btn btn-primary btn-magnetic" data-aos="fade-up" data-aos-delay="500">Discover Our Story</a>
                     </div>
@@ -301,22 +295,24 @@ $marquee_clients = getClientsFromDB();
     </section>
 
     <!-- Vlog & Reel Section -->
+    <?php
+    $vlogs_from_db = getVlogsFromDB();
+    $fallback_reels = [
+        ['thumbnail' => 'assets/images/reels/reel-1.jpg', 'title' => 'Brand Identity Process', 'video_url' => ''],
+        ['thumbnail' => 'assets/images/reels/reel-2.jpg', 'title' => 'Social Media Tips', 'video_url' => ''],
+        ['thumbnail' => 'assets/images/reels/reel-3.jpg', 'title' => 'Web Design Timelapse', 'video_url' => ''],
+        ['thumbnail' => 'assets/images/reels/reel-4.jpg', 'title' => 'Client Testimonial', 'video_url' => ''],
+        ['thumbnail' => 'assets/images/reels/reel-5.jpg', 'title' => 'Behind The Scenes', 'video_url' => ''],
+    ];
+    $reels_list = !empty($vlogs_from_db) ? $vlogs_from_db : $fallback_reels;
+    ?>
     <section class="vlog-section">
         <div class="container">
             <h2 class="vlog-heading">VLOG & REEL</h2>
             <div class="vlog-grid">
-                <?php
-                $reels = [
-                    ['thumb' => 'assets/images/reels/reel-1.jpg', 'title' => 'Brand Identity Process'],
-                    ['thumb' => 'assets/images/reels/reel-2.jpg', 'title' => 'Social Media Tips'],
-                    ['thumb' => 'assets/images/reels/reel-3.jpg', 'title' => 'Web Design Timelapse'],
-                    ['thumb' => 'assets/images/reels/reel-4.jpg', 'title' => 'Client Testimonial'],
-                    ['thumb' => 'assets/images/reels/reel-5.jpg', 'title' => 'Behind The Scenes'],
-                ];
-                foreach ($reels as $reel):
-                ?>
-                <div class="vlog-card">
-                    <img src="<?php echo $reel['thumb']; ?>" alt="<?php echo htmlspecialchars($reel['title']); ?>" loading="lazy">
+                <?php foreach ($reels_list as $reel): ?>
+                <div class="vlog-card" <?php if (!empty($reel['video_url'])): ?>data-video-url="<?php echo htmlspecialchars($reel['video_url']); ?>"<?php endif; ?>>
+                    <img src="<?php echo !empty($reel['thumbnail']) ? (strpos($reel['thumbnail'], 'http') === 0 ? $reel['thumbnail'] : SITE_URL . '/' . $reel['thumbnail']) : 'assets/images/reels/reel-1.jpg'; ?>" alt="<?php echo htmlspecialchars($reel['title']); ?>" loading="lazy">
                     <button class="vlog-play" aria-label="Play <?php echo htmlspecialchars($reel['title']); ?>">
                         <i class="fas fa-play"></i>
                     </button>

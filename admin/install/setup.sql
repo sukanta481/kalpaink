@@ -141,6 +141,30 @@ CREATE TABLE IF NOT EXISTS activity_log (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
+-- Clients Table (Brand Marquee)
+CREATE TABLE IF NOT EXISTS clients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_name VARCHAR(255) NOT NULL,
+    logo VARCHAR(255),
+    website_url VARCHAR(500),
+    sort_order INT DEFAULT 0,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Vlogs Table (Reels & Shorts)
+CREATE TABLE IF NOT EXISTS vlogs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    thumbnail VARCHAR(255),
+    video_url VARCHAR(500) NOT NULL,
+    video_type ENUM('youtube', 'instagram', 'local') DEFAULT 'youtube',
+    description TEXT,
+    sort_order INT DEFAULT 0,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Insert Default Admin User (password: admin123)
 INSERT INTO users (username, email, password, full_name, role) VALUES 
 ('admin', 'admin@kalpoink.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin');

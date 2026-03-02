@@ -124,22 +124,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Handle different actions
+// Pre-fetch data before header include
+$member = null;
 if ($action === 'add' || $action === 'edit') {
-    $member = null;
     if ($action === 'edit' && $id > 0) {
         $stmt = $db->prepare("SELECT * FROM team_members WHERE id = ?");
         $stmt->execute([$id]);
         $member = $stmt->fetch();
-        
+
         if (!$member) {
             setFlashMessage('danger', 'Team member not found.');
             header('Location: team.php');
             exit;
         }
     }
+}
+
+$members = [];
+if ($action === 'list') {
+    $stmt = $db->query("SELECT * FROM team_members ORDER BY sort_order ASC, created_at DESC");
+    $members = $stmt->fetchAll();
+}
+
+// Include header ONCE after all redirects and data fetching
+require_once __DIR__ . '/includes/header.php';
+
+if ($action === 'add' || $action === 'edit') {
     ?>
-    <?php require_once __DIR__ . '/includes/header.php'; ?>
     
     <div class="page-header">
         <h1 class="page-title"><?php echo $action === 'add' ? 'Add Team Member' : 'Edit Team Member'; ?></h1>
@@ -272,10 +283,6 @@ if ($action === 'add' || $action === 'edit') {
     
     <?php
 } else {
-    // List view
-    $stmt = $db->query("SELECT * FROM team_members ORDER BY sort_order ASC, created_at DESC");
-    $members = $stmt->fetchAll();
-    require_once __DIR__ . '/includes/header.php';
     ?>
     
     <div class="page-header">

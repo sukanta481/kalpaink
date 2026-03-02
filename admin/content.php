@@ -28,7 +28,8 @@ $tables = [
     'testimonials' => 'Testimonials',
     'faqs' => 'FAQs',
     'statistics' => 'Statistics',
-    'clients' => 'Clients'
+    'clients' => 'Clients',
+    'vlogs' => 'Vlogs / Reels'
 ];
 
 if ($tablesExist) {
@@ -204,6 +205,25 @@ if ($tablesExist) {
                 <span class="badge bg-primary mb-3"><?php echo $counts['clients']; ?> Clients</span>
                 <div class="d-grid">
                     <a href="<?php echo getAdminUrl('content/clients.php'); ?>" class="btn btn-outline-primary">
+                        <i class="fas fa-edit me-2"></i>Manage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vlogs / Reels -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="stat-icon danger mx-auto mb-3">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h5 class="card-title">Vlogs / Reels</h5>
+                <p class="text-muted">Manage video content, YouTube Shorts, and Instagram Reels.</p>
+                <span class="badge bg-danger mb-3"><?php echo $counts['vlogs']; ?> Videos</span>
+                <div class="d-grid">
+                    <a href="<?php echo getAdminUrl('content/vlogs.php'); ?>" class="btn btn-outline-danger">
                         <i class="fas fa-edit me-2"></i>Manage
                     </a>
                 </div>

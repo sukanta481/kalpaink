@@ -257,10 +257,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="cf3-social-row">
                                             <span class="cf3-social-label">Follow us</span>
                                             <div class="cf3-socials">
-                                                <a href="#" class="cf3-social"><i class="fab fa-facebook-f"></i></a>
-                                                <a href="#" class="cf3-social"><i class="fab fa-instagram"></i></a>
-                                                <a href="#" class="cf3-social"><i class="fab fa-linkedin-in"></i></a>
-                                                <a href="#" class="cf3-social"><i class="fab fa-twitter"></i></a>
+                                                <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" class="cf3-social"><i class="fab fa-facebook-f"></i></a>
+                                                <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" class="cf3-social"><i class="fab fa-instagram"></i></a>
+                                                <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" class="cf3-social"><i class="fab fa-linkedin-in"></i></a>
+                                                <a href="<?php echo SOCIAL_TWITTER; ?>" target="_blank" class="cf3-social"><i class="fab fa-twitter"></i></a>
                                             </div>
                                         </div>
                                     </div>

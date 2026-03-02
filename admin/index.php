@@ -76,6 +76,14 @@ try {
     $stats['gallery'] = 0;
 }
 
+// Total Vlogs
+try {
+    $stmt = $db->query("SELECT COUNT(*) as count FROM vlogs WHERE is_active = 1");
+    $stats['vlogs'] = $stmt->fetch()['count'] ?? 0;
+} catch (PDOException $e) {
+    $stats['vlogs'] = 0;
+}
+
 // Recent Leads
 $stmt = $db->query("SELECT * FROM leads ORDER BY created_at DESC LIMIT 5");
 $recentLeads = $stmt->fetchAll();
@@ -202,6 +210,15 @@ $leadsByStatus = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
                             </div>
                             <div class="content-stat-value"><?php echo $stats['gallery']; ?></div>
                             <div class="content-stat-label">Gallery Images</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="<?php echo getAdminUrl('content/vlogs.php'); ?>" class="content-stat-box text-decoration-none">
+                            <div class="content-stat-icon bg-danger bg-opacity-10 text-danger">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="content-stat-value"><?php echo $stats['vlogs']; ?></div>
+                            <div class="content-stat-label">Vlogs / Reels</div>
                         </a>
                     </div>
                 </div>

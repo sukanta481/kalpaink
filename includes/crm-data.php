@@ -422,6 +422,26 @@ function getSettings($keys = []) {
 }
 
 /**
+ * Get vlogs/reels from database
+ */
+function getVlogsFromDB($limit = null) {
+    $db = getCRMDatabase();
+    if (!$db) return [];
+
+    try {
+        $sql = "SELECT * FROM vlogs WHERE is_active = 1 ORDER BY sort_order ASC";
+        if ($limit) {
+            $sql .= " LIMIT " . (int)$limit;
+        }
+
+        $stmt = $db->query($sql);
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        return [];
+    }
+}
+
+/**
  * Get blogs from database
  */
 function getBlogsFromDB($limit = null, $category = null) {

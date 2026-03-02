@@ -32,62 +32,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'button1_link' => sanitize($_POST['button1_link']),
             'button2_text' => sanitize($_POST['button2_text']),
             'button2_link' => sanitize($_POST['button2_link']),
+            'background_class' => sanitize($_POST['background_class'] ?? ''),
             'sort_order' => (int)$_POST['sort_order'],
             'is_active' => isset($_POST['is_active']) ? 1 : 0
         ];
-        
-        // Handle image uploads
+
+        // Auto-migration: add background_class column if not exists
+        try {
+            $db->exec("ALTER TABLE hero_slides ADD COLUMN background_class VARCHAR(100) DEFAULT '' AFTER image3");
+        } catch (PDOException $e) {
+            // Column already exists
+        }
+        // Auto-migration: add background_image column if not exists
+        try {
+            $db->exec("ALTER TABLE hero_slides ADD COLUMN background_image VARCHAR(255) DEFAULT NULL AFTER background_class");
+        } catch (PDOException $e) {
+            // Column already exists
+        }
+
+        // Handle background image upload
         $upload_dir = __DIR__ . '/../../uploads/hero/';
         if (!file_exists($upload_dir)) {
             mkdir($upload_dir, 0755, true);
         }
-        
-        $images = ['image1', 'image2', 'image3'];
-        $image_paths = [];
-        
-        foreach ($images as $img) {
-            if (!empty($_FILES[$img]['name'])) {
-                $file_ext = strtolower(pathinfo($_FILES[$img]['name'], PATHINFO_EXTENSION));
-                if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-                    $file_name = $img . '-' . time() . '-' . rand(1000,9999) . '.' . $file_ext;
-                    if (move_uploaded_file($_FILES[$img]['tmp_name'], $upload_dir . $file_name)) {
-                        $image_paths[$img] = 'uploads/hero/' . $file_name;
-                    }
+
+        $bg_image_path = null;
+        if (!empty($_FILES['background_image']['name'])) {
+            $file_ext = strtolower(pathinfo($_FILES['background_image']['name'], PATHINFO_EXTENSION));
+            if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                $file_name = 'hero-bg-' . time() . '-' . rand(1000, 9999) . '.' . $file_ext;
+                if (move_uploaded_file($_FILES['background_image']['tmp_name'], $upload_dir . $file_name)) {
+                    $bg_image_path = 'uploads/hero/' . $file_name;
                 }
             }
         }
         
         if ($id > 0) {
             // Update
-            $sql = "UPDATE hero_slides SET title = ?, subtitle = ?, badge_text = ?, 
-                    button1_text = ?, button1_link = ?, button2_text = ?, button2_link = ?, 
-                    sort_order = ?, is_active = ?";
+            $sql = "UPDATE hero_slides SET title = ?, subtitle = ?, badge_text = ?,
+                    button1_text = ?, button1_link = ?, button2_text = ?, button2_link = ?,
+                    background_class = ?, sort_order = ?, is_active = ?";
             $params = array_values($data);
-            
-            foreach ($images as $img) {
-                if (isset($image_paths[$img])) {
-                    $sql .= ", $img = ?";
-                    $params[] = $image_paths[$img];
-                }
+
+            if ($bg_image_path) {
+                $sql .= ", background_image = ?";
+                $params[] = $bg_image_path;
             }
-            
+
             $sql .= " WHERE id = ?";
             $params[] = $id;
-            
+
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
             logActivity('update', 'hero_slide', $id, 'Updated hero slide: ' . $data['title']);
             setFlashMessage('success', 'Hero slide updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO hero_slides (title, subtitle, badge_text, button1_text, button1_link, 
-                    button2_text, button2_link, sort_order, is_active, image1, image2, image3) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO hero_slides (title, subtitle, badge_text, button1_text, button1_link,
+                    button2_text, button2_link, background_class, sort_order, is_active, background_image)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
-            $params[] = $image_paths['image1'] ?? null;
-            $params[] = $image_paths['image2'] ?? null;
-            $params[] = $image_paths['image3'] ?? null;
-            
+            $params[] = $bg_image_path;
+
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
             logActivity('create', 'hero_slide', $db->lastInsertId(), 'Created hero slide: ' . $data['title']);
@@ -202,26 +208,21 @@ if ($action === 'add' || $action === 'edit') {
                 
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Slide Images (Masonry Grid)</h5>
+                        <h5 class="card-title">Slide Background Image</h5>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <?php for ($i = 1; $i <= 3; $i++): ?>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Image <?php echo $i; ?></label>
-                                    <?php if (!empty($slide["image$i"])): ?>
-                                    <div class="mb-2">
-                                        <img src="<?php echo getSiteUrl($slide["image$i"]); ?>" 
-                                             alt="Image <?php echo $i; ?>" class="img-fluid rounded" style="max-height: 100px;">
-                                    </div>
-                                    <?php endif; ?>
-                                    <input type="file" class="form-control" name="image<?php echo $i; ?>" accept="image/*">
-                                </div>
-                            </div>
-                            <?php endfor; ?>
+                        <?php if (!empty($slide['background_image'])): ?>
+                        <div class="mb-3">
+                            <img src="<?php echo getSiteUrl($slide['background_image']); ?>"
+                                 alt="Background" class="img-fluid rounded" style="max-height: 200px;">
                         </div>
-                        <small class="text-muted">Upload images for the masonry grid display.<br><strong>Size:</strong> 400×500px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
+                        <?php endif; ?>
+                        <input type="file" class="form-control" name="background_image" accept="image/*">
+                        <small class="text-muted mt-2 d-block">
+                            Full-width background image for this slide.<br>
+                            <strong>Size:</strong> 1920×1080px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 5MB<br>
+                            <strong>Tip:</strong> If no image is uploaded, the Background CSS Class will be used for styling.
+                        </small>
                     </div>
                 </div>
             </div>
@@ -238,6 +239,14 @@ if ($action === 'add' || $action === 'edit') {
                                    value="<?php echo (int)($slide['sort_order'] ?? 0); ?>">
                         </div>
                         
+                        <div class="mb-3">
+                            <label for="background_class" class="form-label">Background CSS Class</label>
+                            <input type="text" class="form-control" id="background_class" name="background_class"
+                                   placeholder="e.g., hero-slide-bg-1"
+                                   value="<?php echo htmlspecialchars($slide['background_class'] ?? ''); ?>">
+                            <small class="text-muted">CSS class for slide background styling (e.g., hero-slide-bg-1, hero-slide-bg-2)</small>
+                        </div>
+
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="is_active" name="is_active"
                                    <?php echo ($slide['is_active'] ?? 1) ? 'checked' : ''; ?>>
@@ -291,10 +300,11 @@ if ($action === 'add' || $action === 'edit') {
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th style="width: 80px;">Preview</th>
                             <th>Order</th>
                             <th>Badge</th>
                             <th>Title</th>
-                            <th>Buttons</th>
+                            <th>Background</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -302,17 +312,25 @@ if ($action === 'add' || $action === 'edit') {
                     <tbody>
                         <?php foreach ($slides as $slide): ?>
                         <tr>
+                            <td>
+                                <?php if (!empty($slide['background_image'])): ?>
+                                <img src="<?php echo getSiteUrl($slide['background_image']); ?>"
+                                     alt="" style="width: 70px; height: 40px; object-fit: cover; border-radius: 6px;">
+                                <?php else: ?>
+                                <div style="width: 70px; height: 40px; border-radius: 6px; background: #0d1b4b;" class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-image text-white-50" style="font-size: 0.7rem;"></i>
+                                </div>
+                                <?php endif; ?>
+                            </td>
                             <td><?php echo $slide['sort_order']; ?></td>
                             <td><span class="badge bg-secondary"><?php echo htmlspecialchars($slide['badge_text']); ?></span></td>
                             <td>
                                 <strong><?php echo htmlspecialchars($slide['title']); ?></strong>
-                                <br><small class="text-muted"><?php echo htmlspecialchars(substr($slide['subtitle'], 0, 60)); ?>...</small>
+                                <br><small class="text-muted"><?php echo htmlspecialchars(substr($slide['subtitle'] ?? '', 0, 60)); ?>...</small>
                             </td>
                             <td>
-                                <small>
-                                    <?php echo htmlspecialchars($slide['button1_text']); ?> → <?php echo htmlspecialchars($slide['button1_link']); ?>
-                                    <br>
-                                    <?php echo htmlspecialchars($slide['button2_text']); ?> → <?php echo htmlspecialchars($slide['button2_link']); ?>
+                                <small class="text-muted">
+                                    <?php echo htmlspecialchars($slide['background_class'] ?? 'auto'); ?>
                                 </small>
                             </td>
                             <td>

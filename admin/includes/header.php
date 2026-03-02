@@ -104,7 +104,13 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                         <span>Team Members</span>
                     </a>
                 </li>
-                
+                <li class="nav-item">
+                    <a class="nav-link <?php echo $currentPage == 'vlogs' ? 'active' : ''; ?>" href="<?php echo getAdminUrl('content/vlogs.php'); ?>">
+                        <i class="fas fa-video"></i>
+                        <span>Vlogs / Reels</span>
+                    </a>
+                </li>
+
                 <?php if (hasRole('admin')): ?>
                 <li class="nav-header">Administration</li>
                 <li class="nav-item">

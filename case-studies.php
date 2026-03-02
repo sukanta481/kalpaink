@@ -167,7 +167,17 @@ if (count($gallery_previews) < 4) {
                     <span class="title-line title-line--accent"><?php echo htmlspecialchars($cs_hero['extra']['accent_text'] ?? 'Impact'); ?><span class="title-dot">.</span></span>
                 </h1>
                 <p class="case-hero-subtitle"><?php echo htmlspecialchars($cs_hero['content_body'] ?? 'Every project we take on is a collision of bold thinking and meaningful intent. Campaigns that didn\'t just perform—they redefined what\'s possible.'); ?></p>
+                <?php $cs_stats = getStatisticsFromDB(); ?>
                 <div class="case-hero-stats">
+                    <?php if (!empty($cs_stats)): ?>
+                        <?php foreach (array_slice($cs_stats, 0, 3) as $si => $cstat): ?>
+                        <?php if ($si > 0): ?><div class="hero-stat-divider"></div><?php endif; ?>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number"><?php echo htmlspecialchars($cstat['value'] . ($cstat['suffix'] ?? '')); ?></span>
+                            <span class="hero-stat-label"><?php echo htmlspecialchars($cstat['label']); ?></span>
+                        </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
                     <div class="hero-stat">
                         <span class="hero-stat-number">50+</span>
                         <span class="hero-stat-label">Projects</span>
@@ -182,6 +192,7 @@ if (count($gallery_previews) < 4) {
                         <span class="hero-stat-number">4.9</span>
                         <span class="hero-stat-label">Rating</span>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <a href="#portfolio" class="case-hero-cta">
                     <span>Explore Work</span>

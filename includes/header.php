@@ -86,12 +86,18 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="services.php">All Services</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="services.php#graphics">Graphics Design</a></li>
-                            <li><a class="dropdown-item" href="services.php#branding">Brand Identity</a></li>
-                            <li><a class="dropdown-item" href="services.php#smm">Social Media Marketing</a></li>
-                            <li><a class="dropdown-item" href="services.php#web">Web Development</a></li>
-                            <li><a class="dropdown-item" href="services.php#seo">SEO Services</a></li>
-                            <li><a class="dropdown-item" href="services.php#content">Content Marketing</a></li>
+                            <?php if (!empty($services)): ?>
+                                <?php foreach ($services as $svc_nav): ?>
+                                <li><a class="dropdown-item" href="services.php#<?php echo htmlspecialchars($svc_nav['slug'] ?? strtolower(str_replace(' ', '-', $svc_nav['title']))); ?>"><?php echo htmlspecialchars($svc_nav['title']); ?></a></li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li><a class="dropdown-item" href="services.php#graphics">Graphics Design</a></li>
+                                <li><a class="dropdown-item" href="services.php#branding">Brand Identity</a></li>
+                                <li><a class="dropdown-item" href="services.php#smm">Social Media Marketing</a></li>
+                                <li><a class="dropdown-item" href="services.php#web">Web Development</a></li>
+                                <li><a class="dropdown-item" href="services.php#seo">SEO Services</a></li>
+                                <li><a class="dropdown-item" href="services.php#content">Content Marketing</a></li>
+                            <?php endif; ?>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -120,9 +126,9 @@
                 <!-- Mobile menu footer -->
                 <div class="mobile-menu-footer d-lg-none">
                     <div class="mobile-menu-socials">
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     </div>
                     <p class="mobile-menu-tagline">Crafting digital experiences ✨</p>
                 </div>

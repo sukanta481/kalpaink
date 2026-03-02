@@ -101,6 +101,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             is_active TINYINT(1) DEFAULT 1
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
         
+        // Vlogs Table
+        $db->exec("CREATE TABLE IF NOT EXISTS vlogs (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            thumbnail VARCHAR(255),
+            video_url VARCHAR(500) NOT NULL,
+            video_type ENUM('youtube', 'instagram', 'local') DEFAULT 'youtube',
+            description TEXT,
+            sort_order INT DEFAULT 0,
+            is_active TINYINT(1) DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+        // Clients Table
+        $db->exec("CREATE TABLE IF NOT EXISTS clients (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            client_name VARCHAR(255) NOT NULL,
+            logo VARCHAR(255),
+            website_url VARCHAR(500),
+            sort_order INT DEFAULT 0,
+            is_active TINYINT(1) DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+        // Add background_class to hero_slides if not exists
+        try {
+            $db->exec("ALTER TABLE hero_slides ADD COLUMN background_class VARCHAR(100) DEFAULT '' AFTER image3");
+        } catch (PDOException $e) {
+            // Column already exists
+        }
+
+        // Add image column to services if not exists
+        try {
+            $db->exec("ALTER TABLE services ADD COLUMN image VARCHAR(255) DEFAULT NULL AFTER icon");
+        } catch (PDOException $e) {
+            // Column already exists
+        }
+
         // Insert default Hero Slide
         $check = $db->query("SELECT COUNT(*) FROM hero_slides")->fetchColumn();
         if ($check == 0) {
@@ -213,6 +251,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <li class="list-group-item">
                                         <i class="fas fa-chart-bar text-primary me-2"></i><strong>statistics</strong>
                                         <br><small class="text-muted">Counter numbers</small>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-video text-primary me-2"></i><strong>vlogs</strong>
+                                        <br><small class="text-muted">Vlogs & Reels</small>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-building text-primary me-2"></i><strong>clients</strong>
+                                        <br><small class="text-muted">Client brands / Marquee</small>
                                     </li>
                                 </ul>
                             </div>

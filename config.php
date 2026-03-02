@@ -82,8 +82,9 @@ $services = !empty($services_db) ? array_map(function($s) use ($service_images) 
     return [
         'icon' => $s['icon'],
         'title' => $s['title'],
+        'slug' => $s['slug'] ?? strtolower(str_replace(' ', '-', $s['title'])),
         'description' => $s['short_description'],
-        'image' => $service_images[$s['title']] ?? 'assets/images/services/graphics-design.png'
+        'image' => !empty($s['image']) ? $s['image'] : ($service_images[$s['title']] ?? 'assets/images/services/graphics-design.png')
     ];
 }, $services_db) : [
     [
