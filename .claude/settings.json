@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php -r \"$db = new PDO\\(''mysql:host=localhost;dbname=kalpanik_crm;charset=utf8mb4'', ''root'', ''''\\); $stmt = $db->query\\(''SELECT id, page_name, section_key, content_title, content_subtitle FROM page_content''\\); while \\($row = $stmt->fetch\\(PDO::FETCH_ASSOC\\)\\) { echo $row[''id''] . '' | '' . $row[''page_name''] . '' | '' . $row[''section_key''] . '' | '' . $row[''content_title''] . '' | '' . $row[''content_subtitle''] . PHP_EOL; }\")"
+    ]
+  }
+}

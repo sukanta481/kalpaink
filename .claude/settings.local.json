@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(xargs:*)",
-      "Bash(du -sh /c/xampp/htdocs/kalpoink/*)"
+      "Bash(du -sh /c/xampp/htdocs/kalpoink/*)",
+      "Bash(php -r \":*)"
     ]
   }
 }

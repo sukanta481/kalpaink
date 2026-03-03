@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (isset($_POST['save_member'])) {
         $data = [
-            'name' => sanitize($_POST['name']),
-            'position' => sanitize($_POST['position']),
-            'bio' => sanitize($_POST['bio']),
-            'tagline' => sanitize($_POST['tagline']),
+            'name' => trim($_POST['name']),
+            'position' => trim($_POST['position']),
+            'bio' => trim($_POST['bio']),
+            'tagline' => trim($_POST['tagline']),
             'email' => sanitize($_POST['email']),
             'phone' => sanitize($_POST['phone']),
             'linkedin' => sanitize($_POST['linkedin']),
@@ -44,26 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         $image = null;
-        $image_fun = null;
-        
-        // Professional image
+
+        // Team member photo
         if (!empty($_FILES['image_pro']['name'])) {
             $file_ext = strtolower(pathinfo($_FILES['image_pro']['name'], PATHINFO_EXTENSION));
             if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-                $file_name = generateSlug($data['name']) . '-pro-' . time() . '.' . $file_ext;
+                $file_name = generateSlug($data['name']) . '-' . time() . '.' . $file_ext;
                 if (move_uploaded_file($_FILES['image_pro']['tmp_name'], $upload_dir . $file_name)) {
                     $image = 'uploads/team/' . $file_name;
-                }
-            }
-        }
-        
-        // Fun image
-        if (!empty($_FILES['image_fun']['name'])) {
-            $file_ext = strtolower(pathinfo($_FILES['image_fun']['name'], PATHINFO_EXTENSION));
-            if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-                $file_name = generateSlug($data['name']) . '-fun-' . time() . '.' . $file_ext;
-                if (move_uploaded_file($_FILES['image_fun']['tmp_name'], $upload_dir . $file_name)) {
-                    $image_fun = 'uploads/team/' . $file_name;
                 }
             }
         }
@@ -78,10 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql .= ", image = ?";
                 $params[] = $image;
             }
-            if ($image_fun) {
-                $sql .= ", image_fun = ?";
-                $params[] = $image_fun;
-            }
             
             $sql .= " WHERE id = ?";
             $params[] = $id;
@@ -92,11 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlashMessage('success', 'Team member updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO team_members (name, position, bio, tagline, email, phone, linkedin, twitter, sort_order, is_active, image, image_fun) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO team_members (name, position, bio, tagline, email, phone, linkedin, twitter, sort_order, is_active, image)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
             $params[] = $image;
-            $params[] = $image_fun;
             
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
@@ -241,32 +224,16 @@ if ($action === 'add' || $action === 'edit') {
                 
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Professional Photo</h5>
+                        <h5 class="card-title">Photo</h5>
                     </div>
                     <div class="card-body">
                         <?php if (!empty($member['image'])): ?>
                         <div class="mb-3">
-                            <img src="<?php echo getSiteUrl($member['image']); ?>" 
-                                 alt="Professional Photo" class="img-fluid rounded mb-2" style="max-height: 150px;">
+                            <img src="<?php echo getSiteUrl($member['image']); ?>"
+                                 alt="Photo" class="img-fluid rounded mb-2" style="max-height: 150px;">
                         </div>
                         <?php endif; ?>
                         <input type="file" class="form-control" id="image_pro" name="image_pro" accept="image/*">
-                        <small class="text-muted"><strong>Size:</strong> 400×500px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Fun Photo (Hover)</h5>
-                    </div>
-                    <div class="card-body">
-                        <?php if (!empty($member['image_fun'])): ?>
-                        <div class="mb-3">
-                            <img src="<?php echo getSiteUrl($member['image_fun']); ?>" 
-                                 alt="Fun Photo" class="img-fluid rounded mb-2" style="max-height: 150px;">
-                        </div>
-                        <?php endif; ?>
-                        <input type="file" class="form-control" id="image_fun" name="image_fun" accept="image/*">
                         <small class="text-muted"><strong>Size:</strong> 400×500px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
                     </div>
                 </div>

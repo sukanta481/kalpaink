@@ -1323,48 +1323,56 @@ function initBrandsScrollReveal() {
     var brandItems = brandsGrid.querySelectorAll('.brand-item');
     if (!brandItems.length) return;
 
-    // Apply hidden state immediately
+    // Start each brand hidden below
     brandItems.forEach(function (item) {
-        item.classList.add('fade-up-hidden');
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(40px)';
     });
 
-    // Delay observer start so the page renders first
-    // This prevents the animation from firing before the user can see it
-    setTimeout(function () {
-        var brandsObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    // Stagger each logo with 150ms delay for dramatic wave effect
-                    brandItems.forEach(function (item, index) {
-                        item.style.transitionDelay = (index * 150) + 'ms';
-                    });
+    var triggered = false;
 
-                    // Double-rAF to ensure browser paints the hidden state first
-                    requestAnimationFrame(function () {
-                        requestAnimationFrame(function () {
-                            brandItems.forEach(function (item) {
-                                item.classList.add('fade-up-visible');
-                            });
-                        });
-                    });
+    function startAnimation() {
+        if (triggered) return;
+        triggered = true;
 
-                    // Unobserve (one-shot animation)
-                    brandsObserver.unobserve(entry.target);
-
-                    // Clean up transition-delay after all animations finish
-                    setTimeout(function () {
-                        brandItems.forEach(function (item) {
-                            item.style.transitionDelay = '';
-                        });
-                    }, brandItems.length * 150 + 1000);
-                }
-            });
-        }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -100px 0px'
+        // Phase 1: Staggered fade-up entrance
+        brandItems.forEach(function (item, i) {
+            setTimeout(function () {
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, i * 150);
         });
 
-        brandsObserver.observe(brandsGrid);
-    }, 600);
+        // Phase 2: After entrance completes, start continuous float
+        var entranceDuration = brandItems.length * 150 + 800;
+        setTimeout(function () {
+            brandItems.forEach(function (item, i) {
+                // Clear inline transition so it doesn't fight the animation
+                item.style.transition = 'none';
+                item.style.transform = '';
+                item.style.animationDelay = (i * 0.35) + 's';
+                item.classList.add('floating');
+            });
+        }, entranceDuration);
+    }
+
+    // Use IntersectionObserver to trigger when visible
+    var observer = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+            startAnimation();
+            observer.disconnect();
+        }
+    }, { threshold: 0.1 });
+
+    observer.observe(brandsGrid);
+
+    // Fallback: if section is already in view on load, trigger after short delay
+    setTimeout(function () {
+        var rect = brandsGrid.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            startAnimation();
+        }
+    }, 300);
 }
 

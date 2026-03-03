@@ -254,7 +254,7 @@ $marquee_clients = getClientsFromDB();
                     </div>
                     <div class="creator-v2-info">
                         <h3 class="creator-v2-name"><?php echo htmlspecialchars($member['name']); ?></h3>
-                        <p class="creator-v2-role"><?php echo htmlspecialchars($member['position']); ?></p>
+                        <p class="creator-v2-role"><?php echo htmlspecialchars($member['position'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false); ?></p>
                     </div>
                     <?php if (!empty($member['linkedin'])): ?>
                     <div class="creator-v2-socials">

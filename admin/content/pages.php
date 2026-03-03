@@ -12,16 +12,16 @@ $db = getDB();
 $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// Handle form submissions
+// Handle form submissions BEFORE any HTML output
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = $_POST['csrf_token'] ?? '';
-    
+
     if (!verifyCsrfToken($csrf)) {
         setFlashMessage('danger', 'Invalid security token.');
         header('Location: pages.php');
         exit;
     }
-    
+
     if (isset($_POST['save_content'])) {
         $data = [
             'page_name' => sanitize($_POST['page_name']),
@@ -32,14 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'content_extra' => !empty(trim($_POST['content_extra'] ?? '')) ? trim($_POST['content_extra']) : null,
             'is_active' => isset($_POST['is_active']) ? 1 : 0
         ];
-        
+
         // Handle image upload
         if (!empty($_FILES['content_image']['name'])) {
             $upload_dir = __DIR__ . '/../../uploads/content/';
             if (!file_exists($upload_dir)) {
                 mkdir($upload_dir, 0755, true);
             }
-            
+
             $file_ext = strtolower(pathinfo($_FILES['content_image']['name'], PATHINFO_EXTENSION));
             if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'])) {
                 $file_name = $data['page_name'] . '-' . $data['section_key'] . '-' . time() . '.' . $file_ext;
@@ -48,31 +48,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-        
+
         if ($id > 0) {
             // Update — extract image separately to avoid param misalignment
             $contentImage = $data['content_image'] ?? null;
             unset($data['content_image']);
-            
-            $sql = "UPDATE page_content SET page_name = ?, section_key = ?, content_title = ?, 
+
+            $sql = "UPDATE page_content SET page_name = ?, section_key = ?, content_title = ?,
                     content_subtitle = ?, content_body = ?, content_extra = ?, is_active = ?";
             $params = array_values($data);
-            
+
             if ($contentImage) {
                 $sql .= ", content_image = ?";
                 $params[] = $contentImage;
             }
-            
+
             $sql .= ", updated_at = NOW() WHERE id = ?";
             $params[] = $id;
-            
+
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
             logActivity('update', 'page_content', $id, 'Updated content: ' . $data['page_name'] . '/' . $data['section_key']);
             setFlashMessage('success', 'Content updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO page_content (page_name, section_key, content_title, content_subtitle, 
+            $sql = "INSERT INTO page_content (page_name, section_key, content_title, content_subtitle,
                     content_body, content_image, content_extra, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $params = [
                 $data['page_name'],
@@ -84,17 +84,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data['content_extra'],
                 $data['is_active']
             ];
-            
+
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
             logActivity('create', 'page_content', $db->lastInsertId(), 'Created content: ' . $data['page_name'] . '/' . $data['section_key']);
             setFlashMessage('success', 'Content created successfully.');
         }
-        
+
         header('Location: pages.php');
         exit;
     }
-    
+
     if (isset($_POST['delete_content']) && $id > 0) {
         $stmt = $db->prepare("DELETE FROM page_content WHERE id = ?");
         $stmt->execute([$id]);
@@ -105,22 +105,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// NOW include header (after all potential redirects)
-$page_title = 'Page Content';
-require_once __DIR__ . '/../includes/header.php';
-
 // Pages and sections configuration
 $pages_config = [
     'home' => [
         'hero' => 'Hero Banner — main heading, subtext, CTA button',
-        'trust_bar' => 'Trust Bar — "Trusted by 50+ business" text',
-        'welcome' => 'Welcome Section — title, body paragraphs, button',
+        'trust_bar' => 'Trust Bar — "Trusted by 250+ business" text',
+        'welcome' => 'Welcome Section — title, body paragraphs, stats',
         'services_section' => 'Services Section — title, subtitle',
         'about' => 'About Section — title, body paragraphs',
+        'about_preview' => 'About Preview — short about us section',
         'team' => 'Team Section — badge, title, subtitle',
-        'case_studies' => 'Case Studies Section — title',
-        'vlog_reel' => 'Vlog & Reel Section — title',
+        'case_studies' => 'Case Studies Section — title, subtitle',
+        'vlogs' => 'Vlog & Reel Section — title',
         'testimonials' => 'Testimonials Section — title, subtitle',
+        'faq' => 'FAQ Section — headline, subtext',
         'cta' => 'Call To Action — bottom CTA banner'
     ],
     'about' => [
@@ -157,7 +155,7 @@ $page_icons = [
     'case_studies' => 'fas fa-layer-group'
 ];
 
-// Pre-fetch edit item before header output
+// Pre-fetch edit item BEFORE header output (so redirects work)
 $content = null;
 if ($action === 'edit' && $id > 0) {
     $stmt = $db->prepare("SELECT * FROM page_content WHERE id = ?");
@@ -170,7 +168,7 @@ if ($action === 'edit' && $id > 0) {
     }
 }
 
-// NOW include header (after all potential redirects)
+// NOW include header (after all potential redirects are done)
 $page_title = 'Page Content';
 require_once __DIR__ . '/../includes/header.php';
 
@@ -336,9 +334,22 @@ if ($action === 'add' || $action === 'edit') {
     <div class="alert alert-info d-flex align-items-center mb-4" role="alert">
         <i class="fas fa-info-circle me-3 fs-5"></i>
         <div>
-            <strong>How it works:</strong> Each page has multiple sections you can edit independently. 
-            Changes here will automatically reflect on the live website. 
+            <strong>How it works:</strong> Each page has multiple sections you can edit independently.
+            Changes here will automatically reflect on the live website.
             Click <i class="fas fa-edit"></i> to edit any section's title, text, image, or extra data.
+        </div>
+    </div>
+
+    <!-- Quick link to Homepage Section Toggle -->
+    <div class="card mb-4 border-primary">
+        <div class="card-body d-flex justify-content-between align-items-center py-3">
+            <div>
+                <h6 class="mb-0"><i class="fas fa-toggle-on me-2 text-primary"></i>Want to show/hide homepage sections?</h6>
+                <small class="text-muted">Use the Homepage Section Visibility toggle to enable or disable entire sections.</small>
+            </div>
+            <a href="<?php echo getAdminUrl('content/homepage-sections.php'); ?>" class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-sliders-h me-1"></i>Section Toggles
+            </a>
         </div>
     </div>
     

@@ -895,6 +895,17 @@ body {
     transform: translateY(0) scale(1) !important;
 }
 
+/* --- Continuous floating animation for brand items --- */
+@keyframes brandFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.brand-item.floating {
+    animation: brandFloat 3s ease-in-out infinite;
+    transition: filter 0.4s ease-in-out;
+}
+
 /* --- Mobile: Marquee (hidden on desktop) --- */
 .brands-marquee {
     display: none;
@@ -1659,8 +1670,8 @@ body {
     }
 
     .creator-v2-card {
-        flex: 0 0 85%;
-        scroll-snap-align: center;
+        flex: 0 0 75%;
+        scroll-snap-align: start;
     }
 
     /* Always show social bar on touch devices */

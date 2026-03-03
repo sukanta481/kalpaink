@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $db->prepare("UPDATE settings SET setting_value = ? WHERE setting_key = ?");
                 $stmt->execute([$value, $setting_key]);
             } else {
-                $stmt = $db->prepare("INSERT INTO settings (setting_key, setting_value, setting_type, category) VALUES (?, ?, 'toggle', 'homepage')");
+                $stmt = $db->prepare("INSERT INTO settings (setting_key, setting_value, setting_type, category) VALUES (?, ?, 'boolean', 'homepage')");
                 $stmt->execute([$setting_key, $value]);
             }
         }

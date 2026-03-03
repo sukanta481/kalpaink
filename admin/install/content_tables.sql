@@ -7,15 +7,15 @@ USE kalpanik_crm;
 CREATE TABLE IF NOT EXISTS page_content (
     id INT AUTO_INCREMENT PRIMARY KEY,
     page_name VARCHAR(50) NOT NULL,
-    section_name VARCHAR(100) NOT NULL,
-    content_key VARCHAR(100) NOT NULL,
-    content_type ENUM('text', 'textarea', 'html', 'image', 'json') DEFAULT 'text',
-    content_value LONGTEXT,
-    sort_order INT DEFAULT 0,
+    section_key VARCHAR(100) NOT NULL,
+    content_title VARCHAR(255),
+    content_subtitle TEXT,
+    content_body LONGTEXT,
+    content_image VARCHAR(255),
+    content_extra JSON,
     is_active TINYINT(1) DEFAULT 1,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY unique_content (page_name, section_name, content_key)
+    UNIQUE KEY unique_section (page_name, section_key)
 );
 
 -- Hero Slides Table
@@ -117,34 +117,22 @@ INSERT INTO faqs (question, answer, sort_order) VALUES
 ('What makes Kalpanik different from other agencies?', 'Our focus on creative excellence combined with strategic thinking sets us apart. With our partners combined experience, we deliver work that not only looks great but also drives real business results.', 5);
 
 -- Insert Default Page Content
-INSERT INTO page_content (page_name, section_name, content_key, content_type, content_value, sort_order) VALUES
+INSERT INTO page_content (page_name, section_key, content_title, content_subtitle, content_body, is_active) VALUES
 -- Homepage
-('home', 'intro', 'welcome_title', 'text', 'Welcome to Kalpanik', 1),
-('home', 'intro', 'welcome_subtitle', 'textarea', 'We are a creative digital agency specializing in graphics design, branding, and digital marketing solutions.', 2),
+('home', 'welcome', 'Welcome to Kalpanik', 'Who We Are', '<p>We are a creative digital agency specializing in graphics design, branding, and digital marketing solutions.</p>', 1),
 
 -- About Page
-('about', 'hero', 'title', 'text', 'About Us', 1),
-('about', 'hero', 'subtitle', 'textarea', 'We are a passionate team of creative minds dedicated to transforming brands through innovative design and strategic marketing.', 2),
-('about', 'story', 'title', 'text', 'Our Story', 3),
-('about', 'story', 'content', 'html', '<p>Founded in Kolkata, Kalpanik started as a small design studio with big dreams. Today, we have grown into a full-service creative agency, helping businesses across India and beyond establish their digital presence.</p><p>Our journey has been driven by a simple belief: great design can transform businesses. We combine creativity with strategy to deliver results that matter.</p>', 4),
-('about', 'mission', 'title', 'text', 'Our Mission', 5),
-('about', 'mission', 'content', 'textarea', 'To empower businesses with creative solutions that drive growth and create lasting impressions.', 6),
-('about', 'vision', 'title', 'text', 'Our Vision', 7),
-('about', 'vision', 'content', 'textarea', 'To be the most trusted creative partner for businesses seeking to make their mark in the digital world.', 8),
+('about', 'hero', 'About Us', 'Our Story', '<p>We are a passionate team of creative minds dedicated to transforming brands through innovative design and strategic marketing.</p>', 1),
+('about', 'story', 'Our Story', NULL, '<p>Founded in Kolkata, Kalpanik started as a small design studio with big dreams. Today, we have grown into a full-service creative agency, helping businesses across India and beyond establish their digital presence.</p><p>Our journey has been driven by a simple belief: great design can transform businesses. We combine creativity with strategy to deliver results that matter.</p>', 1),
 
 -- Services Page
-('services', 'hero', 'title', 'text', 'Our Services', 1),
-('services', 'hero', 'subtitle', 'textarea', 'Comprehensive digital solutions to help your business grow and thrive in the digital landscape.', 2),
+('services', 'hero', 'Our Services', 'What We Offer', '<p>Comprehensive digital solutions to help your business grow and thrive in the digital landscape.</p>', 1),
 
 -- Contact Page
-('contact', 'hero', 'title', 'text', 'Get In Touch', 1),
-('contact', 'hero', 'subtitle', 'textarea', 'You are One Step Away from Digital Success. Get in Touch!', 2),
-('contact', 'form', 'success_message', 'text', 'Thank you for your message! We will get back to you soon.', 3),
+('contact', 'hero', 'Get In Touch', 'Contact Us', '<p>You are One Step Away from Digital Success. Get in Touch!</p>', 1),
 
 -- Blog Page
-('blog', 'hero', 'title', 'text', 'Our Blog', 1),
-('blog', 'hero', 'subtitle', 'textarea', 'Insights, tips, and stories from our team of digital marketing experts.', 2),
+('blog', 'hero', 'Our Blog', 'Latest Insights', '<p>Insights, tips, and stories from our team of digital marketing experts.</p>', 1),
 
 -- Case Studies Page
-('case-studies', 'hero', 'title', 'text', 'Our Work', 1),
-('case-studies', 'hero', 'subtitle', 'textarea', 'Explore our portfolio of creative projects and see how we have helped brands succeed.', 2);
+('case_studies', 'hero', 'Our Work', 'Portfolio', '<p>Explore our portfolio of creative projects and see how we have helped brands succeed.</p>', 1);

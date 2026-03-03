@@ -40,7 +40,7 @@ class Database {
             // If database doesn't exist, redirect to installer
             if (strpos($e->getMessage(), 'Unknown database') !== false) {
                 // Auto-detect base path
-                $basePath = ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') ? '/kalpanik/' : '/';
+                $basePath = ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') ? '/kalpoink/' : '/';
                 header('Location: ' . $basePath . 'admin/install/');
                 exit;
             }
