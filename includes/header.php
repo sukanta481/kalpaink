@@ -41,6 +41,14 @@
     <?php endif; ?>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-inner">
+            <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="preloader-logo">
+            <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark">
         <div class="container">

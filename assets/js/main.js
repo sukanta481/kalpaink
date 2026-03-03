@@ -3,6 +3,15 @@
  * Digital Marketing Agency Website
  */
 
+// Preloader — hide after page fully loads
+window.addEventListener('load', function () {
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.classList.add('hide');
+        setTimeout(function () { preloader.remove(); }, 600);
+    }
+});
+
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize AOS (Animate on Scroll)

@@ -5,6 +5,62 @@
  */
 
 /* ================================
+   PRELOADER
+================================ */
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #0A0A0A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-inner {
+    text-align: center;
+}
+
+.preloader-logo {
+    width: 180px;
+    animation: preloaderPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes preloaderPulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.96); }
+    50% { opacity: 1; transform: scale(1); }
+}
+
+.preloader-bar {
+    width: 180px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin: 24px auto 0;
+    overflow: hidden;
+}
+
+.preloader-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: #fff;
+    border-radius: 3px;
+    animation: preloaderFill 1.8s ease-in-out forwards;
+}
+
+@keyframes preloaderFill {
+    0% { width: 0%; }
+    60% { width: 70%; }
+    100% { width: 100%; }
+}
+
+/* ================================
    CSS VARIABLES
 ================================ */
 :root {
@@ -2455,7 +2511,11 @@ body {
 }
 
 .testimonial-peek-card.is-center .testimonial-rating i {
-    color: #333;
+    color: #555;
+}
+
+.testimonial-peek-card.is-center .testimonial-rating i.filled {
+    color: #FFD700;
 }
 
 .testimonial-rating i.filled {
@@ -4368,7 +4428,7 @@ textarea.form-control {
 
 @media (max-width: 991.98px) {
     .blog-featured-hero {
-        padding: 80px 0 0;
+        padding: 0;
     }
 
     .blog-featured-hero .container .row {
@@ -5177,12 +5237,14 @@ textarea.form-control {
     }
 
     .footer-v2-legal {
-        flex-direction: column;
-        gap: 4px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px 6px;
+        font-size: 0.7rem;
     }
 
     .footer-v2-dot {
-        display: none;
+        display: inline;
     }
 
     .footer-v2-bottom-bar {
