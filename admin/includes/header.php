@@ -38,7 +38,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
         <div class="sidebar-header">
             <?php
             // Get logo from settings
-            $sidebarLogoPath = 'assets/images/kalpaink-logo.png';
+            $sidebarLogoPath = 'assets/images/kalpanik-logo.png';
             try {
                 $logoDB = getDB();
                 $logoStmt = $logoDB->prepare("SELECT setting_value FROM settings WHERE setting_key = 'site_logo'");

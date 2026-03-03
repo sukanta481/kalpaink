@@ -5,7 +5,7 @@
  */
 
 $host = 'localhost';
-$dbname = 'kalpoink_crm';
+$dbname = 'kalpanik_crm';
 $user = 'root';
 $pass = '';
 
@@ -30,7 +30,7 @@ try {
     } else {
         // Create admin user
         $stmt = $pdo->prepare("INSERT INTO users (username, email, password, full_name, role, is_active) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->execute(['admin', 'admin@kalpoink.com', $password_hash, 'Administrator', 'admin', 1]);
+        $stmt->execute(['admin', 'admin@kalpanik.com', $password_hash, 'Administrator', 'admin', 1]);
         echo "<h2>✅ Admin user has been created!</h2>";
     }
     

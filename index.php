@@ -12,6 +12,7 @@ $marquee_clients = getClientsFromDB();
 ?>
 
     <!-- Hero Section - Royal Blue Carousel -->
+    <?php if (isHomepageSectionEnabled('hero')): ?>
     <?php
     // Fallback hero slides if CRM has none
     $fallback_hero_slides = [
@@ -81,8 +82,10 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Trusted Brands Section -->
+    <?php if (isHomepageSectionEnabled('brands')): ?>
     <section class="trusted-brands">
         <div class="trusted-brands-header">
             <p class="trusted-brands-heading">Trusted by 250+ business worldwide</p>
@@ -135,8 +138,10 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Welcome Section - Fusion Concept -->
+    <?php if (isHomepageSectionEnabled('welcome')): ?>
     <section class="welcome-section section-padding" id="about">
         <div class="container">
             <div class="welcome-card">
@@ -194,8 +199,10 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Services Section - Illustration Cards -->
+    <?php if (isHomepageSectionEnabled('services')): ?>
     <section class="services-section section-padding" id="services-section">
         <div class="container">
             <div class="text-center mb-5">
@@ -227,8 +234,10 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Meet The Creators Section — Clean Light Grid -->
+    <?php if (isHomepageSectionEnabled('team')): ?>
     <section class="creators-section-v2" id="team">
         <div class="container">
             <div class="creators-v2-header">
@@ -259,8 +268,10 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Case Studies Section — Clean 3-Column Grid -->
+    <?php if (isHomepageSectionEnabled('case_studies')): ?>
     <section class="case-studies-v2" id="portfolio">
         <div class="container">
             <div class="cases-v2-header">
@@ -293,8 +304,10 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Vlog & Reel Section -->
+    <?php if (isHomepageSectionEnabled('vlogs')): ?>
     <?php
     $vlogs_from_db = getVlogsFromDB();
     $fallback_reels = [
@@ -321,9 +334,10 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Testimonials Section — Peek Slider -->
-    <?php if (!empty($testimonials)): ?>
+    <?php if (isHomepageSectionEnabled('testimonials') && !empty($testimonials)): ?>
     <section class="testimonials-section section-padding">
         <div class="container">
             <div class="text-center mb-5">
@@ -381,6 +395,7 @@ $marquee_clients = getClientsFromDB();
     <?php endif; ?>
 
     <!-- FAQ Section - Split Screen -->
+    <?php if (isHomepageSectionEnabled('faq')): ?>
     <section class="faq-section section-padding">
         <div class="container">
             <div class="row">
@@ -421,5 +436,6 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
 <?php include 'includes/footer.php'; ?>

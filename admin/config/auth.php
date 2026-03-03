@@ -135,7 +135,7 @@ function logActivity($action, $entityType = null, $entityId = null, $details = n
 function getBaseUrl() {
     // Auto-detect if we're on localhost or live server
     if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
-        return '/kalpoink/';
+        return '/kalpanik/';
     } else {
         // Live server - site is at root
         return '/';

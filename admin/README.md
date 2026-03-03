@@ -26,7 +26,7 @@
 
 2. Navigate to the installer:
    ```
-   http://localhost/kalpoink/admin/install/
+   http://localhost/kalpanik/admin/install/
    ```
 
 3. Click "Install Database" to create the database and tables
@@ -42,7 +42,7 @@
 ## Access Admin Panel
 
 ```
-http://localhost/kalpoink/admin/
+http://localhost/kalpanik/admin/
 ```
 
 ## User Roles
@@ -98,7 +98,7 @@ Edit `admin/config/database.php` to change database settings:
 
 ```php
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'kalpoink_crm');
+define('DB_NAME', 'kalpanik_crm');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 ```
@@ -109,4 +109,4 @@ The contact form on the website automatically saves submissions to the CRM as le
 
 ## Support
 
-For issues or questions, contact: kalpoinc@gmail.com
+For issues or questions, contact: kalpanik@gmail.com

@@ -144,7 +144,7 @@ foreach ($allSettings as $setting) {
                                 <img src="<?php echo $siteUrl . '/' . htmlspecialchars($logoSetting['setting_value']); ?>" 
                                      alt="Current Logo" style="max-height: 80px; max-width: 100%; object-fit: contain;" id="logoPreview">
                                 <?php else: ?>
-                                <img src="<?php echo $siteUrl; ?>/assets/images/kalpaink-logo.png" 
+                                <img src="<?php echo $siteUrl; ?>/assets/images/kalpanik-logo.png" 
                                      alt="Default Logo" style="max-height: 80px; max-width: 100%; object-fit: contain; opacity: 0.5;" id="logoPreview">
                                 <small class="text-muted mt-1">Using default logo</small>
                                 <?php endif; ?>

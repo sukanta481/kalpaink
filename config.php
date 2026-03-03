@@ -10,9 +10,17 @@ require_once __DIR__ . '/includes/crm-data.php';
 // Get settings from CRM database (with fallbacks)
 $crm_settings = getSettings();
 
+// Homepage section visibility (default: all enabled)
+function isHomepageSectionEnabled($section_key) {
+    global $crm_settings;
+    $key = 'homepage_section_' . $section_key;
+    // Default to '1' (enabled) if setting doesn't exist
+    return ($crm_settings[$key] ?? '1') === '1';
+}
+
 // Auto-detect environment for SITE_URL
 if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
-    define('SITE_URL', 'http://localhost/kalpoink');
+    define('SITE_URL', 'http://localhost/kalpanik');
 } else {
     // Use HTTPS and actual domain on live server
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
@@ -31,13 +39,13 @@ function getAbsoluteUrl($path) {
 }
 
 // Branding - Logo & Favicon (dynamic from admin settings)
-define('SITE_LOGO', getAbsoluteUrl(!empty($crm_settings['site_logo']) ? $crm_settings['site_logo'] : 'assets/images/kalpaink-logo.png'));
-define('SITE_FAVICON', getAbsoluteUrl(!empty($crm_settings['site_favicon']) ? $crm_settings['site_favicon'] : 'assets/images/kalpaink-favicon.png'));
+define('SITE_LOGO', getAbsoluteUrl(!empty($crm_settings['site_logo']) ? $crm_settings['site_logo'] : 'assets/images/kalpanik-logo.png'));
+define('SITE_FAVICON', getAbsoluteUrl(!empty($crm_settings['site_favicon']) ? $crm_settings['site_favicon'] : 'assets/images/kalpanik-favicon.png'));
 
 // Contact Information
 define('CONTACT_ADDRESS', $crm_settings['contact_address'] ?? '225 Bagmari Road, Kolkata - 700054');
 define('CONTACT_PHONE', $crm_settings['contact_phone'] ?? '+91 891 082 1105');
-define('CONTACT_EMAIL', $crm_settings['contact_email'] ?? 'kalpoinc@gmail.com');
+define('CONTACT_EMAIL', $crm_settings['contact_email'] ?? 'kalpanik@gmail.com');
 
 // Social Media Links (Update with actual links)
 define('SOCIAL_FACEBOOK', $crm_settings['social_facebook'] ?? '#');

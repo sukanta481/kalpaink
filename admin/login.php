@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-wrapper">
         <div class="login-card">
             <div class="login-logo">
-                <img src="../assets/images/kalpaink-logo.png" alt="Kalpanik" style="max-height: 60px; margin-bottom: 15px;">
+                <img src="../assets/images/kalpanik-logo.png" alt="Kalpanik" style="max-height: 60px; margin-bottom: 15px;">
                 <p class="text-muted">Admin CRM Panel</p>
             </div>
             

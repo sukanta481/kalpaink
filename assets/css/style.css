@@ -6768,6 +6768,178 @@ textarea.form-control {
     border-color: #141414;
 }
 
+/* ================================
+   CASE STUDIES PAGE — CARD GRID V3
+================================ */
+.case-studies-section {
+    background: #FFFFFF;
+}
+
+.case-card-v3 {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #FAFAFA;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.case-card-v3:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+}
+
+.case-card-v3-image {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    position: relative;
+}
+
+.case-card-v3-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.case-card-v3:hover .case-card-v3-image img {
+    transform: scale(1.05);
+}
+
+/* Hover overlay with view icon */
+.case-card-v3-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.case-card-v3:hover .case-card-v3-overlay {
+    opacity: 1;
+}
+
+.case-card-v3-view {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    color: #141414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.case-card-v3-view:hover {
+    transform: scale(1.1);
+    color: #141414;
+}
+
+/* Card body */
+.case-card-v3-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.case-card-v3-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 10px;
+}
+
+.case-card-v3-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.case-card-v3-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #555;
+    background: #eee;
+    padding: 4px 12px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.case-card-v3-desc {
+    font-size: 0.85rem;
+    color: #777;
+    line-height: 1.5;
+    margin: 0 0 14px;
+    flex: 1;
+}
+
+.case-card-v3-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-top: auto;
+}
+
+.case-card-v3-link i {
+    margin-left: 4px;
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+.case-card-v3-link:hover {
+    color: #0033e3;
+}
+
+.case-card-v3-link:hover i {
+    transform: translateX(4px);
+}
+
+/* Portfolio item hide/show for filter */
+.portfolio-item {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.portfolio-item.hidden {
+    display: none;
+}
+
+/* Mobile: 2 columns */
+@media (max-width: 576px) {
+    .portfolio-grid-v3 .portfolio-item {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .case-card-v3-body {
+        padding: 14px;
+    }
+
+    .case-card-v3-title {
+        font-size: 0.9rem;
+    }
+
+    .case-card-v3-desc {
+        font-size: 0.8rem;
+    }
+
+    .case-card-v3-link {
+        font-size: 0.8rem;
+    }
+}
 
 /* Screen reader only class */
 .sr-only {

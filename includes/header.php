@@ -14,8 +14,8 @@
     <link rel="icon" href="<?php echo SITE_FAVICON; ?>">
     <link rel="apple-touch-icon" href="<?php echo SITE_FAVICON; ?>">
     <?php else: ?>
-    <link rel="icon" type="image/png" href="assets/images/kalpaink favicon.png">
-    <link rel="apple-touch-icon" href="assets/images/kalpaink favicon.png">
+    <link rel="icon" type="image/png" href="assets/images/kalpanik-favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/kalpanik-favicon.png">
     <?php endif; ?>
     
     <!-- Google Fonts -->

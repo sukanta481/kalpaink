@@ -78,6 +78,19 @@ if ($tablesExist) {
 </div>
 <?php endif; ?>
 
+<!-- Homepage Section Visibility -->
+<div class="card mb-4">
+    <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-1"><i class="fas fa-toggle-on me-2 text-primary"></i>Homepage Section Visibility</h5>
+            <p class="text-muted mb-0">Enable or disable individual sections on the homepage.</p>
+        </div>
+        <a href="<?php echo getAdminUrl('content/homepage-sections.php'); ?>" class="btn btn-primary">
+            <i class="fas fa-sliders-h me-2"></i>Manage Sections
+        </a>
+    </div>
+</div>
+
 <div class="row g-4">
     <!-- Hero Slides -->
     <div class="col-md-6 col-lg-4">
