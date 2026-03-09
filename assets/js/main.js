@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
     AOS.init({
         duration: 800,
         easing: 'ease-out',
-        once: true,
+        once: false,
+        mirror: true,
         offset: 100
     });
 
@@ -575,7 +576,8 @@ function initGridReveal() {
         entries.forEach(function (entry) {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
+            } else {
+                entry.target.classList.remove('is-visible');
             }
         });
     }, { threshold: 0.15 });
@@ -867,23 +869,28 @@ function initServiceCardAnimations() {
     const cards = document.querySelectorAll('#services-section .service-card-wrapper');
     if (!cards.length) return;
 
+    const gallery = document.querySelector('#services-section .services-gallery');
+    if (!gallery) return;
+
     const observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-
-            // Stagger each card with a delay based on its index
-            cards.forEach(function (card, i) {
-                setTimeout(function () {
-                    card.classList.add('svc-visible');
-                }, i * 120);
-            });
-
-            observer.disconnect();
+            if (entry.isIntersecting) {
+                // Stagger each card with a delay
+                cards.forEach(function (card, i) {
+                    setTimeout(function () {
+                        card.classList.add('svc-visible');
+                    }, i * 120);
+                });
+            } else {
+                // Remove class when scrolled away so animation replays on re-entry
+                cards.forEach(function (card) {
+                    card.classList.remove('svc-visible');
+                });
+            }
         });
     }, { threshold: 0.15 });
 
-    // Observe the first card to trigger the whole group
-    observer.observe(cards[0]);
+    observer.observe(gallery);
 }
 
 /**
@@ -1172,9 +1179,14 @@ function initStatsCountUp() {
     // Intersection Observer to trigger animation when in view
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+            if (entry.isIntersecting && !entry.target.classList.contains('counting')) {
+                entry.target.classList.remove('counted');
                 animateCount(entry.target);
-                observer.unobserve(entry.target);
+            } else if (!entry.isIntersecting) {
+                // Reset when scrolled away so it replays
+                entry.target.classList.remove('counted');
+                const suffix = entry.target.dataset.suffix || '';
+                entry.target.textContent = '0' + suffix;
             }
         });
     }, {

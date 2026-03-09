@@ -241,9 +241,9 @@ $marquee_clients = getClientsFromDB();
     <section class="creators-section-v2" id="team">
         <div class="container">
             <div class="creators-v2-header">
-                <span class="v2-pill">● Our Team</span>
-                <h2 class="v2-heading">Meet The Creators</h2>
-                <p class="v2-subtext">Two dreamers who turned their passion into your brand's success story</p>
+                <span class="v2-pill" data-aos="fade-down" data-aos-duration="600">● Our Team</span>
+                <h2 class="v2-heading" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">Meet The Creators</h2>
+                <p class="v2-subtext" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">Two dreamers who turned their passion into your brand's success story</p>
             </div>
 
             <div class="creators-v2-grid">
@@ -341,12 +341,12 @@ $marquee_clients = getClientsFromDB();
     <section class="testimonials-section section-padding">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="section-badge">Client Love</span>
-                <h2 class="section-title">What Our Clients Say</h2>
-                <p class="section-subtitle">Real feedback from real partners who trusted us with their brands</p>
+                <span class="section-badge" data-aos="fade-down" data-aos-duration="600">Client Love</span>
+                <h2 class="section-title" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">What Our Clients Say</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">Real feedback from real partners who trusted us with their brands</p>
             </div>
         </div>
-        <div class="testimonials-slider-wrapper">
+        <div class="testimonials-slider-wrapper" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
             <button class="testimonial-arrow testimonial-arrow-prev" aria-label="Previous testimonial">
                 <i class="fas fa-chevron-left"></i>
             </button>

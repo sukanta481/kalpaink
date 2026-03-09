@@ -683,10 +683,7 @@ body {
 
 /* Dark overlay for text readability */
 .hero-slide-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(10, 15, 40, 0.65);
-    z-index: 1;
+    display: none;
 }
 
 .hero-slide-inner {
@@ -1890,7 +1887,7 @@ body {
     transform: translateX(4px);
 }
 
-/* Scroll reveal animation */
+/* Scroll reveal animation — default for case studies etc */
 .grid-reveal-item {
     opacity: 0;
     transform: translateY(20px);
@@ -1900,6 +1897,60 @@ body {
 .grid-reveal-item.is-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* ---- Creator card animations (screen-specific) ---- */
+
+/* Desktop: 3D flip-up with stagger */
+@media (min-width: 993px) {
+    .creator-v2-card.grid-reveal-item {
+        opacity: 0;
+        transform: perspective(800px) rotateX(15deg) translateY(60px);
+        transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .creator-v2-card.grid-reveal-item.is-visible {
+        opacity: 1;
+        transform: perspective(800px) rotateX(0deg) translateY(0);
+    }
+}
+
+/* Tablet: scale + rotate entrance */
+@media (max-width: 992px) and (min-width: 769px) {
+    .creator-v2-card.grid-reveal-item {
+        opacity: 0;
+        transform: scale(0.8) rotate(-3deg);
+        transition: opacity 0.6s ease,
+                    transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .creator-v2-card.grid-reveal-item:nth-child(even) {
+        transform: scale(0.8) rotate(3deg);
+    }
+
+    .creator-v2-card.grid-reveal-item.is-visible {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Mobile: slide-in from bottom with blur */
+@media (max-width: 768px) {
+    .creator-v2-card.grid-reveal-item {
+        opacity: 0;
+        transform: translateY(50px);
+        filter: blur(4px);
+        transition: opacity 0.5s ease,
+                    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                    filter 0.5s ease;
+    }
+
+    .creator-v2-card.grid-reveal-item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
 }
 
 @media (max-width: 992px) {
@@ -2395,6 +2446,96 @@ body {
 ================================ */
 .testimonials-section {
     background: #FFFFFF;
+}
+
+/* ---- Testimonial card inner animations ---- */
+
+/* Quote icon bounce-in when card is center */
+.testimonial-peek-card .quote-icon {
+    transform: scale(0.6) rotate(-10deg);
+    opacity: 0.4;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.4s ease;
+}
+
+.testimonial-peek-card.is-center .quote-icon {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+}
+
+/* Text slide-up */
+.testimonial-peek-card .testimonial-text {
+    transform: translateY(12px);
+    transition: color 0.4s ease-in-out,
+                transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s,
+                opacity 0.4s ease 0.1s;
+}
+
+.testimonial-peek-card.is-center .testimonial-text {
+    transform: translateY(0);
+}
+
+/* Stars cascade */
+.testimonial-peek-card .testimonial-rating i {
+    transform: scale(0);
+    transition: color 0.4s ease-in-out,
+                transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.testimonial-peek-card .testimonial-rating i:nth-child(1) { transition-delay: 0.15s; }
+.testimonial-peek-card .testimonial-rating i:nth-child(2) { transition-delay: 0.2s; }
+.testimonial-peek-card .testimonial-rating i:nth-child(3) { transition-delay: 0.25s; }
+.testimonial-peek-card .testimonial-rating i:nth-child(4) { transition-delay: 0.3s; }
+.testimonial-peek-card .testimonial-rating i:nth-child(5) { transition-delay: 0.35s; }
+
+.testimonial-peek-card.is-center .testimonial-rating i {
+    transform: scale(1);
+}
+
+/* Divider expand */
+.testimonial-peek-card .testimonial-divider {
+    transform: scaleX(0.3);
+    transform-origin: left;
+    transition: background 0.4s ease-in-out,
+                transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+}
+
+.testimonial-peek-card.is-center .testimonial-divider {
+    transform: scaleX(1);
+}
+
+/* Author slide-in from left */
+.testimonial-peek-card .testimonial-author {
+    transform: translateX(-20px);
+    opacity: 0.4;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
+                opacity 0.4s ease 0.3s;
+}
+
+.testimonial-peek-card.is-center .testimonial-author {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Desktop hover: same animations */
+@media (min-width: 993px) {
+    .testimonial-peek-card:hover .quote-icon {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    .testimonial-peek-card:hover .testimonial-text {
+        transform: translateY(0);
+    }
+    .testimonial-peek-card:hover .testimonial-rating i {
+        transform: scale(1);
+    }
+    .testimonial-peek-card:hover .testimonial-divider {
+        transform: scaleX(1);
+    }
+    .testimonial-peek-card:hover .testimonial-author {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .testimonials-section .section-title {
@@ -5978,7 +6119,7 @@ textarea.form-control {
         display: none;
     }
 
-    /* Push content to bottom of viewport */
+    /* Push content to bottom so background image character is visible above */
     .hero-slide-inner {
         position: relative;
         z-index: 3;

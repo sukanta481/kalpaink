@@ -179,9 +179,9 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
     <section class="creators-section-v2" id="team">
         <div class="container">
             <div class="creators-v2-header">
-                <span class="v2-pill">● Our Team</span>
-                <h2 class="v2-heading"><?php echo htmlspecialchars($team_sec['content_title'] ?? 'Meet The Creators'); ?></h2>
-                <p class="v2-subtext"><?php echo htmlspecialchars($team_sec['content_body'] ?? 'Two dreamers who turned their passion into your brand\'s success story'); ?></p>
+                <span class="v2-pill" data-aos="fade-down" data-aos-duration="600">● Our Team</span>
+                <h2 class="v2-heading" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100"><?php echo htmlspecialchars($team_sec['content_title'] ?? 'Meet The Creators'); ?></h2>
+                <p class="v2-subtext" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200"><?php echo htmlspecialchars($team_sec['content_body'] ?? 'Two dreamers who turned their passion into your brand\'s success story'); ?></p>
             </div>
 
             <div class="creators-v2-grid">
