@@ -195,53 +195,36 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Comprehensive digital solutions tailored to your needs</p>
             </div>
             
-            <!-- Desktop: Flex Row with Expanding Hover | Mobile: Grid -->
-            <div class="services-hologram-grid">
-                <?php 
-                // Service illustration map
-                $svc_illustrations = [
-                    'Graphics Design' => 'assets/images/services/graphics-design.png',
-                    'Brand Identity' => 'assets/images/services/brand-identity.png',
-                    'Social Media Marketing' => 'assets/images/services/social-media-marketing.png',
-                    'Web Development' => 'assets/images/services/web-development.png',
-                    'SEO Services' => 'assets/images/services/seo-services.png',
-                    'Content Marketing' => 'assets/images/services/content-marketing.png',
-                ];
-                ?>
-                <?php foreach ($detailed_services as $index => $service): ?>
-                <div class="service-hologram-item" id="<?php echo $service['id']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 4 + 1) * 100; ?>">
-                    <div class="service-hologram-card" data-service-id="<?php echo $service['id']; ?>">
-                        <!-- Illustration -->
-                        <div class="svc-illustration-wrap">
-                            <img src="<?php echo $svc_illustrations[$service['title']] ?? 'assets/images/services/graphics-design.png'; ?>" 
-                                 alt="<?php echo htmlspecialchars($service['title']); ?>" 
-                                 class="svc-illustration" loading="lazy">
-                        </div>
-                        <!-- Title (always visible) -->
-                        <h4 class="svc-title"><?php echo $service['title']; ?></h4>
-                        <!-- Details (hidden on desktop, visible on mobile) -->
-                        <div class="svc-details">
-                            <p class="svc-summary"><?php echo $service['summary']; ?></p>
-                            <!-- Mobile Expand Toggle -->
-                            <div class="hologram-toggle">
-                                <i class="fas fa-chevron-down"></i>
+            <?php
+            // Service illustration map
+            $svc_illustrations = [
+                'Graphics Design' => 'assets/images/services/graphics-design.png',
+                'Brand Identity' => 'assets/images/services/brand-identity.png',
+                'Social Media Marketing' => 'assets/images/services/social-media-marketing.png',
+                'Web Development' => 'assets/images/services/web-development.png',
+                'SEO Services' => 'assets/images/services/seo-services.png',
+                'Content Marketing' => 'assets/images/services/content-marketing.png',
+            ];
+            ?>
+            <div class="services-gallery" data-aos="fade-up">
+                <div class="services-track">
+                    <?php foreach ($detailed_services as $index => $service): ?>
+                    <div class="service-card-wrapper" id="<?php echo $service['id']; ?>">
+                        <div class="service-card">
+                            <div class="service-illustration-wrap">
+                                <img src="<?php echo $svc_illustrations[$service['title']] ?? 'assets/images/services/graphics-design.png'; ?>"
+                                     alt="<?php echo htmlspecialchars($service['title']); ?>"
+                                     class="service-illustration" loading="lazy">
                             </div>
-                        </div>
-                        <!-- Expandable Content -->
-                        <div class="hologram-body">
-                            <p class="hologram-description"><?php echo $service['description']; ?></p>
-                            <div class="hologram-features">
-                                <?php foreach ($service['features'] as $featureIndex => $feature): ?>
-                                <div class="hologram-feature-item" style="--feature-index: <?php echo $featureIndex; ?>">
-                                    <i class="fas fa-check"></i>
-                                    <span><?php echo $feature; ?></span>
-                                </div>
-                                <?php endforeach; ?>
+                            <h4 class="service-title"><?php echo $service['title']; ?></h4>
+                            <div class="service-card-details">
+                                <p class="service-description"><?php echo $service['summary']; ?></p>
+                                <a href="contact.php" class="service-link">Get Quote <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
             </div>
         </div>
     </section>

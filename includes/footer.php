@@ -10,9 +10,15 @@
                             <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>">
                         </a>
                         <div class="footer-v2-socials">
+                            <?php if (SOCIAL_FACEBOOK && SOCIAL_FACEBOOK !== '#'): ?>
                             <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <?php endif; ?>
+                            <?php if (SOCIAL_INSTAGRAM && SOCIAL_INSTAGRAM !== '#'): ?>
                             <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <?php endif; ?>
+                            <?php if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#'): ?>
                             <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <?php endif; ?>
                         </div>
                         <!-- Contact info under socials -->
                         <div class="footer-v2-contact">

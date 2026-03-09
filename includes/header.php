@@ -120,8 +120,11 @@
                             Blog
                         </a>
                     </li>
-                    <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">Contact Us</a>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">
+                            <span class="nav-icon d-lg-none"><i class="fas fa-envelope"></i></span>
+                            Contact Us
+                        </a>
                     </li>
                 </ul>
                 
@@ -134,9 +137,15 @@
                 <!-- Mobile menu footer -->
                 <div class="mobile-menu-footer d-lg-none">
                     <div class="mobile-menu-socials">
+                        <?php if (SOCIAL_INSTAGRAM && SOCIAL_INSTAGRAM !== '#'): ?>
                         <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <?php endif; ?>
+                        <?php if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#'): ?>
                         <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <?php endif; ?>
+                        <?php if (SOCIAL_FACEBOOK && SOCIAL_FACEBOOK !== '#'): ?>
                         <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <?php endif; ?>
                     </div>
                     <p class="mobile-menu-tagline">Crafting digital experiences ✨</p>
                 </div>

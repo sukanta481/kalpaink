@@ -175,24 +175,6 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
         </div>
     </section>
 
-    <!-- Why Join Us Section -->
-    <section class="section-padding" style="padding-top: 0;">
-        <div class="container">
-            <div class="join-us-section" data-aos="fade-up">
-                <div class="join-us-pattern"></div>
-                <div class="row align-items-center position-relative">
-                    <div class="col-lg-8">
-                        <h3 class="cta-title"><?php echo htmlspecialchars($join_us['content_title'] ?? 'Why Work With Us?'); ?></h3>
-                        <p class="mb-0"><?php echo htmlspecialchars($join_us['content_body'] ?? 'Ready to elevate your brand? If you\'re creative, passionate, and driven by innovation, Kalpanik is your perfect partner. Let\'s disrupt the digital world together!'); ?></p>
-                    </div>
-                    <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                        <a href="<?php echo htmlspecialchars($join_us['extra']['button_link'] ?? 'contact.php'); ?>" class="btn btn-white btn-pulse-ripple"><?php echo htmlspecialchars($join_us['extra']['button_text'] ?? 'Get In Touch'); ?></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Meet The Creators Section — Same as Homepage -->
     <section class="creators-section-v2" id="team">
         <div class="container">

@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Testimonials Slider
     initTestimonialsSlider();
 
+    // Service card scroll-triggered animations
+    initServiceCardAnimations();
+
     // Services Page - Mobile Accordion Cards
     initServiceAccordion();
 
@@ -334,9 +337,18 @@ function initMobileMenu() {
         backdrop.addEventListener('click', closeMenu);
     }
 
-    // Close on nav link click (for same-page anchor links)
+    // Close on nav link click (skip dropdown toggles so they can open)
     navbarCollapse.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function () {
+        link.addEventListener('click', function (e) {
+            if (window.innerWidth < 992 && !this.classList.contains('dropdown-toggle')) {
+                closeMenu();
+            }
+        });
+    });
+
+    // Close menu when a dropdown-item is clicked on mobile
+    navbarCollapse.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function () {
             if (window.innerWidth < 992) closeMenu();
         });
     });
@@ -846,6 +858,32 @@ function initTestimonialsSlider() {
             resetAutoSlide();
         });
     });
+}
+
+/**
+ * Service cards - scroll-triggered staggered entrance animation
+ */
+function initServiceCardAnimations() {
+    const cards = document.querySelectorAll('#services-section .service-card-wrapper');
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+
+            // Stagger each card with a delay based on its index
+            cards.forEach(function (card, i) {
+                setTimeout(function () {
+                    card.classList.add('svc-visible');
+                }, i * 120);
+            });
+
+            observer.disconnect();
+        });
+    }, { threshold: 0.15 });
+
+    // Observe the first card to trigger the whole group
+    observer.observe(cards[0]);
 }
 
 /**
