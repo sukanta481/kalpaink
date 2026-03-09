@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS activity_log (
 CREATE TABLE IF NOT EXISTS clients (
     id INT AUTO_INCREMENT PRIMARY KEY,
     client_name VARCHAR(255) NOT NULL,
-    logo VARCHAR(255),
+    client_logo VARCHAR(255),
     website_url VARCHAR(500),
     sort_order INT DEFAULT 0,
     is_active TINYINT(1) DEFAULT 1,

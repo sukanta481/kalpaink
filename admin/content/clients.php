@@ -9,6 +9,17 @@ require_once __DIR__ . '/../config/auth.php';
 requireRole('editor');
 
 $db = getDB();
+
+// Auto-fix: rename 'logo' column to 'client_logo' if needed
+try {
+    $cols = $db->query("SHOW COLUMNS FROM clients LIKE 'logo'")->fetchAll();
+    if (!empty($cols)) {
+        $db->exec("ALTER TABLE clients CHANGE `logo` `client_logo` VARCHAR(255)");
+    }
+} catch (PDOException $e) {
+    // Table may not exist yet, ignore
+}
+
 $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
