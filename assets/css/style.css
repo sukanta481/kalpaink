@@ -935,12 +935,12 @@ body {
 
 /* --- Desktop: Static Grid --- */
 .brands-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 12px 20px;
-    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px 10px;
+    padding: 0 40px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .brand-item {
@@ -962,7 +962,7 @@ body {
 .brand-item img {
     height: 70px;
     width: auto;
-    max-width: 160px;
+    max-width: 140px;
     object-fit: contain;
     display: block;
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1024,8 +1024,9 @@ body {
     }
 
     .brands-grid {
-        gap: 10px 16px;
-        padding: 0 16px;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px 8px;
+        padding: 0 20px;
     }
 
     .brand-item {
@@ -1034,7 +1035,7 @@ body {
 
     .brand-item img {
         height: 55px;
-        max-width: 130px;
+        max-width: 120px;
     }
 }
 
