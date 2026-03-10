@@ -89,6 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Trusted Brands staggered scroll reveal
     initBrandsScrollReveal();
+
+    // Marquee touch pause & auto-resume
+    initMarqueeTouchPause();
 });
 
 
@@ -1437,5 +1440,50 @@ function initBrandsScrollReveal() {
             startAnimation();
         }
     }, 300);
+}
+
+/**
+ * Marquee Touch Pause & Auto-Resume
+ * Touch/click pauses for 3s then auto-resumes. Hover pauses until mouse leaves.
+ */
+function initMarqueeTouchPause() {
+    var tracks = document.querySelectorAll('.brands-marquee-track');
+    if (!tracks.length) return;
+
+    tracks.forEach(function (track) {
+        var resumeTimer = null;
+
+        function pause() {
+            track.style.animationPlayState = 'paused';
+        }
+
+        function resume() {
+            track.style.animationPlayState = 'running';
+        }
+
+        function pauseAndResume() {
+            pause();
+            clearTimeout(resumeTimer);
+            resumeTimer = setTimeout(resume, 3000);
+        }
+
+        // Touch events on the track itself and its parent
+        track.addEventListener('touchstart', pauseAndResume, { passive: true });
+        track.parentElement.addEventListener('touchstart', pauseAndResume, { passive: true });
+
+        // Click also pauses (fallback for some devices)
+        track.addEventListener('click', pauseAndResume);
+        track.parentElement.addEventListener('click', pauseAndResume);
+
+        // Mouse hover (desktop)
+        track.parentElement.addEventListener('mouseenter', function () {
+            pause();
+            clearTimeout(resumeTimer);
+        });
+        track.parentElement.addEventListener('mouseleave', function () {
+            resume();
+            clearTimeout(resumeTimer);
+        });
+    });
 }
 

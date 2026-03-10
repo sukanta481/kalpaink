@@ -121,7 +121,7 @@ $marquee_clients = getClientsFromDB();
         </div>
 
         <!-- Mobile: Marquee Strip -->
-        <div class="brands-marquee">
+        <div class="brands-marquee" ontouchstart="var t=this.querySelector('.brands-marquee-track');if(t){t.style.animationPlayState='paused';clearTimeout(t._rt);t._rt=setTimeout(function(){t.style.animationPlayState='running'},3000)}" onclick="var t=this.querySelector('.brands-marquee-track');if(t){t.style.animationPlayState='paused';clearTimeout(t._rt);t._rt=setTimeout(function(){t.style.animationPlayState='running'},3000)}">
             <div class="brands-marquee-track">
                 <?php for ($loop = 0; $loop < 2; $loop++): ?>
                     <?php foreach ($clients_list as $mc): ?>
