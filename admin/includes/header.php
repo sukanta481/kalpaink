@@ -1,14 +1,16 @@
-﻿<?php
+<?php
 /**
  * Admin Header Template
  * Kalpanik Admin CRM
  */
 
+ob_start(); // Buffer any stray output from includes
 require_once __DIR__ . '/../config/auth.php';
 requireAuth();
 
 $currentUser = getCurrentUser();
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
+ob_end_clean(); // Discard any whitespace output before DOCTYPE
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -11,8 +11,8 @@
     
     <!-- Favicon -->
     <?php if (defined('SITE_FAVICON') && SITE_FAVICON): ?>
-    <link rel="icon" href="<?php echo SITE_FAVICON; ?>">
-    <link rel="apple-touch-icon" href="<?php echo SITE_FAVICON; ?>">
+    <link rel="icon" type="image/png" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
+    <link rel="apple-touch-icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
     <?php else: ?>
     <link rel="icon" type="image/png" href="assets/images/kalpanik-favicon.png">
     <link rel="apple-touch-icon" href="assets/images/kalpanik-favicon.png">

@@ -221,19 +221,23 @@ $marquee_clients = getClientsFromDB();
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($home_svc['content_body'] ?? 'Comprehensive digital solutions to help your business grow and thrive in the digital landscape.'); ?></p>
             </div>
             
-            <div class="services-icon-grid" data-aos="fade-up">
-                <?php foreach ($services as $index => $service): ?>
-                <div class="svc-icon-card">
-                    <div class="svc-icon-wrap">
-                        <?php echo $service_svg_icons[$service['icon']] ?? '<i class="fas ' . htmlspecialchars($service['icon']) . '"></i>'; ?>
+            <div class="svc-slider-wrap" data-aos="fade-up">
+                <button class="svc-slider-arrow svc-slider-arrow--prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <div class="services-icon-grid">
+                    <?php foreach ($services as $index => $service): ?>
+                    <div class="svc-icon-card">
+                        <div class="svc-icon-wrap">
+                            <?php echo $service_svg_icons[$service['icon']] ?? '<i class="fas ' . htmlspecialchars($service['icon']) . '"></i>'; ?>
+                        </div>
+                        <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
+                        <div class="svc-icon-details">
+                            <p class="svc-icon-desc"><?php echo htmlspecialchars($service['description']); ?></p>
+                            <a href="services.php" class="svc-icon-link">Know More <span>&rarr;</span></a>
+                        </div>
                     </div>
-                    <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
-                    <div class="svc-icon-details">
-                        <p class="svc-icon-desc"><?php echo htmlspecialchars($service['description']); ?></p>
-                        <a href="services.php" class="svc-icon-link">Know More <span>&rarr;</span></a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
+                <button class="svc-slider-arrow svc-slider-arrow--next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
             </div>
             
             <div class="text-center mt-5" data-aos="fade-up">

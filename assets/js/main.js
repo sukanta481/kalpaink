@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Kalpanik - Main JavaScript
  * Digital Marketing Agency Website
  */
@@ -818,7 +818,7 @@ function initTestimonialsSlider() {
 }
 
 /**
- * Service cards - scroll-triggered staggered entrance animation
+ * Service cards - scroll-triggered animation + slider when >6 cards
  */
 function initServiceCardAnimations() {
     const cards = document.querySelectorAll('#services-section .svc-icon-card');
@@ -827,17 +827,16 @@ function initServiceCardAnimations() {
     const grid = document.querySelector('#services-section .services-icon-grid');
     if (!grid) return;
 
+    // --- Scroll-triggered entrance animation ---
     const observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-                // Stagger each card with a delay
                 cards.forEach(function (card, i) {
                     setTimeout(function () {
                         card.classList.add('svc-visible');
                     }, i * 120);
                 });
             } else {
-                // Remove class when scrolled away so animation replays on re-entry
                 cards.forEach(function (card) {
                     card.classList.remove('svc-visible');
                 });
@@ -846,6 +845,56 @@ function initServiceCardAnimations() {
     }, { threshold: 0.15 });
 
     observer.observe(grid);
+
+    // --- Slider: detect overflow & enable arrows ---
+    var wrap = grid.closest('.svc-slider-wrap');
+    if (!wrap) return;
+
+    var prevBtn = wrap.querySelector('.svc-slider-arrow--prev');
+    var nextBtn = wrap.querySelector('.svc-slider-arrow--next');
+
+    function checkOverflow() {
+        if (grid.scrollWidth > grid.clientWidth + 2) {
+            wrap.classList.add('has-overflow');
+        } else {
+            wrap.classList.remove('has-overflow');
+        }
+        updateArrowState();
+    }
+
+    function updateArrowState() {
+        if (!prevBtn || !nextBtn) return;
+        prevBtn.style.opacity = grid.scrollLeft <= 5 ? '0.3' : '1';
+        prevBtn.style.pointerEvents = grid.scrollLeft <= 5 ? 'none' : 'auto';
+        var maxScroll = grid.scrollWidth - grid.clientWidth;
+        nextBtn.style.opacity = grid.scrollLeft >= maxScroll - 5 ? '0.3' : '1';
+        nextBtn.style.pointerEvents = grid.scrollLeft >= maxScroll - 5 ? 'none' : 'auto';
+    }
+
+    function getCardWidth() {
+        if (!cards.length) return 200;
+        return cards[0].offsetWidth + 18; // card width + gap
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+            grid.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+            grid.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+        });
+    }
+
+    grid.addEventListener('scroll', function () {
+        requestAnimationFrame(updateArrowState);
+    }, { passive: true });
+
+    // Check on load and resize
+    checkOverflow();
+    window.addEventListener('resize', checkOverflow);
 }
 
 /**

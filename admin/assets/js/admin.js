@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Kalpanik Admin CRM JavaScript
  */
 
@@ -51,10 +51,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize TinyMCE
     if (typeof tinymce !== 'undefined') {
+        // Detect base URL for upload endpoint
+        var adminBase = document.querySelector('link[href*="admin.css"]');
+        var uploadUrl = 'api/upload.php';
+        if (adminBase) {
+            var cssHref = adminBase.getAttribute('href');
+            var adminPath = cssHref.substring(0, cssHref.indexOf('assets/'));
+            uploadUrl = adminPath + 'api/upload.php';
+        }
+
         tinymce.init({
             selector: '.tinymce-editor',
-            height: 400,
-            menubar: false,
+            height: 500,
+            menubar: 'file edit insert view format table',
             plugins: [
                 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                 'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
@@ -62,8 +71,54 @@ document.addEventListener('DOMContentLoaded', function () {
             ],
             toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | link image | code | help',
-            content_style: 'body { font-family: Inter, sans-serif; font-size: 14px; }',
+                'removeformat | image media link | code fullscreen | help',
+
+            /* ---- Image / Banner Upload ---- */
+            images_upload_url: uploadUrl,
+            images_upload_credentials: true,
+            automatic_uploads: true,
+            paste_data_images: true,
+            image_caption: true,
+            image_advtab: true,
+            image_title: true,
+            file_picker_types: 'image',
+
+            /* Custom file picker for browse button */
+            file_picker_callback: function (cb, value, meta) {
+                if (meta.filetype === 'image') {
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', 'image/jpeg,image/png,image/gif,image/webp');
+                    input.addEventListener('change', function () {
+                        var file = this.files[0];
+                        if (!file) return;
+
+                        var formData = new FormData();
+                        formData.append('file', file);
+
+                        fetch(uploadUrl, {
+                            method: 'POST',
+                            body: formData,
+                            credentials: 'same-origin'
+                        })
+                            .then(function (res) { return res.json(); })
+                            .then(function (data) {
+                                if (data.location) {
+                                    cb(data.location, { title: file.name, alt: file.name });
+                                } else {
+                                    alert(data.error || 'Upload failed.');
+                                }
+                            })
+                            .catch(function () {
+                                alert('Upload failed. Please try again.');
+                            });
+                    });
+                    input.click();
+                }
+            },
+
+            content_style: 'body { font-family: Inter, sans-serif; font-size: 14px; } ' +
+                'img { max-width: 100%; height: auto; border-radius: 8px; margin: 16px 0; }',
             branding: false
         });
     }

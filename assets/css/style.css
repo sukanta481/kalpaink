@@ -1443,22 +1443,76 @@ body {
     }
 }
 
-/* Desktop: Single-Row Flex with Expanding Hover */
+/* Desktop: Show exactly 6 cards, scroll if more */
 #services-section .services-icon-grid {
     display: flex;
     flex-direction: row;
     gap: 18px;
     align-items: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    position: relative;
+}
+
+#services-section .services-icon-grid::-webkit-scrollbar {
+    display: none;
 }
 
 #services-section .svc-icon-card {
-    flex: 1 1 0;
+    flex: 0 0 calc((100% - 5 * 18px) / 6);
     min-width: 0;
     overflow: hidden;
+    scroll-snap-align: start;
 }
 
-#services-section .svc-icon-card:hover {
-    flex: 1.25 1 0;
+/* Hover uses dark background transition below, no flex change needed */
+
+/* ---- Slider Arrows ---- */
+.svc-slider-wrap {
+    position: relative;
+}
+
+.svc-slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #E0E6F0;
+    color: #2962FF;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 5;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.svc-slider-arrow:hover {
+    background: #2962FF;
+    color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(41, 98, 255, 0.25);
+}
+
+.svc-slider-arrow--prev {
+    left: -20px;
+}
+
+.svc-slider-arrow--next {
+    right: -20px;
+}
+
+/* Show arrows only when grid has overflow */
+.svc-slider-wrap.has-overflow .svc-slider-arrow {
+    display: flex;
 }
 
 /* ---- Card Base ---- */

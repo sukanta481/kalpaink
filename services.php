@@ -209,19 +209,23 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                 'fa-cogs' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M32 6v8M32 50v8M6 32h8M50 32h8M13.5 13.5l5.6 5.6M44.9 44.9l5.6 5.6M13.5 50.5l5.6-5.6M44.9 19.1l5.6-5.6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
             ];
             ?>
-            <div class="services-icon-grid" data-aos="fade-up">
-                <?php foreach ($detailed_services as $index => $service): ?>
-                <div class="svc-icon-card">
-                    <div class="svc-icon-wrap">
-                        <?php echo $svc_svg_icons[$service['icon']] ?? '<i class="fas ' . htmlspecialchars($service['icon']) . '"></i>'; ?>
+            <div class="svc-slider-wrap" data-aos="fade-up">
+                <button class="svc-slider-arrow svc-slider-arrow--prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <div class="services-icon-grid">
+                    <?php foreach ($detailed_services as $index => $service): ?>
+                    <div class="svc-icon-card">
+                        <div class="svc-icon-wrap">
+                            <?php echo $svc_svg_icons[$service['icon']] ?? '<i class="fas ' . htmlspecialchars($service['icon']) . '"></i>'; ?>
+                        </div>
+                        <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
+                        <div class="svc-icon-details">
+                            <p class="svc-icon-desc"><?php echo htmlspecialchars($service['summary']); ?></p>
+                            <a href="contact.php" class="svc-icon-link">Know More <span>&rarr;</span></a>
+                        </div>
                     </div>
-                    <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
-                    <div class="svc-icon-details">
-                        <p class="svc-icon-desc"><?php echo htmlspecialchars($service['summary']); ?></p>
-                        <a href="contact.php" class="svc-icon-link">Know More <span>&rarr;</span></a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
+                <button class="svc-slider-arrow svc-slider-arrow--next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
