@@ -16,6 +16,9 @@ try {
     if (!empty($cols)) {
         $db->exec("ALTER TABLE clients CHANGE `logo` `client_logo` VARCHAR(255)");
     }
+    // Fix HTML-encoded characters in existing client names
+    $db->exec("UPDATE clients SET client_name = REPLACE(client_name, '&#039;', \"'\") WHERE client_name LIKE '%&#039;%'");
+    $db->exec("UPDATE clients SET client_name = REPLACE(client_name, '&amp;', '&') WHERE client_name LIKE '%&amp;%'");
 } catch (PDOException $e) {
     // Table may not exist yet, ignore
 }
