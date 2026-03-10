@@ -933,17 +933,20 @@ body {
     margin: 0 auto;
 }
 
-/* --- Desktop: Static Grid --- */
+/* --- Desktop: Static Grid (8 per row, last row centered) --- */
 .brands-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 12px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px 0;
     padding: 0 40px;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .brand-item {
+    width: calc(100% / 8);
     font-weight: 700;
     font-size: 1.1rem;
     color: #222;
@@ -962,7 +965,7 @@ body {
 .brand-item img {
     height: 70px;
     width: auto;
-    max-width: 140px;
+    max-width: 130px;
     object-fit: contain;
     display: block;
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1024,18 +1027,18 @@ body {
     }
 
     .brands-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 10px 8px;
-        padding: 0 20px;
+        gap: 14px 0;
+        padding: 0 16px;
     }
 
     .brand-item {
+        width: calc(100% / 6);
         height: 65px;
     }
 
     .brand-item img {
         height: 55px;
-        max-width: 120px;
+        max-width: 110px;
     }
 }
 
