@@ -187,7 +187,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         </div>
     </section>
 
-    <!-- Services Grid -->
+    <!-- Services Grid - Icon Cards -->
     <section class="services-grid-section section-padding" id="services-section">
         <div class="container">
             <div class="text-center mb-5">
@@ -196,35 +196,32 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
             </div>
             
             <?php
-            // Service illustration map
-            $svc_illustrations = [
-                'Graphics Design' => 'assets/images/services/graphics-design.png',
-                'Brand Identity' => 'assets/images/services/brand-identity.png',
-                'Social Media Marketing' => 'assets/images/services/social-media-marketing.png',
-                'Web Development' => 'assets/images/services/web-development.png',
-                'SEO Services' => 'assets/images/services/seo-services.png',
-                'Content Marketing' => 'assets/images/services/content-marketing.png',
+            // SVG icon map for services (line-art style)
+            $svc_svg_icons = [
+                'fa-palette' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 52L30 8h4l18 44" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 36h24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M44 52h-8l-2-8h-4l-2 8h-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="16" r="4" stroke="currentColor" stroke-width="2.5"/><path d="M8 48c0-4 4-8 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
+                'fa-bullhorn' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 24h8v16H8a2 2 0 01-2-2V26a2 2 0 012-2z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 24l24-12v40L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 40v10a4 4 0 004 4h4a4 4 0 004-4V40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="20" r="3" stroke="currentColor" stroke-width="2.5"/><path d="M48 28h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="54" cy="36" r="2" stroke="currentColor" stroke-width="2"/></svg>',
+                'fa-share-nodes' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="14" width="24" height="20" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M12 28l6-6 4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 18h24a2 2 0 012 2v24a2 2 0 01-2 2H34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="30" r="5" stroke="currentColor" stroke-width="2.5"/><path d="M43 35l-2 3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M49 35l2 3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="10" y="38" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M18 44v6M15 47h6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
+                'fa-code' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="52" height="40" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M6 20h52" stroke="currentColor" stroke-width="2.5"/><circle cx="12" cy="15" r="1.5" fill="currentColor"/><circle cx="18" cy="15" r="1.5" fill="currentColor"/><circle cx="24" cy="15" r="1.5" fill="currentColor"/><path d="M20 32l-6 4 6 4M36 32l6 4-6 4M26 42l4-16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                'fa-magnifying-glass' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="16" stroke="currentColor" stroke-width="2.5"/><path d="M40 40l14 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 32V24l4 4 4-8 4 6 4-4v10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="14" r="4" stroke="currentColor" stroke-width="2.5"/><path d="M50 12v4M48 14h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+                'fa-pen-nib' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 12h40a4 4 0 014 4v8H8V12z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 24v28h32V24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 32h16M20 38h10M20 44h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M48 20l8-8M52 8l4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="52" cy="44" r="6" stroke="currentColor" stroke-width="2.5"/><path d="M52 41v6M49 44h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+                'fa-print' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 20V8h32v12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="8" y="20" width="48" height="24" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M16 36h32v20H16V36z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M22 44h20M22 50h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="44" cy="28" r="2" fill="currentColor"/></svg>',
+                'fa-video' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="16" width="36" height="32" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M42 28l16-8v24l-16-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="32" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M21 32l4 3v-6l4 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                'fa-cogs' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M32 6v8M32 50v8M6 32h8M50 32h8M13.5 13.5l5.6 5.6M44.9 44.9l5.6 5.6M13.5 50.5l5.6-5.6M44.9 19.1l5.6-5.6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
             ];
             ?>
-            <div class="services-gallery" data-aos="fade-up">
-                <div class="services-track">
-                    <?php foreach ($detailed_services as $index => $service): ?>
-                    <div class="service-card-wrapper" id="<?php echo $service['id']; ?>">
-                        <div class="service-card">
-                            <div class="service-illustration-wrap">
-                                <img src="<?php echo $svc_illustrations[$service['title']] ?? 'assets/images/services/graphics-design.png'; ?>"
-                                     alt="<?php echo htmlspecialchars($service['title']); ?>"
-                                     class="service-illustration" loading="lazy">
-                            </div>
-                            <h4 class="service-title"><?php echo $service['title']; ?></h4>
-                            <div class="service-card-details">
-                                <p class="service-description"><?php echo $service['summary']; ?></p>
-                                <a href="contact.php" class="service-link">Get Quote <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
+            <div class="services-icon-grid" data-aos="fade-up">
+                <?php foreach ($detailed_services as $index => $service): ?>
+                <div class="svc-icon-card">
+                    <div class="svc-icon-wrap">
+                        <?php echo $svc_svg_icons[$service['icon']] ?? '<i class="fas ' . htmlspecialchars($service['icon']) . '"></i>'; ?>
                     </div>
-                    <?php endforeach; ?>
+                    <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
+                    <div class="svc-icon-details">
+                        <p class="svc-icon-desc"><?php echo htmlspecialchars($service['summary']); ?></p>
+                        <a href="contact.php" class="svc-icon-link">Know More <span>&rarr;</span></a>
+                    </div>
                 </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>

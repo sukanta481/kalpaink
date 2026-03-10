@@ -597,53 +597,8 @@ function initGridReveal() {
  * Detects which service card is most visible and activates it
  */
 function initServicesSpotlight() {
-    const track = document.querySelector('.services-track');
-    const wrappers = document.querySelectorAll('.service-card-wrapper');
-
-    if (!track || !wrappers.length || window.innerWidth >= 992) return;
-
-    function updateActiveCard() {
-        // Only apply on mobile
-        if (window.innerWidth >= 992) {
-            wrappers.forEach(w => w.classList.remove('is-active'));
-            return;
-        }
-
-        const trackRect = track.getBoundingClientRect();
-        const trackCenter = trackRect.left + trackRect.width * 0.4; // Slightly left of center for better UX
-
-        let closestCard = null;
-        let closestDistance = Infinity;
-
-        wrappers.forEach(wrapper => {
-            const rect = wrapper.getBoundingClientRect();
-            const cardCenter = rect.left + rect.width / 2;
-            const distance = Math.abs(cardCenter - trackCenter);
-
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestCard = wrapper;
-            }
-        });
-
-        // Update active states
-        wrappers.forEach(wrapper => {
-            if (wrapper === closestCard) {
-                wrapper.classList.add('is-active');
-            } else {
-                wrapper.classList.remove('is-active');
-            }
-        });
-    }
-
-    // Listen for scroll on the track
-    track.addEventListener('scroll', updateActiveCard, { passive: true });
-
-    // Initial check
-    updateActiveCard();
-
-    // Recheck on resize
-    window.addEventListener('resize', updateActiveCard);
+    // No longer needed — icon cards use a static grid, not a scrollable track
+    return;
 }
 
 /**
@@ -866,11 +821,11 @@ function initTestimonialsSlider() {
  * Service cards - scroll-triggered staggered entrance animation
  */
 function initServiceCardAnimations() {
-    const cards = document.querySelectorAll('#services-section .service-card-wrapper');
+    const cards = document.querySelectorAll('#services-section .svc-icon-card');
     if (!cards.length) return;
 
-    const gallery = document.querySelector('#services-section .services-gallery');
-    if (!gallery) return;
+    const grid = document.querySelector('#services-section .services-icon-grid');
+    if (!grid) return;
 
     const observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -890,7 +845,7 @@ function initServiceCardAnimations() {
         });
     }, { threshold: 0.15 });
 
-    observer.observe(gallery);
+    observer.observe(grid);
 }
 
 /**
