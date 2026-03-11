@@ -1,4 +1,4 @@
-﻿
+
 <?php require_once 'config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +10,12 @@
     <title><?php echo isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME . ' - ' . SITE_TAGLINE; ?></title>
     
     <!-- Favicon -->
-    <?php if (defined('SITE_FAVICON') && SITE_FAVICON): ?>
-    <link rel="icon" type="image/png" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
+    <?php if (defined('SITE_FAVICON') && SITE_FAVICON): 
+        $favExt = strtolower(pathinfo(parse_url(SITE_FAVICON, PHP_URL_PATH), PATHINFO_EXTENSION));
+        $favType = ($favExt === 'ico') ? 'image/x-icon' : (($favExt === 'svg') ? 'image/svg+xml' : 'image/png');
+    ?>
+    <link rel="icon" type="<?php echo $favType; ?>" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
+    <link rel="shortcut icon" type="<?php echo $favType; ?>" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
     <link rel="apple-touch-icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
     <?php else: ?>
     <link rel="icon" type="image/png" href="assets/images/kalpanik-favicon.png">

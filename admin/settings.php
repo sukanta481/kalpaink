@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Settings Management
  * Kalpanik Admin CRM
@@ -124,7 +124,7 @@ foreach ($allSettings as $setting) {
             if ($s['setting_key'] === 'site_favicon') $faviconSetting = $s;
         }
     }
-    $siteUrl = getSiteUrl();
+    // Use getSiteUrl() helper to build correct paths on both localhost and live
     ?>
     
     <div class="row">
@@ -141,10 +141,10 @@ foreach ($allSettings as $setting) {
                             <label class="form-label fw-semibold">Site Logo</label>
                             <div class="border rounded p-3 text-center bg-light" style="min-height: 120px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
                                 <?php if (!empty($logoSetting['setting_value'])): ?>
-                                <img src="<?php echo $siteUrl . '/' . htmlspecialchars($logoSetting['setting_value']); ?>" 
+                                <img src="<?php echo getSiteUrl(htmlspecialchars($logoSetting['setting_value'])); ?>" 
                                      alt="Current Logo" style="max-height: 80px; max-width: 100%; object-fit: contain;" id="logoPreview">
                                 <?php else: ?>
-                                <img src="<?php echo $siteUrl; ?>/assets/images/kalpanik-logo.png" 
+                                <img src="<?php echo getSiteUrl('assets/images/kalpanik-logo.png'); ?>" 
                                      alt="Default Logo" style="max-height: 80px; max-width: 100%; object-fit: contain; opacity: 0.5;" id="logoPreview">
                                 <small class="text-muted mt-1">Using default logo</small>
                                 <?php endif; ?>
@@ -167,7 +167,7 @@ foreach ($allSettings as $setting) {
                             <label class="form-label fw-semibold">Site Favicon</label>
                             <div class="border rounded p-3 text-center bg-light" style="min-height: 120px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
                                 <?php if (!empty($faviconSetting['setting_value'])): ?>
-                                <img src="<?php echo $siteUrl . '/' . htmlspecialchars($faviconSetting['setting_value']); ?>" 
+                                <img src="<?php echo getSiteUrl(htmlspecialchars($faviconSetting['setting_value'])); ?>" 
                                      alt="Current Favicon" style="max-height: 64px; max-width: 64px; object-fit: contain;" id="faviconPreview">
                                 <?php else: ?>
                                 <div id="faviconPreview" style="width: 64px; height: 64px; background: #dee2e6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
