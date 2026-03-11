@@ -1,13 +1,156 @@
 
-<?php require_once 'config.php'; ?>
+<?php require_once 'config.php';
+
+// Per-page SEO configuration
+$current_page = basename($_SERVER['PHP_SELF'], '.php');
+$seo_config = [
+    'index' => [
+        'title' => SITE_NAME . ': Top Content Marketing & Creative Agency in Kolkata',
+        'description' => 'Kalpanik is a leading content marketing and creative agency in Kolkata. We specialize in content strategy, brand identity, graphics design, social media marketing, web development, and SEO services.',
+        'keywords' => 'content marketing agency Kolkata, creative agency Kolkata, brand identity, graphics design, social media marketing, web development, SEO services, digital marketing Kolkata, content strategy, content creation'
+    ],
+    'about' => [
+        'title' => 'About Us - ' . SITE_NAME . ' | Content Marketing Experts in Kolkata',
+        'description' => 'Discover Kalpanik — a passionate team of content creators, designers, and digital strategists from Kolkata. We transform brands through compelling content and innovative marketing strategies.',
+        'keywords' => 'about Kalpanik, content marketing team Kolkata, creative agency team, digital marketing experts Kolkata'
+    ],
+    'services' => [
+        'title' => 'Our Services - ' . SITE_NAME . ' | Content Marketing, Design & Digital Solutions',
+        'description' => 'Explore our services: content marketing, graphics design, brand identity, social media marketing, web development, and SEO. Comprehensive digital solutions tailored to grow your brand.',
+        'keywords' => 'content marketing services, graphics design services, branding, social media marketing, web development, SEO services Kolkata'
+    ],
+    'contact' => [
+        'title' => 'Contact Us - ' . SITE_NAME . ' | Get a Free Quote',
+        'description' => 'Get in touch with Kalpanik for content marketing, branding, and digital marketing services. Request a free quote today. Based in Kolkata, serving clients worldwide.',
+        'keywords' => 'contact Kalpanik, digital marketing quote, content marketing agency contact, Kolkata'
+    ],
+    'blog' => [
+        'title' => 'Blog - ' . SITE_NAME . ' | Content Marketing Insights & Digital Trends',
+        'description' => 'Read the latest insights on content marketing, digital marketing trends, branding tips, and creative strategies from Kalpanik\'s team of experts.',
+        'keywords' => 'content marketing blog, digital marketing tips, branding insights, Kolkata agency blog'
+    ],
+    'case-studies' => [
+        'title' => 'Case Studies - ' . SITE_NAME . ' | Our Creative Work & Results',
+        'description' => 'Explore our portfolio of successful content marketing campaigns, brand identity projects, and digital marketing case studies that delivered real results.',
+        'keywords' => 'content marketing case studies, branding portfolio, digital marketing results, creative work Kolkata'
+    ]
+];
+
+$page_seo = $seo_config[$current_page] ?? [
+    'title' => (isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME . ' - ' . SITE_TAGLINE),
+    'description' => 'Kalpanik is a leading content marketing and creative agency in Kolkata specializing in content strategy, graphics design, branding, and digital marketing.',
+    'keywords' => 'content marketing, creative agency, Kolkata, graphics design, branding, digital marketing'
+];
+
+$canonical_url = SITE_URL . '/' . ($current_page === 'index' ? '' : $current_page . '.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kalpanik - Creative Digital Marketing Agency in Kolkata. Specializing in graphics design, branding, and digital marketing services.">
-    <meta name="keywords" content="digital marketing, graphics design, branding, Kolkata, web development, SEO">
-    <title><?php echo isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME . ' - ' . SITE_TAGLINE; ?></title>
+    <meta name="description" content="<?php echo htmlspecialchars($page_seo['description']); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($page_seo['keywords']); ?>">
+    <meta name="author" content="Kalpanik Digital">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="<?php echo htmlspecialchars($canonical_url); ?>">
+    <title><?php echo htmlspecialchars($page_seo['title']); ?></title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo htmlspecialchars($canonical_url); ?>">
+    <meta property="og:title" content="<?php echo htmlspecialchars($page_seo['title']); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($page_seo['description']); ?>">
+    <meta property="og:image" content="<?php echo SITE_LOGO; ?>">
+    <meta property="og:site_name" content="<?php echo SITE_NAME; ?>">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($page_seo['title']); ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($page_seo['description']); ?>">
+    <meta name="twitter:image" content="<?php echo SITE_LOGO; ?>"><?php // JSON-LD Structured Data only on homepage
+if ($current_page === 'index'): ?>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "<?php echo SITE_URL; ?>/#organization",
+                "name": "<?php echo SITE_NAME; ?>",
+                "alternateName": "Kalpanik Digital",
+                "url": "<?php echo SITE_URL; ?>",
+                "logo": "<?php echo SITE_LOGO; ?>",
+                "description": "Leading content marketing and creative agency in Kolkata specializing in content strategy, graphics design, brand identity, social media marketing, web development, and SEO.",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "225 Bagmari Road",
+                    "addressLocality": "Kolkata",
+                    "postalCode": "700054",
+                    "addressRegion": "West Bengal",
+                    "addressCountry": "IN"
+                },
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "<?php echo CONTACT_PHONE; ?>",
+                    "contactType": "customer service",
+                    "email": "<?php echo CONTACT_EMAIL; ?>",
+                    "areaServed": "IN",
+                    "availableLanguage": ["English", "Hindi", "Bengali"]
+                },
+                "sameAs": [
+                    <?php $socials = []; if (SOCIAL_FACEBOOK && SOCIAL_FACEBOOK !== '#') $socials[] = '"' . SOCIAL_FACEBOOK . '"'; if (SOCIAL_INSTAGRAM && SOCIAL_INSTAGRAM !== '#') $socials[] = '"' . SOCIAL_INSTAGRAM . '"'; if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#') $socials[] = '"' . SOCIAL_LINKEDIN . '"'; echo implode(",\n                    ", $socials); ?>
+
+                ],
+                "knowsAbout": ["Content Marketing", "Content Strategy", "Graphics Design", "Brand Identity", "Social Media Marketing", "Web Development", "SEO", "Digital Marketing"]
+            },
+            {
+                "@type": "LocalBusiness",
+                "@id": "<?php echo SITE_URL; ?>/#localbusiness",
+                "name": "<?php echo SITE_NAME; ?>",
+                "image": "<?php echo SITE_LOGO; ?>",
+                "url": "<?php echo SITE_URL; ?>",
+                "telephone": "<?php echo CONTACT_PHONE; ?>",
+                "priceRange": "$$",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "225 Bagmari Road",
+                    "addressLocality": "Kolkata",
+                    "postalCode": "700054",
+                    "addressRegion": "West Bengal",
+                    "addressCountry": "IN"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "22.5726",
+                    "longitude": "88.3639"
+                },
+                "openingHoursSpecification": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                    "opens": "10:00",
+                    "closes": "19:00"
+                }
+            },
+            {
+                "@type": "WebSite",
+                "@id": "<?php echo SITE_URL; ?>/#website",
+                "url": "<?php echo SITE_URL; ?>",
+                "name": "<?php echo SITE_NAME; ?>",
+                "publisher": {"@id": "<?php echo SITE_URL; ?>/#organization"},
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "<?php echo SITE_URL; ?>/blog.php?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            }
+        ]
+    }
+    </script>
+<?php endif; ?>
     
     <!-- Favicon -->
     <?php if (defined('SITE_FAVICON') && SITE_FAVICON): 
