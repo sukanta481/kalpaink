@@ -13,13 +13,16 @@
     <?php if (defined('SITE_FAVICON') && SITE_FAVICON): 
         $favExt = strtolower(pathinfo(parse_url(SITE_FAVICON, PHP_URL_PATH), PATHINFO_EXTENSION));
         $favType = ($favExt === 'ico') ? 'image/x-icon' : (($favExt === 'svg') ? 'image/svg+xml' : 'image/png');
+        $favVer = time();
     ?>
-    <link rel="icon" type="<?php echo $favType; ?>" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
-    <link rel="shortcut icon" type="<?php echo $favType; ?>" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
-    <link rel="apple-touch-icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo time(); ?>">
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="32x32" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="16x16" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <link rel="shortcut icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <?php else: ?>
-    <link rel="icon" type="image/png" href="assets/images/kalpanik-favicon.png">
-    <link rel="apple-touch-icon" href="assets/images/kalpanik-favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.png">
     <?php endif; ?>
     
     <!-- Google Fonts -->

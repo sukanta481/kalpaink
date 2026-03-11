@@ -86,9 +86,10 @@ $marquee_clients = getClientsFromDB();
 
     <!-- Trusted Brands Section -->
     <?php if (isHomepageSectionEnabled('brands')): ?>
+    <?php $trust_bar = $home_content['trust_bar'] ?? null; ?>
     <section class="trusted-brands">
         <div class="trusted-brands-header">
-            <p class="trusted-brands-heading">Trusted by 250+ business worldwide</p>
+            <p class="trusted-brands-heading"><?php echo htmlspecialchars($trust_bar['content_title'] ?? 'Trusted by 250+ business worldwide'); ?></p>
             <span class="trusted-brands-divider"></span>
         </div>
 
