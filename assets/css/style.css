@@ -933,15 +933,15 @@ body {
     margin: 0 auto;
 }
 
-/* --- Desktop: Static Grid (8 per row, last row centered) --- */
+/* --- Desktop: Static Grid (8 per row, aligned with header .container) --- */
 .brands-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 20px 0;
-    padding: 0 40px;
-    max-width: 1200px;
+    padding: 0 12px;
+    max-width: 1320px;
     margin: 0 auto;
 }
 
@@ -965,7 +965,7 @@ body {
 .brand-item img {
     height: 70px;
     width: auto;
-    max-width: 130px;
+    max-width: 140px;
     object-fit: contain;
     display: block;
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
