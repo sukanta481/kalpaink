@@ -3,6 +3,37 @@
    Dark Hero + Light Content + Related Services
 ================================ */
 
+/* ── CTA Button (shared with services page) ── */
+.btn-services-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFFFFF;
+    color: #141414;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    border: 2px solid #FFFFFF;
+}
+
+.btn-services-cta:hover {
+    background: transparent;
+    color: #FFFFFF;
+    transform: translateX(5px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+.btn-services-cta i {
+    transition: transform 0.3s ease;
+}
+
+.btn-services-cta:hover i {
+    transform: translateX(5px);
+}
+
 /* ── Hero Section ── */
 .svc-detail-hero {
     background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);

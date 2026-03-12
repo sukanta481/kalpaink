@@ -22,7 +22,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
     ];
 }, $services_from_db) : [
     [
-        'id' => 'graphics',
+        'id' => 'graphics-design',
         'icon' => 'fa-palette',
         'title' => 'Graphics Design',
         'summary' => 'Eye-catching visuals that capture your brand essence.',
@@ -30,7 +30,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         'features' => ['Logo Design', 'Business Cards', 'Brochures & Flyers', 'Social Media Graphics', 'Infographics', 'Packaging Design']
     ],
     [
-        'id' => 'branding',
+        'id' => 'brand-identity',
         'icon' => 'fa-bullhorn',
         'title' => 'Brand Identity',
         'summary' => 'Build a memorable brand that stands out.',
@@ -38,7 +38,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         'features' => ['Brand Strategy', 'Visual Identity System', 'Brand Guidelines', 'Rebranding', 'Brand Collateral', 'Brand Messaging']
     ],
     [
-        'id' => 'smm',
+        'id' => 'social-media-marketing',
         'icon' => 'fa-share-nodes',
         'title' => 'Social Media Marketing',
         'summary' => 'Strategic campaigns that engage and convert.',
@@ -46,7 +46,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         'features' => ['Content Strategy', 'Community Management', 'Paid Social Ads', 'Influencer Marketing', 'Analytics & Reporting', 'Campaign Management']
     ],
     [
-        'id' => 'web',
+        'id' => 'web-development',
         'icon' => 'fa-code',
         'title' => 'Web Development',
         'summary' => 'Modern, responsive websites that deliver.',
@@ -54,7 +54,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         'features' => ['Custom Website Design', 'E-commerce Solutions', 'WordPress Development', 'Web Applications', 'Mobile Responsive', 'Maintenance & Support']
     ],
     [
-        'id' => 'seo',
+        'id' => 'seo-services',
         'icon' => 'fa-magnifying-glass',
         'title' => 'SEO Services',
         'summary' => 'Boost your search rankings and visibility.',
@@ -62,7 +62,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         'features' => ['Keyword Research', 'On-Page SEO', 'Technical SEO', 'Link Building', 'Local SEO', 'SEO Audits']
     ],
     [
-        'id' => 'content',
+        'id' => 'content-marketing',
         'icon' => 'fa-pen-nib',
         'title' => 'Content Marketing',
         'summary' => 'Compelling content that connects and converts.',
@@ -70,7 +70,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         'features' => ['Blog Writing', 'Copywriting', 'Video Content', 'Email Marketing', 'Content Strategy', 'eBooks & Whitepapers']
     ],
     [
-        'id' => 'print',
+        'id' => 'print-design',
         'icon' => 'fa-print',
         'title' => 'Print Design',
         'summary' => 'High-quality print materials that impress.',
@@ -78,7 +78,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
         'features' => ['Brochures', 'Posters & Banners', 'Business Stationery', 'Catalogs', 'Magazines', 'Signage']
     ],
     [
-        'id' => 'video',
+        'id' => 'video-production',
         'icon' => 'fa-video',
         'title' => 'Video Production',
         'summary' => 'Engaging video content that drives action.',
@@ -96,7 +96,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                     <div class="toolkit-content">
                         <h1 class="toolkit-title"><?php echo $svc_hero['content_title'] ?? 'Everything You Need to <span class="text-accent">Grow</span>.'; ?></h1>
                         <p class="toolkit-subtitle"><?php echo htmlspecialchars($svc_hero['content_body'] ?? 'Comprehensive digital solutions tailored to your needs — from design to development, marketing to branding.'); ?></p>
-                        <a href="contact.php" class="btn-services-cta">
+                        <a href="<?php echo getSitePath('contact.php'); ?>" class="btn-services-cta">
                             <span><?php echo htmlspecialchars($svc_hero['extra']['button_text'] ?? 'Start a Project'); ?></span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -220,7 +220,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                         <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
                         <div class="svc-icon-details">
                             <p class="svc-icon-desc"><?php echo htmlspecialchars($service['summary']); ?></p>
-                            <a href="services/<?php echo htmlspecialchars($service['id']); ?>" class="svc-icon-link">Know More <span>&rarr;</span></a>
+                            <a href="<?php echo getSitePath('services/' . htmlspecialchars($service['id'])); ?>" class="svc-icon-link">Know More <span>&rarr;</span></a>
                         </div>
                     </div>
                     <?php endforeach; ?>

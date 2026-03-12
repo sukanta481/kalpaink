@@ -170,11 +170,13 @@ if ($current_page === 'index'): ?>
         $favType = ($favExt === 'ico') ? 'image/x-icon' : (($favExt === 'svg') ? 'image/svg+xml' : 'image/png');
         $favVer = defined('SITE_FAVICON_VERSION') ? SITE_FAVICON_VERSION : time();
     ?>
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="48x48" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <link rel="icon" type="<?php echo $favType; ?>" sizes="32x32" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <link rel="icon" type="<?php echo $favType; ?>" sizes="16x16" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <link rel="shortcut icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <?php else: ?>
+    <link rel="icon" type="image/png" sizes="48x48" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
     <link rel="shortcut icon" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
     <link rel="apple-touch-icon" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
@@ -195,16 +197,16 @@ if ($current_page === 'index'): ?>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <!-- Custom CSS (with auto cache-busting) -->
-    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo filemtime('assets/css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo getSitePath('assets/css/style.css'); ?>?v=<?php echo filemtime('assets/css/style.css'); ?>">
     
     <!-- Services Page Specific Styles -->
     <?php if (basename($_SERVER['PHP_SELF']) == 'services.php'): ?>
-    <link rel="stylesheet" href="assets/css/services-page.css?v=<?php echo filemtime('assets/css/services-page.css'); ?>">
+    <link rel="stylesheet" href="<?php echo getSitePath('assets/css/services-page.css'); ?>?v=<?php echo filemtime('assets/css/services-page.css'); ?>">
     <?php endif; ?>
 
     <!-- Service Detail Page Styles -->
     <?php if (($current_nav ?? '') === 'services' && basename($_SERVER['PHP_SELF']) !== 'services.php'): ?>
-    <link rel="stylesheet" href="assets/css/service-detail.css?v=<?php echo filemtime('assets/css/service-detail.css'); ?>">
+    <link rel="stylesheet" href="<?php echo getSitePath('assets/css/service-detail.css'); ?>?v=<?php echo filemtime('assets/css/service-detail.css'); ?>">
     <?php endif; ?>
 </head>
 <body>
@@ -220,7 +222,7 @@ if ($current_page === 'index'): ?>
     <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark" aria-label="Main navigation">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand" href="<?php echo getSitePath('index.php'); ?>">
                 <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="navbar-logo">
             </a>
             
@@ -235,61 +237,61 @@ if ($current_page === 'index'): ?>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <!-- Mobile menu header -->
                 <div class="mobile-menu-header d-lg-none">
-                    <a class="mobile-menu-logo" href="index.php">
+                    <a class="mobile-menu-logo" href="<?php echo getSitePath('index.php'); ?>">
                         <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" height="30">
                     </a>
                 </div>
 
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="index.php">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('index.php'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-home"></i></span>
                             Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="about.php">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('about.php'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-users"></i></span>
                             About Us
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'services.php' || ($current_nav ?? '') === 'services') ? 'active' : ''; ?>" href="services.php">
+                        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'services.php' || ($current_nav ?? '') === 'services') ? 'active' : ''; ?>" href="<?php echo getSitePath('services.php'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-briefcase"></i></span>
                             Our Services
                         </a>
                         <button class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle Services submenu"></button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="services.php">All Services</a></li>
+                            <li><a class="dropdown-item" href="<?php echo getSitePath('services.php'); ?>">All Services</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <?php if (!empty($services)): ?>
                                 <?php foreach ($services as $svc_nav): ?>
-                                <li><a class="dropdown-item" href="services/<?php echo htmlspecialchars($svc_nav['slug'] ?? strtolower(str_replace(' ', '-', $svc_nav['title']))); ?>"><?php echo htmlspecialchars($svc_nav['title']); ?></a></li>
+                                <li><a class="dropdown-item" href="<?php echo getSitePath('services/' . htmlspecialchars($svc_nav['slug'] ?? strtolower(str_replace(' ', '-', $svc_nav['title'])))); ?>"><?php echo htmlspecialchars($svc_nav['title']); ?></a></li>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <li><a class="dropdown-item" href="services/graphics-design">Graphics Design</a></li>
-                                <li><a class="dropdown-item" href="services/brand-identity">Brand Identity</a></li>
-                                <li><a class="dropdown-item" href="services/social-media-marketing">Social Media Marketing</a></li>
-                                <li><a class="dropdown-item" href="services/web-development">Web Development</a></li>
-                                <li><a class="dropdown-item" href="services/seo-services">SEO Services</a></li>
-                                <li><a class="dropdown-item" href="services/content-marketing">Content Marketing</a></li>
+                                <li><a class="dropdown-item" href="<?php echo getSitePath('services/graphics-design'); ?>">Graphics Design</a></li>
+                                <li><a class="dropdown-item" href="<?php echo getSitePath('services/brand-identity'); ?>">Brand Identity</a></li>
+                                <li><a class="dropdown-item" href="<?php echo getSitePath('services/social-media-marketing'); ?>">Social Media Marketing</a></li>
+                                <li><a class="dropdown-item" href="<?php echo getSitePath('services/web-development'); ?>">Web Development</a></li>
+                                <li><a class="dropdown-item" href="<?php echo getSitePath('services/seo-services'); ?>">SEO Services</a></li>
+                                <li><a class="dropdown-item" href="<?php echo getSitePath('services/content-marketing'); ?>">Content Marketing</a></li>
                             <?php endif; ?>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'case-studies.php' ? 'active' : ''; ?>" href="case-studies.php">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'case-studies.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('case-studies.php'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-layer-group"></i></span>
                             Case Studies
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : ''; ?>" href="blog.php">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('blog.php'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-pen-nib"></i></span>
                             Blog
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('contact.php'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-envelope"></i></span>
                             Contact Us
                         </a>
@@ -297,7 +299,7 @@ if ($current_page === 'index'): ?>
                 </ul>
                 
                 <!-- CTA Button -->
-                <a href="contact.php" class="btn btn-primary cta-btn">
+                <a href="<?php echo getSitePath('contact.php'); ?>" class="btn btn-primary cta-btn">
                     <span class="btn-text">Get Enquiry Now</span>
                     <i class="fas fa-arrow-right btn-arrow"></i>
                 </a>

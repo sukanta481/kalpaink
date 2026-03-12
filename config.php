@@ -122,6 +122,8 @@ $service_images = [
     'Web Development' => 'assets/images/services/web-development.png',
     'SEO Services' => 'assets/images/services/seo-services.png',
     'Content Marketing' => 'assets/images/services/content-marketing.png',
+    'Print Design' => 'assets/images/services/print-design.png',
+    'Video Production' => 'assets/images/services/video-production.png',
 ];
 
 $services = !empty($services_db) ? array_map(function($s) use ($service_images) {
@@ -136,38 +138,58 @@ $services = !empty($services_db) ? array_map(function($s) use ($service_images) 
     [
         'icon' => 'fa-palette',
         'title' => 'Graphics Design',
+        'slug' => 'graphics-design',
         'description' => 'Eye-catching visuals that capture your brand essence. From logos to complete brand identity packages.',
         'image' => 'assets/images/services/graphics-design.png'
     ],
     [
         'icon' => 'fa-bullhorn',
         'title' => 'Brand Identity',
+        'slug' => 'brand-identity',
         'description' => 'Build a memorable brand with consistent visual identity across all touchpoints.',
         'image' => 'assets/images/services/brand-identity.png'
     ],
     [
         'icon' => 'fa-share-nodes',
         'title' => 'Social Media Marketing',
+        'slug' => 'social-media-marketing',
         'description' => 'Strategic social media campaigns that engage audiences and drive conversions.',
         'image' => 'assets/images/services/social-media-marketing.png'
     ],
     [
         'icon' => 'fa-code',
         'title' => 'Web Development',
+        'slug' => 'web-development',
         'description' => 'Modern, responsive websites that deliver exceptional user experiences.',
         'image' => 'assets/images/services/web-development.png'
     ],
     [
         'icon' => 'fa-magnifying-glass',
         'title' => 'SEO Services',
+        'slug' => 'seo-services',
         'description' => 'Improve your search rankings and drive organic traffic to your website.',
         'image' => 'assets/images/services/seo-services.png'
     ],
     [
         'icon' => 'fa-pen-nib',
         'title' => 'Content Marketing',
+        'slug' => 'content-marketing',
         'description' => 'Compelling content that tells your story and connects with your audience.',
         'image' => 'assets/images/services/content-marketing.png'
+    ],
+    [
+        'icon' => 'fa-print',
+        'title' => 'Print Design',
+        'slug' => 'print-design',
+        'description' => 'High-quality print materials that make a lasting impression.',
+        'image' => 'assets/images/services/print-design.png'
+    ],
+    [
+        'icon' => 'fa-video',
+        'title' => 'Video Production',
+        'slug' => 'video-production',
+        'description' => 'Engaging video content that captures attention and drives action.',
+        'image' => 'assets/images/services/video-production.png'
     ]
 ];
 
