@@ -220,7 +220,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                         <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
                         <div class="svc-icon-details">
                             <p class="svc-icon-desc"><?php echo htmlspecialchars($service['summary']); ?></p>
-                            <a href="contact.php" class="svc-icon-link">Know More <span>&rarr;</span></a>
+                            <a href="services/<?php echo htmlspecialchars($service['id']); ?>" class="svc-icon-link">Know More <span>&rarr;</span></a>
                         </div>
                     </div>
                     <?php endforeach; ?>

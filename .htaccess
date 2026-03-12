@@ -1,1 +1,5 @@
+RewriteEngine On
+RewriteRule ^favicon\.ico$ assets/images/favicon.png [L,NC]
+RewriteRule ^favicon\.png$ assets/images/favicon.png [L,NC]
+
 ErrorDocument 404 /kalpoink/404.php

@@ -10,11 +10,12 @@ $page_title = 'Page Not Found';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found | <?php echo SITE_NAME; ?></title>
     <?php 
-        $fav404 = SITE_FAVICON ?? 'assets/images/kalpanik-favicon.png';
+        $fav404 = SITE_FAVICON ?? getSitePath('assets/images/favicon.png');
         $fav404Ext = strtolower(pathinfo(parse_url($fav404, PHP_URL_PATH), PATHINFO_EXTENSION));
-        $fav404Type = ($fav404Ext === 'ico') ? 'image/x-icon' : 'image/png';
+        $fav404Type = ($fav404Ext === 'ico') ? 'image/x-icon' : (($fav404Ext === 'svg') ? 'image/svg+xml' : 'image/png');
+        $fav404Version = defined('SITE_FAVICON_VERSION') ? SITE_FAVICON_VERSION : time();
     ?>
-    <link rel="icon" type="<?php echo $fav404Type; ?>" href="<?php echo $fav404; ?>">
+    <link rel="icon" type="<?php echo $fav404Type; ?>" href="<?php echo $fav404; ?>?v=<?php echo $fav404Version; ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>

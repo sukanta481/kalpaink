@@ -32,11 +32,44 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Quick Links -->
+                    <nav class="footer-v2-nav" aria-label="Footer navigation">
+                        <div class="footer-v2-nav-col">
+                            <h4 class="footer-v2-nav-heading">Quick Links</h4>
+                            <ul class="footer-v2-nav-list">
+                                <li><a href="index.php">Home</a></li>
+                                <li><a href="about.php">About Us</a></li>
+                                <li><a href="services.php">Services</a></li>
+                                <li><a href="case-studies.php">Case Studies</a></li>
+                                <li><a href="blog.php">Blog</a></li>
+                                <li><a href="contact.php">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-v2-nav-col">
+                            <h4 class="footer-v2-nav-heading">Our Services</h4>
+                            <ul class="footer-v2-nav-list">
+                                <?php if (!empty($services)): ?>
+                                    <?php foreach ($services as $svc_footer): ?>
+                                    <li><a href="services/<?php echo htmlspecialchars($svc_footer['slug'] ?? strtolower(str_replace(' ', '-', $svc_footer['title']))); ?>"><?php echo htmlspecialchars($svc_footer['title']); ?></a></li>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <li><a href="services/graphics-design">Graphics Design</a></li>
+                                    <li><a href="services/brand-identity">Brand Identity</a></li>
+                                    <li><a href="services/social-media-marketing">Social Media Marketing</a></li>
+                                    <li><a href="services/web-development">Web Development</a></li>
+                                    <li><a href="services/seo-services">SEO Services</a></li>
+                                    <li><a href="services/content-marketing">Content Marketing</a></li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    </nav>
+
                     <div class="footer-v2-cta">
                         <h3 class="footer-v2-cta-title">Ready to Transform Your Brand?</h3>
                         <p class="footer-v2-cta-text">Let's create something extraordinary together. Get in touch with us today and start your digital journey.</p>
                         <a href="contact.php" class="footer-v2-cta-btn">
-                            Gate enquiry now <i class="fas fa-arrow-right"></i>
+                            Get enquiry now <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>

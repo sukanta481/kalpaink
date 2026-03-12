@@ -36,13 +36,13 @@ $seo_config = [
     ]
 ];
 
-$page_seo = $seo_config[$current_page] ?? [
+$page_seo = $page_seo ?? $seo_config[$current_page] ?? [
     'title' => (isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME . ' - ' . SITE_TAGLINE),
     'description' => 'Kalpanik is a leading content marketing and creative agency in Kolkata specializing in content strategy, graphics design, branding, and digital marketing.',
     'keywords' => 'content marketing, creative agency, Kolkata, graphics design, branding, digital marketing'
 ];
 
-$canonical_url = SITE_URL . '/' . ($current_page === 'index' ? '' : $current_page . '.php');
+$canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ? '' : $current_page . '.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -146,6 +146,18 @@ if ($current_page === 'index'): ?>
                     "target": "<?php echo SITE_URL; ?>/blog.php?q={search_term_string}",
                     "query-input": "required name=search_term_string"
                 }
+            },
+            {
+                "@type": "SiteNavigationElement",
+                "name": ["Home", "About Us", "Services", "Case Studies", "Blog", "Contact Us"],
+                "url": [
+                    "<?php echo SITE_URL; ?>/",
+                    "<?php echo SITE_URL; ?>/about.php",
+                    "<?php echo SITE_URL; ?>/services.php",
+                    "<?php echo SITE_URL; ?>/case-studies.php",
+                    "<?php echo SITE_URL; ?>/blog.php",
+                    "<?php echo SITE_URL; ?>/contact.php"
+                ]
             }
         ]
     }
@@ -156,16 +168,16 @@ if ($current_page === 'index'): ?>
     <?php if (defined('SITE_FAVICON') && SITE_FAVICON): 
         $favExt = strtolower(pathinfo(parse_url(SITE_FAVICON, PHP_URL_PATH), PATHINFO_EXTENSION));
         $favType = ($favExt === 'ico') ? 'image/x-icon' : (($favExt === 'svg') ? 'image/svg+xml' : 'image/png');
-        $favVer = time();
+        $favVer = defined('SITE_FAVICON_VERSION') ? SITE_FAVICON_VERSION : time();
     ?>
     <link rel="icon" type="<?php echo $favType; ?>" sizes="32x32" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <link rel="icon" type="<?php echo $favType; ?>" sizes="16x16" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <link rel="shortcut icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
     <?php else: ?>
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
+    <link rel="shortcut icon" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
+    <link rel="apple-touch-icon" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
     <?php endif; ?>
     
     <!-- Google Fonts -->
@@ -189,6 +201,11 @@ if ($current_page === 'index'): ?>
     <?php if (basename($_SERVER['PHP_SELF']) == 'services.php'): ?>
     <link rel="stylesheet" href="assets/css/services-page.css?v=<?php echo filemtime('assets/css/services-page.css'); ?>">
     <?php endif; ?>
+
+    <!-- Service Detail Page Styles -->
+    <?php if (($current_nav ?? '') === 'services' && basename($_SERVER['PHP_SELF']) !== 'services.php'): ?>
+    <link rel="stylesheet" href="assets/css/service-detail.css?v=<?php echo filemtime('assets/css/service-detail.css'); ?>">
+    <?php endif; ?>
 </head>
 <body>
     <!-- Preloader -->
@@ -200,7 +217,7 @@ if ($current_page === 'index'): ?>
     </div>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark" aria-label="Main navigation">
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="index.php">
@@ -237,24 +254,25 @@ if ($current_page === 'index'): ?>
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle <?php echo basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'services.php' || ($current_nav ?? '') === 'services') ? 'active' : ''; ?>" href="services.php">
                             <span class="nav-icon d-lg-none"><i class="fas fa-briefcase"></i></span>
-                            Services
+                            Our Services
                         </a>
+                        <button class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle Services submenu"></button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="services.php">All Services</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <?php if (!empty($services)): ?>
                                 <?php foreach ($services as $svc_nav): ?>
-                                <li><a class="dropdown-item" href="services.php#<?php echo htmlspecialchars($svc_nav['slug'] ?? strtolower(str_replace(' ', '-', $svc_nav['title']))); ?>"><?php echo htmlspecialchars($svc_nav['title']); ?></a></li>
+                                <li><a class="dropdown-item" href="services/<?php echo htmlspecialchars($svc_nav['slug'] ?? strtolower(str_replace(' ', '-', $svc_nav['title']))); ?>"><?php echo htmlspecialchars($svc_nav['title']); ?></a></li>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <li><a class="dropdown-item" href="services.php#graphics">Graphics Design</a></li>
-                                <li><a class="dropdown-item" href="services.php#branding">Brand Identity</a></li>
-                                <li><a class="dropdown-item" href="services.php#smm">Social Media Marketing</a></li>
-                                <li><a class="dropdown-item" href="services.php#web">Web Development</a></li>
-                                <li><a class="dropdown-item" href="services.php#seo">SEO Services</a></li>
-                                <li><a class="dropdown-item" href="services.php#content">Content Marketing</a></li>
+                                <li><a class="dropdown-item" href="services/graphics-design">Graphics Design</a></li>
+                                <li><a class="dropdown-item" href="services/brand-identity">Brand Identity</a></li>
+                                <li><a class="dropdown-item" href="services/social-media-marketing">Social Media Marketing</a></li>
+                                <li><a class="dropdown-item" href="services/web-development">Web Development</a></li>
+                                <li><a class="dropdown-item" href="services/seo-services">SEO Services</a></li>
+                                <li><a class="dropdown-item" href="services/content-marketing">Content Marketing</a></li>
                             <?php endif; ?>
                         </ul>
                     </li>

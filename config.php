@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Kalpanik - Configuration File
  * Digital Marketing Agency Website
@@ -18,14 +18,46 @@ function isHomepageSectionEnabled($section_key) {
     return ($crm_settings[$key] ?? '1') === '1';
 }
 
-// Auto-detect environment for SITE_URL
-if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
-    define('SITE_URL', 'http://localhost/kalpoink');
-} else {
-    // Use HTTPS and actual domain on live server
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
-    define('SITE_URL', $protocol . $_SERVER['SERVER_NAME']);
+// Auto-detect the project base path so URLs work in both subfolder and root installs.
+function getBasePath() {
+    $documentRoot = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : false;
+    $projectRoot = realpath(__DIR__);
+
+    if ($documentRoot && $projectRoot) {
+        $normalizedDocumentRoot = str_replace('\\', '/', $documentRoot);
+        $normalizedProjectRoot = str_replace('\\', '/', $projectRoot);
+
+        if (strpos($normalizedProjectRoot, $normalizedDocumentRoot) === 0) {
+            $relativePath = trim(substr($normalizedProjectRoot, strlen($normalizedDocumentRoot)), '/');
+            return $relativePath === '' ? '/' : '/' . $relativePath . '/';
+        }
+    }
+
+    if (($_SERVER['SERVER_NAME'] ?? '') === 'localhost' || ($_SERVER['SERVER_NAME'] ?? '') === '127.0.0.1') {
+        return '/kalpoink/';
+    }
+
+    return '/';
 }
+
+function getSitePath($path = '') {
+    $basePath = getBasePath();
+
+    if ($path === '') {
+        return $basePath;
+    }
+
+    return ($basePath === '/' ? '' : rtrim($basePath, '/')) . '/' . ltrim($path, '/');
+}
+
+function getSiteUrlRoot() {
+    $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+
+    return rtrim($protocol . $host, '/') . rtrim(getBasePath(), '/');
+}
+
+define('SITE_URL', getSiteUrlRoot());
 
 // Site Configuration
 define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpanik');
@@ -38,9 +70,15 @@ function getAbsoluteUrl($path) {
     return rtrim(SITE_URL, '/') . '/' . ltrim($path, '/');
 }
 
-// Branding - Logo & Favicon (dynamic from admin settings)
+function getAssetVersion($path) {
+    $absolutePath = __DIR__ . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, ltrim($path, '/'));
+    return file_exists($absolutePath) ? filemtime($absolutePath) : time();
+}
+
+// Branding - Logo (dynamic from admin settings), Favicon (static from assets/images/favicon.png)
 define('SITE_LOGO', getAbsoluteUrl(!empty($crm_settings['site_logo']) ? $crm_settings['site_logo'] : 'assets/images/kalpanik-logo.png'));
-define('SITE_FAVICON', getAbsoluteUrl(!empty($crm_settings['site_favicon']) ? $crm_settings['site_favicon'] : 'assets/images/kalpanik-favicon.png'));
+define('SITE_FAVICON', getSitePath('assets/images/favicon.png'));
+define('SITE_FAVICON_VERSION', getAssetVersion('assets/images/favicon.png'));
 
 // Contact Information
 define('CONTACT_ADDRESS', $crm_settings['contact_address'] ?? '225 Bagmari Road, Kolkata - 700054');

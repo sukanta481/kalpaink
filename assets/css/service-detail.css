@@ -1,0 +1,407 @@
+/* ================================
+   SERVICE DETAIL PAGE STYLES
+   Dark Hero + Light Content + Related Services
+================================ */
+
+/* ── Hero Section ── */
+.svc-detail-hero {
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+    padding: 140px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.svc-detail-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+/* Breadcrumb */
+.svc-detail-breadcrumb {
+    margin-bottom: 32px;
+    font-size: 0.85rem;
+}
+
+.svc-detail-breadcrumb a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.svc-detail-breadcrumb a:hover {
+    color: #FFFFFF;
+}
+
+.svc-bc-sep {
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 8px;
+}
+
+.svc-bc-current {
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+/* Hero Icon */
+.svc-detail-hero-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+}
+
+/* Hero Title */
+.svc-detail-hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.svc-detail-hero-subtitle {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 32px;
+}
+
+/* Hero Image */
+.svc-detail-hero-img {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.svc-detail-hero-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+}
+
+/* ── Content Section ── */
+.svc-detail-content {
+    background: #FFFFFF;
+    padding: 80px 0;
+}
+
+.svc-detail-section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #141414;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.svc-detail-body {
+    font-size: 1rem;
+    color: #555555;
+    line-height: 1.8;
+}
+
+.svc-detail-body p {
+    margin-bottom: 16px;
+}
+
+/* Features Card */
+.svc-detail-features-card {
+    background: #F8F9FC;
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid #E8ECF4;
+    position: sticky;
+    top: 100px;
+}
+
+.svc-detail-features-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #141414;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.svc-detail-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+}
+
+.svc-detail-features-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #E8ECF4;
+    font-size: 0.9rem;
+    color: #444444;
+}
+
+.svc-detail-features-list li:last-child {
+    border-bottom: none;
+}
+
+.svc-detail-features-list li i {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+}
+
+.svc-detail-features-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #141414;
+    color: #FFFFFF;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+.svc-detail-features-btn:hover {
+    background: #2962FF;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(41, 98, 255, 0.25);
+}
+
+.svc-detail-features-btn i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.svc-detail-features-btn:hover i {
+    transform: translateX(4px);
+}
+
+/* ── Related Services ── */
+.svc-detail-related {
+    background: #F8F9FC;
+    padding: 80px 0;
+}
+
+.svc-detail-section-sub {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 48px;
+}
+
+.svc-detail-related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.svc-related-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 28px 24px;
+    border: 1px solid #E8ECF4;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.svc-related-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    border-color: #c8d4f0;
+}
+
+.svc-related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #F0F4FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #2962FF;
+    margin-bottom: 16px;
+}
+
+.svc-related-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #141414;
+    margin-bottom: 8px;
+}
+
+.svc-related-desc {
+    font-size: 0.85rem;
+    color: #666666;
+    line-height: 1.6;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.svc-related-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2962FF;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.3s ease;
+}
+
+.svc-related-card:hover .svc-related-link {
+    gap: 10px;
+}
+
+/* ── CTA Section ── */
+.svc-detail-cta {
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+    padding: 80px 0;
+    position: relative;
+}
+
+.svc-detail-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+}
+
+.svc-detail-cta-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.svc-detail-cta-text {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.svc-detail-cta .btn-services-cta {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991.98px) {
+    .svc-detail-hero {
+        padding: 120px 0 60px;
+    }
+
+    .svc-detail-hero-title {
+        font-size: 2.2rem;
+    }
+
+    .svc-detail-hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .svc-detail-content {
+        padding: 60px 0;
+    }
+
+    .svc-detail-features-card {
+        position: static;
+        margin-top: 32px;
+    }
+
+    .svc-detail-related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .svc-detail-hero {
+        padding: 110px 0 50px;
+    }
+
+    .svc-detail-hero-title {
+        font-size: 1.8rem;
+    }
+
+    .svc-detail-hero-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 1.2rem;
+    }
+
+    .svc-detail-content {
+        padding: 48px 0;
+    }
+
+    .svc-detail-section-title {
+        font-size: 1.4rem;
+    }
+
+    .svc-detail-features-card {
+        padding: 24px;
+    }
+
+    .svc-detail-related {
+        padding: 60px 0;
+    }
+
+    .svc-detail-related-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .svc-detail-cta {
+        padding: 60px 0;
+    }
+
+    .svc-detail-cta-title {
+        font-size: 1.6rem;
+    }
+
+    .svc-detail-breadcrumb {
+        font-size: 0.78rem;
+    }
+}

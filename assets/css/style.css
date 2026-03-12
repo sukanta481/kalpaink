@@ -528,6 +528,23 @@ ul {
     transition: var(--transition-fast);
 }
 
+/* Split dropdown toggle button (SEO-friendly: link is real <a>, toggle is separate <button>) */
+.nav-item.dropdown > .dropdown-toggle-split {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    padding: 0 6px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    line-height: 1;
+    display: none; /* hidden by default; shown on mobile via media query */
+}
+
+.nav-item.dropdown > .dropdown-toggle-split:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 /* Hover Dropdown for Desktop */
 @media (min-width: 992px) {
     .nav-item.dropdown:hover .dropdown-menu {
@@ -582,6 +599,26 @@ ul {
     .dropdown-toggle::after {
         float: right;
         margin-top: 8px;
+    }
+
+    /* Show split toggle on mobile */
+    .nav-item.dropdown {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .nav-item.dropdown > .nav-link {
+        flex: 1;
+    }
+
+    .nav-item.dropdown > .dropdown-toggle-split {
+        display: flex;
+        align-items: center;
+        padding: 10px 14px;
+    }
+
+    .nav-item.dropdown > .dropdown-menu {
+        flex-basis: 100%;
     }
 }
 
@@ -5473,6 +5510,47 @@ textarea.form-control {
     color: #22c55e;
 }
 
+/* Middle columns: Quick Links + Services */
+.footer-v2-nav {
+    display: flex;
+    gap: 48px;
+    flex-shrink: 0;
+}
+
+.footer-v2-nav-col {
+    min-width: 140px;
+}
+
+.footer-v2-nav-heading {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+}
+
+.footer-v2-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-v2-nav-list li {
+    margin-bottom: 10px;
+}
+
+.footer-v2-nav-list a {
+    color: #999999;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-v2-nav-list a:hover {
+    color: #FFFFFF;
+}
+
 /* Right column: CTA */
 .footer-v2-cta {
     max-width: 420px;
@@ -5570,10 +5648,25 @@ textarea.form-control {
     .footer-v2-cta {
         max-width: 100%;
     }
+
+    .footer-v2-nav {
+        gap: 32px;
+    }
 }
 
 /* Mobile */
 @media (max-width: 576px) {
+
+    .footer-v2-nav {
+        flex-direction: row;
+        gap: 24px;
+        width: 100%;
+    }
+
+    .footer-v2-nav-col {
+        min-width: 0;
+        flex: 1;
+    }
     .footer-v2-card {
         border-radius: 20px 20px 0 0;
         padding: 32px 0 28px;
@@ -7461,6 +7554,19 @@ textarea.form-control {
 
 .welcome-section p {
     color: #444444 !important;
+}
+
+.welcome-section p a {
+    color: #141414;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(20, 20, 20, 0.3);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.3s ease;
+}
+
+.welcome-section p a:hover {
+    text-decoration-color: #141414;
 }
 
 /* Fix Fusion Headline text color in white section */

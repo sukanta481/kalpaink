@@ -170,7 +170,7 @@ $marquee_clients = getClientsFromDB();
                             <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
                         </div>
                         <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
-                        <p>From the initial sketch to the final polish—logo design, brand identity, web development, and digital marketing—we're the creative studio that brings visions to life.</p>
+                        <p>From the initial sketch to the final polish—<a href="services/graphics-design">logo design</a>, <a href="services/brand-identity">brand identity</a>, <a href="services/web-development">web development</a>, and <a href="services/content-marketing">content marketing</a>—we're the creative studio that brings visions to life.</p>
                         <div class="welcome-stats" data-aos="fade-up" data-aos-delay="400">
                             <?php if (!empty($statistics)): ?>
                                 <?php foreach (array_slice($statistics, 0, 3) as $stat): ?>
@@ -233,7 +233,7 @@ $marquee_clients = getClientsFromDB();
                         <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
                         <div class="svc-icon-details">
                             <p class="svc-icon-desc"><?php echo htmlspecialchars($service['description']); ?></p>
-                            <a href="services.php" class="svc-icon-link">Know More <span>&rarr;</span></a>
+                            <a href="services/<?php echo htmlspecialchars($service['slug'] ?? strtolower(str_replace(' ', '-', $service['title']))); ?>" class="svc-icon-link"><?php echo htmlspecialchars($service['title']); ?> <span>&rarr;</span></a>
                         </div>
                     </div>
                     <?php endforeach; ?>
