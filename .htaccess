@@ -1,5 +1,15 @@
 RewriteEngine On
+
 RewriteRule ^favicon\.ico$ assets/images/favicon.png [L,NC]
 RewriteRule ^favicon\.png$ assets/images/favicon.png [L,NC]
+
+# Clean URL rewrites for extensionless pages
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(about|contact|blog|case-studies)$ $1.php [L,QSA]
+
+# /services (no trailing slash) → rewrite to services.php
+# Note: /services/ (with trailing slash) is handled by services/index.php which includes services.php
+RewriteRule ^services$ services.php [L,QSA]
 
 ErrorDocument 404 /kalpoink/404.php

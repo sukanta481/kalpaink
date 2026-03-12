@@ -18,7 +18,10 @@ require_once __DIR__ . '/../config.php';
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
 if (empty($slug)) {
-    header('Location: ' . SITE_URL . '/services.php');
+    // No slug — serve the services listing page directly
+    // Override PHP_SELF so header.php detects 'services' page for SEO
+    $_SERVER['PHP_SELF'] = '/kalpoink/services.php';
+    include __DIR__ . '/../services.php';
     exit;
 }
 
@@ -149,9 +152,9 @@ $related_services = array_slice($related_services, 0, 4);
     <section class="svc-detail-hero">
         <div class="container">
             <nav class="svc-detail-breadcrumb" aria-label="Breadcrumb">
-                <a href="<?php echo SITE_URL; ?>/index.php">Home</a>
+                <a href="<?php echo SITE_URL; ?>/">Home</a>
                 <span class="svc-bc-sep">/</span>
-                <a href="<?php echo SITE_URL; ?>/services.php">Services</a>
+                <a href="<?php echo SITE_URL; ?>/services">Services</a>
                 <span class="svc-bc-sep">/</span>
                 <span class="svc-bc-current"><?php echo htmlspecialchars($svc_title); ?></span>
             </nav>
@@ -162,7 +165,7 @@ $related_services = array_slice($related_services, 0, 4);
                     </div>
                     <h1 class="svc-detail-hero-title"><?php echo htmlspecialchars($svc_title); ?></h1>
                     <p class="svc-detail-hero-subtitle"><?php echo htmlspecialchars($svc_short); ?></p>
-                    <a href="<?php echo SITE_URL; ?>/contact.php" class="btn-services-cta">
+                    <a href="<?php echo SITE_URL; ?>/contact" class="btn-services-cta">
                         <span>Get a Free Quote</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -200,7 +203,7 @@ $related_services = array_slice($related_services, 0, 4);
                             </li>
                             <?php endforeach; ?>
                         </ul>
-                        <a href="<?php echo SITE_URL; ?>/contact.php" class="svc-detail-features-btn">
+                        <a href="<?php echo SITE_URL; ?>/contact" class="svc-detail-features-btn">
                             Start a Project <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -239,7 +242,7 @@ $related_services = array_slice($related_services, 0, 4);
         <div class="container text-center">
             <h2 class="svc-detail-cta-title" data-aos="fade-up">Ready to Get Started?</h2>
             <p class="svc-detail-cta-text" data-aos="fade-up" data-aos-delay="100">Let's discuss how our <?php echo htmlspecialchars(strtolower($svc_title)); ?> services can help grow your business.</p>
-            <a href="<?php echo SITE_URL; ?>/contact.php" class="btn-services-cta" data-aos="fade-up" data-aos-delay="200">
+            <a href="<?php echo SITE_URL; ?>/contact" class="btn-services-cta" data-aos="fade-up" data-aos-delay="200">
                 <span>Get Enquiry Now</span>
                 <i class="fas fa-arrow-right"></i>
             </a>

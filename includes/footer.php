@@ -6,7 +6,7 @@
                 <!-- Row 1: Brand + CTA -->
                 <div class="footer-v2-top">
                     <div class="footer-v2-left">
-                        <a href="<?php echo getSitePath('index.php'); ?>" class="footer-v2-logo">
+                        <a href="<?php echo getSitePath(''); ?>" class="footer-v2-logo">
                             <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>">
                         </a>
                         <div class="footer-v2-socials">
@@ -38,12 +38,12 @@
                         <div class="footer-v2-nav-col">
                             <h4 class="footer-v2-nav-heading">Quick Links</h4>
                             <ul class="footer-v2-nav-list">
-                                <li><a href="<?php echo getSitePath('index.php'); ?>">Home</a></li>
-                                <li><a href="<?php echo getSitePath('about.php'); ?>">About Us</a></li>
-                                <li><a href="<?php echo getSitePath('services.php'); ?>">Services</a></li>
-                                <li><a href="<?php echo getSitePath('case-studies.php'); ?>">Case Studies</a></li>
-                                <li><a href="<?php echo getSitePath('blog.php'); ?>">Blog</a></li>
-                                <li><a href="<?php echo getSitePath('contact.php'); ?>">Contact Us</a></li>
+                                <li><a href="<?php echo getSitePath(''); ?>">Home</a></li>
+                                <li><a href="<?php echo getSitePath('about'); ?>">About Us</a></li>
+                                <li><a href="<?php echo getSitePath('services'); ?>">Services</a></li>
+                                <li><a href="<?php echo getSitePath('case-studies'); ?>">Case Studies</a></li>
+                                <li><a href="<?php echo getSitePath('blog'); ?>">Blog</a></li>
+                                <li><a href="<?php echo getSitePath('contact'); ?>">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="footer-v2-nav-col">
@@ -68,7 +68,7 @@
                     <div class="footer-v2-cta">
                         <h3 class="footer-v2-cta-title">Ready to Transform Your Brand?</h3>
                         <p class="footer-v2-cta-text">Let's create something extraordinary together. Get in touch with us today and start your digital journey.</p>
-                        <a href="<?php echo getSitePath('contact.php'); ?>" class="footer-v2-cta-btn">
+                        <a href="<?php echo getSitePath('contact'); ?>" class="footer-v2-cta-btn">
                             Get enquiry now <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>

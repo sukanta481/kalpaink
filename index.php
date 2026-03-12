@@ -57,8 +57,8 @@ $marquee_clients = getClientsFromDB();
                             </h1>
                             <p class="hero-subtext"><?php echo $slide['subtitle'] ?? ''; ?></p>
                             <div class="hero-buttons">
-                                <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact.php'); ?>" class="hero-btn hero-btn-primary"><?php echo htmlspecialchars($slide['button1_text'] ?? 'Get Started'); ?></a>
-                                <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services.php'); ?>" class="hero-btn hero-btn-secondary"><?php echo htmlspecialchars($slide['button2_text'] ?? 'Our Services'); ?></a>
+                                <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact'); ?>" class="hero-btn hero-btn-primary"><?php echo htmlspecialchars($slide['button1_text'] ?? 'Get Started'); ?></a>
+                                <a href="<?php echo htmlspecialchars($slide['button2_link'] ?? 'services'); ?>" class="hero-btn hero-btn-secondary"><?php echo htmlspecialchars($slide['button2_text'] ?? 'Our Services'); ?></a>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@ $marquee_clients = getClientsFromDB();
                             </div>
                             <?php endif; ?>
                         </div>
-                        <a href="about.php" class="btn btn-primary btn-magnetic" data-aos="fade-up" data-aos-delay="500">Discover Our Story</a>
+                        <a href="<?php echo getSitePath('about'); ?>" class="btn btn-primary btn-magnetic" data-aos="fade-up" data-aos-delay="500">Discover Our Story</a>
                     </div>
                 </div>
             </div>
@@ -242,7 +242,7 @@ $marquee_clients = getClientsFromDB();
             </div>
             
             <div class="text-center mt-5" data-aos="fade-up">
-                <a href="services.php" class="btn btn-primary">View All Services</a>
+                <a href="<?php echo getSitePath('services'); ?>" class="btn btn-primary">View All Services</a>
             </div>
         </div>
     </section>
@@ -305,14 +305,14 @@ $marquee_clients = getClientsFromDB();
                             <span class="case-v2-pill"><?php echo htmlspecialchars($case['tags'][0]); ?></span>
                             <?php endif; ?>
                         </div>
-                        <a href="case-studies.php" class="case-v2-link">View Details <i class="fas fa-arrow-right"></i></a>
+                        <a href="<?php echo getSitePath('case-studies'); ?>" class="case-v2-link">View Details <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <?php endforeach; ?>
             </div>
 
             <div class="text-center" style="margin-top: 48px;">
-                <a href="case-studies.php" class="btn btn-primary">View All Projects</a>
+                <a href="<?php echo getSitePath('case-studies'); ?>" class="btn btn-primary">View All Projects</a>
             </div>
         </div>
     </section>
@@ -419,7 +419,7 @@ $marquee_clients = getClientsFromDB();
                         </div>
                         <h2 class="faq-headline">Got Questions?</h2>
                         <p class="faq-subtext">We've got answers. Find quick solutions to your most common queries.</p>
-                        <a href="contact.php" class="faq-contact-link">
+                        <a href="<?php echo getSitePath('contact'); ?>" class="faq-contact-link">
                             <span>Still have questions?</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>

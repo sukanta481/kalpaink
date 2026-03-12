@@ -42,7 +42,7 @@ $page_seo = $page_seo ?? $seo_config[$current_page] ?? [
     'keywords' => 'content marketing, creative agency, Kolkata, graphics design, branding, digital marketing'
 ];
 
-$canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ? '' : $current_page . '.php');
+$canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ? '' : $current_page);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -143,7 +143,7 @@ if ($current_page === 'index'): ?>
                 "publisher": {"@id": "<?php echo SITE_URL; ?>/#organization"},
                 "potentialAction": {
                     "@type": "SearchAction",
-                    "target": "<?php echo SITE_URL; ?>/blog.php?q={search_term_string}",
+                    "target": "<?php echo SITE_URL; ?>/blog?q={search_term_string}",
                     "query-input": "required name=search_term_string"
                 }
             },
@@ -152,11 +152,11 @@ if ($current_page === 'index'): ?>
                 "name": ["Home", "About Us", "Services", "Case Studies", "Blog", "Contact Us"],
                 "url": [
                     "<?php echo SITE_URL; ?>/",
-                    "<?php echo SITE_URL; ?>/about.php",
-                    "<?php echo SITE_URL; ?>/services.php",
-                    "<?php echo SITE_URL; ?>/case-studies.php",
-                    "<?php echo SITE_URL; ?>/blog.php",
-                    "<?php echo SITE_URL; ?>/contact.php"
+                    "<?php echo SITE_URL; ?>/about",
+                    "<?php echo SITE_URL; ?>/services",
+                    "<?php echo SITE_URL; ?>/case-studies",
+                    "<?php echo SITE_URL; ?>/blog",
+                    "<?php echo SITE_URL; ?>/contact"
                 ]
             }
         ]
@@ -222,7 +222,7 @@ if ($current_page === 'index'): ?>
     <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark" aria-label="Main navigation">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand" href="<?php echo getSitePath('index.php'); ?>">
+            <a class="navbar-brand" href="<?php echo getSitePath(''); ?>">
                 <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="navbar-logo">
             </a>
             
@@ -237,32 +237,32 @@ if ($current_page === 'index'): ?>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <!-- Mobile menu header -->
                 <div class="mobile-menu-header d-lg-none">
-                    <a class="mobile-menu-logo" href="<?php echo getSitePath('index.php'); ?>">
+                    <a class="mobile-menu-logo" href="<?php echo getSitePath(''); ?>">
                         <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" height="30">
                     </a>
                 </div>
 
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('index.php'); ?>">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="<?php echo getSitePath(''); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-home"></i></span>
                             Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('about.php'); ?>">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('about'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-users"></i></span>
                             About Us
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'services.php' || ($current_nav ?? '') === 'services') ? 'active' : ''; ?>" href="<?php echo getSitePath('services.php'); ?>">
+                        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'services.php' || ($current_nav ?? '') === 'services') ? 'active' : ''; ?>" href="<?php echo getSitePath('services'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-briefcase"></i></span>
                             Our Services
                         </a>
                         <button class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle Services submenu"></button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?php echo getSitePath('services.php'); ?>">All Services</a></li>
+                            <li><a class="dropdown-item" href="<?php echo getSitePath('services'); ?>">All Services</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <?php if (!empty($services)): ?>
                                 <?php foreach ($services as $svc_nav): ?>
@@ -279,19 +279,19 @@ if ($current_page === 'index'): ?>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'case-studies.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('case-studies.php'); ?>">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'case-studies.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('case-studies'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-layer-group"></i></span>
                             Case Studies
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('blog.php'); ?>">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('blog'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-pen-nib"></i></span>
                             Blog
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('contact.php'); ?>">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('contact'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-envelope"></i></span>
                             Contact Us
                         </a>
@@ -299,7 +299,7 @@ if ($current_page === 'index'): ?>
                 </ul>
                 
                 <!-- CTA Button -->
-                <a href="<?php echo getSitePath('contact.php'); ?>" class="btn btn-primary cta-btn">
+                <a href="<?php echo getSitePath('contact'); ?>" class="btn btn-primary cta-btn">
                     <span class="btn-text">Get Enquiry Now</span>
                     <i class="fas fa-arrow-right btn-arrow"></i>
                 </a>

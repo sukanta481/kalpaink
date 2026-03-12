@@ -96,7 +96,7 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                     <div class="toolkit-content">
                         <h1 class="toolkit-title"><?php echo $svc_hero['content_title'] ?? 'Everything You Need to <span class="text-accent">Grow</span>.'; ?></h1>
                         <p class="toolkit-subtitle"><?php echo htmlspecialchars($svc_hero['content_body'] ?? 'Comprehensive digital solutions tailored to your needs — from design to development, marketing to branding.'); ?></p>
-                        <a href="<?php echo getSitePath('contact.php'); ?>" class="btn-services-cta">
+                        <a href="<?php echo getSitePath('contact'); ?>" class="btn-services-cta">
                             <span><?php echo htmlspecialchars($svc_hero['extra']['button_text'] ?? 'Start a Project'); ?></span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
