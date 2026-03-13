@@ -173,7 +173,7 @@ $marquee_clients = getClientsFromDB();
                     <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col" data-aos="fade-right" data-aos-duration="1000">
                         <div class="welcome-image fusion-image image-comparison" data-comparison>
                             <div class="comparison-container">
-                                <img src="assets/images/about-fusion.png" alt="Raw Concept to Brand Creation - We transform ideas into masterpieces" class="comparison-image">
+                                <img src="<?php echo !empty($welcome['content_image']) ? SITE_URL . '/' . $welcome['content_image'] : getSitePath('assets/images/about-fusion.png'); ?>" alt="<?php echo htmlspecialchars($welcome['content_title'] ?? 'Raw Concept to Brand Creation'); ?>" class="comparison-image">
                                 <div class="comparison-overlay"></div>
                             </div>
                         </div>
