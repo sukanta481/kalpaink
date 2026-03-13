@@ -56,6 +56,34 @@ $canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ?
     <link rel="canonical" href="<?php echo htmlspecialchars($canonical_url); ?>">
     <title><?php echo htmlspecialchars($page_seo['title']); ?></title>
 
+    <!-- Favicon -->
+    <?php if (defined('SITE_FAVICON') && SITE_FAVICON): 
+        $favExt = strtolower(pathinfo(parse_url(SITE_FAVICON, PHP_URL_PATH), PATHINFO_EXTENSION));
+        $favType = ($favExt === 'ico') ? 'image/x-icon' : (($favExt === 'svg') ? 'image/svg+xml' : 'image/png');
+        
+        $favVer = '1';
+        if (defined('SITE_FAVICON_VERSION')) {
+            $favVer = SITE_FAVICON_VERSION;
+        } else {
+            // Use filemtime for stable cache busting. time() changes every second and breaks browser caching/loading.
+            $favFilePath = $_SERVER['DOCUMENT_ROOT'] . parse_url(SITE_FAVICON, PHP_URL_PATH);
+            if (file_exists($favFilePath)) {
+                $favVer = filemtime($favFilePath);
+            }
+        }
+    ?>
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="48x48" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="32x32" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="16x16" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <link rel="shortcut icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <?php else: ?>
+    <link rel="icon" type="image/png" sizes="48x48" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
+    <link rel="shortcut icon" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
+    <link rel="apple-touch-icon" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
+    <?php endif; ?>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo htmlspecialchars($canonical_url); ?>">
@@ -163,24 +191,6 @@ if ($current_page === 'index'): ?>
     }
     </script>
 <?php endif; ?>
-    
-    <!-- Favicon -->
-    <?php if (defined('SITE_FAVICON') && SITE_FAVICON): 
-        $favExt = strtolower(pathinfo(parse_url(SITE_FAVICON, PHP_URL_PATH), PATHINFO_EXTENSION));
-        $favType = ($favExt === 'ico') ? 'image/x-icon' : (($favExt === 'svg') ? 'image/svg+xml' : 'image/png');
-        $favVer = defined('SITE_FAVICON_VERSION') ? SITE_FAVICON_VERSION : time();
-    ?>
-    <link rel="icon" type="<?php echo $favType; ?>" sizes="48x48" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <link rel="icon" type="<?php echo $favType; ?>" sizes="32x32" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <link rel="icon" type="<?php echo $favType; ?>" sizes="16x16" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <link rel="shortcut icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <?php else: ?>
-    <link rel="icon" type="image/png" sizes="48x48" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
-    <link rel="shortcut icon" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
-    <link rel="apple-touch-icon" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
-    <?php endif; ?>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
