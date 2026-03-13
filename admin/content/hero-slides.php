@@ -37,20 +37,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'is_active' => isset($_POST['is_active']) ? 1 : 0
         ];
 
-        // Auto-migration: add background_class column if not exists
-        try {
-            $db->exec("ALTER TABLE hero_slides ADD COLUMN background_class VARCHAR(100) DEFAULT '' AFTER image3");
-        } catch (PDOException $e) {
-            // Column already exists
-        }
-        // Auto-migration: add background_image column if not exists
-        try {
-            $db->exec("ALTER TABLE hero_slides ADD COLUMN background_image VARCHAR(255) DEFAULT NULL AFTER background_class");
-        } catch (PDOException $e) {
-            // Column already exists
+        // Auto-migration: add columns if not exists
+        $migrations = [
+            "ALTER TABLE hero_slides ADD COLUMN background_class VARCHAR(100) DEFAULT '' AFTER image3",
+            "ALTER TABLE hero_slides ADD COLUMN background_image VARCHAR(255) DEFAULT NULL AFTER background_class",
+            "ALTER TABLE hero_slides ADD COLUMN mobile_image VARCHAR(255) DEFAULT NULL AFTER background_image"
+        ];
+        foreach ($migrations as $sql_mig) {
+            try { $db->exec($sql_mig); } catch (PDOException $e) { /* Column already exists */ }
         }
 
-        // Handle background image upload
+        // Handle image uploads
         $upload_dir = __DIR__ . '/../../uploads/hero/';
         if (!file_exists($upload_dir)) {
             mkdir($upload_dir, 0755, true);
@@ -66,6 +63,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
+
+        $mobile_image_path = null;
+        if (!empty($_FILES['mobile_image']['name'])) {
+            $file_ext = strtolower(pathinfo($_FILES['mobile_image']['name'], PATHINFO_EXTENSION));
+            if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                $file_name = 'hero-mob-' . time() . '-' . rand(1000, 9999) . '.' . $file_ext;
+                if (move_uploaded_file($_FILES['mobile_image']['tmp_name'], $upload_dir . $file_name)) {
+                    $mobile_image_path = 'uploads/hero/' . $file_name;
+                }
+            }
+        }
         
         if ($id > 0) {
             // Update
@@ -78,6 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql .= ", background_image = ?";
                 $params[] = $bg_image_path;
             }
+            if ($mobile_image_path) {
+                $sql .= ", mobile_image = ?";
+                $params[] = $mobile_image_path;
+            }
 
             $sql .= " WHERE id = ?";
             $params[] = $id;
@@ -89,10 +101,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Insert
             $sql = "INSERT INTO hero_slides (title, subtitle, badge_text, button1_text, button1_link,
-                    button2_text, button2_link, background_class, sort_order, is_active, background_image)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    button2_text, button2_link, background_class, sort_order, is_active, background_image, mobile_image)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
             $params[] = $bg_image_path;
+            $params[] = $mobile_image_path;
 
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
@@ -208,20 +221,40 @@ if ($action === 'add' || $action === 'edit') {
                 
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Slide Background Image</h5>
+                        <h5 class="card-title"><i class="fas fa-desktop me-2"></i>Desktop Background Image</h5>
                     </div>
                     <div class="card-body">
                         <?php if (!empty($slide['background_image'])): ?>
                         <div class="mb-3">
                             <img src="<?php echo getSiteUrl($slide['background_image']); ?>"
-                                 alt="Background" class="img-fluid rounded" style="max-height: 200px;">
+                                 alt="Desktop Background" class="img-fluid rounded" style="max-height: 200px;">
                         </div>
                         <?php endif; ?>
                         <input type="file" class="form-control" name="background_image" accept="image/*">
                         <small class="text-muted mt-2 d-block">
-                            Full-width background image for this slide.<br>
-                            <strong>Size:</strong> 1920×1080px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 5MB<br>
-                            <strong>Tip:</strong> If no image is uploaded, the Background CSS Class will be used for styling.
+                            Landscape image for desktop and tablet screens.<br>
+                            <strong>Size:</strong> 1920 x 1080 px (16:9 ratio) &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 5MB<br>
+                            <strong>Tip:</strong> Place the main subject in the center-right area for best results.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title"><i class="fas fa-mobile-alt me-2"></i>Mobile Background Image</h5>
+                    </div>
+                    <div class="card-body">
+                        <?php if (!empty($slide['mobile_image'])): ?>
+                        <div class="mb-3">
+                            <img src="<?php echo getSiteUrl($slide['mobile_image']); ?>"
+                                 alt="Mobile Background" class="img-fluid rounded" style="max-height: 200px;">
+                        </div>
+                        <?php endif; ?>
+                        <input type="file" class="form-control" name="mobile_image" accept="image/*">
+                        <small class="text-muted mt-2 d-block">
+                            Portrait image for mobile phones (below 768px width).<br>
+                            <strong>Size:</strong> 800 x 1200 px (2:3 ratio) &nbsp;|&nbsp; <strong>Format:</strong> WebP preferred, JPG, PNG &nbsp;|&nbsp; <strong>Max:</strong> 5MB<br>
+                            <strong>Tip:</strong> Center the main subject in the upper half — text overlay covers the bottom.
                         </small>
                     </div>
                 </div>

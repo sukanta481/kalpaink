@@ -43,6 +43,22 @@ $marquee_clients = getClientsFromDB();
     ];
     $active_slides = !empty($hero_slides) ? $hero_slides : $fallback_hero_slides;
     ?>
+    <?php
+    // Generate mobile image overrides if any slide has a mobile_image
+    $mobile_overrides = '';
+    foreach ($active_slides as $si => $sl) {
+        if (!empty($sl['mobile_image'])) {
+            $mob_url = htmlspecialchars($sl['mobile_image']);
+            $mobile_overrides .= ".hero-slide[data-slide=\"{$si}\"] { background-image: url('{$mob_url}') !important; }\n        ";
+        }
+    }
+    if ($mobile_overrides): ?>
+    <style>
+    @media (max-width: 767.98px) {
+        <?php echo $mobile_overrides; ?>
+    }
+    </style>
+    <?php endif; ?>
     <section class="hero-section">
         <div class="hero-carousel" id="heroCarousel">
             <?php foreach ($active_slides as $slideIndex => $slide): ?>

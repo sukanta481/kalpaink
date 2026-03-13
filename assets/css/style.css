@@ -6338,7 +6338,7 @@ textarea.form-control {
         width: 100%;
         height: 100%;
         background-size: cover !important;
-        background-position: 85% center !important;
+        background-position: center center !important;
         background-repeat: no-repeat;
         margin: 0;
         padding: 0;
@@ -6367,10 +6367,21 @@ textarea.form-control {
         min-height: calc(100svh - 80px);
     }
 
-    .hero-slide-bg-1,
-    .hero-slide-bg-2,
-    .hero-slide-bg-3 {
+    /* Art Direction: mobile-portrait assets override desktop landscapes */
+    /* Target via data-slide attr — DB slides have empty background_class */
+    .hero-slide[data-slide="0"] {
         background-color: #0d1b4b;
+        background-image: url('../images/hero/1_mob.webp') !important;
+    }
+
+    .hero-slide[data-slide="1"] {
+        background-color: #0a1a35;
+        background-image: url('../images/hero/2_mob.webp') !important;
+    }
+
+    .hero-slide[data-slide="2"] {
+        background-color: #0b1540;
+        background-image: url('../images/hero/3_mob.webp') !important;
     }
 
     /* Disable the separate overlay div — ::after handles gradient now */
