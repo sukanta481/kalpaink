@@ -159,6 +159,7 @@ $marquee_clients = getClientsFromDB();
 
     <!-- Welcome Section - Fusion Concept -->
     <?php if (isHomepageSectionEnabled('welcome')): ?>
+    <?php $welcome = $home_content['welcome'] ?? null; ?>
     <section class="welcome-section section-padding" id="about">
         <div class="container">
             <div class="welcome-card">
