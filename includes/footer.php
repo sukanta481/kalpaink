@@ -66,10 +66,17 @@
                     </nav>
 
                     <div class="footer-v2-cta">
-                        <h3 class="footer-v2-cta-title">Ready to Transform Your Brand?</h3>
-                        <p class="footer-v2-cta-text">Let's create something extraordinary together. Get in touch with us today and start your digital journey.</p>
+                        <?php 
+                        $footer_cta = $home_cta ?? $svc_cta ?? null;
+                        if (!$footer_cta) {
+                            $footer_content_data = getPageContent('home');
+                            $footer_cta = $footer_content_data['cta'] ?? null;
+                        }
+                        ?>
+                        <h3 class="footer-v2-cta-title"><?php echo htmlspecialchars($footer_cta['content_title'] ?? 'Ready to Transform Your Brand?'); ?></h3>
+                        <p class="footer-v2-cta-text"><?php echo htmlspecialchars($footer_cta['content_body'] ?? 'Let\'s create something extraordinary together. Get in touch with us today and start your digital journey.'); ?></p>
                         <a href="<?php echo getSitePath('contact'); ?>" class="footer-v2-cta-btn">
-                            Get enquiry now <i class="fas fa-arrow-right"></i>
+                            <?php echo htmlspecialchars($footer_cta['content_subtitle'] ?? 'Get enquiry now'); ?> <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>

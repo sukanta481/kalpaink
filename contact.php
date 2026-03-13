@@ -154,8 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-lg-7">
                                 <div class="cf3-form-side">
                                     <div class="cf3-header">
-                                        <h2 class="cf3-headline">Tell us about your project</h2>
-                                        <p class="cf3-subtext">Fill in the details and we'll get back to you shortly.</p>
+                                        <h2 class="cf3-headline"><?php echo htmlspecialchars($c_form['content_title'] ?? 'Tell us about your project'); ?></h2>
+                                        <p class="cf3-subtext"><?php echo htmlspecialchars($c_form['content_body'] ?? 'Fill in the details and we\'ll get back to you shortly.'); ?></p>
                                     </div>
                                     
                                     <?php if ($form_submitted || $form_error): ?>

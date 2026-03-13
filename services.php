@@ -191,8 +191,9 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
     <section class="services-grid-section section-padding" id="services-section">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Our Services</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Comprehensive digital solutions tailored to your needs</p>
+                <?php $svc_process = $svc_content['process'] ?? null; ?>
+                <h2 class="section-title" data-aos="fade-up"><?php echo htmlspecialchars($svc_process['content_title'] ?? 'Our Services'); ?></h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100"><?php echo htmlspecialchars($svc_process['content_body'] ?? 'Comprehensive digital solutions tailored to your needs'); ?></p>
             </div>
             
             <?php

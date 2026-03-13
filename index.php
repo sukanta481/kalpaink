@@ -165,9 +165,19 @@ $marquee_clients = getClientsFromDB();
             <div class="welcome-card">
                 <!-- Mobile: Sandwich Layout (Headline → Image → Content) -->
                 <div class="welcome-header-mobile d-lg-none text-center" data-aos="fade-up">
-                    <span class="welcome-badge">Who We Are</span>
-                    <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
+                    <span class="welcome-badge"><?php echo htmlspecialchars($welcome['content_subtitle'] ?? 'Who We Are'); ?></span>
+                    <h2 class="fusion-headline">
+                        <?php 
+                        $title = $welcome['content_title'] ?? 'We Sculpt Brands.'; 
+                        // Try to preserve the trademark gradient style if they kept the word "Sculpt"
+                        echo str_replace('Sculpt', '<span class="text-gradient-sculpt">Sculpt</span>', htmlspecialchars($title));
+                        ?>
+                    </h2>
+                    <?php if (!empty($welcome['extra']['lead_text'])): ?>
+                    <p class="lead-text"><?php echo $welcome['extra']['lead_text']; ?></p>
+                    <?php else: ?>
                     <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="row align-items-center">
@@ -182,12 +192,27 @@ $marquee_clients = getClientsFromDB();
                     <div class="col-lg-7 welcome-text-col" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
                         <!-- Desktop: Show header here -->
                         <div class="welcome-header-desktop d-none d-lg-block">
-                            <span class="welcome-badge">Who We Are</span>
-                            <h2 class="fusion-headline">We <span class="text-gradient-sculpt">Sculpt</span> Brands.</h2>
+                            <span class="welcome-badge"><?php echo htmlspecialchars($welcome['content_subtitle'] ?? 'Who We Are'); ?></span>
+                            <h2 class="fusion-headline">
+                                <?php 
+                                $title = $welcome['content_title'] ?? 'We Sculpt Brands.';
+                                echo str_replace('Sculpt', '<span class="text-gradient-sculpt">Sculpt</span>', htmlspecialchars($title));
+                                ?>
+                            </h2>
+                            <?php if (!empty($welcome['extra']['lead_text'])): ?>
+                            <p class="lead-text"><?php echo $welcome['extra']['lead_text']; ?></p>
+                            <?php else: ?>
                             <p class="lead-text">Where <strong>Art Meets Algorithm.</strong></p>
+                            <?php endif; ?>
                         </div>
-                        <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
-                        <p>From the initial sketch to the final polish—<a href="services/graphics-design">logo design</a>, <a href="services/brand-identity">brand identity</a>, <a href="services/web-development">web development</a>, and <a href="services/content-marketing">content marketing</a>—we're the creative studio that brings visions to life.</p>
+                        <?php if (!empty($welcome['content_body'])): ?>
+                            <div class="welcome-body-cms">
+                                <?php echo $welcome['content_body']; ?>
+                            </div>
+                        <?php else: ?>
+                            <p>Just like sculptors transform raw marble into masterpieces, we take your raw ideas and craft them into powerful brands that captivate and convert.</p>
+                            <p>From the initial sketch to the final polish—<a href="services/graphics-design">logo design</a>, <a href="services/brand-identity">brand identity</a>, <a href="services/web-development">web development</a>, and <a href="services/content-marketing">content marketing</a>—we're the creative studio that brings visions to life.</p>
+                        <?php endif; ?>
                         <div class="welcome-stats" data-aos="fade-up" data-aos-delay="400">
                             <?php if (!empty($statistics)): ?>
                                 <?php foreach (array_slice($statistics, 0, 3) as $stat): ?>
@@ -267,12 +292,13 @@ $marquee_clients = getClientsFromDB();
 
     <!-- Meet The Creators Section — Clean Light Grid -->
     <?php if (isHomepageSectionEnabled('team')): ?>
+    <?php $home_team = $home_content['team'] ?? null; ?>
     <section class="creators-section-v2" id="team">
         <div class="container">
             <div class="creators-v2-header">
-                <span class="v2-pill" data-aos="fade-down" data-aos-duration="600">● Our Team</span>
-                <h2 class="v2-heading" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">Meet The Creators</h2>
-                <p class="v2-subtext" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">Two dreamers who turned their passion into your brand's success story</p>
+                <span class="v2-pill" data-aos="fade-down" data-aos-duration="600"><?php echo htmlspecialchars($home_team['content_subtitle'] ?? '● Our Team'); ?></span>
+                <h2 class="v2-heading" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100"><?php echo htmlspecialchars($home_team['content_title'] ?? 'Meet The Creators'); ?></h2>
+                <p class="v2-subtext" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200"><?php echo strip_tags($home_team['content_body'] ?? "Two dreamers who turned their passion into your brand's success story"); ?></p>
             </div>
 
             <div class="creators-v2-grid">
@@ -301,11 +327,12 @@ $marquee_clients = getClientsFromDB();
 
     <!-- Case Studies Section — Clean 3-Column Grid -->
     <?php if (isHomepageSectionEnabled('case_studies')): ?>
+    <?php $home_cases = $home_content['case_studies'] ?? null; ?>
     <section class="case-studies-v2" id="portfolio">
         <div class="container">
             <div class="cases-v2-header">
-                <h2 class="v2-heading">Case Studies</h2>
-                <p class="v2-subtext">Some of our recent creative work</p>
+                <h2 class="v2-heading"><?php echo htmlspecialchars($home_cases['content_title'] ?? 'Case Studies'); ?></h2>
+                <p class="v2-subtext"><?php echo htmlspecialchars($home_cases['content_subtitle'] ?? 'Some of our recent creative work'); ?></p>
             </div>
 
             <?php $displayed_cases = array_slice($case_studies, 0, 6); ?>
@@ -349,8 +376,9 @@ $marquee_clients = getClientsFromDB();
     $reels_list = !empty($vlogs_from_db) ? $vlogs_from_db : $fallback_reels;
     ?>
     <section class="vlog-section">
+        <?php $home_vlogs = $home_content['vlogs'] ?? null; ?>
         <div class="container">
-            <h2 class="vlog-heading">VLOG & REEL</h2>
+            <h2 class="vlog-heading"><?php echo htmlspecialchars($home_vlogs['content_title'] ?? 'VLOG & REEL'); ?></h2>
             <div class="vlog-grid">
                 <?php foreach ($reels_list as $reel): ?>
                 <div class="vlog-card" <?php if (!empty($reel['video_url'])): ?>data-video-url="<?php echo htmlspecialchars($reel['video_url']); ?>"<?php endif; ?>>
@@ -367,12 +395,13 @@ $marquee_clients = getClientsFromDB();
 
     <!-- Testimonials Section — Peek Slider -->
     <?php if (isHomepageSectionEnabled('testimonials') && !empty($testimonials)): ?>
+    <?php $home_testimonials = $home_content['testimonials'] ?? null; ?>
     <section class="testimonials-section section-padding">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="section-badge" data-aos="fade-down" data-aos-duration="600">Client Love</span>
-                <h2 class="section-title" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">What Our Clients Say</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">Real feedback from real partners who trusted us with their brands</p>
+                <span class="section-badge" data-aos="fade-down" data-aos-duration="600"><?php echo htmlspecialchars($home_testimonials['content_subtitle'] ?? 'Client Love'); ?></span>
+                <h2 class="section-title" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100"><?php echo htmlspecialchars($home_testimonials['content_title'] ?? 'What Our Clients Say'); ?></h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200"><?php echo strip_tags($home_testimonials['content_body'] ?? 'Real feedback from real partners who trusted us with their brands'); ?></p>
             </div>
         </div>
         <div class="testimonials-slider-wrapper" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
@@ -425,6 +454,7 @@ $marquee_clients = getClientsFromDB();
 
     <!-- FAQ Section - Split Screen -->
     <?php if (isHomepageSectionEnabled('faq')): ?>
+    <?php $home_faq = $home_content['faq'] ?? null; ?>
     <section class="faq-section section-padding">
         <div class="container">
             <div class="row">
@@ -434,8 +464,8 @@ $marquee_clients = getClientsFromDB();
                         <div class="faq-icon-float">
                             <i class="fas fa-question"></i>
                         </div>
-                        <h2 class="faq-headline">Got Questions?</h2>
-                        <p class="faq-subtext">We've got answers. Find quick solutions to your most common queries.</p>
+                        <h2 class="faq-headline"><?php echo htmlspecialchars($home_faq['content_title'] ?? 'Got Questions?'); ?></h2>
+                        <p class="faq-subtext"><?php echo htmlspecialchars($home_faq['content_subtitle'] ?? $home_faq['content_body'] ?? 'We\'ve got answers. Find quick solutions to your most common queries.'); ?></p>
                         <a href="<?php echo getSitePath('contact'); ?>" class="faq-contact-link">
                             <span>Still have questions?</span>
                             <i class="fas fa-arrow-right"></i>
