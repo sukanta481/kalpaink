@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Case Studies - Scattered Hero Parallax
     initScatteredParallax();
-    initFloatingGalleryParallax();
 
     // Blog - Trending Section Progress Bar
     initBlogTrendingProgress();
@@ -1389,51 +1388,75 @@ function initBrandsScrollReveal() {
     var brandItems = brandsGrid.querySelectorAll('.brand-item');
     if (!brandItems.length) return;
 
-    // Start each brand hidden below
-    brandItems.forEach(function (item) {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(40px)';
-    });
-
     var triggered = false;
+    var entranceTimers = [];
+    var floatTimers = [];
+
+    function resetAnimation() {
+        triggered = false;
+        
+        // Clear any timeouts in progress
+        entranceTimers.forEach(clearTimeout);
+        floatTimers.forEach(clearTimeout);
+        entranceTimers = [];
+        floatTimers = [];
+
+        brandItems.forEach(function (item) {
+            item.style.transition = 'none';
+            item.style.animation = 'none';
+            item.classList.remove('floating');
+            
+            // Re-apply initial hidden state
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(40px)';
+        });
+    }
 
     function startAnimation() {
         if (triggered) return;
         triggered = true;
 
+        brandItems[0].offsetHeight; // Force reflow
+
         // Phase 1: Staggered fade-up entrance
         brandItems.forEach(function (item, i) {
-            setTimeout(function () {
+            item.style.animation = '';
+            var t1 = setTimeout(function () {
                 item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 item.style.opacity = '1';
                 item.style.transform = 'translateY(0)';
             }, i * 150);
+            entranceTimers.push(t1);
         });
 
         // Phase 2: After entrance completes, start continuous float
         var entranceDuration = brandItems.length * 150 + 800;
-        setTimeout(function () {
+        var t2 = setTimeout(function () {
             brandItems.forEach(function (item, i) {
-                // Clear inline transition so it doesn't fight the animation
                 item.style.transition = 'none';
                 item.style.transform = '';
                 item.style.animationDelay = (i * 0.35) + 's';
                 item.classList.add('floating');
             });
         }, entranceDuration);
+        floatTimers.push(t2);
     }
+
+    // Initialize state
+    resetAnimation();
 
     // Use IntersectionObserver to trigger when visible
     var observer = new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting) {
             startAnimation();
-            observer.disconnect();
+        } else {
+            resetAnimation();
         }
     }, { threshold: 0.1 });
 
     observer.observe(brandsGrid);
 
-    // Fallback: if section is already in view on load, trigger after short delay
+    // Initial check (in case observer is slow)
     setTimeout(function () {
         var rect = brandsGrid.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
