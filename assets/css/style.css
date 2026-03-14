@@ -108,7 +108,9 @@
     --neutral-950: #0a0a0a;
 
     /* Fonts */
-    --font-primary: 'Poppins', sans-serif;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-primary: var(--font-body);
 
     /* Transitions */
     --transition-fast: 0.2s ease;
@@ -143,8 +145,8 @@ html {
 }
 
 body {
-    font-family: var(--font-primary);
-    font-weight: 300;
+    font-family: var(--font-body);
+    font-weight: 400;
     font-size: 16px;
     line-height: 1.6;
     color: var(--gray-400);
@@ -158,33 +160,34 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: 700;
+    font-family: var(--font-heading);
+    font-weight: 800;
     color: var(--white);
     line-height: 1.2;
 }
 
 h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
 }
 
 h2 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
 }
 
 h3 {
-    font-size: 1.75rem;
-}
-
-h4 {
     font-size: 1.5rem;
 }
 
-h5 {
+h4 {
     font-size: 1.25rem;
 }
 
-h6 {
+h5 {
     font-size: 1rem;
+}
+
+h6 {
+    font-size: 0.875rem;
 }
 
 p {
@@ -223,15 +226,18 @@ ul {
 }
 
 .section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
     position: relative;
 }
 
 .section-subtitle {
     color: var(--gray-500);
-    font-size: 1.1rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     margin-bottom: 3rem;
 }
 
@@ -796,11 +802,11 @@ body {
 /* ---- Headline ---- */
 .hero-headline {
     font-size: 4rem;
-    font-weight: 900;
+    font-weight: 800;
     color: #FFFFFF;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.03em;
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
@@ -813,12 +819,12 @@ body {
 
 /* ---- Subtext ---- */
 .hero-subtext {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.7);
-    letter-spacing: 2px;
-    margin-bottom: 2rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.04em;
+    margin-bottom: 2.5rem;
     text-transform: uppercase;
-    font-weight: 400;
+    font-weight: 300;
     opacity: 0;
     transition: opacity 0.4s ease 0.25s;
 }
@@ -856,25 +862,29 @@ body {
 }
 
 .hero-btn-primary {
-    background: #FFFFFF;
+    background: #7CFF4F;
     color: #000000;
-    border: 2px solid #FFFFFF;
+    border: 2px solid #7CFF4F;
 }
 
 .hero-btn-primary:hover {
-    background: transparent;
-    color: #FFFFFF;
+    background: #6ae03f;
+    border-color: #6ae03f;
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(124, 255, 79, 0.3);
 }
 
 .hero-btn-secondary {
     background: transparent;
     color: #FFFFFF;
-    border: 2px solid #FFFFFF;
+    border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
 .hero-btn-secondary:hover {
-    background: #FFFFFF;
-    color: #000000;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.6);
 }
 
 /* ---- Navigation Arrows ---- */
@@ -1968,6 +1978,58 @@ body {
     .creator-v2-info {
         padding-bottom: 52px;
     }
+
+    /* Swipe hint */
+    .creators-swipe-hint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 16px;
+        font-size: 0.8rem;
+        color: #999;
+        letter-spacing: 0.02em;
+    }
+
+    .creators-swipe-hint i {
+        font-size: 0.75rem;
+        animation: creatorSwipeNudge 1.5s ease-in-out infinite;
+    }
+
+    @keyframes creatorSwipeNudge {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(5px); }
+    }
+
+    /* Pagination dots */
+    .creators-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .creators-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ccc;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .creators-dot.active {
+        background: #333;
+        transform: scale(1.25);
+    }
+}
+
+/* Hide swipe hint & dots on desktop */
+.creators-swipe-hint,
+.creators-dots {
+    display: none;
 }
 
 /* ================================
@@ -5856,11 +5918,11 @@ textarea.form-control {
     }
 
     h1 {
-        font-size: 3rem;
+        font-size: 2.75rem;
     }
 
     h2 {
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
 }
 
@@ -6119,11 +6181,11 @@ textarea.form-control {
     }
 
     h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
     }
 
     h2 {
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
 }
 
@@ -6200,15 +6262,15 @@ textarea.form-control {
     }
 
     h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
         font-size: 1.75rem;
     }
 
-    h3 {
+    h2 {
         font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
     }
 
 }

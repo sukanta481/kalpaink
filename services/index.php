@@ -123,6 +123,12 @@ $svc_short = $service['short_description'] ?? '';
 $svc_full = $service['full_description'] ?? $svc_short;
 $svc_features = is_array($service['features']) ? $service['features'] : (json_decode($service['features'] ?? '[]', true) ?? []);
 $svc_image = $service['image'] ?? '';
+if (empty($svc_image)) {
+    $fallback_img = 'assets/images/services/' . $svc_slug . '.png';
+    if (file_exists(__DIR__ . '/../' . $fallback_img)) {
+        $svc_image = $fallback_img;
+    }
+}
 
 // Override SEO for this page
 $page_seo = [
@@ -170,10 +176,11 @@ $related_services = array_slice($related_services, 0, 4);
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
+                <!-- Right Side Image Graphic -->
                 <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left">
                     <?php if (!empty($svc_image)): ?>
                     <div class="svc-detail-hero-img">
-                        <img src="<?php echo SITE_URL . '/' . htmlspecialchars($svc_image); ?>" alt="<?php echo htmlspecialchars($svc_title); ?> Services">
+                        <img src="<?php echo SITE_URL . '/' . htmlspecialchars($svc_image); ?>" alt="<?php echo htmlspecialchars($svc_title); ?> Services Graphic">
                     </div>
                     <?php endif; ?>
                 </div>
@@ -182,7 +189,7 @@ $related_services = array_slice($related_services, 0, 4);
     </section>
 
     <!-- Service Content -->
-    <section class="svc-detail-content section-padding">
+    <section class="svc-detail-content" style="padding: 64px 0;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7" data-aos="fade-up">

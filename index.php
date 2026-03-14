@@ -321,8 +321,55 @@ $marquee_clients = getClientsFromDB();
                 </div>
                 <?php endforeach; ?>
             </div>
+
+            <!-- Mobile: swipe hint + dots -->
+            <div class="creators-swipe-hint">Swipe to see more <i class="fas fa-arrow-right"></i></div>
+            <div class="creators-dots">
+                <?php foreach ($team_members as $di => $dm): ?>
+                <button class="creators-dot<?php echo $di === 0 ? ' active' : ''; ?>" data-index="<?php echo $di; ?>" aria-label="Go to team member <?php echo $di + 1; ?>"></button>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
+
+    <script>
+    (function(){
+        var grid = document.querySelector('.creators-v2-grid');
+        var dots = document.querySelectorAll('.creators-dot');
+        var hint = document.querySelector('.creators-swipe-hint');
+        if (!grid || !dots.length) return;
+
+        // Dot click → scroll to card
+        dots.forEach(function(dot) {
+            dot.addEventListener('click', function() {
+                var card = grid.children[parseInt(this.dataset.index)];
+                if (card) grid.scrollTo({ left: card.offsetLeft - grid.offsetLeft, behavior: 'smooth' });
+            });
+        });
+
+        // Scroll → update active dot + hide swipe hint on first scroll
+        var ticking = false;
+        grid.addEventListener('scroll', function() {
+            if (hint && grid.scrollLeft > 10) {
+                hint.style.opacity = '0';
+                hint.style.transition = 'opacity 0.3s ease';
+                hint = null;
+            }
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    var scrollLeft = grid.scrollLeft;
+                    var cardWidth = grid.children[0] ? grid.children[0].offsetWidth : 1;
+                    var active = Math.round(scrollLeft / (cardWidth + 16));
+                    dots.forEach(function(d, i) {
+                        d.classList.toggle('active', i === active);
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    })();
+    </script>
     <?php endif; ?>
 
     <!-- Case Studies Section — Clean 3-Column Grid -->

@@ -17,12 +17,13 @@ $page_title = 'Page Not Found';
     ?>
     <link rel="icon" type="<?php echo $fav404Type; ?>" href="<?php echo $fav404; ?>?v=<?php echo $fav404Version; ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             background: #0A0A0A;
             color: #fff;
             height: 100vh;

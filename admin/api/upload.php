@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 header('Content-Type: application/json');
 
 // Check for uploaded file
-if (empty($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+if (!isset($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
     $errorMessages = [
         UPLOAD_ERR_INI_SIZE   => 'File exceeds server upload limit.',
         UPLOAD_ERR_FORM_SIZE  => 'File exceeds form upload limit.',
