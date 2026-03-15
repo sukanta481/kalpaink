@@ -62,7 +62,7 @@ $marquee_clients = getClientsFromDB();
     <section class="hero-section">
         <div class="hero-carousel" id="heroCarousel">
             <?php foreach ($active_slides as $slideIndex => $slide): ?>
-            <div class="hero-slide <?php echo htmlspecialchars($slide['background_class'] ?? 'hero-slide-bg-' . ($slideIndex + 1)); ?> <?php echo $slideIndex === 0 ? 'active' : ''; ?>" data-slide="<?php echo $slideIndex; ?>"<?php if (!empty($slide['background_image'])): ?> style="background-image: url('<?php echo htmlspecialchars($slide['background_image']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
+            <div class="hero-slide <?php echo htmlspecialchars($slide['background_class'] ?? 'hero-slide-bg-' . ($slideIndex + 1)); ?> <?php echo $slideIndex === 0 ? 'active' : ''; ?>" data-slide="<?php echo $slideIndex; ?>"<?php if (!empty($slide['background_image'])): ?> role="img" aria-label="<?php echo htmlspecialchars($slide['title'] ?? 'Hero slide ' . ($slideIndex + 1)); ?>" style="background-image: url('<?php echo htmlspecialchars($slide['background_image']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
                 <div class="hero-slide-overlay"></div>
                 <div class="hero-slide-inner">
                     <div class="hero-text-col">
@@ -129,7 +129,7 @@ $marquee_clients = getClientsFromDB();
             <span class="brand-item">
                 <?php if (!empty($mc['client_logo'])): ?>
                     <img src="<?php echo SITE_URL . '/' . $mc['client_logo']; ?>"
-                         alt="<?php echo htmlspecialchars($mc['client_name']); ?>">
+                         alt="<?php echo htmlspecialchars(!empty($mc['logo_alt_text']) ? $mc['logo_alt_text'] : 'Logo of ' . $mc['client_name']); ?>">
                 <?php else: ?>
                     <?php echo htmlspecialchars($mc['client_name']); ?>
                 <?php endif; ?>
@@ -145,7 +145,7 @@ $marquee_clients = getClientsFromDB();
                     <span class="brand-item-mobile">
                         <?php if (!empty($mc['client_logo'])): ?>
                             <img src="<?php echo SITE_URL . '/' . $mc['client_logo']; ?>"
-                                 alt="<?php echo htmlspecialchars($mc['client_name']); ?>">
+                                 alt="<?php echo htmlspecialchars(!empty($mc['logo_alt_text']) ? $mc['logo_alt_text'] : 'Logo of ' . $mc['client_name']); ?>">
                         <?php else: ?>
                             <?php echo htmlspecialchars($mc['client_name']); ?>
                         <?php endif; ?>
@@ -184,7 +184,7 @@ $marquee_clients = getClientsFromDB();
                     <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col" data-aos="fade-right" data-aos-duration="1000">
                         <div class="welcome-image fusion-image image-comparison" data-comparison>
                             <div class="comparison-container">
-                                <img src="<?php echo !empty($welcome['content_image']) ? SITE_URL . '/' . $welcome['content_image'] : getSitePath('assets/images/about-fusion.png'); ?>" alt="<?php echo htmlspecialchars($welcome['content_title'] ?? 'Raw Concept to Brand Creation'); ?>" class="comparison-image">
+                                <img src="<?php echo !empty($welcome['content_image']) ? SITE_URL . '/' . $welcome['content_image'] : getSitePath('assets/images/about-fusion.png'); ?>" alt="<?php echo htmlspecialchars(!empty($welcome['image_alt_text']) ? $welcome['image_alt_text'] : ($welcome['content_title'] ?? 'Raw Concept to Brand Creation')); ?>" class="comparison-image">
                                 <div class="comparison-overlay"></div>
                             </div>
                         </div>
@@ -305,7 +305,7 @@ $marquee_clients = getClientsFromDB();
                 <?php foreach ($team_members as $index => $member): ?>
                 <div class="creator-v2-card grid-reveal-item">
                     <div class="creator-v2-img">
-                        <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo htmlspecialchars($member['name']); ?>" loading="lazy">
+                        <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo htmlspecialchars(!empty($member['image_alt_text']) ? $member['image_alt_text'] : $member['name'] . ', ' . ($member['position'] ?? 'Team Member')); ?>" loading="lazy">
                     </div>
                     <div class="creator-v2-info">
                         <h3 class="creator-v2-name"><?php echo htmlspecialchars($member['name']); ?></h3>
@@ -387,7 +387,7 @@ $marquee_clients = getClientsFromDB();
                 <?php foreach ($displayed_cases as $index => $case): ?>
                 <div class="case-v2-card grid-reveal-item">
                     <div class="case-v2-img">
-                        <img src="<?php echo $case['image']; ?>" alt="<?php echo htmlspecialchars($case['title']); ?>" loading="lazy">
+                        <img src="<?php echo $case['image']; ?>" alt="<?php echo htmlspecialchars(!empty($case['image_alt_text']) ? $case['image_alt_text'] : $case['title']); ?>" loading="lazy">
                     </div>
                     <div class="case-v2-content">
                         <h3 class="case-v2-title"><?php echo htmlspecialchars($case['title']); ?></h3>
@@ -429,7 +429,7 @@ $marquee_clients = getClientsFromDB();
             <div class="vlog-grid">
                 <?php foreach ($reels_list as $reel): ?>
                 <div class="vlog-card" <?php if (!empty($reel['video_url'])): ?>data-video-url="<?php echo htmlspecialchars($reel['video_url']); ?>"<?php endif; ?>>
-                    <img src="<?php echo !empty($reel['thumbnail']) ? (strpos($reel['thumbnail'], 'http') === 0 ? $reel['thumbnail'] : SITE_URL . '/' . $reel['thumbnail']) : 'assets/images/reels/reel-1.jpg'; ?>" alt="<?php echo htmlspecialchars($reel['title']); ?>" loading="lazy">
+                    <img src="<?php echo !empty($reel['thumbnail']) ? (strpos($reel['thumbnail'], 'http') === 0 ? $reel['thumbnail'] : SITE_URL . '/' . $reel['thumbnail']) : 'assets/images/reels/reel-1.jpg'; ?>" alt="<?php echo htmlspecialchars(!empty($reel['image_alt_text']) ? $reel['image_alt_text'] : $reel['title']); ?>" loading="lazy">
                     <button class="vlog-play" aria-label="Play <?php echo htmlspecialchars($reel['title']); ?>">
                         <i class="fas fa-play"></i>
                     </button>
@@ -474,7 +474,7 @@ $marquee_clients = getClientsFromDB();
                     <div class="testimonial-author">
                         <div class="author-avatar">
                             <?php if (!empty($testimonial['client_avatar'])): ?>
-                            <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
+                            <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars(!empty($testimonial['image_alt_text']) ? $testimonial['image_alt_text'] : 'Photo of ' . ($testimonial['client_name'] ?? 'client')); ?>">
                             <?php else: ?>
                             <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
                             <?php endif; ?>

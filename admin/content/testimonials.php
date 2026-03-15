@@ -12,6 +12,9 @@ $db = getDB();
 $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
+// Auto-migration: add alt_text column
+try { $db->exec("ALTER TABLE testimonials ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
+
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = $_POST['csrf_token'] ?? '';
@@ -31,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'rating' => (int)$_POST['rating'],
             'sort_order' => (int)$_POST['sort_order'],
             'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
-            'is_active' => isset($_POST['is_active']) ? 1 : 0
+            'is_active' => isset($_POST['is_active']) ? 1 : 0,
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
         
         // Handle avatar upload
@@ -52,11 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($id > 0) {
             // Update
-            $sql = "UPDATE testimonials SET client_name = ?, client_position = ?, client_company = ?, 
-                    testimonial_text = ?, rating = ?, sort_order = ?, is_featured = ?, is_active = ?";
-            $params = [$data['client_name'], $data['client_position'], $data['client_company'], 
-                       $data['testimonial_text'], $data['rating'], $data['sort_order'], 
-                       $data['is_featured'], $data['is_active']];
+            $sql = "UPDATE testimonials SET client_name = ?, client_position = ?, client_company = ?,
+                    testimonial_text = ?, rating = ?, sort_order = ?, is_featured = ?, is_active = ?, image_alt_text = ?";
+            $params = [$data['client_name'], $data['client_position'], $data['client_company'],
+                       $data['testimonial_text'], $data['rating'], $data['sort_order'],
+                       $data['is_featured'], $data['is_active'], $data['image_alt_text']];
             
             if (isset($data['client_avatar'])) {
                 $sql .= ", client_avatar = ?";
@@ -72,9 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlashMessage('success', 'Testimonial updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO testimonials (client_name, client_position, client_company, client_avatar, 
-                    testimonial_text, rating, sort_order, is_featured, is_active) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO testimonials (client_name, client_position, client_company, client_avatar,
+                    testimonial_text, rating, sort_order, is_featured, is_active, image_alt_text)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = [
                 $data['client_name'],
                 $data['client_position'],
@@ -84,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data['rating'],
                 $data['sort_order'],
                 $data['is_featured'],
-                $data['is_active']
+                $data['is_active'],
+                $data['image_alt_text']
             ];
             
             $stmt = $db->prepare($sql);
@@ -208,6 +213,13 @@ if ($action === 'add' || $action === 'edit') {
                         
                         <input type="file" class="form-control" name="client_avatar" accept="image/*">
                         <small class="text-muted d-block mt-2"><strong>Size:</strong> 150×150px (square) &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 500KB</small>
+                        <div class="mt-3">
+                            <label for="image_alt_text" class="form-label">Photo Alt Text</label>
+                            <input type="text" class="form-control" id="image_alt_text" name="image_alt_text"
+                                   placeholder="e.g., Photo of John Doe, CEO at Acme Corp"
+                                   value="<?php echo htmlspecialchars($testimonial['image_alt_text'] ?? ''); ?>">
+                            <small class="text-muted">Defaults to "Photo of [Client Name]" if left empty</small>
+                        </div>
                     </div>
                 </div>
                 

@@ -20,6 +20,9 @@ try {
     // Column already exists
 }
 
+// Auto-migration: add alt_text column
+try { $db->exec("ALTER TABLE services ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
+
 // Handle form submissions BEFORE including header
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = $_POST['csrf_token'] ?? '';
@@ -60,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'price_range' => sanitize($_POST['price_range']),
             'is_featured' => $is_featured,
             'is_active' => $is_active,
-            'sort_order' => (int)$_POST['sort_order']
+            'sort_order' => (int)$_POST['sort_order'],
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
 
         // Handle image upload
@@ -83,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($id > 0) {
             // Update
             $sql = "UPDATE services SET title = ?, slug = ?, icon = ?, short_description = ?, full_description = ?,
-                    features = ?, price_range = ?, is_featured = ?, is_active = ?, sort_order = ?";
+                    features = ?, price_range = ?, is_featured = ?, is_active = ?, sort_order = ?, image_alt_text = ?";
             $params = array_values($data);
 
             if ($image_path) {
@@ -100,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlashMessage('success', 'Service updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO services (title, slug, icon, short_description, full_description, features, price_range, is_featured, is_active, sort_order, image)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO services (title, slug, icon, short_description, full_description, features, price_range, is_featured, is_active, sort_order, image_alt_text, image)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
             $params[] = $image_path;
 
@@ -291,6 +295,12 @@ if ($action === 'add' || $action === 'edit') {
                         <?php endif; ?>
                         <input type="file" class="form-control" id="service_image" name="service_image" accept="image/*">
                         <small class="text-muted"><strong>Size:</strong> 400×300px &nbsp;|&nbsp; <strong>Format:</strong> PNG, SVG (transparent bg) &nbsp;|&nbsp; <strong>Max:</strong> 1MB<br>This illustration appears on the homepage service cards.</small>
+                        <div class="mt-3">
+                            <label for="image_alt_text" class="form-label">Image Alt Text</label>
+                            <input type="text" class="form-control" id="image_alt_text" name="image_alt_text"
+                                   placeholder="e.g., Digital marketing strategy illustration"
+                                   value="<?php echo htmlspecialchars($service['image_alt_text'] ?? ''); ?>">
+                        </div>
                     </div>
                 </div>
 

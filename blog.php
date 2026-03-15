@@ -121,7 +121,7 @@ if (!empty($blogs_from_db)) {
                 <!-- Featured Image -->
                 <div class="col-lg-6" data-aos="fade-right">
                     <div class="featured-image-wrapper">
-                        <img src="<?php echo $featured_post['image']; ?>" alt="<?php echo $featured_post['title']; ?>">
+                        <img src="<?php echo $featured_post['image']; ?>" alt="<?php echo htmlspecialchars(!empty($featured_post['image_alt_text']) ? $featured_post['image_alt_text'] : $featured_post['title']); ?>">
                         <span class="featured-badge">Featured</span>
                     </div>
                 </div>
@@ -175,7 +175,7 @@ if (!empty($blogs_from_db)) {
                         <!-- Typography Card Background (No Grey Boxes!) -->
                         <div class="blog-card-visual" style="background-color: <?php echo $colors['bg']; ?>;">
                             <?php if (!empty($post['image'])): ?>
-                            <img src="<?php echo $post['image']; ?>" alt="<?php echo $post['title']; ?>" class="blog-card-img">
+                            <img src="<?php echo $post['image']; ?>" alt="<?php echo htmlspecialchars(!empty($post['image_alt_text']) ? $post['image_alt_text'] : $post['title']); ?>" class="blog-card-img">
                             <?php else: ?>
                             <div class="typography-card" style="color: <?php echo $colors['text']; ?>;">
                                 <span class="typo-category"><?php echo $post['category']; ?></span>

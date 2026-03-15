@@ -223,10 +223,13 @@ if ($current_page === 'index'): ?>
     <!-- Preloader -->
     <div id="preloader">
         <div class="preloader-inner">
-            <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="preloader-logo">
+            <img src="<?php echo SITE_LOGO; ?>" alt="" class="preloader-logo">
             <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
         </div>
     </div>
+
+    <!-- Mobile nav backdrop -->
+    <div id="navbarBackdrop"></div>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark" aria-label="Main navigation">

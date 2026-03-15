@@ -189,7 +189,7 @@ $related_services = array_slice($related_services, 0, 4);
     </section>
 
     <!-- Service Content -->
-    <section class="svc-detail-content" style="padding: 64px 0;">
+    <section class="svc-detail-content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7" data-aos="fade-up">

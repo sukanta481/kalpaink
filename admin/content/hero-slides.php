@@ -34,14 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'button2_link' => sanitize($_POST['button2_link']),
             'background_class' => sanitize($_POST['background_class'] ?? ''),
             'sort_order' => (int)$_POST['sort_order'],
-            'is_active' => isset($_POST['is_active']) ? 1 : 0
+            'is_active' => isset($_POST['is_active']) ? 1 : 0,
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
 
         // Auto-migration: add columns if not exists
         $migrations = [
             "ALTER TABLE hero_slides ADD COLUMN background_class VARCHAR(100) DEFAULT '' AFTER image3",
             "ALTER TABLE hero_slides ADD COLUMN background_image VARCHAR(255) DEFAULT NULL AFTER background_class",
-            "ALTER TABLE hero_slides ADD COLUMN mobile_image VARCHAR(255) DEFAULT NULL AFTER background_image"
+            "ALTER TABLE hero_slides ADD COLUMN mobile_image VARCHAR(255) DEFAULT NULL AFTER background_image",
+            "ALTER TABLE hero_slides ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL AFTER mobile_image"
         ];
         foreach ($migrations as $sql_mig) {
             try { $db->exec($sql_mig); } catch (PDOException $e) { /* Column already exists */ }
@@ -79,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Update
             $sql = "UPDATE hero_slides SET title = ?, subtitle = ?, badge_text = ?,
                     button1_text = ?, button1_link = ?, button2_text = ?, button2_link = ?,
-                    background_class = ?, sort_order = ?, is_active = ?";
+                    background_class = ?, sort_order = ?, is_active = ?, image_alt_text = ?";
             $params = array_values($data);
 
             if ($bg_image_path) {
@@ -101,8 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Insert
             $sql = "INSERT INTO hero_slides (title, subtitle, badge_text, button1_text, button1_link,
-                    button2_text, button2_link, background_class, sort_order, is_active, background_image, mobile_image)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    button2_text, button2_link, background_class, sort_order, is_active, image_alt_text, background_image, mobile_image)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
             $params[] = $bg_image_path;
             $params[] = $mobile_image_path;
@@ -256,6 +258,18 @@ if ($action === 'add' || $action === 'edit') {
                             <strong>Size:</strong> 800 x 1200 px (2:3 ratio) &nbsp;|&nbsp; <strong>Format:</strong> WebP preferred, JPG, PNG &nbsp;|&nbsp; <strong>Max:</strong> 5MB<br>
                             <strong>Tip:</strong> Center the main subject in the upper half — text overlay covers the bottom.
                         </small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title"><i class="fas fa-universal-access me-2"></i>Image Alt Text</h5>
+                    </div>
+                    <div class="card-body">
+                        <input type="text" class="form-control" name="image_alt_text"
+                               placeholder="Describe the background image for accessibility"
+                               value="<?php echo htmlspecialchars($slide['image_alt_text'] ?? ''); ?>">
+                        <small class="text-muted mt-2 d-block">Describes the hero background image for screen readers. E.g., "Creative team brainstorming in modern office"</small>
                     </div>
                 </div>
             </div>

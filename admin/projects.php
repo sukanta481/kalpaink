@@ -44,8 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'project_url' => sanitize($_POST['project_url']),
             'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
             'is_active' => isset($_POST['is_active']) ? 1 : 1,
-            'project_date' => !empty($_POST['completed_date']) ? $_POST['completed_date'] : null
+            'project_date' => !empty($_POST['completed_date']) ? $_POST['completed_date'] : null,
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
+
+        // Auto-migration: add alt_text column
+        try { $db->exec("ALTER TABLE projects ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
         
         // Handle image upload
         $featured_image = null;
@@ -70,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($id > 0) {
             // Update
-            $sql = "UPDATE projects SET title = ?, slug = ?, short_description = ?, full_description = ?, client_name = ?, 
-                    category = ?, tags = ?, project_url = ?, is_featured = ?, is_active = ?, project_date = ?";
+            $sql = "UPDATE projects SET title = ?, slug = ?, short_description = ?, full_description = ?, client_name = ?,
+                    category = ?, tags = ?, project_url = ?, is_featured = ?, is_active = ?, project_date = ?, image_alt_text = ?";
             $params = array_values($data);
             
             if ($featured_image) {
@@ -88,9 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlashMessage('success', 'Project updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO projects (title, slug, short_description, full_description, client_name, category, tags, 
-                    project_url, is_featured, is_active, project_date, featured_image) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO projects (title, slug, short_description, full_description, client_name, category, tags,
+                    project_url, is_featured, is_active, project_date, image_alt_text, featured_image)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
             $params[] = $featured_image;
             
@@ -249,12 +253,18 @@ if ($action === 'add' || $action === 'edit') {
                                  alt="Featured Image" class="img-fluid rounded mb-2" id="imagePreview">
                         </div>
                         <?php endif; ?>
-                        <input type="file" class="form-control image-upload" id="featured_image" 
+                        <input type="file" class="form-control image-upload" id="featured_image"
                                name="featured_image" accept="image/*" data-preview="imagePreview">
                         <small class="text-muted"><strong>Size:</strong> 800×600px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
+                        <div class="mt-3">
+                            <label for="image_alt_text" class="form-label">Image Alt Text</label>
+                            <input type="text" class="form-control" id="image_alt_text" name="image_alt_text"
+                                   placeholder="Describe the project image"
+                                   value="<?php echo htmlspecialchars($project['image_alt_text'] ?? ''); ?>">
+                        </div>
                     </div>
                 </div>
-                
+
                 <div class="d-grid gap-2">
                     <button type="submit" name="save_project" class="btn btn-primary">
                         <i class="fas fa-save me-2"></i>Save Project

@@ -44,8 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'read_time' => sanitize($_POST['read_time']),
             'meta_title' => sanitize($_POST['meta_title']),
             'meta_description' => sanitize($_POST['meta_description']),
-            'author_id' => $_SESSION['admin_user_id']
+            'author_id' => $_SESSION['admin_user_id'],
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
+
+        // Auto-migration: add alt_text column
+        try { $db->exec("ALTER TABLE blogs ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
         
         // Handle image upload
         $featured_image = null;
@@ -70,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($id > 0) {
             // Update
-            $sql = "UPDATE blogs SET title = ?, slug = ?, excerpt = ?, content = ?, category = ?, 
-                    tags = ?, status = ?, read_time = ?, meta_title = ?, meta_description = ?, author_id = ?";
+            $sql = "UPDATE blogs SET title = ?, slug = ?, excerpt = ?, content = ?, category = ?,
+                    tags = ?, status = ?, read_time = ?, meta_title = ?, meta_description = ?, author_id = ?, image_alt_text = ?";
             $params = array_values($data);
             
             if ($featured_image) {
@@ -92,9 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlashMessage('success', 'Blog post updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO blogs (title, slug, excerpt, content, category, tags, status, read_time, 
-                    meta_title, meta_description, author_id, featured_image, published_at) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " . ($data['status'] === 'published' ? 'NOW()' : 'NULL') . ")";
+            $sql = "INSERT INTO blogs (title, slug, excerpt, content, category, tags, status, read_time,
+                    meta_title, meta_description, author_id, image_alt_text, featured_image, published_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " . ($data['status'] === 'published' ? 'NOW()' : 'NULL') . ")";
             $params = array_values($data);
             $params[] = $featured_image;
             
@@ -256,12 +260,18 @@ if ($action === 'add' || $action === 'edit') {
                                  alt="Featured Image" class="img-fluid rounded mb-2" id="imagePreview">
                         </div>
                         <?php endif; ?>
-                        <input type="file" class="form-control image-upload" id="featured_image" 
+                        <input type="file" class="form-control image-upload" id="featured_image"
                                name="featured_image" accept="image/*" data-preview="imagePreview">
                         <small class="text-muted"><strong>Size:</strong> 1200×630px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
+                        <div class="mt-3">
+                            <label for="image_alt_text" class="form-label">Image Alt Text</label>
+                            <input type="text" class="form-control" id="image_alt_text" name="image_alt_text"
+                                   placeholder="Describe the featured image"
+                                   value="<?php echo htmlspecialchars($blog['image_alt_text'] ?? ''); ?>">
+                        </div>
                     </div>
                 </div>
-                
+
                 <div class="d-grid gap-2">
                     <button type="submit" name="save_blog" class="btn btn-primary">
                         <i class="fas fa-save me-2"></i>Save Blog Post

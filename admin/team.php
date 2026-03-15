@@ -34,9 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'linkedin' => sanitize($_POST['linkedin']),
             'twitter' => sanitize($_POST['twitter']),
             'sort_order' => (int)$_POST['sort_order'],
-            'is_active' => isset($_POST['is_active']) ? 1 : 0
+            'is_active' => isset($_POST['is_active']) ? 1 : 0,
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
-        
+
+        // Auto-migration: add alt_text column
+        try { $db->exec("ALTER TABLE team_members ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
+
         // Handle image uploads
         $upload_dir = __DIR__ . '/../uploads/team/';
         if (!file_exists($upload_dir)) {
@@ -58,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($id > 0) {
             // Update
-            $sql = "UPDATE team_members SET name = ?, position = ?, bio = ?, tagline = ?, email = ?, 
-                    phone = ?, linkedin = ?, twitter = ?, sort_order = ?, is_active = ?";
+            $sql = "UPDATE team_members SET name = ?, position = ?, bio = ?, tagline = ?, email = ?,
+                    phone = ?, linkedin = ?, twitter = ?, sort_order = ?, is_active = ?, image_alt_text = ?";
             $params = array_values($data);
             
             if ($image) {
@@ -76,8 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlashMessage('success', 'Team member updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO team_members (name, position, bio, tagline, email, phone, linkedin, twitter, sort_order, is_active, image)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO team_members (name, position, bio, tagline, email, phone, linkedin, twitter, sort_order, is_active, image_alt_text, image)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
             $params[] = $image;
             
@@ -235,6 +239,12 @@ if ($action === 'add' || $action === 'edit') {
                         <?php endif; ?>
                         <input type="file" class="form-control" id="image_pro" name="image_pro" accept="image/*">
                         <small class="text-muted"><strong>Size:</strong> 400×500px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
+                        <div class="mt-3">
+                            <label for="image_alt_text" class="form-label">Image Alt Text</label>
+                            <input type="text" class="form-control" id="image_alt_text" name="image_alt_text"
+                                   placeholder="e.g., Suman Kundu, Co-Founder & Creative Director"
+                                   value="<?php echo htmlspecialchars($member['image_alt_text'] ?? ''); ?>">
+                        </div>
                     </div>
                 </div>
                 

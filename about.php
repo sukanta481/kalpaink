@@ -75,8 +75,8 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                 <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
                     <div class="about-hero-visual">
                         <div class="about-hero-img-card">
-                            <img src="<?php echo htmlspecialchars($hero['extra']['hero_image'] ?? 'assets/images/about-hero-dark.png'); ?>" 
-                                 alt="Digital craftsmanship - creative design studio" 
+                            <img src="<?php echo htmlspecialchars($hero['extra']['hero_image'] ?? 'assets/images/about-hero-dark.png'); ?>"
+                                 alt="<?php echo htmlspecialchars(!empty($hero['image_alt_text']) ? $hero['image_alt_text'] : 'Digital craftsmanship - creative design studio'); ?>"
                                  class="about-hero-img">
                         </div>
                         <!-- Floating badge -->
@@ -156,8 +156,8 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                 <div class="col-lg-5" data-aos="fade-right">
                     <div class="digital-desk-image animate-slide-up" data-aos="fade-up" data-aos-duration="800">
                         <!-- Digital Desk Bento Grid - Real workspace imagery -->
-                        <img src="<?php echo htmlspecialchars($who_we_are['content_image'] ?? 'assets/images/digital-desk-bento.png'); ?>" 
-                             alt="Our Digital Workspace - VS Code, Sketchbook with Coffee, and Figma UI Kit" 
+                        <img src="<?php echo htmlspecialchars($who_we_are['content_image'] ?? 'assets/images/digital-desk-bento.png'); ?>"
+                             alt="<?php echo htmlspecialchars(!empty($who_we_are['image_alt_text']) ? $who_we_are['image_alt_text'] : 'Our Digital Workspace - VS Code, Sketchbook with Coffee, and Figma UI Kit'); ?>"
                              class="bento-collage">
                     </div>
                 </div>
@@ -188,7 +188,7 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                 <?php foreach ($team_members as $index => $member): ?>
                 <div class="creator-v2-card grid-reveal-item">
                     <div class="creator-v2-img">
-                        <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo htmlspecialchars($member['name']); ?>" loading="lazy">
+                        <img src="<?php echo $member['image_pro'] ?? $member['image']; ?>" alt="<?php echo htmlspecialchars(!empty($member['image_alt_text']) ? $member['image_alt_text'] : $member['name'] . ', ' . ($member['position'] ?? 'Team Member')); ?>" loading="lazy">
                     </div>
                     <div class="creator-v2-info">
                         <h3 class="creator-v2-name"><?php echo htmlspecialchars($member['name']); ?></h3>
@@ -240,7 +240,7 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                     <div class="testimonial-author">
                         <div class="author-avatar">
                             <?php if (!empty($testimonial['client_avatar'])): ?>
-                            <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars($testimonial['client_name'] ?? ''); ?>">
+                            <img src="<?php echo htmlspecialchars($testimonial['client_avatar']); ?>" alt="<?php echo htmlspecialchars(!empty($testimonial['image_alt_text']) ? $testimonial['image_alt_text'] : 'Photo of ' . ($testimonial['client_name'] ?? 'client')); ?>">
                             <?php else: ?>
                             <div class="avatar-placeholder"><?php echo strtoupper(substr($testimonial['client_name'] ?? 'C', 0, 1)); ?></div>
                             <?php endif; ?>

@@ -28,8 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'title' => sanitize($_POST['title']),
             'description' => sanitize($_POST['description']),
             'sort_order' => (int)$_POST['sort_order'],
-            'is_active' => isset($_POST['is_active']) ? 1 : 0
+            'is_active' => isset($_POST['is_active']) ? 1 : 0,
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
+
+        // Auto-migration: add alt_text column
+        try { $db->exec("ALTER TABLE gallery ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
         
         // Handle image upload
         $upload_dir = __DIR__ . '/../../uploads/gallery/';
@@ -62,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($id > 0) {
             // Update
-            $sql = "UPDATE gallery SET category = ?, title = ?, description = ?, sort_order = ?, is_active = ?";
-            $params = [$data['category'], $data['title'], $data['description'], $data['sort_order'], $data['is_active']];
+            $sql = "UPDATE gallery SET category = ?, title = ?, description = ?, sort_order = ?, is_active = ?, image_alt_text = ?";
+            $params = [$data['category'], $data['title'], $data['description'], $data['sort_order'], $data['is_active'], $data['image_alt_text']];
             
             if (isset($data['image'])) {
                 $sql .= ", image = ?";
@@ -89,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
             
-            $sql = "INSERT INTO gallery (category, title, description, image, thumbnail, sort_order, is_active) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO gallery (category, title, description, image, thumbnail, sort_order, is_active, image_alt_text)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $params = [
                 $data['category'],
                 $data['title'],
@@ -98,7 +102,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data['image'],
                 $data['thumbnail'] ?? null,
                 $data['sort_order'],
-                $data['is_active']
+                $data['is_active'],
+                $data['image_alt_text']
             ];
             
             $stmt = $db->prepare($sql);
@@ -249,6 +254,14 @@ if ($action === 'add' || $action === 'edit') {
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*"
                                            <?php echo $action === 'add' ? 'required' : ''; ?>>
                                     <small class="text-muted"><strong>Size:</strong> 800×600px or larger &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 5MB</small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="image_alt_text" class="form-label">Image Alt Text</label>
+                                    <input type="text" class="form-control" id="image_alt_text" name="image_alt_text"
+                                           placeholder="Describe the image for accessibility"
+                                           value="<?php echo htmlspecialchars($item['image_alt_text'] ?? ''); ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">

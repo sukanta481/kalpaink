@@ -41,8 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'client_name' => sanitize($_POST['client_name']),
             'website_url' => sanitize($_POST['website_url'] ?? ''),
             'sort_order' => (int)($_POST['sort_order'] ?? 0),
-            'is_active' => isset($_POST['is_active']) ? 1 : 0
+            'is_active' => isset($_POST['is_active']) ? 1 : 0,
+            'logo_alt_text' => sanitize($_POST['logo_alt_text'] ?? '')
         ];
+
+        // Auto-migration: add alt_text column
+        try { $db->exec("ALTER TABLE clients ADD COLUMN logo_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
         
         // Handle logo upload
         $upload_dir = __DIR__ . '/../../uploads/clients/';
@@ -81,8 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($id > 0) {
             // Update
-            $sql = "UPDATE clients SET client_name = ?, website_url = ?, sort_order = ?, is_active = ?";
-            $params = [$data['client_name'], $data['website_url'], $data['sort_order'], $data['is_active']];
+            $sql = "UPDATE clients SET client_name = ?, website_url = ?, sort_order = ?, is_active = ?, logo_alt_text = ?";
+            $params = [$data['client_name'], $data['website_url'], $data['sort_order'], $data['is_active'], $data['logo_alt_text']];
             
             if ($logo_uploaded || isset($data['client_logo'])) {
                 // Delete old logo if uploading a new one
@@ -113,13 +117,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Insert
             try {
-                $stmt = $db->prepare("INSERT INTO clients (client_name, client_logo, website_url, sort_order, is_active) VALUES (?, ?, ?, ?, ?)");
+                $stmt = $db->prepare("INSERT INTO clients (client_name, client_logo, website_url, sort_order, is_active, logo_alt_text) VALUES (?, ?, ?, ?, ?, ?)");
                 $stmt->execute([
                     $data['client_name'],
                     $data['client_logo'] ?? null,
                     $data['website_url'],
                     $data['sort_order'],
-                    $data['is_active']
+                    $data['is_active'],
+                    $data['logo_alt_text']
                 ]);
                 logActivity('create', 'client', $db->lastInsertId(), 'Created client: ' . $data['client_name']);
                 setFlashMessage('success', 'Client added successfully.');
@@ -227,6 +232,14 @@ if ($action === 'add' || $action === 'edit') {
                             <?php endif; ?>
                             <input type="file" class="form-control" id="client_logo" name="client_logo" accept="image/*,.svg">
                             <small class="text-muted"><strong>Size:</strong> 200×60px &nbsp;|&nbsp; <strong>Format:</strong> PNG, SVG (transparent background) &nbsp;|&nbsp; <strong>Max:</strong> 500KB<br>If no logo is uploaded, the client name will display as text in the marquee.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="logo_alt_text" class="form-label">Logo Alt Text</label>
+                            <input type="text" class="form-control" id="logo_alt_text" name="logo_alt_text"
+                                   placeholder="e.g., Logo of Acme Corp"
+                                   value="<?php echo htmlspecialchars($client['logo_alt_text'] ?? ''); ?>">
+                            <small class="text-muted">Describes the logo for screen readers. Defaults to "Logo of [Client Name]" if left empty.</small>
                         </div>
                     </div>
                 </div>

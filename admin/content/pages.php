@@ -12,6 +12,9 @@ $db = getDB();
 $action = $_GET['action'] ?? 'list';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
+// Auto-migration: add alt_text column
+try { $db->exec("ALTER TABLE page_content ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
+
 // Handle form submissions BEFORE any HTML output
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = $_POST['csrf_token'] ?? '';
@@ -30,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'content_subtitle' => sanitize($_POST['content_subtitle']),
             'content_body' => $_POST['content_body'],
             'content_extra' => !empty(trim($_POST['content_extra'] ?? '')) ? trim($_POST['content_extra']) : null,
-            'is_active' => isset($_POST['is_active']) ? 1 : 0
+            'is_active' => isset($_POST['is_active']) ? 1 : 0,
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
 
         // Handle image upload
@@ -55,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unset($data['content_image']);
 
             $sql = "UPDATE page_content SET page_name = ?, section_key = ?, content_title = ?,
-                    content_subtitle = ?, content_body = ?, content_extra = ?, is_active = ?";
+                    content_subtitle = ?, content_body = ?, content_extra = ?, is_active = ?, image_alt_text = ?";
             $params = array_values($data);
 
             if ($contentImage) {
@@ -73,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Insert
             $sql = "INSERT INTO page_content (page_name, section_key, content_title, content_subtitle,
-                    content_body, content_image, content_extra, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    content_body, content_image, content_extra, is_active, image_alt_text) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = [
                 $data['page_name'],
                 $data['section_key'],
@@ -82,7 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data['content_body'],
                 $data['content_image'] ?? null,
                 $data['content_extra'],
-                $data['is_active']
+                $data['is_active'],
+                $data['image_alt_text']
             ];
 
             $stmt = $db->prepare($sql);
@@ -279,6 +284,12 @@ if ($action === 'add' || $action === 'edit') {
                             <label for="content_image" class="form-label">Upload Image</label>
                             <input type="file" class="form-control" id="content_image" name="content_image" accept="image/*">
                             <small class="text-muted"><strong>Size:</strong> 800×600px or larger &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image_alt_text" class="form-label">Image Alt Text</label>
+                            <input type="text" class="form-control" id="image_alt_text" name="image_alt_text"
+                                   placeholder="e.g., Team brainstorming in the Kalpanik office"
+                                   value="<?php echo htmlspecialchars($content['image_alt_text'] ?? ''); ?>">
                         </div>
                     </div>
                 </div>

@@ -30,6 +30,9 @@ try {
     // Table already exists
 }
 
+// Auto-migration: add alt_text column
+try { $db->exec("ALTER TABLE vlogs ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
+
 // Handle form submissions BEFORE including header
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = $_POST['csrf_token'] ?? '';
@@ -47,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'video_type' => sanitize($_POST['video_type']),
             'description' => sanitize($_POST['description']),
             'sort_order' => (int)$_POST['sort_order'],
-            'is_active' => isset($_POST['is_active']) ? 1 : 0
+            'is_active' => isset($_POST['is_active']) ? 1 : 0,
+            'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
 
         // Handle thumbnail upload
@@ -69,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($id > 0) {
             // Update
-            $sql = "UPDATE vlogs SET title = ?, video_url = ?, video_type = ?, description = ?, sort_order = ?, is_active = ?";
+            $sql = "UPDATE vlogs SET title = ?, video_url = ?, video_type = ?, description = ?, sort_order = ?, is_active = ?, image_alt_text = ?";
             $params = array_values($data);
 
             if ($thumbnail) {
@@ -86,8 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlashMessage('success', 'Vlog updated successfully.');
         } else {
             // Insert
-            $sql = "INSERT INTO vlogs (title, video_url, video_type, description, sort_order, is_active, thumbnail)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO vlogs (title, video_url, video_type, description, sort_order, is_active, image_alt_text, thumbnail)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
             $params[] = $thumbnail;
 
@@ -212,6 +216,12 @@ if ($action === 'add' || $action === 'edit') {
                         <?php endif; ?>
                         <input type="file" class="form-control" name="thumbnail" accept="image/*">
                         <small class="text-muted"><strong>Size:</strong> 360x640px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
+                        <div class="mt-3">
+                            <label for="image_alt_text" class="form-label">Thumbnail Alt Text</label>
+                            <input type="text" class="form-control" id="image_alt_text" name="image_alt_text"
+                                   placeholder="e.g., Behind the scenes brand shoot thumbnail"
+                                   value="<?php echo htmlspecialchars($vlog['image_alt_text'] ?? ''); ?>">
+                        </div>
                     </div>
                 </div>
 

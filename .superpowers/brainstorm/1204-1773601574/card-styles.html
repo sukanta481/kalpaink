@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Card Style Options</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #000000;
+    font-family: 'Plus Jakarta Sans', 'DM Sans', sans-serif;
+    padding: 32px 20px;
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    margin-bottom: 36px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1080px;
+    margin: 0 auto 40px;
+  }
+
+  .col { display: flex; flex-direction: column; gap: 14px; }
+
+  .col-label {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 4px;
+  }
+
+  .label-a { background: rgba(41,98,255,0.2); color: #7EB6FF; border: 1px solid rgba(41,98,255,0.3); }
+  .label-b { background: rgba(124,77,255,0.2); color: #B97FFF; border: 1px solid rgba(124,77,255,0.3); }
+  .label-c { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.12); }
+
+  /* ── STYLE A: Vivid Blue Glass ── */
+  .card-a {
+    background: rgba(41, 98, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(41, 98, 255, 0.3);
+    border-radius: 18px;
+    padding: 22px 20px;
+    transition: all 0.35s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-a::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(41,98,255,0.6), transparent);
+  }
+  .card-a:hover {
+    background: rgba(41, 98, 255, 0.15);
+    border-color: rgba(41, 98, 255, 0.6);
+    box-shadow: 0 0 40px rgba(41, 98, 255, 0.2), inset 0 1px 0 rgba(41,98,255,0.2);
+    transform: translateY(-4px);
+  }
+
+  /* ── STYLE B: Dark Frosted Glass ── */
+  .card-b {
+    background: rgba(18, 18, 24, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 22px 20px;
+    transition: all 0.35s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .card-b::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  }
+  .card-b:hover {
+    border-color: rgba(255,255,255,0.18);
+    background: rgba(25, 25, 35, 0.85);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    transform: translateY(-4px);
+  }
+
+  /* ── STYLE C: Gradient Shimmer Glass ── */
+  .card-c {
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 22px 20px;
+    transition: all 0.35s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-c::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(124,77,255,0.07) 100%);
+    pointer-events: none;
+  }
+  .card-c:hover {
+    border-color: rgba(124,77,255,0.4);
+    background: linear-gradient(135deg, rgba(124,77,255,0.12) 0%, rgba(41,98,255,0.06) 100%);
+    box-shadow: 0 12px 40px rgba(124,77,255,0.15);
+    transform: translateY(-4px);
+  }
+
+  /* Card internals */
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 14px;
+  }
+  .icon-a { background: rgba(41,98,255,0.15); color: #7EB6FF; }
+  .icon-b { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.7); }
+  .icon-c { background: rgba(124,77,255,0.12); color: #B97FFF; }
+
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .card-link-a { font-size: 0.8rem; font-weight: 600; color: #7EB6FF; }
+  .card-link-b { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.5); }
+  .card-link-c { font-size: 0.8rem; font-weight: 600; color: #B97FFF; }
+
+  .style-name {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-align: center;
+    margin-top: 4px;
+  }
+  .style-desc {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .selector-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .select-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-family: inherit;
+    margin-top: 12px;
+  }
+  .select-btn:hover {
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+  }
+  .select-btn.selected-a {
+    border-color: #2962FF;
+    background: rgba(41,98,255,0.15);
+    color: #7EB6FF;
+  }
+  .select-btn.selected-b {
+    border-color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+  }
+  .select-btn.selected-c {
+    border-color: #7C4DFF;
+    background: rgba(124,77,255,0.15);
+    color: #B97FFF;
+  }
+
+  .hover-hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<h1>Service Card Glass Style</h1>
+<p class="subtitle">Three glassmorphism directions — hover cards to preview interactions. Pick your favourite.</p>
+<p class="hover-hint">↑ Hover the cards above to see hover states</p>
+
+<div class="grid">
+  <!-- Column A -->
+  <div class="col">
+    <div class="col-label label-a" style="text-align:center">Option A</div>
+    <div class="card-a">
+      <div class="card-icon icon-a">🎨</div>
+      <div class="card-title">Graphics Design</div>
+      <div class="card-desc">Eye-catching visuals that capture your brand essence and leave lasting impressions.</div>
+      <div class="card-link-a">Know More →</div>
+    </div>
+    <div class="card-a">
+      <div class="card-icon icon-a">💻</div>
+      <div class="card-title">Web Development</div>
+      <div class="card-desc">Modern, responsive websites that deliver exceptional user experiences.</div>
+      <div class="card-link-a">Know More →</div>
+    </div>
+    <div class="style-name">Vivid Blue Glass</div>
+    <div class="style-desc">Blue-tinted frosted glass with electric glow on hover. Energetic, tech-forward feel. Matches the site's #2962FF accent.</div>
+    <button class="select-btn" onclick="select('a', this)">Choose A</button>
+  </div>
+
+  <!-- Column B -->
+  <div class="col">
+    <div class="col-label label-b" style="text-align:center">Option B</div>
+    <div class="card-b">
+      <div class="card-icon icon-b">📣</div>
+      <div class="card-title">Brand Identity</div>
+      <div class="card-desc">Build a memorable brand with consistent visual identity across all touchpoints.</div>
+      <div class="card-link-b">Know More →</div>
+    </div>
+    <div class="card-b">
+      <div class="card-icon icon-b">📈</div>
+      <div class="card-title">SEO Services</div>
+      <div class="card-desc">Improve your search rankings and drive organic traffic to your website.</div>
+      <div class="card-link-b">Know More →</div>
+    </div>
+    <div class="style-name">Dark Frosted Glass</div>
+    <div class="style-desc">Near-black frosted panels with subtle white borders. Clean, premium, matches the existing hero card style exactly.</div>
+    <button class="select-btn" onclick="select('b', this)">Choose B</button>
+  </div>
+
+  <!-- Column C -->
+  <div class="col">
+    <div class="col-label label-c" style="text-align:center">Option C</div>
+    <div class="card-c">
+      <div class="card-icon icon-c">📱</div>
+      <div class="card-title">Social Media Marketing</div>
+      <div class="card-desc">Strategic campaigns that engage audiences and drive real conversions.</div>
+      <div class="card-link-c">Know More →</div>
+    </div>
+    <div class="card-c">
+      <div class="card-icon icon-c">🎬</div>
+      <div class="card-title">Video Production</div>
+      <div class="card-desc">Engaging video content that captures attention and drives action.</div>
+      <div class="card-link-c">Know More →</div>
+    </div>
+    <div class="style-name">Gradient Shimmer Glass</div>
+    <div class="style-desc">Translucent gradient glass with a purple shift on hover. Artistic, modern — blends blue and purple brand accents.</div>
+    <button class="select-btn" onclick="select('c', this)">Choose C</button>
+  </div>
+</div>
+
+<script>
+  let selected = null;
+  function select(choice, btn) {
+    document.querySelectorAll('.select-btn').forEach(b => {
+      b.classList.remove('selected-a','selected-b','selected-c');
+      b.textContent = b.textContent.replace(' ✓','');
+    });
+    btn.classList.add('selected-' + choice);
+    btn.textContent = 'Chosen ✓';
+    selected = choice;
+
+    // record event
+    try {
+      const label = choice === 'a' ? 'Vivid Blue Glass' : choice === 'b' ? 'Dark Frosted Glass' : 'Gradient Shimmer Glass';
+      fetch('/__event', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({type:'click', choice, text: 'Option ' + choice.toUpperCase() + ' - ' + label, timestamp: Date.now()})
+      }).catch(()=>{});
+    } catch(e){}
+  }
+</script>
+</body>
+</html>

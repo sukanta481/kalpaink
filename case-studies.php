@@ -149,7 +149,7 @@ if (count($gallery_previews) < 4) {
                 $pos = $scattered_positions[$i];
             ?>
             <div class="sc-card <?php echo $pos['class']; ?>" data-speed="<?php echo 0.02 + ($i * 0.008); ?>">
-                <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['title']; ?>" loading="lazy">
+                <img src="<?php echo $item['image']; ?>" alt="<?php echo htmlspecialchars(!empty($item['image_alt_text']) ? $item['image_alt_text'] : $item['title']); ?>" loading="lazy">
                 <div class="sc-card-shine"></div>
             </div>
             <?php endforeach; ?>
@@ -222,7 +222,7 @@ if (count($gallery_previews) < 4) {
                 <div class="col-lg-4 col-md-6 portfolio-item" data-category="<?php echo $item['category']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 3 + 1) * 80; ?>">
                     <div class="case-card-v3">
                         <div class="case-card-v3-image">
-                            <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['title']; ?>" loading="lazy">
+                            <img src="<?php echo $item['image']; ?>" alt="<?php echo htmlspecialchars(!empty($item['image_alt_text']) ? $item['image_alt_text'] : $item['title']); ?>" loading="lazy">
                             <div class="case-card-v3-overlay">
                                 <a href="#" class="case-card-v3-view">
                                     <i class="fas fa-arrow-up-right-from-square"></i>
