@@ -1,0 +1,474 @@
+/* ================================
+   CASE STUDY DETAIL PAGE STYLES
+   Dark Hero + Full-width Presentation
+================================ */
+
+/* ── Hero Section ── */
+.cs-detail-hero {
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+    padding: 140px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cs-detail-hero-noise {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+/* Breadcrumb */
+.cs-detail-breadcrumb {
+    margin-bottom: 32px;
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 1;
+}
+
+.cs-detail-breadcrumb a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.cs-detail-breadcrumb a:hover {
+    color: #FFFFFF;
+}
+
+.cs-bc-sep {
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 8px;
+}
+
+.cs-bc-current {
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+/* Hero Content */
+.cs-detail-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+}
+
+/* Client Logo */
+.cs-detail-client-logo {
+    margin-bottom: 28px;
+}
+
+.cs-detail-client-logo img {
+    max-height: 60px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.cs-detail-client-logo img:hover {
+    opacity: 1;
+}
+
+/* Hero Title */
+.cs-detail-hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.cs-detail-hero-subtitle {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+/* Meta Info */
+.cs-detail-meta {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.cs-detail-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cs-meta-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.cs-meta-value {
+    font-size: 0.95rem;
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+/* Tags */
+.cs-detail-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.cs-detail-tag {
+    padding: 6px 16px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Visit Button */
+.cs-detail-visit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #FFFFFF;
+    color: #141414;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    border: 2px solid #FFFFFF;
+}
+
+.cs-detail-visit-btn:hover {
+    background: transparent;
+    color: #FFFFFF;
+    transform: translateX(5px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+.cs-detail-visit-btn i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.cs-detail-visit-btn:hover i {
+    transform: translateX(4px);
+}
+
+/* ── Presentation Image Section ── */
+.cs-detail-presentation {
+    background: #F8F9FC;
+    padding: 60px 0;
+}
+
+.cs-detail-image-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+}
+
+.cs-detail-full-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ── Description Section ── */
+.cs-detail-description {
+    background: #FFFFFF;
+    padding: 80px 0;
+}
+
+.cs-detail-section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #141414;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cs-detail-body {
+    font-size: 1rem;
+    color: #555555;
+    line-height: 1.8;
+}
+
+.cs-detail-body p {
+    margin-bottom: 16px;
+}
+
+/* ── Related Projects ── */
+.cs-detail-related {
+    background: #F8F9FC;
+    padding: 80px 0;
+}
+
+.cs-detail-section-sub {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 48px;
+}
+
+.cs-detail-related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.cs-related-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #E8ECF4;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.cs-related-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(41, 98, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(41, 98, 255, 0.15);
+}
+
+.cs-related-image {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #F0F4FF;
+}
+
+.cs-related-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.cs-related-card:hover .cs-related-image img {
+    transform: scale(1.05);
+}
+
+.cs-related-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #c8d4f0;
+}
+
+.cs-related-body {
+    padding: 20px 24px;
+}
+
+.cs-related-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #141414;
+    margin-bottom: 8px;
+}
+
+.cs-related-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.cs-related-tag {
+    padding: 3px 10px;
+    border-radius: 50px;
+    background: #F0F4FF;
+    color: #2962FF;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+/* ── CTA Section ── */
+.cs-detail-cta {
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cs-detail-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+}
+
+.cs-detail-cta::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.cs-detail-cta-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.cs-detail-cta-text {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.cs-detail-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFFFFF;
+    color: #141414;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    border: 2px solid #FFFFFF;
+    position: relative;
+    z-index: 1;
+}
+
+.cs-detail-cta-btn:hover {
+    background: transparent;
+    color: #FFFFFF;
+    transform: translateX(5px);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+.cs-detail-cta-btn i {
+    transition: transform 0.3s ease;
+}
+
+.cs-detail-cta-btn:hover i {
+    transform: translateX(5px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 991.98px) {
+    .cs-detail-hero {
+        padding: 120px 0 60px;
+    }
+
+    .cs-detail-hero-title {
+        font-size: 2.2rem;
+    }
+
+    .cs-detail-hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .cs-detail-meta {
+        gap: 24px;
+    }
+
+    .cs-detail-presentation {
+        padding: 40px 0;
+    }
+
+    .cs-detail-description {
+        padding: 60px 0;
+    }
+
+    .cs-detail-related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .cs-detail-hero {
+        padding: 110px 0 50px;
+    }
+
+    .cs-detail-hero-title {
+        font-size: 1.8rem;
+    }
+
+    .cs-detail-client-logo img {
+        max-height: 44px;
+    }
+
+    .cs-detail-meta {
+        gap: 16px;
+    }
+
+    .cs-detail-meta-item {
+        min-width: calc(50% - 8px);
+    }
+
+    .cs-detail-presentation {
+        padding: 24px 0;
+    }
+
+    .cs-detail-image-wrap {
+        border-radius: 10px;
+    }
+
+    .cs-detail-description {
+        padding: 48px 0;
+    }
+
+    .cs-detail-section-title {
+        font-size: 1.4rem;
+    }
+
+    .cs-detail-related {
+        padding: 60px 0;
+    }
+
+    .cs-detail-related-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .cs-detail-cta {
+        padding: 60px 0;
+    }
+
+    .cs-detail-cta-title {
+        font-size: 1.6rem;
+    }
+
+    .cs-detail-breadcrumb {
+        font-size: 0.78rem;
+    }
+}

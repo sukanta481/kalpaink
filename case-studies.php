@@ -23,7 +23,9 @@ if (!empty($projects_from_db)) {
             'tags' => $tags,
             'description' => $project['short_description'] ?? '',
             'size' => $sizes[$index % count($sizes)],
-            'slug' => $project['slug'] ?? ''
+            'slug' => $project['slug'] ?? '',
+            'case_study_image' => $project['case_study_image'] ?? '',
+            'image_alt_text' => $project['image_alt_text'] ?? ''
         ];
     }
     
@@ -219,12 +221,17 @@ if (count($gallery_previews) < 4) {
             <!-- Portfolio Grid -->
             <div class="row g-4 portfolio-grid-v3">
                 <?php foreach ($portfolio_items as $index => $item): ?>
+                <?php
+                    $item_slug = $item['slug'] ?? strtolower(str_replace(' ', '-', $item['title']));
+                    $has_case_study = !empty($item['case_study_image']);
+                    $detail_url = $has_case_study ? SITE_URL . '/case-study/' . htmlspecialchars($item_slug) : '#';
+                ?>
                 <div class="col-lg-4 col-md-6 portfolio-item" data-category="<?php echo $item['category']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 3 + 1) * 80; ?>">
                     <div class="case-card-v3">
                         <div class="case-card-v3-image">
                             <img src="<?php echo $item['image']; ?>" alt="<?php echo htmlspecialchars(!empty($item['image_alt_text']) ? $item['image_alt_text'] : $item['title']); ?>" loading="lazy">
                             <div class="case-card-v3-overlay">
-                                <a href="#" class="case-card-v3-view">
+                                <a href="<?php echo $detail_url; ?>" class="case-card-v3-view">
                                     <i class="fas fa-arrow-up-right-from-square"></i>
                                 </a>
                             </div>
@@ -237,7 +244,7 @@ if (count($gallery_previews) < 4) {
                                 <?php endforeach; ?>
                             </div>
                             <p class="case-card-v3-desc"><?php echo $item['description']; ?></p>
-                            <a href="#" class="case-card-v3-link">View Details <i class="fas fa-arrow-right"></i></a>
+                            <a href="<?php echo $detail_url; ?>" class="case-card-v3-link">View Details <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

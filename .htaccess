@@ -12,4 +12,7 @@ RewriteRule ^(about|contact|blog|case-studies)$ $1.php [L,QSA]
 # Note: /services/ (with trailing slash) is handled by services/index.php which includes services.php
 RewriteRule ^services$ services.php [L,QSA]
 
+# /case-study/{slug} → case-study/index.php
+RewriteRule ^case-study/([a-z0-9-]+)/?$ case-study/index.php?slug=$1 [L,QSA]
+
 ErrorDocument 404 /kalpoink/404.php

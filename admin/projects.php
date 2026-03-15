@@ -4,8 +4,9 @@
  * Kalpanik Admin CRM
  */
 
-$page_title = 'Projects';
-require_once __DIR__ . '/includes/header.php';
+// Load auth BEFORE any output so redirects work
+require_once __DIR__ . '/config/auth.php';
+requireAuth();
 
 $db = getDB();
 $action = $_GET['action'] ?? 'list';
@@ -48,44 +49,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'image_alt_text' => sanitize($_POST['image_alt_text'] ?? '')
         ];
 
-        // Auto-migration: add alt_text column
+        // Auto-migration: add columns if missing
         try { $db->exec("ALTER TABLE projects ADD COLUMN image_alt_text VARCHAR(255) DEFAULT NULL"); } catch (PDOException $e) {}
-        
-        // Handle image upload
+        try { $db->exec("ALTER TABLE projects ADD COLUMN case_study_image VARCHAR(500) DEFAULT NULL"); } catch (PDOException $e) {}
+        try { $db->exec("ALTER TABLE projects ADD COLUMN client_logo VARCHAR(500) DEFAULT NULL"); } catch (PDOException $e) {}
+
+        // Handle image uploads
+        $upload_dir = __DIR__ . '/../uploads/portfolio/';
+        if (!file_exists($upload_dir)) {
+            mkdir($upload_dir, 0755, true);
+        }
+        $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+        // Featured image (card thumbnail)
         $featured_image = null;
         if (!empty($_FILES['featured_image']['name'])) {
-            $upload_dir = __DIR__ . '/../uploads/portfolio/';
-            if (!file_exists($upload_dir)) {
-                mkdir($upload_dir, 0755, true);
-            }
-            
             $file_ext = strtolower(pathinfo($_FILES['featured_image']['name'], PATHINFO_EXTENSION));
-            $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-            
             if (in_array($file_ext, $allowed_ext)) {
-                $file_name = $slug . '-' . time() . '.' . $file_ext;
-                $file_path = $upload_dir . $file_name;
-                
-                if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $file_path)) {
+                $file_name = $slug . '-thumb-' . time() . '.' . $file_ext;
+                if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $upload_dir . $file_name)) {
                     $featured_image = 'uploads/portfolio/' . $file_name;
                 }
             }
         }
-        
+
+        // Case study PNG (full presentation image)
+        $case_study_image = null;
+        if (!empty($_FILES['case_study_image']['name'])) {
+            $file_ext = strtolower(pathinfo($_FILES['case_study_image']['name'], PATHINFO_EXTENSION));
+            if (in_array($file_ext, $allowed_ext)) {
+                $file_name = $slug . '-casestudy-' . time() . '.' . $file_ext;
+                if (move_uploaded_file($_FILES['case_study_image']['tmp_name'], $upload_dir . $file_name)) {
+                    $case_study_image = 'uploads/portfolio/' . $file_name;
+                }
+            }
+        }
+
+        // Client logo/banner
+        $client_logo = null;
+        if (!empty($_FILES['client_logo']['name'])) {
+            $file_ext = strtolower(pathinfo($_FILES['client_logo']['name'], PATHINFO_EXTENSION));
+            if (in_array($file_ext, $allowed_ext)) {
+                $file_name = $slug . '-logo-' . time() . '.' . $file_ext;
+                if (move_uploaded_file($_FILES['client_logo']['tmp_name'], $upload_dir . $file_name)) {
+                    $client_logo = 'uploads/portfolio/' . $file_name;
+                }
+            }
+        }
+
         if ($id > 0) {
             // Update
             $sql = "UPDATE projects SET title = ?, slug = ?, short_description = ?, full_description = ?, client_name = ?,
                     category = ?, tags = ?, project_url = ?, is_featured = ?, is_active = ?, project_date = ?, image_alt_text = ?";
             $params = array_values($data);
-            
+
             if ($featured_image) {
                 $sql .= ", featured_image = ?";
                 $params[] = $featured_image;
             }
-            
+            if ($case_study_image) {
+                $sql .= ", case_study_image = ?";
+                $params[] = $case_study_image;
+            }
+            if ($client_logo) {
+                $sql .= ", client_logo = ?";
+                $params[] = $client_logo;
+            }
+
             $sql .= " WHERE id = ?";
             $params[] = $id;
-            
+
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
             logActivity('update', 'project', $id, 'Updated project: ' . $data['title']);
@@ -93,11 +126,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Insert
             $sql = "INSERT INTO projects (title, slug, short_description, full_description, client_name, category, tags,
-                    project_url, is_featured, is_active, project_date, image_alt_text, featured_image)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    project_url, is_featured, is_active, project_date, image_alt_text, featured_image, case_study_image, client_logo)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_values($data);
             $params[] = $featured_image;
-            
+            $params[] = $case_study_image;
+            $params[] = $client_logo;
+
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
             $newId = $db->lastInsertId();
@@ -123,6 +158,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+
+// Now include header (after all redirects are done)
+$page_title = 'Projects';
+require_once __DIR__ . '/includes/header.php';
 
 // Handle different actions
 if ($action === 'add' || $action === 'edit') {
@@ -262,6 +301,42 @@ if ($action === 'add' || $action === 'edit') {
                                    placeholder="Describe the project image"
                                    value="<?php echo htmlspecialchars($project['image_alt_text'] ?? ''); ?>">
                         </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Case Study Image</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-2">Upload the full-length portfolio presentation PNG (the long scrollable design showcase).</p>
+                        <?php if (!empty($project['case_study_image'])): ?>
+                        <div class="mb-3">
+                            <img src="<?php echo getSiteUrl($project['case_study_image']); ?>"
+                                 alt="Case Study Image" class="img-fluid rounded mb-2" id="caseStudyPreview" style="max-height: 300px; object-fit: cover; object-position: top;">
+                        </div>
+                        <?php endif; ?>
+                        <input type="file" class="form-control image-upload" id="case_study_image"
+                               name="case_study_image" accept="image/*" data-preview="caseStudyPreview">
+                        <small class="text-muted"><strong>Format:</strong> PNG, JPG, WebP &nbsp;|&nbsp; <strong>Recommended:</strong> Full-length project presentation</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Client Logo / Banner</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-2">Upload the client's company logo or banner (shown on the case study detail page).</p>
+                        <?php if (!empty($project['client_logo'])): ?>
+                        <div class="mb-3">
+                            <img src="<?php echo getSiteUrl($project['client_logo']); ?>"
+                                 alt="Client Logo" class="img-fluid rounded mb-2" id="clientLogoPreview" style="max-height: 100px;">
+                        </div>
+                        <?php endif; ?>
+                        <input type="file" class="form-control image-upload" id="client_logo"
+                               name="client_logo" accept="image/*" data-preview="clientLogoPreview">
+                        <small class="text-muted"><strong>Size:</strong> 300×80px recommended &nbsp;|&nbsp; <strong>Format:</strong> PNG (transparent bg preferred)</small>
                     </div>
                 </div>
 
