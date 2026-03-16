@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'short_description' => sanitize($_POST['description']),
             'full_description' => $_POST['content'],
             'client_name' => sanitize($_POST['client_name']),
-            'category' => sanitize($_POST['category']),
+            'category' => implode(',', array_map('trim', $_POST['categories'] ?? [])),
             'tags' => sanitize($_POST['tags']),
             'project_url' => sanitize($_POST['project_url']),
             'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
@@ -240,18 +240,22 @@ if ($action === 'add' || $action === 'edit') {
                         </div>
                         
                         <div class="mb-3">
-                            <label for="category" class="form-label">Category</label>
-                            <select class="form-select" id="category" name="category">
-                                <option value="">Select Category</option>
-                                <?php 
-                                $categories = ['Branding', 'Web Design', 'Marketing', 'UI/UX', 'Photography', 'YouTube'];
-                                foreach ($categories as $cat): 
-                                ?>
-                                <option value="<?php echo $cat; ?>" <?php echo ($project['category'] ?? '') === $cat ? 'selected' : ''; ?>>
+                            <label class="form-label">Categories</label>
+                            <?php
+                            $categories = ['Branding', 'Web Design', 'Marketing', 'UI/UX', 'Photography', 'YouTube', 'Logo', 'Print', 'Film', 'SMM'];
+                            $selected_cats = array_map('trim', explode(',', $project['category'] ?? ''));
+                            foreach ($categories as $cat):
+                            ?>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="categories[]"
+                                       id="cat_<?php echo str_replace(['/', ' '], '_', $cat); ?>"
+                                       value="<?php echo $cat; ?>"
+                                       <?php echo in_array($cat, $selected_cats) ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="cat_<?php echo str_replace(['/', ' '], '_', $cat); ?>">
                                     <?php echo $cat; ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
+                                </label>
+                            </div>
+                            <?php endforeach; ?>
                         </div>
                         
                         <div class="mb-3">
@@ -438,7 +442,17 @@ if ($action === 'add' || $action === 'edit') {
                                 <strong><?php echo htmlspecialchars($project['title']); ?></strong>
                             </td>
                             <td><?php echo htmlspecialchars($project['client_name'] ?: '-'); ?></td>
-                            <td><?php echo htmlspecialchars($project['category'] ?: '-'); ?></td>
+                            <td>
+                                <?php
+                                $proj_cats = array_filter(array_map('trim', explode(',', $project['category'] ?? '')));
+                                if (!empty($proj_cats)):
+                                    foreach ($proj_cats as $pc): ?>
+                                    <span class="badge bg-info text-dark me-1"><?php echo htmlspecialchars($pc); ?></span>
+                                    <?php endforeach;
+                                else: ?>
+                                    -
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <span class="badge bg-<?php echo $project['is_active'] ? 'success' : 'secondary'; ?>">
                                     <?php echo $project['is_active'] ? 'Active' : 'Inactive'; ?>

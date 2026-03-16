@@ -419,7 +419,9 @@ $marquee_clients = getClientsFromDB();
                         <h3 class="case-v2-title"><?php echo htmlspecialchars($case['title']); ?></h3>
                         <div class="case-v2-tags">
                             <?php if (!empty($case['tags'])): ?>
-                            <span class="case-v2-pill"><?php echo htmlspecialchars($case['tags'][0]); ?></span>
+                                <?php foreach ($case['tags'] as $ctag): ?>
+                                <span class="case-v2-pill"><?php echo htmlspecialchars($ctag); ?></span>
+                                <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
                         <span class="case-v2-link">View Details <i class="fas fa-arrow-right"></i></span>

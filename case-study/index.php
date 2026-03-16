@@ -126,7 +126,12 @@ $related_projects = array_slice($related_projects, 0, 3);
                     <?php if (!empty($p_category)): ?>
                     <div class="cs-detail-meta-item">
                         <span class="cs-meta-label">Category</span>
-                        <span class="cs-meta-value"><?php echo htmlspecialchars($p_category); ?></span>
+                        <span class="cs-meta-value">
+                            <?php
+                            $detail_cats = array_filter(array_map('trim', explode(',', $p_category)));
+                            echo htmlspecialchars(implode(', ', $detail_cats));
+                            ?>
+                        </span>
                     </div>
                     <?php endif; ?>
 

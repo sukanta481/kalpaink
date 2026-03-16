@@ -132,12 +132,12 @@ function getProjectsFromDB($limit = null, $featured_only = false) {
         
         // Decode JSON fields
         foreach ($projects as &$project) {
-            $project['tags'] = json_decode($project['tags'], true) ?? [];
             $project['gallery_images'] = json_decode($project['gallery_images'], true) ?? [];
             // Map to old format for compatibility
             $project['image'] = $project['featured_image'];
-            $project['title'] = $project['title'];
-            $project['category'] = $project['category'];
+            // Build tags from category field (comma-separated)
+            $cat_list = array_filter(array_map('trim', explode(',', $project['category'] ?? '')));
+            $project['tags'] = !empty($cat_list) ? $cat_list : (json_decode($project['tags'], true) ?? []);
         }
         
         return $projects;
@@ -159,9 +159,10 @@ function getProjectBySlug($slug) {
         $project = $stmt->fetch();
         
         if ($project) {
-            $project['tags'] = json_decode($project['tags'], true) ?? [];
             $project['gallery_images'] = json_decode($project['gallery_images'], true) ?? [];
             $project['image'] = $project['featured_image'];
+            $cat_list = array_filter(array_map('trim', explode(',', $project['category'] ?? '')));
+            $project['tags'] = !empty($cat_list) ? $cat_list : (json_decode($project['tags'], true) ?? []);
         }
         
         return $project;

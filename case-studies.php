@@ -16,11 +16,15 @@ if (!empty($projects_from_db)) {
     
     foreach ($projects_from_db as $index => $project) {
         $tags = is_array($project['tags']) ? $project['tags'] : (json_decode($project['tags'], true) ?? []);
+        // Use categories from category field, fall back to tags
+        $cat_str = $project['category'] ?? '';
+        $cat_list = array_filter(array_map('trim', explode(',', $cat_str)));
+        if (empty($cat_list)) $cat_list = $tags;
         $portfolio_items[] = [
             'title' => $project['title'],
-            'category' => implode(',', $tags),
+            'category' => implode(',', $cat_list),
             'image' => $project['featured_image'] ?? 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop',
-            'tags' => $tags,
+            'tags' => $cat_list,
             'description' => $project['short_description'] ?? '',
             'size' => $sizes[$index % count($sizes)],
             'slug' => $project['slug'] ?? '',
