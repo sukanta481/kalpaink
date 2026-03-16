@@ -273,6 +273,9 @@ $marquee_clients = getClientsFromDB();
         'fa-code' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="52" height="40" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M6 20h52" stroke="currentColor" stroke-width="2.5"/><circle cx="12" cy="15" r="1.5" fill="currentColor"/><circle cx="18" cy="15" r="1.5" fill="currentColor"/><circle cx="24" cy="15" r="1.5" fill="currentColor"/><path d="M20 32l-6 4 6 4M36 32l6 4-6 4M26 42l4-16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
         'fa-magnifying-glass' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="16" stroke="currentColor" stroke-width="2.5"/><path d="M40 40l14 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 32V24l4 4 4-8 4 6 4-4v10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="14" r="4" stroke="currentColor" stroke-width="2.5"/><path d="M50 12v4M48 14h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
         'fa-pen-nib' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 12h40a4 4 0 014 4v8H8V12z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 24v28h32V24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 32h16M20 38h10M20 44h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M48 20l8-8M52 8l4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="52" cy="44" r="6" stroke="currentColor" stroke-width="2.5"/><path d="M52 41v6M49 44h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+        'fa-layer-group' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 22l24-12 24 12-24 12L8 22z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 34l24 12 24-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 46l24 12 24-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        'fa-file-image' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 8h24l12 12v36H14V8z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M38 8v12h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="30" r="4" stroke="currentColor" stroke-width="2.5"/><path d="M14 50l10-10 6 6 6-8 8 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        'fa-image' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="12" width="52" height="40" rx="4" stroke="currentColor" stroke-width="2.5"/><circle cx="22" cy="26" r="5" stroke="currentColor" stroke-width="2.5"/><path d="M6 44l14-14 10 10 8-10 14 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     ];
     ?>
     <section class="services-section section-padding" id="services-section">
@@ -286,16 +289,16 @@ $marquee_clients = getClientsFromDB();
                 <button class="svc-slider-arrow svc-slider-arrow--prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
                 <div class="services-icon-grid">
                     <?php foreach ($services as $index => $service): ?>
-                    <div class="svc-icon-card">
+                    <a href="services/<?php echo htmlspecialchars($service['slug'] ?? strtolower(str_replace(' ', '-', $service['title']))); ?>" class="svc-icon-card">
                         <div class="svc-icon-wrap">
                             <?php echo $service_svg_icons[$service['icon']] ?? '<i class="fas ' . htmlspecialchars($service['icon']) . '"></i>'; ?>
                         </div>
                         <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
                         <div class="svc-icon-details">
                             <p class="svc-icon-desc"><?php echo htmlspecialchars($service['description']); ?></p>
-                            <a href="services/<?php echo htmlspecialchars($service['slug'] ?? strtolower(str_replace(' ', '-', $service['title']))); ?>" class="svc-icon-link"><?php echo htmlspecialchars($service['title']); ?> <span>&rarr;</span></a>
+                            <span class="svc-icon-link"><?php echo htmlspecialchars($service['title']); ?> <span>&rarr;</span></span>
                         </div>
-                    </div>
+                    </a>
                     <?php endforeach; ?>
                 </div>
                 <button class="svc-slider-arrow svc-slider-arrow--next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>

@@ -10,82 +10,112 @@ $svc_cta = $svc_content['cta'] ?? null;
 // Get services from CRM database (auto-sync)
 $services_from_db = getServicesFromDB(false);
 
-// Use CRM services if available, otherwise use fallback
-$detailed_services = !empty($services_from_db) ? array_map(function($s) {
-    return [
-        'id' => $s['slug'] ?? strtolower(str_replace(' ', '-', $s['title'])),
-        'icon' => $s['icon'] ?? 'fa-cogs',
-        'title' => $s['title'],
-        'summary' => $s['short_description'],
-        'description' => $s['full_description'] ?? $s['short_description'],
-        'features' => is_array($s['features']) ? $s['features'] : (json_decode($s['features'], true) ?? [])
+// Use CRM services if available, otherwise use fallback — always sorted A-Z
+if (!empty($services_from_db)) {
+    $detailed_services = array_map(function($s) {
+        return [
+            'id' => $s['slug'] ?? strtolower(str_replace(' ', '-', $s['title'])),
+            'icon' => $s['icon'] ?? 'fa-cogs',
+            'title' => $s['title'],
+            'summary' => $s['short_description'],
+            'description' => $s['full_description'] ?? $s['short_description'],
+            'features' => is_array($s['features']) ? $s['features'] : (json_decode($s['features'], true) ?? [])
+        ];
+    }, $services_from_db);
+    usort($detailed_services, fn($a, $b) => strcasecmp($a['title'], $b['title']));
+} else {
+    // Sorted A-Z
+    $detailed_services = [
+        [
+            'id' => 'brand-identity',
+            'icon' => 'fa-bullhorn',
+            'title' => 'Brand Identity',
+            'summary' => 'Build a memorable brand that stands out.',
+            'description' => 'Build a memorable brand with consistent visual identity across all touchpoints. We create comprehensive brand guidelines that ensure your brand stands out.',
+            'features' => ['Brand Strategy', 'Visual Identity System', 'Brand Guidelines', 'Rebranding', 'Brand Collateral', 'Brand Messaging']
+        ],
+        [
+            'id' => 'communication-design',
+            'icon' => 'fa-layer-group',
+            'title' => 'Communication Design',
+            'summary' => 'Clear, compelling visual communication with impact.',
+            'description' => 'Communication design bridges the gap between your brand and your audience through intentional, strategic design — infographics, presentations, reports, and collateral.',
+            'features' => ['Infographics', 'Presentation Design', 'Marketing Collateral', 'Annual Reports', 'Brochures', 'Digital Banners']
+        ],
+        [
+            'id' => 'content-marketing',
+            'icon' => 'fa-pen-nib',
+            'title' => 'Content Marketing',
+            'summary' => 'Compelling content that connects and converts.',
+            'description' => 'Compelling content that tells your story and connects with your audience. We create content that educates, entertains, and converts.',
+            'features' => ['Blog Writing', 'Copywriting', 'Video Content', 'Email Marketing', 'Content Strategy', 'eBooks & Whitepapers']
+        ],
+        [
+            'id' => 'flyers',
+            'icon' => 'fa-file-image',
+            'title' => 'Flyers',
+            'summary' => 'Eye-catching flyers that drive action.',
+            'description' => 'Eye-catching flyer designs combining bold visuals, clear hierarchy, and persuasive copy — for events, promotions, and campaigns in print and digital formats.',
+            'features' => ['Event Flyers', 'Promotional Flyers', 'Digital Flyers', 'A4 & A5 Formats', 'Social Media Adaptations', 'Brand-consistent Layouts']
+        ],
+        [
+            'id' => 'graphics-design',
+            'icon' => 'fa-palette',
+            'title' => 'Graphics Design',
+            'summary' => 'Eye-catching visuals that capture your brand essence.',
+            'description' => 'From stunning logos to complete visual identities, our graphics design team creates eye-catching visuals that capture your brand essence and leave lasting impressions.',
+            'features' => ['Logo Design', 'Business Cards', 'Brochures & Flyers', 'Social Media Graphics', 'Infographics', 'Packaging Design']
+        ],
+        [
+            'id' => 'poster-design',
+            'icon' => 'fa-image',
+            'title' => 'Poster Design',
+            'summary' => 'Bold, striking posters that leave a lasting impression.',
+            'description' => 'Bold, striking poster designs for events, films, campaigns, and promotions — commanding attention with creative direction, masterful typography, and print-ready quality.',
+            'features' => ['Event Posters', 'Film Posters', 'Promotional Posters', 'Large Format Print', 'Digital Formats', 'Campaign Series']
+        ],
+        [
+            'id' => 'print-design',
+            'icon' => 'fa-print',
+            'title' => 'Print Design',
+            'summary' => 'High-quality print materials that impress.',
+            'description' => 'High-quality print materials that make a lasting impression. From business cards to large format displays, we handle all your print needs.',
+            'features' => ['Brochures', 'Posters & Banners', 'Business Stationery', 'Catalogs', 'Magazines', 'Signage']
+        ],
+        [
+            'id' => 'seo-services',
+            'icon' => 'fa-magnifying-glass',
+            'title' => 'SEO Services',
+            'summary' => 'Boost your search rankings and visibility.',
+            'description' => 'Improve your search rankings and drive organic traffic to your website. Our SEO experts use proven strategies to boost your online visibility.',
+            'features' => ['Keyword Research', 'On-Page SEO', 'Technical SEO', 'Link Building', 'Local SEO', 'SEO Audits']
+        ],
+        [
+            'id' => 'social-media-marketing',
+            'icon' => 'fa-share-nodes',
+            'title' => 'Social Media Marketing',
+            'summary' => 'Strategic campaigns that engage and convert.',
+            'description' => 'Strategic social media campaigns that engage audiences and drive conversions. We manage your social presence across all major platforms.',
+            'features' => ['Content Strategy', 'Community Management', 'Paid Social Ads', 'Influencer Marketing', 'Analytics & Reporting', 'Campaign Management']
+        ],
+        [
+            'id' => 'video-production',
+            'icon' => 'fa-video',
+            'title' => 'Video Production',
+            'summary' => 'Engaging video content that drives action.',
+            'description' => 'Engaging video content that captures attention and drives action. From promotional videos to animations, we bring your vision to life.',
+            'features' => ['Corporate Videos', 'Motion Graphics', 'Product Videos', 'Social Media Videos', 'Explainer Videos', 'Video Editing']
+        ],
+        [
+            'id' => 'web-development',
+            'icon' => 'fa-code',
+            'title' => 'Web Development',
+            'summary' => 'Modern, responsive websites that deliver.',
+            'description' => 'Modern, responsive websites that deliver exceptional user experiences. From landing pages to complex web applications, we build it all.',
+            'features' => ['Custom Website Design', 'E-commerce Solutions', 'WordPress Development', 'Web Applications', 'Mobile Responsive', 'Maintenance & Support']
+        ],
     ];
-}, $services_from_db) : [
-    [
-        'id' => 'graphics-design',
-        'icon' => 'fa-palette',
-        'title' => 'Graphics Design',
-        'summary' => 'Eye-catching visuals that capture your brand essence.',
-        'description' => 'From stunning logos to complete visual identities, our graphics design team creates eye-catching visuals that capture your brand essence and leave lasting impressions.',
-        'features' => ['Logo Design', 'Business Cards', 'Brochures & Flyers', 'Social Media Graphics', 'Infographics', 'Packaging Design']
-    ],
-    [
-        'id' => 'brand-identity',
-        'icon' => 'fa-bullhorn',
-        'title' => 'Brand Identity',
-        'summary' => 'Build a memorable brand that stands out.',
-        'description' => 'Build a memorable brand with consistent visual identity across all touchpoints. We create comprehensive brand guidelines that ensure your brand stands out.',
-        'features' => ['Brand Strategy', 'Visual Identity System', 'Brand Guidelines', 'Rebranding', 'Brand Collateral', 'Brand Messaging']
-    ],
-    [
-        'id' => 'social-media-marketing',
-        'icon' => 'fa-share-nodes',
-        'title' => 'Social Media Marketing',
-        'summary' => 'Strategic campaigns that engage and convert.',
-        'description' => 'Strategic social media campaigns that engage audiences and drive conversions. We manage your social presence across all major platforms.',
-        'features' => ['Content Strategy', 'Community Management', 'Paid Social Ads', 'Influencer Marketing', 'Analytics & Reporting', 'Campaign Management']
-    ],
-    [
-        'id' => 'web-development',
-        'icon' => 'fa-code',
-        'title' => 'Web Development',
-        'summary' => 'Modern, responsive websites that deliver.',
-        'description' => 'Modern, responsive websites that deliver exceptional user experiences. From landing pages to complex web applications, we build it all.',
-        'features' => ['Custom Website Design', 'E-commerce Solutions', 'WordPress Development', 'Web Applications', 'Mobile Responsive', 'Maintenance & Support']
-    ],
-    [
-        'id' => 'seo-services',
-        'icon' => 'fa-magnifying-glass',
-        'title' => 'SEO Services',
-        'summary' => 'Boost your search rankings and visibility.',
-        'description' => 'Improve your search rankings and drive organic traffic to your website. Our SEO experts use proven strategies to boost your online visibility.',
-        'features' => ['Keyword Research', 'On-Page SEO', 'Technical SEO', 'Link Building', 'Local SEO', 'SEO Audits']
-    ],
-    [
-        'id' => 'content-marketing',
-        'icon' => 'fa-pen-nib',
-        'title' => 'Content Marketing',
-        'summary' => 'Compelling content that connects and converts.',
-        'description' => 'Compelling content that tells your story and connects with your audience. We create content that educates, entertains, and converts.',
-        'features' => ['Blog Writing', 'Copywriting', 'Video Content', 'Email Marketing', 'Content Strategy', 'eBooks & Whitepapers']
-    ],
-    [
-        'id' => 'print-design',
-        'icon' => 'fa-print',
-        'title' => 'Print Design',
-        'summary' => 'High-quality print materials that impress.',
-        'description' => 'High-quality print materials that make a lasting impression. From business cards to large format displays, we handle all your print needs.',
-        'features' => ['Brochures', 'Posters & Banners', 'Business Stationery', 'Catalogs', 'Magazines', 'Signage']
-    ],
-    [
-        'id' => 'video-production',
-        'icon' => 'fa-video',
-        'title' => 'Video Production',
-        'summary' => 'Engaging video content that drives action.',
-        'description' => 'Engaging video content that captures attention and drives action. From promotional videos to animations, we bring your vision to life.',
-        'features' => ['Corporate Videos', 'Motion Graphics', 'Product Videos', 'Social Media Videos', 'Explainer Videos', 'Video Editing']
-    ]
-];
+}
 ?>
 
     <!-- JSON-LD: BreadcrumbList -->
@@ -220,22 +250,25 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
                 'fa-print' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 20V8h32v12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="8" y="20" width="48" height="24" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M16 36h32v20H16V36z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M22 44h20M22 50h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="44" cy="28" r="2" fill="currentColor"/></svg>',
                 'fa-video' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="16" width="36" height="32" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M42 28l16-8v24l-16-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="32" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M21 32l4 3v-6l4 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
                 'fa-cogs' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M32 6v8M32 50v8M6 32h8M50 32h8M13.5 13.5l5.6 5.6M44.9 44.9l5.6 5.6M13.5 50.5l5.6-5.6M44.9 19.1l5.6-5.6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
+                'fa-layer-group' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 22l24-12 24 12-24 12L8 22z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 34l24 12 24-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 46l24 12 24-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                'fa-file-image' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 8h24l12 12v36H14V8z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M38 8v12h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="30" r="4" stroke="currentColor" stroke-width="2.5"/><path d="M14 50l10-10 6 6 6-8 8 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                'fa-image' => '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="12" width="52" height="40" rx="4" stroke="currentColor" stroke-width="2.5"/><circle cx="22" cy="26" r="5" stroke="currentColor" stroke-width="2.5"/><path d="M6 44l14-14 10 10 8-10 14 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
             ];
             ?>
             <div class="svc-slider-wrap" data-aos="fade-up">
                 <button class="svc-slider-arrow svc-slider-arrow--prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
                 <div class="services-icon-grid">
                     <?php foreach ($detailed_services as $index => $service): ?>
-                    <div class="svc-icon-card">
+                    <a href="<?php echo getSitePath('services/' . htmlspecialchars($service['id'])); ?>" class="svc-icon-card">
                         <div class="svc-icon-wrap">
                             <?php echo $svc_svg_icons[$service['icon']] ?? '<i class="fas ' . htmlspecialchars($service['icon']) . '"></i>'; ?>
                         </div>
                         <h3 class="svc-icon-title"><?php echo htmlspecialchars($service['title']); ?></h3>
                         <div class="svc-icon-details">
                             <p class="svc-icon-desc"><?php echo htmlspecialchars($service['summary']); ?></p>
-                            <a href="<?php echo getSitePath('services/' . htmlspecialchars($service['id'])); ?>" class="svc-icon-link">Know More <span>&rarr;</span></a>
+                            <span class="svc-icon-link">Know More <span>&rarr;</span></span>
                         </div>
-                    </div>
+                    </a>
                     <?php endforeach; ?>
                 </div>
                 <button class="svc-slider-arrow svc-slider-arrow--next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>

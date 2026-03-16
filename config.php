@@ -116,32 +116,20 @@ $team_members = !empty($team_members_db) ? $team_members_db : [
 $services_db = getServicesFromDB(true);
 // Image map for service illustrations
 $service_images = [
-    'Graphics Design' => 'assets/images/services/graphics-design.png',
-    'Brand Identity' => 'assets/images/services/brand-identity.png',
+    'Brand Identity'         => 'assets/images/services/brand-identity.png',
+    'Communication Design'   => 'assets/images/services/communication-design.png',
+    'Content Marketing'      => 'assets/images/services/content-marketing.png',
+    'Flyers'                 => 'assets/images/services/print-design.png',
+    'Graphics Design'        => 'assets/images/services/graphics-design.png',
+    'Poster Design'          => 'assets/images/services/print-design.png',
+    'Print Design'           => 'assets/images/services/print-design.png',
+    'SEO Services'           => 'assets/images/services/seo-services.png',
     'Social Media Marketing' => 'assets/images/services/social-media-marketing.png',
-    'Web Development' => 'assets/images/services/web-development.png',
-    'SEO Services' => 'assets/images/services/seo-services.png',
-    'Content Marketing' => 'assets/images/services/content-marketing.png',
-    'Print Design' => 'assets/images/services/print-design.png',
-    'Video Production' => 'assets/images/services/video-production.png',
+    'Video Production'       => 'assets/images/services/video-production.png',
+    'Web Development'        => 'assets/images/services/web-development.png',
 ];
 
-$services = !empty($services_db) ? array_map(function($s) use ($service_images) {
-    return [
-        'icon' => $s['icon'],
-        'title' => $s['title'],
-        'slug' => $s['slug'] ?? strtolower(str_replace(' ', '-', $s['title'])),
-        'description' => $s['short_description'],
-        'image' => !empty($s['image']) ? $s['image'] : ($service_images[$s['title']] ?? 'assets/images/services/graphics-design.png')
-    ];
-}, $services_db) : [
-    [
-        'icon' => 'fa-palette',
-        'title' => 'Graphics Design',
-        'slug' => 'graphics-design',
-        'description' => 'Eye-catching visuals that capture your brand essence. From logos to complete brand identity packages.',
-        'image' => 'assets/images/services/graphics-design.png'
-    ],
+$services_fallback = [
     [
         'icon' => 'fa-bullhorn',
         'title' => 'Brand Identity',
@@ -150,25 +138,11 @@ $services = !empty($services_db) ? array_map(function($s) use ($service_images) 
         'image' => 'assets/images/services/brand-identity.png'
     ],
     [
-        'icon' => 'fa-share-nodes',
-        'title' => 'Social Media Marketing',
-        'slug' => 'social-media-marketing',
-        'description' => 'Strategic social media campaigns that engage audiences and drive conversions.',
-        'image' => 'assets/images/services/social-media-marketing.png'
-    ],
-    [
-        'icon' => 'fa-code',
-        'title' => 'Web Development',
-        'slug' => 'web-development',
-        'description' => 'Modern, responsive websites that deliver exceptional user experiences.',
-        'image' => 'assets/images/services/web-development.png'
-    ],
-    [
-        'icon' => 'fa-magnifying-glass',
-        'title' => 'SEO Services',
-        'slug' => 'seo-services',
-        'description' => 'Improve your search rankings and drive organic traffic to your website.',
-        'image' => 'assets/images/services/seo-services.png'
+        'icon' => 'fa-layer-group',
+        'title' => 'Communication Design',
+        'slug' => 'communication-design',
+        'description' => 'Clear, compelling visual communication that conveys your message with impact.',
+        'image' => 'assets/images/services/communication-design.png'
     ],
     [
         'icon' => 'fa-pen-nib',
@@ -178,6 +152,27 @@ $services = !empty($services_db) ? array_map(function($s) use ($service_images) 
         'image' => 'assets/images/services/content-marketing.png'
     ],
     [
+        'icon' => 'fa-file-image',
+        'title' => 'Flyers',
+        'slug' => 'flyers',
+        'description' => 'Eye-catching flyer designs that get noticed and drive action for events and promotions.',
+        'image' => 'assets/images/services/print-design.png'
+    ],
+    [
+        'icon' => 'fa-palette',
+        'title' => 'Graphics Design',
+        'slug' => 'graphics-design',
+        'description' => 'Eye-catching visuals that capture your brand essence. From logos to complete brand identity packages.',
+        'image' => 'assets/images/services/graphics-design.png'
+    ],
+    [
+        'icon' => 'fa-image',
+        'title' => 'Poster Design',
+        'slug' => 'poster-design',
+        'description' => 'Bold, striking poster designs that communicate powerfully and leave a lasting impression.',
+        'image' => 'assets/images/services/print-design.png'
+    ],
+    [
         'icon' => 'fa-print',
         'title' => 'Print Design',
         'slug' => 'print-design',
@@ -185,13 +180,49 @@ $services = !empty($services_db) ? array_map(function($s) use ($service_images) 
         'image' => 'assets/images/services/print-design.png'
     ],
     [
+        'icon' => 'fa-magnifying-glass',
+        'title' => 'SEO Services',
+        'slug' => 'seo-services',
+        'description' => 'Improve your search rankings and drive organic traffic to your website.',
+        'image' => 'assets/images/services/seo-services.png'
+    ],
+    [
+        'icon' => 'fa-share-nodes',
+        'title' => 'Social Media Marketing',
+        'slug' => 'social-media-marketing',
+        'description' => 'Strategic social media campaigns that engage audiences and drive conversions.',
+        'image' => 'assets/images/services/social-media-marketing.png'
+    ],
+    [
         'icon' => 'fa-video',
         'title' => 'Video Production',
         'slug' => 'video-production',
         'description' => 'Engaging video content that captures attention and drives action.',
         'image' => 'assets/images/services/video-production.png'
-    ]
+    ],
+    [
+        'icon' => 'fa-code',
+        'title' => 'Web Development',
+        'slug' => 'web-development',
+        'description' => 'Modern, responsive websites that deliver exceptional user experiences.',
+        'image' => 'assets/images/services/web-development.png'
+    ],
 ];
+
+if (!empty($services_db)) {
+    $services = array_map(function($s) use ($service_images) {
+        return [
+            'icon' => $s['icon'],
+            'title' => $s['title'],
+            'slug' => $s['slug'] ?? strtolower(str_replace(' ', '-', $s['title'])),
+            'description' => $s['short_description'],
+            'image' => !empty($s['image']) ? $s['image'] : ($service_images[$s['title']] ?? 'assets/images/services/graphics-design.png')
+        ];
+    }, $services_db);
+    usort($services, fn($a, $b) => strcasecmp($a['title'], $b['title']));
+} else {
+    $services = $services_fallback; // already sorted A-Z above
+}
 
 // Get Case Studies/Projects from CRM (with fallback to static data)
 $case_studies_db = getProjectsFromDB(8);

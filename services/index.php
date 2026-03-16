@@ -30,16 +30,8 @@ $service = getServiceBySlug($slug);
 
 // Fallback: match against hardcoded services by slug
 if (!$service) {
+    // Sorted A-Z by title
     $fallback_services = [
-        'graphics-design' => [
-            'title' => 'Graphics Design',
-            'slug' => 'graphics-design',
-            'icon' => 'fa-palette',
-            'short_description' => 'Eye-catching visuals that capture your brand essence. From logos to complete brand identity packages.',
-            'full_description' => '<p>At Kalpanik, our graphics design team transforms ideas into stunning visual experiences. Whether you need a logo that tells your story, marketing collateral that converts, or social media graphics that stop the scroll — we deliver designs that leave lasting impressions.</p><p>We combine creative flair with strategic thinking to ensure every design element serves a purpose. Our team stays on top of the latest design trends while maintaining timeless quality that represents your brand for years to come.</p>',
-            'features' => ['Logo Design', 'Business Cards', 'Brochures & Flyers', 'Social Media Graphics', 'Infographics', 'Packaging Design', 'Poster & Banner Design', 'Illustration'],
-            'image' => 'assets/images/services/graphics-design.png'
-        ],
         'brand-identity' => [
             'title' => 'Brand Identity',
             'slug' => 'brand-identity',
@@ -49,32 +41,14 @@ if (!$service) {
             'features' => ['Brand Strategy', 'Visual Identity System', 'Brand Guidelines', 'Rebranding', 'Brand Collateral', 'Brand Messaging', 'Color Palette & Typography', 'Brand Voice Development'],
             'image' => 'assets/images/services/brand-identity.png'
         ],
-        'social-media-marketing' => [
-            'title' => 'Social Media Marketing',
-            'slug' => 'social-media-marketing',
-            'icon' => 'fa-share-nodes',
-            'short_description' => 'Strategic social media campaigns that engage audiences and drive conversions.',
-            'full_description' => '<p>Social media is where your audience lives, and we make sure your brand is part of the conversation. Our social media marketing strategies are built on data-driven insights, creative content, and consistent engagement that turns followers into loyal customers.</p><p>We manage your presence across all major platforms — Instagram, Facebook, LinkedIn, Twitter, and more — with customized strategies that align with your business goals. From content calendars to paid advertising, we handle every aspect of your social media growth.</p>',
-            'features' => ['Content Strategy', 'Community Management', 'Paid Social Ads', 'Influencer Marketing', 'Analytics & Reporting', 'Campaign Management', 'Platform Optimization', 'Trend Monitoring'],
-            'image' => 'assets/images/services/social-media-marketing.png'
-        ],
-        'web-development' => [
-            'title' => 'Web Development',
-            'slug' => 'web-development',
-            'icon' => 'fa-code',
-            'short_description' => 'Modern, responsive websites that deliver exceptional user experiences.',
-            'full_description' => '<p>Your website is your digital headquarters — it needs to be fast, beautiful, and built to convert. Our web development team creates custom websites that not only look stunning but are engineered for performance, accessibility, and search engine visibility.</p><p>From single-page landing sites to complex e-commerce platforms, we use modern technologies and best practices to build websites that grow with your business. Every site we build is mobile-responsive, SEO-optimized, and designed for maximum user engagement.</p>',
-            'features' => ['Custom Website Design', 'E-commerce Solutions', 'WordPress Development', 'Web Applications', 'Mobile Responsive', 'Maintenance & Support', 'Performance Optimization', 'CMS Integration'],
-            'image' => 'assets/images/services/web-development.png'
-        ],
-        'seo-services' => [
-            'title' => 'SEO Services',
-            'slug' => 'seo-services',
-            'icon' => 'fa-magnifying-glass',
-            'short_description' => 'Improve your search rankings and drive organic traffic to your website.',
-            'full_description' => '<p>Getting found online shouldn\'t be a matter of luck. Our SEO experts use proven, white-hat strategies to improve your search engine rankings and drive qualified organic traffic to your website. We focus on sustainable growth that delivers long-term results.</p><p>From comprehensive site audits to keyword research, on-page optimization, and link building — we cover every aspect of SEO that matters. Our data-driven approach means every decision is backed by analytics, ensuring your investment delivers measurable returns.</p>',
-            'features' => ['Keyword Research', 'On-Page SEO', 'Technical SEO', 'Link Building', 'Local SEO', 'SEO Audits', 'Content Optimization', 'Competitor Analysis'],
-            'image' => 'assets/images/services/seo-services.png'
+        'communication-design' => [
+            'title' => 'Communication Design',
+            'slug' => 'communication-design',
+            'icon' => 'fa-layer-group',
+            'short_description' => 'Clear, compelling visual communication that conveys your message with impact.',
+            'full_description' => '<p>Communication design is the art of conveying ideas visually — bridging the gap between your brand and your audience through intentional, strategic design. At Kalpanik, we craft communication pieces that are not just beautiful but purposefully effective.</p><p>From infographics and presentation decks to reports, brochures, and marketing collateral — we ensure every visual touchpoint communicates your message clearly, builds trust, and drives the response you want from your audience.</p>',
+            'features' => ['Infographics', 'Presentation Design', 'Marketing Collateral', 'Annual Reports', 'Brochures & Leaflets', 'Email Templates', 'Digital Banners', 'Editorial Design'],
+            'image' => 'assets/images/services/communication-design.png'
         ],
         'content-marketing' => [
             'title' => 'Content Marketing',
@@ -85,6 +59,33 @@ if (!$service) {
             'features' => ['Blog Writing', 'Copywriting', 'Video Content', 'Email Marketing', 'Content Strategy', 'eBooks & Whitepapers', 'Social Media Content', 'Content Calendar Planning'],
             'image' => 'assets/images/services/content-marketing.png'
         ],
+        'flyers' => [
+            'title' => 'Flyers',
+            'slug' => 'flyers',
+            'icon' => 'fa-file-image',
+            'short_description' => 'Eye-catching flyer designs that get noticed and drive action for events and promotions.',
+            'full_description' => '<p>A well-designed flyer can stop someone in their tracks. At Kalpanik, we design flyers that do exactly that — combining bold visuals, clear hierarchy, and persuasive copy to make sure your message gets across and your audience takes action.</p><p>Whether it\'s for a grand opening, event promotion, sale announcement, or community outreach, we tailor every flyer design to your specific goal and target audience. We handle both print-ready and digital formats optimized for sharing across platforms.</p>',
+            'features' => ['Event Flyers', 'Promotional Flyers', 'Digital Flyers', 'A4 & A5 Print Formats', 'Social Media Adaptations', 'Double-sided Design', 'Bulk Variations', 'Brand-consistent Layouts'],
+            'image' => 'assets/images/services/print-design.png'
+        ],
+        'graphics-design' => [
+            'title' => 'Graphics Design',
+            'slug' => 'graphics-design',
+            'icon' => 'fa-palette',
+            'short_description' => 'Eye-catching visuals that capture your brand essence. From logos to complete brand identity packages.',
+            'full_description' => '<p>At Kalpanik, our graphics design team transforms ideas into stunning visual experiences. Whether you need a logo that tells your story, marketing collateral that converts, or social media graphics that stop the scroll — we deliver designs that leave lasting impressions.</p><p>We combine creative flair with strategic thinking to ensure every design element serves a purpose. Our team stays on top of the latest design trends while maintaining timeless quality that represents your brand for years to come.</p>',
+            'features' => ['Logo Design', 'Business Cards', 'Brochures & Flyers', 'Social Media Graphics', 'Infographics', 'Packaging Design', 'Poster & Banner Design', 'Illustration'],
+            'image' => 'assets/images/services/graphics-design.png'
+        ],
+        'poster-design' => [
+            'title' => 'Poster Design',
+            'slug' => 'poster-design',
+            'icon' => 'fa-image',
+            'short_description' => 'Bold, striking poster designs that communicate powerfully and leave a lasting impression.',
+            'full_description' => '<p>Posters are one of the most powerful visual communication tools — when done right. At Kalpanik, we design posters that command attention, tell a story at a glance, and represent your brand with confidence whether displayed in print or shared digitally.</p><p>From film and event posters to promotional and motivational designs, our team brings creative direction, typography mastery, and print expertise together to produce poster work that genuinely stands out. We deliver files ready for large-format printing or digital use.</p>',
+            'features' => ['Event Posters', 'Film & Entertainment Posters', 'Promotional Posters', 'Large Format Print', 'Digital Poster Formats', 'Typography-led Designs', 'Illustration Posters', 'Series & Campaign Posters'],
+            'image' => 'assets/images/services/print-design.png'
+        ],
         'print-design' => [
             'title' => 'Print Design',
             'slug' => 'print-design',
@@ -94,6 +95,24 @@ if (!$service) {
             'features' => ['Brochures', 'Posters & Banners', 'Business Stationery', 'Catalogs', 'Magazines', 'Signage', 'Packaging Design', 'Event Materials'],
             'image' => 'assets/images/services/print-design.png'
         ],
+        'seo-services' => [
+            'title' => 'SEO Services',
+            'slug' => 'seo-services',
+            'icon' => 'fa-magnifying-glass',
+            'short_description' => 'Improve your search rankings and drive organic traffic to your website.',
+            'full_description' => '<p>Getting found online shouldn\'t be a matter of luck. Our SEO experts use proven, white-hat strategies to improve your search engine rankings and drive qualified organic traffic to your website. We focus on sustainable growth that delivers long-term results.</p><p>From comprehensive site audits to keyword research, on-page optimization, and link building — we cover every aspect of SEO that matters. Our data-driven approach means every decision is backed by analytics, ensuring your investment delivers measurable returns.</p>',
+            'features' => ['Keyword Research', 'On-Page SEO', 'Technical SEO', 'Link Building', 'Local SEO', 'SEO Audits', 'Content Optimization', 'Competitor Analysis'],
+            'image' => 'assets/images/services/seo-services.png'
+        ],
+        'social-media-marketing' => [
+            'title' => 'Social Media Marketing',
+            'slug' => 'social-media-marketing',
+            'icon' => 'fa-share-nodes',
+            'short_description' => 'Strategic social media campaigns that engage audiences and drive conversions.',
+            'full_description' => '<p>Social media is where your audience lives, and we make sure your brand is part of the conversation. Our social media marketing strategies are built on data-driven insights, creative content, and consistent engagement that turns followers into loyal customers.</p><p>We manage your presence across all major platforms — Instagram, Facebook, LinkedIn, Twitter, and more — with customized strategies that align with your business goals. From content calendars to paid advertising, we handle every aspect of your social media growth.</p>',
+            'features' => ['Content Strategy', 'Community Management', 'Paid Social Ads', 'Influencer Marketing', 'Analytics & Reporting', 'Campaign Management', 'Platform Optimization', 'Trend Monitoring'],
+            'image' => 'assets/images/services/social-media-marketing.png'
+        ],
         'video-production' => [
             'title' => 'Video Production',
             'slug' => 'video-production',
@@ -102,7 +121,16 @@ if (!$service) {
             'full_description' => '<p>Video is the most engaging content format online, and we help your brand harness its full potential. From concept development to final production, our video team creates compelling visual stories that capture attention, communicate your message, and drive action.</p><p>Whether you need corporate videos, product demos, social media reels, or animated explainers — we bring creative storytelling and technical expertise together to produce videos that deliver results and represent your brand at its best.</p>',
             'features' => ['Corporate Videos', 'Motion Graphics', 'Product Videos', 'Social Media Videos', 'Explainer Videos', 'Video Editing', 'Animation', 'Storyboarding'],
             'image' => 'assets/images/services/video-production.png'
-        ]
+        ],
+        'web-development' => [
+            'title' => 'Web Development',
+            'slug' => 'web-development',
+            'icon' => 'fa-code',
+            'short_description' => 'Modern, responsive websites that deliver exceptional user experiences.',
+            'full_description' => '<p>Your website is your digital headquarters — it needs to be fast, beautiful, and built to convert. Our web development team creates custom websites that not only look stunning but are engineered for performance, accessibility, and search engine visibility.</p><p>From single-page landing sites to complex e-commerce platforms, we use modern technologies and best practices to build websites that grow with your business. Every site we build is mobile-responsive, SEO-optimized, and designed for maximum user engagement.</p>',
+            'features' => ['Custom Website Design', 'E-commerce Solutions', 'WordPress Development', 'Web Applications', 'Mobile Responsive', 'Maintenance & Support', 'Performance Optimization', 'CMS Integration'],
+            'image' => 'assets/images/services/web-development.png'
+        ],
     ];
 
     $service = $fallback_services[$slug] ?? null;
