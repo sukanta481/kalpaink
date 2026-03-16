@@ -406,7 +406,12 @@ $marquee_clients = getClientsFromDB();
             <?php $displayed_cases = array_slice($case_studies, 0, 6); ?>
             <div class="cases-v2-grid">
                 <?php foreach ($displayed_cases as $index => $case): ?>
-                <div class="case-v2-card grid-reveal-item">
+                <?php
+                    $case_slug = $case['slug'] ?? strtolower(str_replace(' ', '-', $case['title']));
+                    $has_case_study = !empty($case['case_study_image']);
+                    $case_detail_url = $has_case_study ? getSitePath('case-study/' . $case_slug) : getSitePath('case-studies');
+                ?>
+                <a href="<?php echo $case_detail_url; ?>" class="case-v2-card grid-reveal-item">
                     <div class="case-v2-img">
                         <img src="<?php echo $case['image']; ?>" alt="<?php echo htmlspecialchars(!empty($case['image_alt_text']) ? $case['image_alt_text'] : $case['title']); ?>" loading="lazy">
                     </div>
@@ -417,9 +422,9 @@ $marquee_clients = getClientsFromDB();
                             <span class="case-v2-pill"><?php echo htmlspecialchars($case['tags'][0]); ?></span>
                             <?php endif; ?>
                         </div>
-                        <a href="<?php echo getSitePath('case-studies'); ?>" class="case-v2-link">View Details <i class="fas fa-arrow-right"></i></a>
+                        <span class="case-v2-link">View Details <i class="fas fa-arrow-right"></i></span>
                     </div>
-                </div>
+                </a>
                 <?php endforeach; ?>
             </div>
 

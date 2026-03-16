@@ -60,7 +60,12 @@ function getSiteUrlRoot() {
 define('SITE_URL', getSiteUrlRoot());
 
 // Site Configuration
-define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpanik');
+// Normalize site name — correct any legacy misspellings stored in DB
+$_raw_site_name = $crm_settings['site_name'] ?? 'Kalpanik Digital';
+if (stripos($_raw_site_name, 'kalpoink') !== false) {
+    $_raw_site_name = str_ireplace('Kalpoink', 'Kalpanik', $_raw_site_name);
+}
+define('SITE_NAME', $_raw_site_name);
 define('SITE_TAGLINE', $crm_settings['site_tagline'] ?? 'Content Marketing Company | Brand Identity & Creative Design');
 
 // Helper to make URLs absolute

@@ -32,6 +32,7 @@ Disallow: /*?*
 
 # Allow CSS/JS/Images for rendering
 Allow: /assets/
+Allow: /assets/images/favicon.png
 Allow: /uploads/*.png
 Allow: /uploads/*.jpg
 Allow: /uploads/*.jpeg

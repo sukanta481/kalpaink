@@ -239,13 +239,13 @@ if (count($gallery_previews) < 4) {
                     $detail_url = $has_case_study ? SITE_URL . '/case-study/' . htmlspecialchars($item_slug) : '#';
                 ?>
                 <div class="col-lg-4 col-md-6 portfolio-item" data-category="<?php echo $item['category']; ?>" data-aos="fade-up" data-aos-delay="<?php echo ($index % 3 + 1) * 80; ?>">
-                    <div class="case-card-v3">
+                    <a href="<?php echo $detail_url; ?>" class="case-card-v3">
                         <div class="case-card-v3-image">
                             <img src="<?php echo $item['image']; ?>" alt="<?php echo htmlspecialchars(!empty($item['image_alt_text']) ? $item['image_alt_text'] : $item['title']); ?>" loading="lazy">
                             <div class="case-card-v3-overlay">
-                                <a href="<?php echo $detail_url; ?>" class="case-card-v3-view">
+                                <span class="case-card-v3-view">
                                     <i class="fas fa-arrow-up-right-from-square"></i>
-                                </a>
+                                </span>
                             </div>
                         </div>
                         <div class="case-card-v3-body">
@@ -256,9 +256,9 @@ if (count($gallery_previews) < 4) {
                                 <?php endforeach; ?>
                             </div>
                             <p class="case-card-v3-desc"><?php echo $item['description']; ?></p>
-                            <a href="<?php echo $detail_url; ?>" class="case-card-v3-link">View Details <i class="fas fa-arrow-right"></i></a>
+                            <span class="case-card-v3-link">View Details <i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <?php endforeach; ?>
             </div>

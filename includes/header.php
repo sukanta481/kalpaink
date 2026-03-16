@@ -64,11 +64,11 @@ $canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ?
             }
         }
     ?>
-    <link rel="icon" type="<?php echo $favType; ?>" sizes="48x48" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <link rel="icon" type="<?php echo $favType; ?>" sizes="32x32" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <link rel="icon" type="<?php echo $favType; ?>" sizes="16x16" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <link rel="shortcut icon" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo SITE_FAVICON; ?>?v=<?php echo $favVer; ?>">
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="48x48" href="<?php echo SITE_FAVICON; ?>">
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="32x32" href="<?php echo SITE_FAVICON; ?>">
+    <link rel="icon" type="<?php echo $favType; ?>" sizes="16x16" href="<?php echo SITE_FAVICON; ?>">
+    <link rel="shortcut icon" href="<?php echo SITE_FAVICON; ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo SITE_FAVICON; ?>">
     <?php else: ?>
     <link rel="icon" type="image/png" sizes="48x48" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo getSitePath('assets/images/favicon.png'); ?>">
@@ -106,8 +106,8 @@ if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#') $socials_arr[] = SOCIAL_LINKEDIN
             {
                 "@type": "Organization",
                 "@id": "<?php echo SITE_URL; ?>/#organization",
-                "name": "<?php echo SITE_NAME; ?>",
-                "alternateName": ["Kalpanik Digital", "Kalpanik Content Marketing"],
+                "name": "Kalpanik Digital",
+                "alternateName": ["Kalpanik", "Kalpanik Content Marketing"],
                 "url": "<?php echo SITE_URL; ?>",
                 "logo": "<?php echo SITE_LOGO; ?>",
                 "description": "Kalpanik is a content marketing company in Kolkata specializing in brand identity, creative design, social media management, and brand building.",
@@ -163,7 +163,9 @@ if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#') $socials_arr[] = SOCIAL_LINKEDIN
                 "@type": "WebSite",
                 "@id": "<?php echo SITE_URL; ?>/#website",
                 "url": "<?php echo SITE_URL; ?>",
-                "name": "<?php echo SITE_NAME; ?>",
+                "name": "Kalpanik Digital",
+                "alternateName": ["Kalpanik", "<?php echo SITE_NAME; ?>"],
+                "description": "Content marketing company in Kolkata specializing in brand identity, creative design, social media management, and brand building.",
                 "publisher": {"@id": "<?php echo SITE_URL; ?>/#organization"},
                 "potentialAction": {
                     "@type": "SearchAction",

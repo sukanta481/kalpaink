@@ -86,7 +86,7 @@ $sections = [
      'Let\'s create something extraordinary together. Get in touch with us today and start your digital journey.',
      null, '{"button_text": "Get Enquiry Now", "button_link": "contact.php"}', 1],
 
-    ['home', 'about', 'About Kalpoink', 'Who We Are',
+    ['home', 'about', 'About Kalpanik', 'Who We Are',
      '<p>A passionate team of creative professionals dedicated to transforming brands through innovative design and digital marketing strategies.</p>',
      null, null, 1],
 
