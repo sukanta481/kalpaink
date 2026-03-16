@@ -1,6 +1,17 @@
-<?php 
+<?php
 $page_title = 'Contact Us';
-include 'includes/header.php'; 
+
+// Start session for CSRF token
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Generate CSRF token
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+include 'includes/header.php';
 
 // Get page content from CMS (auto-sync)
 $contact_content = getPageContent('contact');
@@ -13,13 +24,18 @@ $form_error = false;
 $form_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verify CSRF token
+    if (empty($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        $form_error = true;
+        $form_message = 'Invalid form submission. Please try again.';
+    } else {
     // Get form data
     $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : '';
     $email = isset($_POST['email']) ? htmlspecialchars(trim($_POST['email'])) : '';
     $phone = isset($_POST['phone']) ? htmlspecialchars(trim($_POST['phone'])) : '';
     $country = isset($_POST['country']) ? htmlspecialchars(trim($_POST['country'])) : '';
     $message = isset($_POST['message']) ? htmlspecialchars(trim($_POST['message'])) : '';
-    
+
     // Basic validation
     if (empty($name) || empty($email) || empty($message)) {
         $form_error = true;
@@ -62,8 +78,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $form_submitted = true;
         $form_message = 'Thank you for your message! We will get back to you soon.';
     }
+    } // end CSRF else
+}
+
+// Regenerate token after successful submission
+if ($form_submitted) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 ?>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo SITE_URL; ?>/"},
+            {"@type": "ListItem", "position": 2, "name": "Contact Us", "item": "<?php echo SITE_URL; ?>/contact"}
+        ]
+    }
+    </script>
 
     <!-- Contact Hero -->
     <section class="contact-hero-v3">
@@ -123,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <i class="fas fa-arrow-right ch-qc-arrow"></i>
                             </a>
-                            <a href="https://maps.google.com" target="_blank" class="ch-qc-item">
+                            <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="ch-qc-item">
                                 <div class="ch-qc-icon"><i class="fas fa-map-marker-alt"></i></div>
                                 <div class="ch-qc-info">
                                     <span class="ch-qc-info-label">Visit us</span>
@@ -166,6 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <?php endif; ?>
                                     
                                     <form id="contactForm" method="POST" action="">
+                                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                                         <div class="row g-3">
                                             <div class="col-sm-6">
                                                 <div class="cf3-field">
@@ -257,10 +292,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="cf3-social-row">
                                             <span class="cf3-social-label">Follow us</span>
                                             <div class="cf3-socials">
-                                                <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" class="cf3-social"><i class="fab fa-facebook-f"></i></a>
-                                                <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" class="cf3-social"><i class="fab fa-instagram"></i></a>
-                                                <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" class="cf3-social"><i class="fab fa-linkedin-in"></i></a>
-                                                <a href="<?php echo SOCIAL_TWITTER; ?>" target="_blank" class="cf3-social"><i class="fab fa-twitter"></i></a>
+                                                <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" rel="noopener noreferrer" class="cf3-social"><i class="fab fa-facebook-f"></i></a>
+                                                <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" rel="noopener noreferrer" class="cf3-social"><i class="fab fa-instagram"></i></a>
+                                                <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" rel="noopener noreferrer" class="cf3-social"><i class="fab fa-linkedin-in"></i></a>
+                                                <a href="<?php echo SOCIAL_TWITTER; ?>" target="_blank" rel="noopener noreferrer" class="cf3-social"><i class="fab fa-twitter"></i></a>
                                             </div>
                                         </div>
                                     </div>

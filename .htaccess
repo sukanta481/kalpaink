@@ -1,12 +1,15 @@
 RewriteEngine On
 
+# Dynamic XML Sitemap
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
 RewriteRule ^favicon\.ico$ assets/images/favicon.png [L,NC]
 RewriteRule ^favicon\.png$ assets/images/favicon.png [L,NC]
 
 # Clean URL rewrites for extensionless pages
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(about|contact|blog|case-studies)$ $1.php [L,QSA]
+RewriteRule ^(about|contact|blog|case-studies|terms|privacy)$ $1.php [L,QSA]
 
 # /services (no trailing slash) → rewrite to services.php
 # Note: /services/ (with trailing slash) is handled by services/index.php which includes services.php
@@ -14,5 +17,32 @@ RewriteRule ^services$ services.php [L,QSA]
 
 # /case-study/{slug} → case-study/index.php
 RewriteRule ^case-study/([a-z0-9-]+)/?$ case-study/index.php?slug=$1 [L,QSA]
+
+# Block access to development/debug files
+<FilesMatch "(scan_db|link_images|test_output|index_9a0e01f|index_bc02078)\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+# Block access to config and includes directly
+<FilesMatch "^(config)\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+# Block hidden files (.git, .claude, .superpowers, etc.)
+<IfModule mod_rewrite.c>
+    RewriteRule (^|/)\.(?!htaccess|well-known) - [F]
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
 
 ErrorDocument 404 /kalpoink/404.php

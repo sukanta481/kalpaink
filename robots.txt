@@ -1,0 +1,42 @@
+# Robots.txt for Kalpanik - Content Marketing Company
+# https://kalpanik.com
+
+User-agent: *
+Allow: /
+
+# Block admin panel
+Disallow: /admin/
+Disallow: /admin
+
+# Block sensitive files
+Disallow: /uploads/contact_submissions.txt
+Disallow: /config.php
+Disallow: /includes/
+
+# Block development/debug files
+Disallow: /scan_db.php
+Disallow: /link_images.php
+Disallow: /test_output.html
+Disallow: /test_output.txt
+Disallow: /index_9a0e01f.php
+Disallow: /index_bc02078.php
+Disallow: /services/test_image.php
+Disallow: /services/web_test.php
+Disallow: /backup-before-redesign/
+Disallow: /.superpowers/
+Disallow: /.claude/
+Disallow: /.git/
+
+# Block query string duplicates
+Disallow: /*?*
+
+# Allow CSS/JS/Images for rendering
+Allow: /assets/
+Allow: /uploads/*.png
+Allow: /uploads/*.jpg
+Allow: /uploads/*.jpeg
+Allow: /uploads/*.webp
+Allow: /uploads/*.svg
+
+# Sitemap
+Sitemap: https://kalpanik.com/sitemap.xml

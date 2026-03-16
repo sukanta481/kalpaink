@@ -68,9 +68,15 @@ $marquee_clients = getClientsFromDB();
                     <div class="hero-text-col">
                         <div class="hero-content">
                             <span class="hero-pill"><?php echo htmlspecialchars($slide['badge_text'] ?? ''); ?></span>
+                            <?php if ($slideIndex === 0): ?>
                             <h1 class="hero-headline">
                                 <?php echo nl2br(htmlspecialchars($slide['title'] ?? '')); ?>
                             </h1>
+                            <?php else: ?>
+                            <p class="hero-headline" role="heading" aria-level="2">
+                                <?php echo nl2br(htmlspecialchars($slide['title'] ?? '')); ?>
+                            </p>
+                            <?php endif; ?>
                             <p class="hero-subtext"><?php echo $slide['subtitle'] ?? ''; ?></p>
                             <div class="hero-buttons">
                                 <a href="<?php echo htmlspecialchars($slide['button1_link'] ?? 'contact'); ?>" class="hero-btn hero-btn-primary"><?php echo htmlspecialchars($slide['button1_text'] ?? 'Get Started'); ?></a>
@@ -138,7 +144,7 @@ $marquee_clients = getClientsFromDB();
         </div>
 
         <!-- Mobile: Marquee Strip -->
-        <div class="brands-marquee" ontouchstart="var t=this.querySelector('.brands-marquee-track');if(t){t.style.animationPlayState='paused';clearTimeout(t._rt);t._rt=setTimeout(function(){t.style.animationPlayState='running'},3000)}" onclick="var t=this.querySelector('.brands-marquee-track');if(t){t.style.animationPlayState='paused';clearTimeout(t._rt);t._rt=setTimeout(function(){t.style.animationPlayState='running'},3000)}">
+        <div class="brands-marquee" id="brandsMarquee">
             <div class="brands-marquee-track">
                 <?php for ($loop = 0; $loop < 2; $loop++): ?>
                     <?php foreach ($clients_list as $mc): ?>
@@ -155,6 +161,18 @@ $marquee_clients = getClientsFromDB();
             </div>
         </div>
     </section>
+    <script>
+    (function(){
+        var m = document.getElementById('brandsMarquee');
+        if (!m) return;
+        function pauseMarquee() {
+            var t = m.querySelector('.brands-marquee-track');
+            if (t) { t.style.animationPlayState = 'paused'; clearTimeout(t._rt); t._rt = setTimeout(function(){ t.style.animationPlayState = 'running'; }, 3000); }
+        }
+        m.addEventListener('touchstart', pauseMarquee, {passive: true});
+        m.addEventListener('click', pauseMarquee);
+    })();
+    </script>
     <?php endif; ?>
 
     <!-- Welcome Section - Fusion Concept -->
@@ -184,7 +202,7 @@ $marquee_clients = getClientsFromDB();
                     <div class="col-lg-5 mb-4 mb-lg-0 welcome-image-col" data-aos="fade-right" data-aos-duration="1000">
                         <div class="welcome-image fusion-image image-comparison" data-comparison>
                             <div class="comparison-container">
-                                <img src="<?php echo !empty($welcome['content_image']) ? SITE_URL . '/' . $welcome['content_image'] : getSitePath('assets/images/about-fusion.png'); ?>" alt="<?php echo htmlspecialchars(!empty($welcome['image_alt_text']) ? $welcome['image_alt_text'] : ($welcome['content_title'] ?? 'Raw Concept to Brand Creation')); ?>" class="comparison-image">
+                                <img src="<?php echo !empty($welcome['content_image']) ? SITE_URL . '/' . $welcome['content_image'] : getSitePath('assets/images/about-fusion.png'); ?>" alt="<?php echo htmlspecialchars(!empty($welcome['image_alt_text']) ? $welcome['image_alt_text'] : ($welcome['content_title'] ?? 'Raw Concept to Brand Creation')); ?>" class="comparison-image" width="500" height="600" loading="lazy">
                                 <div class="comparison-overlay"></div>
                             </div>
                         </div>
@@ -313,7 +331,7 @@ $marquee_clients = getClientsFromDB();
                     </div>
                     <?php if (!empty($member['linkedin'])): ?>
                     <div class="creator-v2-socials">
-                        <a href="<?php echo $member['linkedin']; ?>" class="creator-v2-social" target="_blank" aria-label="LinkedIn">
+                        <a href="<?php echo $member['linkedin']; ?>" class="creator-v2-social" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>

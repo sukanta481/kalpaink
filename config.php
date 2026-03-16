@@ -61,7 +61,7 @@ define('SITE_URL', getSiteUrlRoot());
 
 // Site Configuration
 define('SITE_NAME', $crm_settings['site_name'] ?? 'Kalpanik');
-define('SITE_TAGLINE', $crm_settings['site_tagline'] ?? 'Creative Digital Solutions');
+define('SITE_TAGLINE', $crm_settings['site_tagline'] ?? 'Content Marketing Company | Brand Identity & Creative Design');
 
 // Helper to make URLs absolute
 function getAbsoluteUrl($path) {

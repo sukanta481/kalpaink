@@ -130,6 +130,18 @@ if (count($gallery_previews) < 4) {
 }
 ?>
 
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo SITE_URL; ?>/"},
+            {"@type": "ListItem", "position": 2, "name": "Case Studies", "item": "<?php echo SITE_URL; ?>/case-studies"}
+        ]
+    }
+    </script>
+
     <!-- Case Studies Hero Section -->
     <section class="case-hero">
         <div class="case-hero-noise"></div>

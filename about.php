@@ -19,6 +19,18 @@ $team_sec = $about_content['team_section'] ?? null;
 $testimonials_sec = $about_content['testimonials_section'] ?? null;
 ?>
 
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo SITE_URL; ?>/"},
+            {"@type": "ListItem", "position": 2, "name": "About Us", "item": "<?php echo SITE_URL; ?>/about"}
+        ]
+    }
+    </script>
+
     <!-- About Hero Section -->
     <section class="about-hero-v3">
         <!-- Atmosphere -->
@@ -76,8 +88,8 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                     <div class="about-hero-visual">
                         <div class="about-hero-img-card">
                             <img src="<?php echo htmlspecialchars($hero['extra']['hero_image'] ?? 'assets/images/about-hero-dark.png'); ?>"
-                                 alt="<?php echo htmlspecialchars(!empty($hero['image_alt_text']) ? $hero['image_alt_text'] : 'Digital craftsmanship - creative design studio'); ?>"
-                                 class="about-hero-img">
+                                 alt="<?php echo htmlspecialchars(!empty($hero['image_alt_text']) ? $hero['image_alt_text'] : 'Kalpanik - Content Marketing Company and Creative Design House'); ?>"
+                                 class="about-hero-img" width="450" height="500">
                         </div>
                         <!-- Floating badge -->
                         <div class="about-floating-badge" data-aos="fade-up" data-aos-delay="500">
@@ -158,7 +170,7 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                         <!-- Digital Desk Bento Grid - Real workspace imagery -->
                         <img src="<?php echo htmlspecialchars($who_we_are['content_image'] ?? 'assets/images/digital-desk-bento.png'); ?>"
                              alt="<?php echo htmlspecialchars(!empty($who_we_are['image_alt_text']) ? $who_we_are['image_alt_text'] : 'Our Digital Workspace - VS Code, Sketchbook with Coffee, and Figma UI Kit'); ?>"
-                             class="bento-collage">
+                             class="bento-collage" width="500" height="400" loading="lazy">
                     </div>
                 </div>
                 <div class="col-lg-7" data-aos="fade-left">
@@ -196,7 +208,7 @@ $testimonials_sec = $about_content['testimonials_section'] ?? null;
                     </div>
                     <?php if (!empty($member['linkedin'])): ?>
                     <div class="creator-v2-socials">
-                        <a href="<?php echo $member['linkedin']; ?>" class="creator-v2-social" target="_blank" aria-label="LinkedIn">
+                        <a href="<?php echo $member['linkedin']; ?>" class="creator-v2-social" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>

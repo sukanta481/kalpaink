@@ -132,9 +132,8 @@ if (empty($svc_image)) {
 
 // Override SEO for this page
 $page_seo = [
-    'title' => $svc_title . ' Services in Kolkata - ' . SITE_NAME,
-    'description' => strip_tags($svc_short) . ' Professional ' . strtolower($svc_title) . ' services by ' . SITE_NAME . ', a creative agency in Kolkata.',
-    'keywords' => strtolower($svc_title) . ', ' . strtolower($svc_title) . ' services Kolkata, ' . strtolower($svc_title) . ' agency, ' . SITE_NAME
+    'title' => $svc_title . ' Services in Kolkata - ' . SITE_NAME . ' | Content Marketing Company',
+    'description' => strip_tags($svc_short) . ' Professional ' . strtolower($svc_title) . ' services by ' . SITE_NAME . ', a content marketing company and creative design house in Kolkata.',
 ];
 $canonical_url = SITE_URL . '/services/' . $svc_slug;
 
@@ -153,6 +152,30 @@ $related_services = array_filter($all_services, function($s) use ($svc_title) {
 });
 $related_services = array_slice($related_services, 0, 4);
 ?>
+
+    <!-- JSON-LD: Service + BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": <?php echo json_encode($svc_title); ?>,
+        "description": <?php echo json_encode(strip_tags($svc_short)); ?>,
+        "provider": {"@id": "<?php echo SITE_URL; ?>/#organization"},
+        "areaServed": {"@type": "Country", "name": "India"},
+        "url": "<?php echo $canonical_url; ?>"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo SITE_URL; ?>/"},
+            {"@type": "ListItem", "position": 2, "name": "Services", "item": "<?php echo SITE_URL; ?>/services"},
+            {"@type": "ListItem", "position": 3, "name": <?php echo json_encode($svc_title); ?>, "item": "<?php echo $canonical_url; ?>"}
+        ]
+    }
+    </script>
 
     <!-- Breadcrumb + Hero -->
     <section class="svc-detail-hero">

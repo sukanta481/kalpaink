@@ -5,41 +5,34 @@
 $current_page = basename($_SERVER['PHP_SELF'], '.php');
 $seo_config = [
     'index' => [
-        'title' => SITE_NAME . ': Top Content Marketing & Creative Agency in Kolkata',
-        'description' => 'Kalpanik is a leading content marketing and creative agency in Kolkata. We specialize in content strategy, brand identity, graphics design, social media marketing, web development, and SEO services.',
-        'keywords' => 'content marketing agency Kolkata, creative agency Kolkata, brand identity, graphics design, social media marketing, web development, SEO services, digital marketing Kolkata, content strategy, content creation'
+        'title' => SITE_NAME . ' - Content Marketing Company in Kolkata | Brand Identity & Creative Design',
+        'description' => 'Kalpanik is a content marketing company in Kolkata specializing in brand identity, creative design, social media management, and brand building. We craft content strategies that grow businesses.',
     ],
     'about' => [
-        'title' => 'About Us - ' . SITE_NAME . ' | Content Marketing Experts in Kolkata',
-        'description' => 'Discover Kalpanik — a passionate team of content creators, designers, and digital strategists from Kolkata. We transform brands through compelling content and innovative marketing strategies.',
-        'keywords' => 'about Kalpanik, content marketing team Kolkata, creative agency team, digital marketing experts Kolkata'
+        'title' => 'About ' . SITE_NAME . ' | Content Marketing & Brand Identity Experts in Kolkata',
+        'description' => 'Meet Kalpanik — a content marketing company and creative design house from Kolkata. We build brands through strategic content, compelling design, and social media management.',
     ],
     'services' => [
-        'title' => 'Our Services - ' . SITE_NAME . ' | Content Marketing, Design & Digital Solutions',
-        'description' => 'Explore our services: content marketing, graphics design, brand identity, social media marketing, web development, and SEO. Comprehensive digital solutions tailored to grow your brand.',
-        'keywords' => 'content marketing services, graphics design services, branding, social media marketing, web development, SEO services Kolkata'
+        'title' => 'Services - ' . SITE_NAME . ' | Content Marketing, Brand Identity & Creative Design',
+        'description' => 'Content marketing, brand identity, creative design, social media management, web development, and SEO services. Kalpanik delivers end-to-end brand building solutions from Kolkata.',
     ],
     'contact' => [
-        'title' => 'Contact Us - ' . SITE_NAME . ' | Get a Free Quote',
-        'description' => 'Get in touch with Kalpanik for content marketing, branding, and digital marketing services. Request a free quote today. Based in Kolkata, serving clients worldwide.',
-        'keywords' => 'contact Kalpanik, digital marketing quote, content marketing agency contact, Kolkata'
+        'title' => 'Contact ' . SITE_NAME . ' | Content Marketing Company in Kolkata - Free Quote',
+        'description' => 'Get in touch with Kalpanik for content marketing, brand identity, and creative design services. Free consultation for businesses looking to build their brand. Based in Kolkata.',
     ],
     'blog' => [
-        'title' => 'Blog - ' . SITE_NAME . ' | Content Marketing Insights & Digital Trends',
-        'description' => 'Read the latest insights on content marketing, digital marketing trends, branding tips, and creative strategies from Kalpanik\'s team of experts.',
-        'keywords' => 'content marketing blog, digital marketing tips, branding insights, Kolkata agency blog'
+        'title' => 'Blog - ' . SITE_NAME . ' | Content Marketing, Branding & Design Insights',
+        'description' => 'Expert insights on content marketing strategy, brand identity, creative design trends, and social media management from Kalpanik — a content marketing company in Kolkata.',
     ],
     'case-studies' => [
-        'title' => 'Case Studies - ' . SITE_NAME . ' | Our Creative Work & Results',
-        'description' => 'Explore our portfolio of successful content marketing campaigns, brand identity projects, and digital marketing case studies that delivered real results.',
-        'keywords' => 'content marketing case studies, branding portfolio, digital marketing results, creative work Kolkata'
+        'title' => 'Case Studies - ' . SITE_NAME . ' | Content Marketing & Brand Building Results',
+        'description' => 'See how Kalpanik delivers results through content marketing, brand identity design, and social media campaigns. Real case studies from a creative design house in Kolkata.',
     ]
 ];
 
 $page_seo = $page_seo ?? $seo_config[$current_page] ?? [
-    'title' => (isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME . ' - ' . SITE_TAGLINE),
-    'description' => 'Kalpanik is a leading content marketing and creative agency in Kolkata specializing in content strategy, graphics design, branding, and digital marketing.',
-    'keywords' => 'content marketing, creative agency, Kolkata, graphics design, branding, digital marketing'
+    'title' => (isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME . ' - Content Marketing Company in Kolkata'),
+    'description' => 'Kalpanik is a content marketing company in Kolkata specializing in brand identity, creative design, social media management, and brand building.',
 ];
 
 $canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ? '' : $current_page);
@@ -50,8 +43,7 @@ $canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ?
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?php echo htmlspecialchars($page_seo['description']); ?>">
-    <meta name="keywords" content="<?php echo htmlspecialchars($page_seo['keywords']); ?>">
-    <meta name="author" content="Kalpanik Digital">
+    <meta name="author" content="Kalpanik">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="<?php echo htmlspecialchars($canonical_url); ?>">
     <title><?php echo htmlspecialchars($page_seo['title']); ?></title>
@@ -85,11 +77,13 @@ $canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ?
     <?php endif; ?>
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="<?php echo ($current_page === 'blog') ? 'blog' : 'website'; ?>">
     <meta property="og:url" content="<?php echo htmlspecialchars($canonical_url); ?>">
     <meta property="og:title" content="<?php echo htmlspecialchars($page_seo['title']); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($page_seo['description']); ?>">
     <meta property="og:image" content="<?php echo SITE_LOGO; ?>">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
     <meta property="og:site_name" content="<?php echo SITE_NAME; ?>">
     <meta property="og:locale" content="en_IN">
 
@@ -97,10 +91,14 @@ $canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ?
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($page_seo['title']); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($page_seo['description']); ?>">
-    <meta name="twitter:image" content="<?php echo SITE_LOGO; ?>"><?php // JSON-LD Structured Data only on homepage
-if ($current_page === 'index'): ?>
+    <meta name="twitter:image" content="<?php echo SITE_LOGO; ?>"><?php // JSON-LD Structured Data — Organization + LocalBusiness on all pages, page-specific schema added per page
+$socials_arr = [];
+if (SOCIAL_FACEBOOK && SOCIAL_FACEBOOK !== '#') $socials_arr[] = SOCIAL_FACEBOOK;
+if (SOCIAL_INSTAGRAM && SOCIAL_INSTAGRAM !== '#') $socials_arr[] = SOCIAL_INSTAGRAM;
+if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#') $socials_arr[] = SOCIAL_LINKEDIN;
+?>
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD: Organization + LocalBusiness (all pages) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -109,10 +107,10 @@ if ($current_page === 'index'): ?>
                 "@type": "Organization",
                 "@id": "<?php echo SITE_URL; ?>/#organization",
                 "name": "<?php echo SITE_NAME; ?>",
-                "alternateName": "Kalpanik Digital",
+                "alternateName": ["Kalpanik Digital", "Kalpanik Content Marketing"],
                 "url": "<?php echo SITE_URL; ?>",
                 "logo": "<?php echo SITE_LOGO; ?>",
-                "description": "Leading content marketing and creative agency in Kolkata specializing in content strategy, graphics design, brand identity, social media marketing, web development, and SEO.",
+                "description": "Kalpanik is a content marketing company in Kolkata specializing in brand identity, creative design, social media management, and brand building.",
                 "address": {
                     "@type": "PostalAddress",
                     "streetAddress": "225 Bagmari Road",
@@ -126,14 +124,11 @@ if ($current_page === 'index'): ?>
                     "telephone": "<?php echo CONTACT_PHONE; ?>",
                     "contactType": "customer service",
                     "email": "<?php echo CONTACT_EMAIL; ?>",
-                    "areaServed": "IN",
+                    "areaServed": ["IN", "US", "GB"],
                     "availableLanguage": ["English", "Hindi", "Bengali"]
                 },
-                "sameAs": [
-                    <?php $socials = []; if (SOCIAL_FACEBOOK && SOCIAL_FACEBOOK !== '#') $socials[] = '"' . SOCIAL_FACEBOOK . '"'; if (SOCIAL_INSTAGRAM && SOCIAL_INSTAGRAM !== '#') $socials[] = '"' . SOCIAL_INSTAGRAM . '"'; if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#') $socials[] = '"' . SOCIAL_LINKEDIN . '"'; echo implode(",\n                    ", $socials); ?>
-
-                ],
-                "knowsAbout": ["Content Marketing", "Content Strategy", "Graphics Design", "Brand Identity", "Social Media Marketing", "Web Development", "SEO", "Digital Marketing"]
+                "sameAs": <?php echo json_encode($socials_arr); ?>,
+                "knowsAbout": ["Content Marketing", "Content Strategy", "Brand Identity", "Creative Design", "Social Media Management", "Brand Building", "Graphics Design", "Web Development", "SEO"]
             },
             {
                 "@type": "LocalBusiness",
@@ -143,6 +138,7 @@ if ($current_page === 'index'): ?>
                 "url": "<?php echo SITE_URL; ?>",
                 "telephone": "<?php echo CONTACT_PHONE; ?>",
                 "priceRange": "$$",
+                "description": "Content marketing company and creative design house in Kolkata offering brand identity, social media management, and brand building services.",
                 "address": {
                     "@type": "PostalAddress",
                     "streetAddress": "225 Bagmari Road",
@@ -186,25 +182,84 @@ if ($current_page === 'index'): ?>
                     "<?php echo SITE_URL; ?>/blog",
                     "<?php echo SITE_URL; ?>/contact"
                 ]
+            }<?php if ($current_page === 'about'): ?>,
+            {
+                "@type": "AboutPage",
+                "mainEntity": {"@id": "<?php echo SITE_URL; ?>/#organization"},
+                "url": "<?php echo SITE_URL; ?>/about",
+                "name": "About <?php echo SITE_NAME; ?>"
+            }<?php endif; ?><?php if ($current_page === 'contact'): ?>,
+            {
+                "@type": "ContactPage",
+                "url": "<?php echo SITE_URL; ?>/contact",
+                "name": "Contact <?php echo SITE_NAME; ?>"
+            }<?php endif; ?><?php if ($current_page === 'blog'): ?>,
+            {
+                "@type": "Blog",
+                "url": "<?php echo SITE_URL; ?>/blog",
+                "name": "<?php echo SITE_NAME; ?> Blog",
+                "description": "Expert insights on content marketing strategy, brand identity, creative design trends, and social media management.",
+                "publisher": {"@id": "<?php echo SITE_URL; ?>/#organization"}
+            }<?php endif; ?><?php if ($current_page === 'services'): ?>,
+            {
+                "@type": "CollectionPage",
+                "url": "<?php echo SITE_URL; ?>/services",
+                "name": "Services - <?php echo SITE_NAME; ?>",
+                "description": "Content marketing, brand identity, creative design, social media management, and web development services.",
+                "provider": {"@id": "<?php echo SITE_URL; ?>/#organization"}
+            }<?php endif; ?><?php if ($current_page === 'case-studies'): ?>,
+            {
+                "@type": "CollectionPage",
+                "url": "<?php echo SITE_URL; ?>/case-studies",
+                "name": "Case Studies - <?php echo SITE_NAME; ?>",
+                "description": "Content marketing and brand building case studies showcasing real results.",
+                "provider": {"@id": "<?php echo SITE_URL; ?>/#organization"}
+            }<?php endif; ?>
+
+        ]
+    }
+    </script>
+<?php // Page-specific schema
+if ($current_page === 'index' && !empty($GLOBALS['faqs'])): ?>
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            <?php foreach ($GLOBALS['faqs'] as $fi => $faq_item): ?>
+            <?php if ($fi > 0) echo ','; ?>
+            {
+                "@type": "Question",
+                "name": <?php echo json_encode(strip_tags($faq_item['question'])); ?>,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": <?php echo json_encode(strip_tags($faq_item['answer'])); ?>
+                }
             }
+            <?php endforeach; ?>
         ]
     }
     </script>
 <?php endif; ?>
     
-    <!-- Google Fonts -->
+    <!-- DNS Prefetch + Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- Google Fonts (swap for no FOIT) -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     
     <!-- Custom CSS (with auto cache-busting) -->
     <link rel="stylesheet" href="<?php echo getSitePath('assets/css/style.css'); ?>?v=<?php echo filemtime('assets/css/style.css'); ?>">
@@ -223,7 +278,7 @@ if ($current_page === 'index'): ?>
     <!-- Preloader -->
     <div id="preloader">
         <div class="preloader-inner">
-            <img src="<?php echo SITE_LOGO; ?>" alt="" class="preloader-logo">
+            <img src="<?php echo SITE_LOGO; ?>" alt="Loading <?php echo SITE_NAME; ?>" class="preloader-logo" width="120" height="35">
             <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
         </div>
     </div>
@@ -236,7 +291,7 @@ if ($current_page === 'index'): ?>
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="<?php echo getSitePath(''); ?>">
-                <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>" class="navbar-logo">
+                <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?> - Content Marketing Company" class="navbar-logo" width="140" height="40">
             </a>
             
             <!-- Mobile Toggle (CSS transforms into X when open) -->
@@ -321,13 +376,13 @@ if ($current_page === 'index'): ?>
                 <div class="mobile-menu-footer d-lg-none">
                     <div class="mobile-menu-socials">
                         <?php if (SOCIAL_INSTAGRAM && SOCIAL_INSTAGRAM !== '#'): ?>
-                        <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <?php endif; ?>
                         <?php if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#'): ?>
-                        <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                         <?php endif; ?>
                         <?php if (SOCIAL_FACEBOOK && SOCIAL_FACEBOOK !== '#'): ?>
-                        <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <?php endif; ?>
                     </div>
                     <p class="mobile-menu-tagline">Crafting digital experiences ✨</p>

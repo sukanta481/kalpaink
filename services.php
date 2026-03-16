@@ -88,6 +88,18 @@ $detailed_services = !empty($services_from_db) ? array_map(function($s) {
 ];
 ?>
 
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo SITE_URL; ?>/"},
+            {"@type": "ListItem", "position": 2, "name": "Services", "item": "<?php echo SITE_URL; ?>/services"}
+        ]
+    }
+    </script>
+
     <!-- Services Hero Section - Digital Toolkit -->
     <section class="services-hero-toolkit">
         <div class="container">

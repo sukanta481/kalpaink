@@ -114,6 +114,18 @@ if (!empty($blogs_from_db)) {
 }
 ?>
 
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo SITE_URL; ?>/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "<?php echo SITE_URL; ?>/blog"}
+        ]
+    }
+    </script>
+
     <!-- Featured Story Hero Section -->
     <section class="blog-featured-hero">
         <div class="container">
@@ -135,12 +147,13 @@ if (!empty($blogs_from_db)) {
                             <span><i class="far fa-calendar-alt"></i> <?php echo $featured_post['date']; ?></span>
                             <span><i class="far fa-clock"></i> <?php echo $featured_post['read_time']; ?></span>
                         </div>
-                        <a href="#" class="btn btn-primary mt-4">Read Article <i class="fas fa-arrow-right ms-2"></i></a>
+                        <?php $featured_link = !empty($featured_post['slug']) ? getSitePath('blog/' . $featured_post['slug']) : getSitePath('blog'); ?>
+                        <a href="<?php echo $featured_link; ?>" class="btn btn-primary mt-4">Read Article <i class="fas fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- Mobile Featured Card (Instagram Story Style) -->
         <div class="mobile-featured-card d-lg-none">
             <div class="mobile-featured-bg" style="background-image: url('<?php echo $featured_post['image']; ?>');"></div>
@@ -150,7 +163,7 @@ if (!empty($blogs_from_db)) {
                 <span class="featured-category"><?php echo $featured_post['category']; ?></span>
                 <h2 class="mobile-featured-title"><?php echo $featured_post['title']; ?></h2>
                 <p class="mobile-featured-excerpt"><?php echo $featured_post['excerpt']; ?></p>
-                <a href="#" class="btn btn-primary">Read Article</a>
+                <a href="<?php echo $featured_link; ?>" class="btn btn-primary">Read Article</a>
             </div>
         </div>
     </section>
@@ -163,7 +176,7 @@ if (!empty($blogs_from_db)) {
                     <h2 class="section-title mb-1" data-aos="fade-up">Trending Now</h2>
                     <p class="text-muted mb-0 d-none d-md-block" data-aos="fade-up" data-aos-delay="100">Popular articles this week</p>
                 </div>
-                <a href="#" class="btn btn-outline-dark btn-sm d-none d-md-inline-block" data-aos="fade-up">View All</a>
+                <a href="<?php echo getSitePath('blog'); ?>" class="btn btn-outline-dark btn-sm d-none d-md-inline-block" data-aos="fade-up">View All</a>
             </div>
             
             <!-- Trending Cards Grid (Desktop) / Swipe Deck (Mobile) -->
@@ -186,7 +199,7 @@ if (!empty($blogs_from_db)) {
                         <div class="blog-card-body">
                             <span class="blog-category-v2"><?php echo $post['category']; ?></span>
                             <h5 class="blog-title-v2">
-                                <a href="#"><?php echo $post['title']; ?></a>
+                                <a href="<?php echo !empty($post['slug']) ? getSitePath('blog/' . $post['slug']) : getSitePath('blog'); ?>"><?php echo $post['title']; ?></a>
                             </h5>
                             <p class="blog-excerpt-v2"><?php echo $post['excerpt']; ?></p>
                             <div class="blog-meta-v2">
@@ -213,7 +226,7 @@ if (!empty($blogs_from_db)) {
         <div class="container">
             <div class="section-header d-flex justify-content-between align-items-center mb-4">
                 <h2 class="section-title mb-0" data-aos="fade-up">Recent Articles</h2>
-                <a href="#" class="btn btn-outline-dark btn-sm" data-aos="fade-up">View All</a>
+                <a href="<?php echo getSitePath('blog'); ?>" class="btn btn-outline-dark btn-sm" data-aos="fade-up">View All</a>
             </div>
             
             <!-- Desktop: Grid Layout | Mobile: Compact List -->
@@ -239,7 +252,7 @@ if (!empty($blogs_from_db)) {
                     </div>
                     
                     <!-- Mobile Compact List View -->
-                    <a href="#" class="recent-list-mobile">
+                    <a href="<?php echo !empty($post['slug']) ? getSitePath('blog/' . $post['slug']) : getSitePath('blog'); ?>" class="recent-list-mobile">
                         <div class="recent-list-thumb" style="background-color: <?php echo $colors['bg']; ?>;">
                             <span style="color: <?php echo $colors['text']; ?>;"><?php echo substr($post['category'], 0, 1); ?></span>
                         </div>

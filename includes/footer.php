@@ -7,17 +7,17 @@
                 <div class="footer-v2-top">
                     <div class="footer-v2-left">
                         <a href="<?php echo getSitePath(''); ?>" class="footer-v2-logo">
-                            <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?>">
+                            <img src="<?php echo SITE_LOGO; ?>" alt="<?php echo SITE_NAME; ?> - Content Marketing Company" width="140" height="40">
                         </a>
                         <div class="footer-v2-socials">
                             <?php if (SOCIAL_FACEBOOK && SOCIAL_FACEBOOK !== '#'): ?>
-                            <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="<?php echo SOCIAL_FACEBOOK; ?>" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                             <?php endif; ?>
                             <?php if (SOCIAL_INSTAGRAM && SOCIAL_INSTAGRAM !== '#'): ?>
-                            <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="<?php echo SOCIAL_INSTAGRAM; ?>" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                             <?php endif; ?>
                             <?php if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#'): ?>
-                            <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="<?php echo SOCIAL_LINKEDIN; ?>" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                             <?php endif; ?>
                         </div>
                         <!-- Contact info under socials -->
@@ -91,9 +91,9 @@
                     <span class="footer-v2-dot">&bull;</span>
                     <span>All Rights Reserved</span>
                     <span class="footer-v2-dot">&bull;</span>
-                    <a href="#">Terms & Conditions</a>
+                    <a href="<?php echo getSitePath('terms'); ?>">Terms & Conditions</a>
                     <span class="footer-v2-dot">&bull;</span>
-                    <a href="#">Privacy Policy</a>
+                    <a href="<?php echo getSitePath('privacy'); ?>">Privacy Policy</a>
                 </div>
             </div>
         </div>
@@ -105,15 +105,17 @@
     </button>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <!-- AOS Animation Library -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
 
-    <!-- GSAP Animation Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- GSAP Animation Library (loaded only on pages that need it) -->
+    <?php if (in_array($current_page ?? '', ['index', 'about', 'case-studies'])): ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <?php endif; ?>
 
     <!-- Custom JS (with auto cache-busting) -->
-    <script src="<?php echo getSitePath('assets/js/main.js'); ?>?v=<?php echo filemtime('assets/js/main.js'); ?>"></script>
+    <script src="<?php echo getSitePath('assets/js/main.js'); ?>?v=<?php echo filemtime('assets/js/main.js'); ?>" defer></script>
 </body>
 </html>

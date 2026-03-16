@@ -47,9 +47,8 @@ $p_client_logo = $project['client_logo'] ?? '';
 
 // Override SEO
 $page_seo = [
-    'title' => $p_title . ' - Case Study | ' . SITE_NAME,
-    'description' => strip_tags($p_short) . ' A case study by ' . SITE_NAME . ', a creative agency in Kolkata.',
-    'keywords' => strtolower($p_title) . ', case study, portfolio, ' . strtolower($p_category) . ', ' . SITE_NAME
+    'title' => $p_title . ' - Case Study | ' . SITE_NAME . ' Content Marketing Company',
+    'description' => strip_tags($p_short) . ' A case study by ' . SITE_NAME . ', a content marketing company and creative design house in Kolkata.',
 ];
 $canonical_url = SITE_URL . '/case-study/' . $p_slug;
 
@@ -64,6 +63,32 @@ $related_projects = array_slice($related_projects, 0, 3);
 ?>
 
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/case-study-detail.css">
+
+    <!-- JSON-LD: CreativeWork + BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "name": <?php echo json_encode($p_title); ?>,
+        "description": <?php echo json_encode(strip_tags($p_short)); ?>,
+        "creator": {"@id": "<?php echo SITE_URL; ?>/#organization"},
+        "url": "<?php echo $canonical_url; ?>"<?php if (!empty($p_featured_image)): ?>,
+        "image": "<?php echo SITE_URL . '/' . htmlspecialchars($p_featured_image); ?>"<?php endif; ?><?php if (!empty($p_client)): ?>,
+        "accountablePerson": {"@type": "Organization", "name": <?php echo json_encode($p_client); ?>}<?php endif; ?>
+
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo SITE_URL; ?>/"},
+            {"@type": "ListItem", "position": 2, "name": "Case Studies", "item": "<?php echo SITE_URL; ?>/case-studies"},
+            {"@type": "ListItem", "position": 3, "name": <?php echo json_encode($p_title); ?>, "item": "<?php echo $canonical_url; ?>"}
+        ]
+    }
+    </script>
 
     <!-- Hero Section -->
     <section class="cs-detail-hero">
