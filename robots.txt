@@ -1,5 +1,5 @@
-# Robots.txt for Kalpanik - Content Marketing Company
-# https://kalpanik.com
+# Robots.txt for Kalpanik Digital - Content Marketing Company
+# https://www.kalpanikdigital.com
 
 User-agent: *
 Allow: /
@@ -27,6 +27,16 @@ Disallow: /.superpowers/
 Disallow: /.claude/
 Disallow: /.git/
 
+# Block .php versions of clean URLs (prevent duplicate content)
+Disallow: /index.php
+Disallow: /about.php
+Disallow: /contact.php
+Disallow: /blog.php
+Disallow: /case-studies.php
+Disallow: /services.php
+Disallow: /terms.php
+Disallow: /privacy.php
+
 # Block query string duplicates
 Disallow: /*?*
 
@@ -40,4 +50,4 @@ Allow: /uploads/*.webp
 Allow: /uploads/*.svg
 
 # Sitemap
-Sitemap: https://kalpanik.com/sitemap.xml
+Sitemap: https://www.kalpanikdigital.com/sitemap.xml

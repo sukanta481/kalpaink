@@ -52,8 +52,13 @@ function getSitePath($path = '') {
 
 function getSiteUrlRoot() {
     $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 
+    // On live server, always return the canonical production URL
+    if ($host !== 'localhost' && $host !== '127.0.0.1') {
+        return 'https://www.kalpanikdigital.com';
+    }
+
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
     return rtrim($protocol . $host, '/') . rtrim(getBasePath(), '/');
 }
 

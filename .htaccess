@@ -1,5 +1,74 @@
 RewriteEngine On
 
+# ============================================================
+# 1. HTTPS + CANONICAL DOMAIN ENFORCEMENT
+#    Force all traffic to https://www.kalpanikdigital.com
+#    (fixes: "Duplicate without user-selected canonical" — 12 pages,
+#     "Page with redirect" — 2 pages)
+# ============================================================
+
+# Skip on localhost (development)
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Force www prefix (non-www → www)
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# ============================================================
+# 2. STRIP .php EXTENSION FROM URLs
+#    (fixes: "index.php" accessible alongside clean URLs)
+# ============================================================
+
+# Redirect /something.php → /something (external 301)
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Redirect /index.php → / (homepage)
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+RewriteCond %{THE_REQUEST} \s/index\.php[\s?] [NC]
+RewriteRule ^ / [R=301,L]
+
+# ============================================================
+# 3. 301 REDIRECTS FOR BROKEN / LEGACY PAGES
+#    (fixes: "Not found – 404 errors" — 3 pages,
+#     "Crawled – currently not indexed" — legacy URLs)
+# ============================================================
+
+# 404 pages found in GSC → redirect to closest live pages
+RewriteRule ^galleries/success/?$      /case-studies [R=301,L]
+RewriteRule ^galleries/[^/]+/?$        /case-studies [R=301,L]
+RewriteRule ^about-2/?$                /about [R=301,L]
+RewriteRule ^blog/balancing-act-work-life-(.*)$ /blog [R=301,L]
+
+# Legacy/duplicate service URLs
+RewriteRule ^services-2/?$             /services [R=301,L]
+RewriteRule ^digital-agency/?$         /services [R=301,L]
+RewriteRule ^consulting/?$             /services [R=301,L]
+
+# Legacy team/career pages → about page
+RewriteRule ^teams/[^/]+/?$            /about [R=301,L]
+RewriteRule ^careers/[^/]+/?$          /about [R=301,L]
+
+# Tag pages → blog
+RewriteRule ^tag/[^/]+/?$              /blog [R=301,L]
+
+# Old contact.php direct access
+RewriteRule ^contact\.php$             /contact [R=301,L]
+
+# ============================================================
+# 4. CLEAN URL REWRITES (internal)
+# ============================================================
+
 # Dynamic XML Sitemap
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
@@ -12,11 +81,14 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(about|contact|blog|case-studies|terms|privacy)$ $1.php [L,QSA]
 
 # /services (no trailing slash) → rewrite to services.php
-# Note: /services/ (with trailing slash) is handled by services/index.php which includes services.php
 RewriteRule ^services$ services.php [L,QSA]
 
 # /case-study/{slug} → case-study/index.php
 RewriteRule ^case-study/([a-z0-9-]+)/?$ case-study/index.php?slug=$1 [L,QSA]
+
+# ============================================================
+# 5. SECURITY
+# ============================================================
 
 # Block access to development/debug files
 <FilesMatch "(scan_db|link_images|test_output|index_9a0e01f|index_bc02078)\.">
@@ -33,9 +105,7 @@ RewriteRule ^case-study/([a-z0-9-]+)/?$ case-study/index.php?slug=$1 [L,QSA]
 </FilesMatch>
 
 # Block hidden files (.git, .claude, .superpowers, etc.)
-<IfModule mod_rewrite.c>
-    RewriteRule (^|/)\.(?!htaccess|well-known) - [F]
-</IfModule>
+RewriteRule (^|/)\.(?!htaccess|well-known) - [F]
 
 # Security headers
 <IfModule mod_headers.c>
@@ -43,6 +113,7 @@ RewriteRule ^case-study/([a-z0-9-]+)/?$ case-study/index.php?slug=$1 [L,QSA]
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-XSS-Protection "1; mode=block"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
 </IfModule>
 
-ErrorDocument 404 /kalpoink/404.php
+ErrorDocument 404 /404.php
