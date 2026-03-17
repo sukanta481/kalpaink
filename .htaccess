@@ -90,13 +90,6 @@ RewriteRule ^case-study/([a-z0-9-]+)/?$ case-study/index.php?slug=$1 [L,QSA]
 # 5. SECURITY
 # ============================================================
 
-# Block access to development/debug files
-<FilesMatch "(scan_db|link_images|test_output|index_9a0e01f|index_bc02078)\.">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-</FilesMatch>
-
 # Block access to config and includes directly
 <FilesMatch "^(config)\.php$">
     <IfModule mod_authz_core.c>

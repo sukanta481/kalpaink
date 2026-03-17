@@ -13,19 +13,10 @@ Disallow: /uploads/contact_submissions.txt
 Disallow: /config.php
 Disallow: /includes/
 
-# Block development/debug files
-Disallow: /scan_db.php
-Disallow: /link_images.php
-Disallow: /test_output.html
-Disallow: /test_output.txt
-Disallow: /index_9a0e01f.php
-Disallow: /index_bc02078.php
-Disallow: /services/test_image.php
-Disallow: /services/web_test.php
-Disallow: /backup-before-redesign/
-Disallow: /.superpowers/
+# Block development artifacts
 Disallow: /.claude/
 Disallow: /.git/
+Disallow: /.superpowers/
 
 # Block .php versions of clean URLs (prevent duplicate content)
 Disallow: /index.php
