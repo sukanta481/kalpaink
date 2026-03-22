@@ -151,6 +151,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Image Preview
     document.querySelectorAll('.image-upload').forEach(function (input) {
         input.addEventListener('change', function (e) {
+            const maxSizeMb = parseFloat(this.dataset.maxSizeMb || '0');
+            if (maxSizeMb && this.files && this.files[0]) {
+                const maxBytes = maxSizeMb * 1024 * 1024;
+                if (this.files[0].size > maxBytes) {
+                    alert(`"${this.files[0].name}" is too large. Maximum allowed size is ${maxSizeMb}MB.`);
+                    this.value = '';
+                    return;
+                }
+            }
+
             const preview = document.getElementById(this.dataset.preview);
             if (preview && this.files && this.files[0]) {
                 const reader = new FileReader();
@@ -313,6 +323,22 @@ class FileUploadProgress {
     handleFormSubmit(e, form, fileInputs) {
         // Don't show progress if form is invalid (validation handler will block submission)
         if (!form.checkValidity()) return;
+
+        for (const input of fileInputs) {
+            const maxSizeMb = parseFloat(input.dataset.maxSizeMb || '0');
+            if (!maxSizeMb || !input.files || input.files.length === 0) {
+                continue;
+            }
+
+            const maxBytes = maxSizeMb * 1024 * 1024;
+            for (const file of input.files) {
+                if (file.size > maxBytes) {
+                    e.preventDefault();
+                    alert(`"${file.name}" is too large for ${input.name}. Maximum allowed size is ${maxSizeMb}MB.`);
+                    return;
+                }
+            }
+        }
 
         // Check if any files are selected
         let hasFiles = false;

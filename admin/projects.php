@@ -23,6 +23,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     if (isset($_POST['save_project'])) {
+        $uploadErrorMessages = [
+            UPLOAD_ERR_INI_SIZE => 'File exceeds the live server upload limit.',
+            UPLOAD_ERR_FORM_SIZE => 'File exceeds the form upload limit.',
+            UPLOAD_ERR_PARTIAL => 'File was only partially uploaded.',
+            UPLOAD_ERR_NO_TMP_DIR => 'Server temporary upload folder is missing.',
+            UPLOAD_ERR_CANT_WRITE => 'Server could not write the uploaded file to disk.',
+            UPLOAD_ERR_EXTENSION => 'A server extension stopped the upload.',
+        ];
+
+        $assertUploadOk = function ($fieldName, $label) use ($uploadErrorMessages) {
+            if (!isset($_FILES[$fieldName]) || empty($_FILES[$fieldName]['name'])) {
+                return;
+            }
+
+            $errorCode = $_FILES[$fieldName]['error'] ?? UPLOAD_ERR_OK;
+            if ($errorCode !== UPLOAD_ERR_OK) {
+                $message = $uploadErrorMessages[$errorCode] ?? 'Unknown upload error.';
+                setFlashMessage('danger', $label . ': ' . $message);
+                header('Location: projects.php' . (!empty($_GET['id']) ? '?id=' . (int)$_GET['id'] : ''));
+                exit;
+            }
+        };
+
+        $assertUploadOk('featured_image', 'Featured image');
+        $assertUploadOk('case_study_image', 'Case study image');
+        $assertUploadOk('client_logo', 'Client logo');
+
         $title = sanitize($_POST['title']);
         $slug = sanitize($_POST['slug']) ?: generateSlug($title);
         
@@ -297,7 +324,7 @@ if ($action === 'add' || $action === 'edit') {
                         </div>
                         <?php endif; ?>
                         <input type="file" class="form-control image-upload" id="featured_image"
-                               name="featured_image" accept="image/*" data-preview="imagePreview">
+                               name="featured_image" accept="image/*" data-preview="imagePreview" data-max-size-mb="2">
                         <small class="text-muted"><strong>Size:</strong> 800×600px &nbsp;|&nbsp; <strong>Format:</strong> JPG, PNG, WebP &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
                         <div class="mt-3">
                             <label for="image_alt_text" class="form-label">Image Alt Text</label>
@@ -321,8 +348,8 @@ if ($action === 'add' || $action === 'edit') {
                         </div>
                         <?php endif; ?>
                         <input type="file" class="form-control image-upload" id="case_study_image"
-                               name="case_study_image" accept="image/*" data-preview="caseStudyPreview">
-                        <small class="text-muted"><strong>Format:</strong> PNG, JPG, WebP &nbsp;|&nbsp; <strong>Recommended:</strong> Full-length project presentation</small>
+                               name="case_study_image" accept="image/*" data-preview="caseStudyPreview" data-max-size-mb="5">
+                        <small class="text-muted"><strong>Format:</strong> PNG, JPG, WebP &nbsp;|&nbsp; <strong>Recommended:</strong> Full-length project presentation &nbsp;|&nbsp; <strong>Max:</strong> 5MB</small>
                     </div>
                 </div>
 
@@ -339,8 +366,8 @@ if ($action === 'add' || $action === 'edit') {
                         </div>
                         <?php endif; ?>
                         <input type="file" class="form-control image-upload" id="client_logo"
-                               name="client_logo" accept="image/*" data-preview="clientLogoPreview">
-                        <small class="text-muted"><strong>Size:</strong> 300×80px recommended &nbsp;|&nbsp; <strong>Format:</strong> PNG (transparent bg preferred)</small>
+                               name="client_logo" accept="image/*" data-preview="clientLogoPreview" data-max-size-mb="2">
+                        <small class="text-muted"><strong>Size:</strong> 300×80px recommended &nbsp;|&nbsp; <strong>Format:</strong> PNG (transparent bg preferred) &nbsp;|&nbsp; <strong>Max:</strong> 2MB</small>
                     </div>
                 </div>
 
