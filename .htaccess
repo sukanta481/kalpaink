@@ -86,6 +86,12 @@ RewriteRule ^services$ services.php [L,QSA]
 # /case-study/{slug} → case-study/index.php
 RewriteRule ^case-study/([a-z0-9-]+)/?$ case-study/index.php?slug=$1 [L,QSA]
 
+# Admin clean URL rewrites
+# This keeps admin routes working after the global ".php -> extensionless" redirect.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^admin/(.+)$ admin/$1.php [L,QSA]
+
 # ============================================================
 # 5. SECURITY
 # ============================================================
