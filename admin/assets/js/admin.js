@@ -49,9 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Initialize TinyMCE
-    if (typeof tinymce !== 'undefined') {
-        // Detect base URL for upload endpoint
+    // Initialize Quill Rich Text Editor
+    if (typeof Quill !== 'undefined') {
+        // Detect base URL for upload endpoint using absolute admin.css href
+        // so this works correctly for pages in subdirectories (admin/content/*.php)
         var adminBase = document.querySelector('link[href*="admin.css"]');
         var uploadUrl = 'api/upload.php';
         if (adminBase) {
@@ -60,66 +61,84 @@ document.addEventListener('DOMContentLoaded', function () {
             uploadUrl = adminPath + 'api/upload.php';
         }
 
-        tinymce.init({
-            selector: '.tinymce-editor',
-            height: 500,
-            menubar: 'file edit insert view format table',
-            plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-            ],
-            toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | image media link | code fullscreen | help',
+        // Custom image upload handler — POSTs to existing api/upload.php endpoint
+        function quillImageHandler(quillInstance) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/jpeg,image/png,image/gif,image/webp');
+            input.click();
+            input.addEventListener('change', function () {
+                var file = this.files[0];
+                if (!file) return;
+                var formData = new FormData();
+                formData.append('file', file);
+                fetch(uploadUrl, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (data.location) {
+                        var range = quillInstance.getSelection(true);
+                        quillInstance.insertEmbed(range ? range.index : 0, 'image', data.location);
+                        quillInstance.setSelection((range ? range.index : 0) + 1);
+                    } else {
+                        alert(data.error || 'Image upload failed.');
+                    }
+                })
+                .catch(function () {
+                    alert('Image upload failed. Please try again.');
+                });
+            });
+        }
 
-            /* ---- Image / Banner Upload ---- */
-            images_upload_url: uploadUrl,
-            images_upload_credentials: true,
-            automatic_uploads: true,
-            paste_data_images: true,
-            image_caption: true,
-            image_advtab: true,
-            image_title: true,
-            file_picker_types: 'image',
+        var quillToolbar = [
+            [{ 'header': [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['link', 'image'],
+            ['clean']
+        ];
 
-            /* Custom file picker for browse button */
-            file_picker_callback: function (cb, value, meta) {
-                if (meta.filetype === 'image') {
-                    var input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/jpeg,image/png,image/gif,image/webp');
-                    input.addEventListener('change', function () {
-                        var file = this.files[0];
-                        if (!file) return;
+        document.querySelectorAll('.tinymce-editor').forEach(function (textarea) {
+            // Hide the original textarea — it receives the value on submit
+            textarea.style.display = 'none';
 
-                        var formData = new FormData();
-                        formData.append('file', file);
+            // Insert Quill container immediately before the hidden textarea
+            var container = document.createElement('div');
+            container.className = 'quill-editor-container';
+            textarea.parentNode.insertBefore(container, textarea);
 
-                        fetch(uploadUrl, {
-                            method: 'POST',
-                            body: formData,
-                            credentials: 'same-origin'
-                        })
-                            .then(function (res) { return res.json(); })
-                            .then(function (data) {
-                                if (data.location) {
-                                    cb(data.location, { title: file.name, alt: file.name });
-                                } else {
-                                    alert(data.error || 'Upload failed.');
-                                }
-                            })
-                            .catch(function () {
-                                alert('Upload failed. Please try again.');
-                            });
-                    });
-                    input.click();
+            // Init Quill with Snow theme and custom image handler
+            var quill = new Quill(container, {
+                theme: 'snow',
+                modules: {
+                    toolbar: {
+                        container: quillToolbar,
+                        handlers: {
+                            image: function () { quillImageHandler(quill); }
+                        }
+                    }
                 }
-            },
+            });
 
-            content_style: 'body { font-family: Inter, sans-serif; font-size: 14px; } ' +
-                'img { max-width: 100%; height: auto; border-radius: 8px; margin: 16px 0; }',
-            branding: false
+            // Pre-fill with existing HTML content from the database
+            // textarea.value is decoded by the browser (htmlspecialchars entities → real HTML)
+            if (textarea.value.trim()) {
+                quill.clipboard.dangerouslyPasteHTML(textarea.value);
+            }
+
+            // Sync Quill HTML back to textarea before form submits
+            // Registered here (inside first DOMContentLoaded block) so it fires
+            // before FileUploadProgress submit handlers registered later
+            var form = textarea.closest('form');
+            if (form) {
+                form.addEventListener('submit', function () {
+                    textarea.value = quill.root.innerHTML;
+                });
+            }
         });
     }
 

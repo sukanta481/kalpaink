@@ -30,7 +30,10 @@ ob_end_clean(); // Discard any whitespace output before DOCTYPE
     
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    
+
+    <!-- Quill Rich Text Editor CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
+
     <!-- Custom Admin CSS -->
     <link rel="stylesheet" href="<?php echo getAdminUrl('assets/css/admin.css'); ?>">
 </head>
