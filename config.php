@@ -186,7 +186,7 @@ $services_fallback = [
         'icon' => 'fa-print',
         'title' => 'Print Design',
         'slug' => 'print-design',
-        'description' => 'High-quality print materials that make a lasting impression.',
+        'description' => 'Tangible brand experiences. From high-quality marketing collaterals and custom merchandise to premium packaging, we bring your visual identity into the physical world.',
         'image' => 'assets/images/services/print-design.png'
     ],
     [

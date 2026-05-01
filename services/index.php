@@ -90,9 +90,9 @@ if (!$service) {
             'title' => 'Print Design',
             'slug' => 'print-design',
             'icon' => 'fa-print',
-            'short_description' => 'High-quality print materials that make a lasting impression.',
-            'full_description' => '<p>In a digital world, print still carries weight. Well-designed print materials create tangible connections with your audience that digital simply can\'t replicate. Our print design team creates everything from business stationery to large-format displays with meticulous attention to detail.</p><p>We understand the nuances of print production — color management, paper selection, finishing techniques — and ensure every piece we design is print-ready and impactful. Whether it\'s a premium brochure or eye-catching event signage, we deliver print that impresses.</p>',
-            'features' => ['Brochures', 'Posters & Banners', 'Business Stationery', 'Catalogs', 'Magazines', 'Signage', 'Packaging Design', 'Event Materials'],
+            'short_description' => 'Tangible brand experiences. From high-quality marketing collaterals and custom merchandise to premium packaging, we bring your visual identity into the physical world.',
+            'full_description' => '<p>Tangible brand experiences matter. In a world saturated with digital noise, physical touchpoints create deeper, more memorable connections with your audience. At Kalpanik, our Print Design service bridges the gap between your digital brand and the real world — transforming your visual identity into high-quality marketing collaterals, custom merchandise, and premium packaging that people can hold, feel, and remember.</p><p>From business stationery and brochures to large-format displays, custom merchandise, and luxury packaging — we handle every detail with precision. We understand the nuances of print production — color management, paper selection, finishing techniques — and ensure every piece we design is print-ready, on-brand, and built to leave a lasting impression.</p>',
+            'features' => ['Marketing Collaterals', 'Custom Merchandise', 'Premium Packaging', 'Business Stationery', 'Brochures & Catalogs', 'Posters & Banners', 'Signage & Displays', 'Event Materials'],
             'image' => 'assets/images/services/print-design.png'
         ],
         'seo-services' => [
@@ -205,89 +205,209 @@ $related_services = array_slice($related_services, 0, 4);
     }
     </script>
 
-    <!-- Breadcrumb + Hero -->
-    <section class="svc-detail-hero">
+    <!-- ═══════════════════════════════════════════════════
+         HERO — Immersive gradient backdrop with floating orbs
+    ═══════════════════════════════════════════════════ -->
+    <section class="sdp-hero">
+        <!-- Animated background orbs -->
+        <div class="sdp-hero__orb sdp-hero__orb--1"></div>
+        <div class="sdp-hero__orb sdp-hero__orb--2"></div>
+        <div class="sdp-hero__orb sdp-hero__orb--3"></div>
+        <div class="sdp-hero__grid-overlay"></div>
+
         <div class="container">
-            <nav class="svc-detail-breadcrumb" aria-label="Breadcrumb">
+            <!-- Breadcrumb -->
+            <nav class="sdp-breadcrumb" aria-label="Breadcrumb">
                 <a href="<?php echo SITE_URL; ?>/">Home</a>
-                <span class="svc-bc-sep">/</span>
+                <span class="sdp-breadcrumb__sep"><i class="fas fa-chevron-right"></i></span>
                 <a href="<?php echo SITE_URL; ?>/services">Services</a>
-                <span class="svc-bc-sep">/</span>
-                <span class="svc-bc-current"><?php echo htmlspecialchars($svc_title); ?></span>
+                <span class="sdp-breadcrumb__sep"><i class="fas fa-chevron-right"></i></span>
+                <span class="sdp-breadcrumb__current"><?php echo htmlspecialchars($svc_title); ?></span>
             </nav>
-            <div class="row align-items-center">
-                <div class="col-lg-7" data-aos="fade-right">
-                    <div class="svc-detail-hero-icon">
-                        <i class="fas <?php echo htmlspecialchars($svc_icon); ?>"></i>
-                    </div>
-                    <h1 class="svc-detail-hero-title"><?php echo htmlspecialchars($svc_title); ?></h1>
-                    <p class="svc-detail-hero-subtitle"><?php echo htmlspecialchars($svc_short); ?></p>
-                    <a href="<?php echo SITE_URL; ?>/contact" class="btn-services-cta">
+
+            <div class="sdp-hero__content">
+                <!-- Icon badge -->
+                <div class="sdp-hero__icon-badge" data-aos="zoom-in" data-aos-duration="600">
+                    <i class="fas <?php echo htmlspecialchars($svc_icon); ?>"></i>
+                </div>
+
+                <h1 class="sdp-hero__title" data-aos="fade-up" data-aos-delay="100">
+                    <?php echo htmlspecialchars($svc_title); ?>
+                </h1>
+
+                <p class="sdp-hero__desc" data-aos="fade-up" data-aos-delay="200">
+                    <?php echo htmlspecialchars($svc_short); ?>
+                </p>
+
+                <div class="sdp-hero__actions" data-aos="fade-up" data-aos-delay="300">
+                    <a href="<?php echo SITE_URL; ?>/contact" class="sdp-btn sdp-btn--primary">
                         <span>Get a Free Quote</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
+                    <a href="#sdp-features" class="sdp-btn sdp-btn--ghost">
+                        <span>Explore Features</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
                 </div>
-                <!-- Right Side Image Graphic -->
-                <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left">
-                    <?php if (!empty($svc_image)): ?>
-                    <div class="svc-detail-hero-img">
-                        <img src="<?php echo SITE_URL . '/' . htmlspecialchars($svc_image); ?>" alt="<?php echo htmlspecialchars($svc_title); ?> Services Graphic">
+
+                <!-- Quick Stats -->
+                <?php if (!empty($svc_features)): ?>
+                <div class="sdp-hero__stats" data-aos="fade-up" data-aos-delay="400">
+                    <div class="sdp-hero__stat">
+                        <span class="sdp-hero__stat-value"><?php echo count($svc_features); ?>+</span>
+                        <span class="sdp-hero__stat-label">Deliverables</span>
                     </div>
-                    <?php endif; ?>
+                    <div class="sdp-hero__stat-divider"></div>
+                    <div class="sdp-hero__stat">
+                        <span class="sdp-hero__stat-value">100%</span>
+                        <span class="sdp-hero__stat-label">Custom Work</span>
+                    </div>
+                    <div class="sdp-hero__stat-divider"></div>
+                    <div class="sdp-hero__stat">
+                        <span class="sdp-hero__stat-value">24/7</span>
+                        <span class="sdp-hero__stat-label">Support</span>
+                    </div>
                 </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="sdp-hero__scroll-hint">
+            <div class="sdp-scroll-mouse">
+                <div class="sdp-scroll-wheel"></div>
             </div>
         </div>
     </section>
 
-    <!-- Service Content -->
-    <section class="svc-detail-content">
+    <!-- ═══════════════════════════════════════════════════
+         CONTENT — Description + Feature Pills
+    ═══════════════════════════════════════════════════ -->
+    <section class="sdp-content" id="sdp-features">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-7" data-aos="fade-up">
-                    <h2 class="svc-detail-section-title">What We Offer</h2>
-                    <div class="svc-detail-body">
+            <!-- Section label -->
+            <div class="sdp-content__label" data-aos="fade-up">
+                <span class="sdp-label-tag"><i class="fas <?php echo htmlspecialchars($svc_icon); ?>"></i> About this service</span>
+            </div>
+
+            <div class="sdp-content__grid">
+                <!-- Left: Body text -->
+                <div class="sdp-content__text" data-aos="fade-up" data-aos-delay="100">
+                    <h2 class="sdp-content__heading">What We <span class="sdp-text-accent">Offer</span></h2>
+                    <div class="sdp-content__body">
                         <?php echo $svc_full; ?>
                     </div>
+                    <a href="<?php echo SITE_URL; ?>/contact" class="sdp-inline-cta">
+                        Discuss your project <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
-                <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
-                    <?php if (!empty($svc_features)): ?>
-                    <div class="svc-detail-features-card">
-                        <h3 class="svc-detail-features-heading">What's Included</h3>
-                        <ul class="svc-detail-features-list">
-                            <?php foreach ($svc_features as $feature): ?>
-                            <li>
-                                <i class="fas fa-check"></i>
-                                <span><?php echo htmlspecialchars($feature); ?></span>
-                            </li>
+
+                <!-- Right: Feature card -->
+                <?php if (!empty($svc_features)): ?>
+                <div class="sdp-content__features" data-aos="fade-up" data-aos-delay="200">
+                    <div class="sdp-features-card">
+                        <div class="sdp-features-card__header">
+                            <div class="sdp-features-card__icon">
+                                <i class="fas fa-cubes"></i>
+                            </div>
+                            <div>
+                                <h3 class="sdp-features-card__title">What's Included</h3>
+                                <p class="sdp-features-card__sub"><?php echo count($svc_features); ?> key deliverables</p>
+                            </div>
+                        </div>
+
+                        <div class="sdp-features-pills">
+                            <?php foreach ($svc_features as $i => $feature): ?>
+                            <div class="sdp-feature-pill" style="--pill-delay: <?php echo $i * 0.05; ?>s">
+                                <span class="sdp-feature-pill__num"><?php echo str_pad($i + 1, 2, '0', STR_PAD_LEFT); ?></span>
+                                <span class="sdp-feature-pill__text"><?php echo htmlspecialchars($feature); ?></span>
+                            </div>
                             <?php endforeach; ?>
-                        </ul>
-                        <a href="<?php echo SITE_URL; ?>/contact" class="svc-detail-features-btn">
-                            Start a Project <i class="fas fa-arrow-right"></i>
+                        </div>
+
+                        <a href="<?php echo SITE_URL; ?>/contact" class="sdp-features-card__btn">
+                            <span>Start a Project</span>
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
-                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════
+         WHY CHOOSE US — Process Steps
+    ═══════════════════════════════════════════════════ -->
+    <section class="sdp-process">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up">
+                <span class="sdp-label-tag"><i class="fas fa-route"></i> Our Process</span>
+                <h2 class="sdp-process__title">How We <span class="sdp-text-accent">Work</span></h2>
+                <p class="sdp-process__sub">A streamlined approach to delivering exceptional <?php echo htmlspecialchars(strtolower($svc_title)); ?> results.</p>
+            </div>
+
+            <div class="sdp-process__steps">
+                <div class="sdp-process__step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="sdp-step__number">01</div>
+                    <div class="sdp-step__content">
+                        <h3 class="sdp-step__title">Discovery</h3>
+                        <p class="sdp-step__desc">We dive deep into your brand, goals, and audience to build a solid foundation.</p>
+                    </div>
+                </div>
+                <div class="sdp-process__connector"></div>
+                <div class="sdp-process__step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="sdp-step__number">02</div>
+                    <div class="sdp-step__content">
+                        <h3 class="sdp-step__title">Strategy</h3>
+                        <p class="sdp-step__desc">We craft a tailored plan aligned with your objectives and market positioning.</p>
+                    </div>
+                </div>
+                <div class="sdp-process__connector"></div>
+                <div class="sdp-process__step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="sdp-step__number">03</div>
+                    <div class="sdp-step__content">
+                        <h3 class="sdp-step__title">Execution</h3>
+                        <p class="sdp-step__desc">Our creative team brings the vision to life with meticulous attention to detail.</p>
+                    </div>
+                </div>
+                <div class="sdp-process__connector"></div>
+                <div class="sdp-process__step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="sdp-step__number">04</div>
+                    <div class="sdp-step__content">
+                        <h3 class="sdp-step__title">Delivery</h3>
+                        <p class="sdp-step__desc">Polished, production-ready deliverables with ongoing support and revisions.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Related Services -->
+    <!-- ═══════════════════════════════════════════════════
+         RELATED SERVICES
+    ═══════════════════════════════════════════════════ -->
     <?php if (!empty($related_services)): ?>
-    <section class="svc-detail-related">
+    <section class="sdp-related">
         <div class="container">
-            <h2 class="svc-detail-section-title text-center" data-aos="fade-up">Explore Other Services</h2>
-            <p class="svc-detail-section-sub text-center" data-aos="fade-up" data-aos-delay="50">Discover more ways we can help grow your brand</p>
-            <div class="svc-detail-related-grid" data-aos="fade-up" data-aos-delay="100">
+            <div class="text-center" data-aos="fade-up">
+                <span class="sdp-label-tag"><i class="fas fa-th-large"></i> More Services</span>
+                <h2 class="sdp-related__title">Explore Other <span class="sdp-text-accent">Services</span></h2>
+                <p class="sdp-related__sub">Discover more ways we can help grow your brand</p>
+            </div>
+
+            <div class="sdp-related__grid">
                 <?php foreach ($related_services as $rs):
                     $rs_slug = $rs['slug'] ?? strtolower(str_replace(' ', '-', $rs['title']));
                 ?>
-                <a href="<?php echo SITE_URL; ?>/services/<?php echo htmlspecialchars($rs_slug); ?>" class="svc-related-card">
-                    <div class="svc-related-icon">
+                <a href="<?php echo SITE_URL; ?>/services/<?php echo htmlspecialchars($rs_slug); ?>" class="sdp-related__card" data-aos="fade-up">
+                    <div class="sdp-related__card-icon">
                         <i class="fas <?php echo htmlspecialchars($rs['icon'] ?? 'fa-cogs'); ?>"></i>
                     </div>
-                    <h3 class="svc-related-title"><?php echo htmlspecialchars($rs['title']); ?></h3>
-                    <p class="svc-related-desc"><?php echo htmlspecialchars($rs['short_description'] ?? $rs['description'] ?? ''); ?></p>
-                    <span class="svc-related-link">Learn More <i class="fas fa-arrow-right"></i></span>
+                    <h3 class="sdp-related__card-title"><?php echo htmlspecialchars($rs['title']); ?></h3>
+                    <p class="sdp-related__card-desc"><?php echo htmlspecialchars($rs['short_description'] ?? $rs['description'] ?? ''); ?></p>
+                    <span class="sdp-related__card-link">
+                        Learn More <i class="fas fa-arrow-right"></i>
+                    </span>
                 </a>
                 <?php endforeach; ?>
             </div>
@@ -295,16 +415,24 @@ $related_services = array_slice($related_services, 0, 4);
     </section>
     <?php endif; ?>
 
-    <!-- CTA Section -->
-    <section class="svc-detail-cta">
-        <div class="container text-center">
-            <h2 class="svc-detail-cta-title" data-aos="fade-up">Ready to Get Started?</h2>
-            <p class="svc-detail-cta-text" data-aos="fade-up" data-aos-delay="100">Let's discuss how our <?php echo htmlspecialchars(strtolower($svc_title)); ?> services can help grow your business.</p>
-            <a href="<?php echo SITE_URL; ?>/contact" class="btn-services-cta" data-aos="fade-up" data-aos-delay="200">
-                <span>Get Enquiry Now</span>
-                <i class="fas fa-arrow-right"></i>
-            </a>
+    <!-- ═══════════════════════════════════════════════════
+         CTA — Final call to action
+    ═══════════════════════════════════════════════════ -->
+    <section class="sdp-cta">
+        <div class="sdp-cta__particles">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="container">
+            <div class="sdp-cta__inner" data-aos="zoom-in">
+                <h2 class="sdp-cta__title">Ready to Get Started?</h2>
+                <p class="sdp-cta__text">Let's discuss how our <?php echo htmlspecialchars(strtolower($svc_title)); ?> services can help grow your business.</p>
+                <a href="<?php echo SITE_URL; ?>/contact" class="sdp-btn sdp-btn--primary sdp-btn--lg">
+                    <span>Get Enquiry Now</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
     </section>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
+

@@ -78,8 +78,8 @@ if (!empty($services_from_db)) {
             'id' => 'print-design',
             'icon' => 'fa-print',
             'title' => 'Print Design',
-            'summary' => 'High-quality print materials that impress.',
-            'description' => 'High-quality print materials that make a lasting impression. From business cards to large format displays, we handle all your print needs.',
+            'summary' => 'Tangible brand experiences. From high-quality marketing collaterals and custom merchandise to premium packaging, we bring your visual identity into the physical world.',
+            'description' => 'Tangible brand experiences. From high-quality marketing collaterals and custom merchandise to premium packaging, we bring your visual identity into the physical world.',
             'features' => ['Brochures', 'Posters & Banners', 'Business Stationery', 'Catalogs', 'Magazines', 'Signage']
         ],
         [
