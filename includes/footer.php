@@ -43,6 +43,7 @@
                                 <li><a href="<?php echo getSitePath('services'); ?>">Services</a></li>
                                 <li><a href="<?php echo getSitePath('case-studies'); ?>">Case Studies</a></li>
                                 <li><a href="<?php echo getSitePath('blog'); ?>">Blog</a></li>
+                                <li><a href="<?php echo getSitePath('gallery'); ?>">Gallery</a></li>
                                 <li><a href="<?php echo getSitePath('contact'); ?>">Contact Us</a></li>
                             </ul>
                         </div>

@@ -20,13 +20,17 @@ $seo_config = [
         'title' => 'Contact ' . SITE_NAME . ' | Content Marketing Company in Kolkata - Free Quote',
         'description' => 'Get in touch with Kalpanik for content marketing, brand identity, and creative design services. Free consultation for businesses looking to build their brand. Based in Kolkata.',
     ],
-    'blog' => [
+    /* 'blog' => [
         'title' => 'Blog - ' . SITE_NAME . ' | Content Marketing, Branding & Design Insights',
         'description' => 'Expert insights on content marketing strategy, brand identity, creative design trends, and social media management from Kalpanik — a content marketing company in Kolkata.',
-    ],
+    ], */
     'case-studies' => [
         'title' => 'Case Studies - ' . SITE_NAME . ' | Content Marketing & Brand Building Results',
         'description' => 'See how Kalpanik delivers results through content marketing, brand identity design, and social media campaigns. Real case studies from a creative design house in Kolkata.',
+    ],
+    'gallery' => [
+        'title' => 'Gallery - ' . SITE_NAME . ' | Event Photos & Creative Portfolio',
+        'description' => 'Browse our gallery of event photos, creative portfolio, team moments, and behind-the-scenes shots. See the work and culture of Kalpanik — a creative design house in Kolkata.',
     ]
 ];
 
@@ -77,7 +81,7 @@ $canonical_url = $canonical_url ?? SITE_URL . '/' . ($current_page === 'index' ?
     <?php endif; ?>
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="<?php echo ($current_page === 'blog') ? 'blog' : 'website'; ?>">
+    <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo htmlspecialchars($canonical_url); ?>">
     <meta property="og:title" content="<?php echo htmlspecialchars($page_seo['title']); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($page_seo['description']); ?>">
@@ -166,22 +170,17 @@ if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#') $socials_arr[] = SOCIAL_LINKEDIN
                 "name": "Kalpanik Digital",
                 "alternateName": ["Kalpanik", "<?php echo SITE_NAME; ?>"],
                 "description": "Content marketing company in Kolkata specializing in brand identity, creative design, social media management, and brand building.",
-                "publisher": {"@id": "<?php echo SITE_URL; ?>/#organization"},
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "<?php echo SITE_URL; ?>/blog?q={search_term_string}",
-                    "query-input": "required name=search_term_string"
-                }
+                "publisher": {"@id": "<?php echo SITE_URL; ?>/#organization"}
             },
             {
                 "@type": "SiteNavigationElement",
-                "name": ["Home", "About Us", "Services", "Case Studies", "Blog", "Contact Us"],
+                "name": ["Home", "About Us", "Services", "Case Studies", "Gallery", "Contact Us"],
                 "url": [
                     "<?php echo SITE_URL; ?>/",
                     "<?php echo SITE_URL; ?>/about",
                     "<?php echo SITE_URL; ?>/services",
                     "<?php echo SITE_URL; ?>/case-studies",
-                    "<?php echo SITE_URL; ?>/blog",
+                    "<?php echo SITE_URL; ?>/gallery",
                     "<?php echo SITE_URL; ?>/contact"
                 ]
             }<?php if ($current_page === 'about'): ?>,
@@ -195,14 +194,14 @@ if (SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== '#') $socials_arr[] = SOCIAL_LINKEDIN
                 "@type": "ContactPage",
                 "url": "<?php echo SITE_URL; ?>/contact",
                 "name": "Contact <?php echo SITE_NAME; ?>"
-            }<?php endif; ?><?php if ($current_page === 'blog'): ?>,
+            }<?php endif; ?><?php /* if ($current_page === 'blog'): ?>,
             {
                 "@type": "Blog",
                 "url": "<?php echo SITE_URL; ?>/blog",
                 "name": "<?php echo SITE_NAME; ?> Blog",
                 "description": "Expert insights on content marketing strategy, brand identity, creative design trends, and social media management.",
                 "publisher": {"@id": "<?php echo SITE_URL; ?>/#organization"}
-            }<?php endif; ?><?php if ($current_page === 'services'): ?>,
+            }<?php endif; */ ?><?php if ($current_page === 'services'): ?>,
             {
                 "@type": "CollectionPage",
                 "url": "<?php echo SITE_URL; ?>/services",
@@ -355,9 +354,17 @@ if ($current_page === 'index' && !empty($GLOBALS['faqs'])): ?>
                         </a>
                     </li>
                     <li class="nav-item">
+                        <?php /*
                         <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('blog'); ?>">
                             <span class="nav-icon d-lg-none"><i class="fas fa-pen-nib"></i></span>
                             Blog
+                        </a>
+                        */ ?>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'gallery.php' ? 'active' : ''; ?>" href="<?php echo getSitePath('gallery'); ?>">
+                            <span class="nav-icon d-lg-none"><i class="fas fa-images"></i></span>
+                            Gallery
                         </a>
                     </li>
                     <li class="nav-item">

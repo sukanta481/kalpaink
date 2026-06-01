@@ -468,6 +468,71 @@ $marquee_clients = getClientsFromDB();
     </section>
     <?php endif; ?>
 
+    <!-- Gallery Showcase Section — Auto Slider -->
+    <?php if (isHomepageSectionEnabled('gallery')): ?>
+    <?php
+    $gallery_slider_images = getRandomGalleryImages(12);
+    $fallback_gallery_slider = [
+        ['title' => 'Brand Identity Workshop', 'category' => 'events', 'image' => 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&h=350&fit=crop'],
+        ['title' => 'Creative Design Sprint', 'category' => 'portfolio', 'image' => 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=500&h=350&fit=crop'],
+        ['title' => 'Social Media Launch', 'category' => 'portfolio', 'image' => 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=500&h=350&fit=crop'],
+        ['title' => 'Office Brainstorm', 'category' => 'office', 'image' => 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&h=350&fit=crop'],
+        ['title' => 'Team Celebration', 'category' => 'team', 'image' => 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&h=350&fit=crop'],
+        ['title' => 'Web Dev Showcase', 'category' => 'portfolio', 'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=350&fit=crop'],
+        ['title' => 'Client Meeting', 'category' => 'clients', 'image' => 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=500&h=350&fit=crop'],
+        ['title' => 'Product Shoot', 'category' => 'portfolio', 'image' => 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=350&fit=crop'],
+        ['title' => 'Annual Meetup', 'category' => 'events', 'image' => 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=500&h=350&fit=crop'],
+        ['title' => 'Logo Collection', 'category' => 'portfolio', 'image' => 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=500&h=350&fit=crop'],
+        ['title' => 'Team Outing', 'category' => 'team', 'image' => 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&h=350&fit=crop'],
+        ['title' => 'Studio Setup', 'category' => 'office', 'image' => 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=500&h=350&fit=crop'],
+    ];
+    $slider_images = !empty($gallery_slider_images) ? $gallery_slider_images : $fallback_gallery_slider;
+    ?>
+    <section class="gallery-showcase-section" id="gallery-showcase">
+        <div class="container">
+            <div class="gallery-showcase-header" data-aos="fade-up">
+                <span class="gallery-showcase-badge">● Gallery</span>
+                <h2 class="gallery-showcase-heading">Creative Design Showcase</h2>
+                <p class="gallery-showcase-subtext">A curated display of our graphics, visual brandings, and creative digital designs.</p>
+            </div>
+        </div>
+        <div class="gallery-showcase-slider" id="galleryShowcaseSlider" data-aos="fade-up" data-aos-delay="200">
+            <div class="gallery-showcase-track">
+                <?php for ($loop = 0; $loop < 2; $loop++): ?>
+                    <?php foreach ($slider_images as $gsi): ?>
+                    <div class="gallery-showcase-slide">
+                        <img src="<?php echo htmlspecialchars(!empty($gsi['thumbnail']) ? (strpos($gsi['thumbnail'], 'http') === 0 ? $gsi['thumbnail'] : SITE_URL . '/' . $gsi['thumbnail']) : (!empty($gsi['image']) ? (strpos($gsi['image'], 'http') === 0 ? $gsi['image'] : SITE_URL . '/' . $gsi['image']) : '')); ?>" alt="<?php echo htmlspecialchars(!empty($gsi['image_alt_text']) ? $gsi['image_alt_text'] : ($gsi['title'] ?? 'Gallery photo')); ?>" loading="lazy" class="gallery-showcase-img">
+                        <div class="gallery-showcase-overlay">
+                            <span class="gallery-showcase-cat"><?php echo ucfirst(htmlspecialchars($gsi['category'] ?? '')); ?></span>
+                            <span class="gallery-showcase-title"><?php echo htmlspecialchars($gsi['title'] ?? ''); ?></span>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                <?php endfor; ?>
+            </div>
+        </div>
+        <div class="text-center" style="margin-top: 40px;" data-aos="fade-up" data-aos-delay="300">
+            <a href="<?php echo getSitePath('gallery'); ?>" class="btn btn-primary">View Full Gallery</a>
+        </div>
+    </section>
+    <script>
+    (function(){
+        var slider = document.getElementById('galleryShowcaseSlider');
+        if (!slider) return;
+        var track = slider.querySelector('.gallery-showcase-track');
+        if (!track) return;
+        function pauseSlider() {
+            track.style.animationPlayState = 'paused';
+            clearTimeout(track._rt);
+            track._rt = setTimeout(function(){ track.style.animationPlayState = 'running'; }, 3000);
+        }
+        slider.addEventListener('mouseenter', function(){ track.style.animationPlayState = 'paused'; });
+        slider.addEventListener('mouseleave', function(){ track.style.animationPlayState = 'running'; });
+        slider.addEventListener('touchstart', pauseSlider, {passive: true});
+    })();
+    </script>
+    <?php endif; ?>
+
     <!-- Testimonials Section — Peek Slider -->
     <?php if (isHomepageSectionEnabled('testimonials') && !empty($testimonials)): ?>
     <?php $home_testimonials = $home_content['testimonials'] ?? null; ?>

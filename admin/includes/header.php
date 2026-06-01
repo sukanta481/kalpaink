@@ -115,6 +115,12 @@ ob_end_clean(); // Discard any whitespace output before DOCTYPE
                         <span>Vlogs / Reels</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo $currentPage == 'gallery' ? 'active' : ''; ?>" href="<?php echo getAdminUrl('content/gallery.php'); ?>">
+                        <i class="fas fa-images"></i>
+                        <span>Gallery</span>
+                    </a>
+                </li>
 
                 <?php if (hasRole('admin')): ?>
                 <li class="nav-header">Administration</li>

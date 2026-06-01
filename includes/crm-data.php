@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * CRM Data Helper
  * Fetches content from the CRM database for the website
@@ -361,7 +361,7 @@ function getGalleryFromDB($category = null, $limit = null) {
         if ($category) {
             $sql .= " AND category = :category";
         }
-        $sql .= " ORDER BY sort_order ASC";
+        $sql .= " ORDER BY group_sort_order ASC, sort_order ASC";
         if ($limit) {
             $sql .= " LIMIT " . (int)$limit;
         }
@@ -373,6 +373,37 @@ function getGalleryFromDB($category = null, $limit = null) {
             $stmt->execute();
         }
         
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        return [];
+    }
+}
+
+/**
+ * Get distinct gallery categories with image counts
+ */
+function getGalleryCategoriesFromDB() {
+    $db = getCRMDatabase();
+    if (!$db) return [];
+    
+    try {
+        $stmt = $db->query("SELECT category, COUNT(*) as count FROM gallery WHERE is_active = 1 GROUP BY category ORDER BY category ASC");
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        return [];
+    }
+}
+
+/**
+ * Get random gallery images for homepage slider
+ */
+function getRandomGalleryImages($limit = 12) {
+    $db = getCRMDatabase();
+    if (!$db) return [];
+    
+    try {
+        $sql = "SELECT * FROM gallery WHERE is_active = 1 ORDER BY RAND() LIMIT " . (int)$limit;
+        $stmt = $db->query($sql);
         return $stmt->fetchAll();
     } catch (PDOException $e) {
         return [];

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Admin Dashboard
  * Kalpanik Admin CRM
@@ -347,6 +347,9 @@ $leadsByStatus = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
                     </a>
                     <a href="<?php echo getAdminUrl('team.php?action=add'); ?>" class="btn btn-outline-warning">
                         <i class="fas fa-user me-2"></i>Add Team Member
+                    </a>
+                    <a href="<?php echo getAdminUrl('content/gallery.php?action=add'); ?>" class="btn btn-outline-success">
+                        <i class="fas fa-images me-2"></i>Add Gallery Image
                     </a>
                     <hr class="my-2">
                     <a href="<?php echo getAdminUrl('content.php'); ?>" class="btn btn-dark">
